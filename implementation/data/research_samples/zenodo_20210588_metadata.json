@@ -1,0 +1,170 @@
+﻿{
+    "created":  "2026-05-15T16:36:04.833117+00:00",
+    "modified":  "2026-05-15T16:36:05.036502+00:00",
+    "id":  20210588,
+    "conceptrecid":  "20210587",
+    "doi":  "10.5281/zenodo.20210588",
+    "conceptdoi":  "10.5281/zenodo.20210587",
+    "doi_url":  "https://doi.org/10.5281/zenodo.20210588",
+    "metadata":  {
+                     "title":  "Loading/unloading data occupancy dataset - Barcelona LL - DISCO project",
+                     "doi":  "10.5281/zenodo.20210588",
+                     "publication_date":  "2026-05-15",
+                     "description":  "\u003ch1 class=\"p1\"\u003e\u003cstrong\u003e\u003cspan class=\"s1\"\u003eDISCO Project Dataset: Computer Vision Parking Detection and Monitoring\u003c/span\u003e\u003c/strong\u003e\u003c/h1\u003e\n\u003ch2 class=\"p1\"\u003e\u003cstrong\u003e\u003cspan class=\"s1\"\u003eOverview\u003c/span\u003e\u003c/strong\u003e\u003c/h2\u003e\n\u003cp class=\"p2\"\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eThis dataset contains computer vision-based vehicle detection, tracking, and parking monitoring data collected in Barcelona un/loading areas during Decemb\u003c/span\u003e\u003cspan class=\"s1\"\u003eer 2025 - March 2026. The project aimed to provide comprehensive vehicle occupancy monitoring that complements the official [SPRO parking management syste\u003c/span\u003e\u003cspan class=\"s1\"\u003em](https://webspro.bsmsa.eu/), which records only users who actively check in via the mobile application.\u003c/span\u003e\u003c/p\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eThe dataset covers two distinct monitoring areas with different camera setups and collection methodologies, enabling researchers to study vehicle detectio\u003c/span\u003e\u003cspan class=\"s1\"\u003en, license plate recognition, parking occupancy patterns, and dwell time analysis in real-world urban environments.\u003c/span\u003e\u003c/p\u003e\n\u003ch2 class=\"p1\"\u003e\u003cstrong\u003e\u003cspan class=\"s1\"\u003eStudy Areas\u003c/span\u003e\u003c/strong\u003e\u003c/h2\u003e\n\u003col\u003e\n\u003cli\u003e\u003cstrong\u003e\u003cspan class=\"s1\"\u003eArea 4703: Pedestrian Street (Multicamera Setup)\u003c/span\u003e\u003c/strong\u003e\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eA pedestrian street with 10 parking spaces reserved for un/loading operations during specific hours. Location: CONSELL DE CENT, 378\u003c/span\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\n\u003cul\u003e\n\u003cli class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eOperational hours**: 07:00 - 08:00 and 10:00 - 16:00 (reserved for un/loading)\u003c/span\u003e\u003c/li\u003e\n\u003cli class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eRecording period**: 06:30 - 16:30\u003c/span\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eMonitored using two fixed cameras:\u003c/span\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\n\u003cul\u003e\n\u003cli class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eCamera 2: Entry point monitoring\u003c/span\u003e\u003c/li\u003e\n\u003cli class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eCamera 3: Exit point monitoring\u003c/span\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eData is collected continuously with frame-based processing. License plates detected at entry and exit are matched using OCR-read plate numbers to link ent\u003c/span\u003e\u003cspan class=\"s1\"\u003erance and exit records, creating complete tracking of individual vehicles through the parking area.\u003c/span\u003e\u003c/p\u003e\n\u003col\u003e\n\u003cli class=\"p1\"\u003e\u003cstrong\u003e\u003cspan class=\"s1\"\u003eArea 3177: Chamfered Area (Single Camera Setup)\u003c/span\u003e\u003c/strong\u003e\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eA chamfered parking area with multiple parking slots reserved for un/loading operations during specific hours. Location: VALENCIA, 394\u003c/span\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\n\u003cul\u003e\n\u003cli class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eOperational hours: 08:00 - 20:00 (reserved for un/loading)\u003c/span\u003e\u003c/li\u003e\n\u003cli class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eRecording period**: 07:30 - 20:30\u003c/span\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eMonitored using a single fixed camera with frames collected at 30-second intervals (not continuous), providing periodic snapshots of the parking situation\u003c/span\u003e\u003cspan class=\"s1\"\u003e. This setup captures long-term occupancy patterns and is suitable for areas where continuous video monitoring is not feasible.\u003c/span\u003e\u003c/p\u003e\n\u003cp class=\"p1\"\u003e\u003cspan class=\"s1\"\u003eFor more information, see the README.md file in the dataset.\u003c/span\u003e\u003c/p\u003e",
+                     "access_right":  "open",
+                     "creators":  [
+                                      {
+                                          "name":  "Morros Rubió, Josep Ramon",
+                                          "affiliation":  "Universitat Politècnica de Catalunya",
+                                          "orcid":  "0000-0002-1395-487X"
+                                      },
+                                      {
+                                          "name":  "Martínez Lanza, Hugo",
+                                          "affiliation":  "Universitat Politècnica de Catalunya"
+                                      }
+                                  ],
+                     "contributors":  [
+                                          {
+                                              "name":  "Ajuntament de Barcelona",
+                                              "affiliation":  null,
+                                              "type":  "Other"
+                                          },
+                                          {
+                                              "name":  "Barcelona Serveis Municipals (B:SM)",
+                                              "affiliation":  null,
+                                              "type":  "DataCollector"
+                                          }
+                                      ],
+                     "keywords":  [
+                                      "Barcelona",
+                                      "Logistics",
+                                      "Urban Logistics",
+                                      "Loading/Unloading areas",
+                                      "Parking Occupancy",
+                                      "Computer Vision"
+                                  ],
+                     "version":  "1.0.0",
+                     "language":  "eng",
+                     "resource_type":  {
+                                           "title":  "Dataset",
+                                           "type":  "dataset"
+                                       },
+                     "license":  {
+                                     "id":  "cc-by-4.0"
+                                 },
+                     "grants":  [
+                                    {
+                                        "code":  "101103954",
+                                        "internal_id":  "10.13039/501100000780::101103954",
+                                        "funder":  {
+                                                       "name":  "European Commission",
+                                                       "doi":  "10.13039/501100000780",
+                                                       "acronym":  "EC"
+                                                   },
+                                        "title":  "Data-driven, Integrated, Syncromodal, Collaborative and Optimised urban freight meta model for a new generation of urban logistics and planning with data sharing at European Living Labs",
+                                        "acronym":  "DISCO",
+                                        "program":  "HORIZON.2.5",
+                                        "url":  "https://cordis.europa.eu/projects/101103954"
+                                    },
+                                    {
+                                        "code":  "PID2024-161868OB-I00",
+                                        "internal_id":  "003x0zc53::PID2024-161868OB-I00",
+                                        "funder":  {
+                                                       "name":  "Agencia Estatal de Investigación"
+                                                   },
+                                        "title":  "Collaborative heterogeneous 3D scene representations for Urban Mobility",
+                                        "url":  "https://imatge.upc.edu/web/projects/collaborative-heterogeneous-3d-scene-representations-urban-mobility"
+                                    }
+                                ],
+                     "communities":  [
+                                         {
+                                             "id":  "eu"
+                                         },
+                                         {
+                                             "id":  "disco"
+                                         }
+                                     ],
+                     "relations":  {
+                                       "version":  [
+                                                       {
+                                                           "index":  0,
+                                                           "is_last":  true,
+                                                           "parent":  {
+                                                                          "pid_type":  "recid",
+                                                                          "pid_value":  "20210587"
+                                                                      }
+                                                       }
+                                                   ]
+                                   }
+                 },
+    "title":  "Loading/unloading data occupancy dataset - Barcelona LL - DISCO project",
+    "links":  {
+                  "self":  "https://zenodo.org/api/records/20210588",
+                  "self_html":  "https://zenodo.org/records/20210588",
+                  "preview_html":  "https://zenodo.org/records/20210588?preview=1",
+                  "doi":  "https://doi.org/10.5281/zenodo.20210588",
+                  "self_doi":  "https://doi.org/10.5281/zenodo.20210588",
+                  "self_doi_html":  "https://zenodo.org/doi/10.5281/zenodo.20210588",
+                  "reserve_doi":  "https://zenodo.org/api/records/20210588/draft/pids/doi",
+                  "parent":  "https://zenodo.org/api/records/20210587",
+                  "parent_html":  "https://zenodo.org/records/20210587",
+                  "parent_doi":  "https://doi.org/10.5281/zenodo.20210587",
+                  "parent_doi_html":  "https://zenodo.org/doi/10.5281/zenodo.20210587",
+                  "self_iiif_manifest":  "https://zenodo.org/api/iiif/record:20210588/manifest",
+                  "self_iiif_sequence":  "https://zenodo.org/api/iiif/record:20210588/sequence/default",
+                  "files":  "https://zenodo.org/api/records/20210588/files",
+                  "media_files":  "https://zenodo.org/api/records/20210588/media-files",
+                  "archive":  "https://zenodo.org/api/records/20210588/files-archive",
+                  "archive_media":  "https://zenodo.org/api/records/20210588/media-files-archive",
+                  "latest":  "https://zenodo.org/api/records/20210588/versions/latest",
+                  "latest_html":  "https://zenodo.org/records/20210588/latest",
+                  "versions":  "https://zenodo.org/api/records/20210588/versions",
+                  "draft":  "https://zenodo.org/api/records/20210588/draft",
+                  "access_links":  "https://zenodo.org/api/records/20210588/access/links",
+                  "access_grants":  "https://zenodo.org/api/records/20210588/access/grants",
+                  "access_users":  "https://zenodo.org/api/records/20210588/access/users",
+                  "access_request":  "https://zenodo.org/api/records/20210588/access/request",
+                  "access":  "https://zenodo.org/api/records/20210588/access",
+                  "communities":  "https://zenodo.org/api/records/20210588/communities",
+                  "communities-suggestions":  "https://zenodo.org/api/records/20210588/communities-suggestions",
+                  "request_deletion":  "https://zenodo.org/api/records/20210588/request-deletion",
+                  "file_modification":  "https://zenodo.org/api/records/20210588/file-modification",
+                  "quota_increase":  "https://zenodo.org/api/records/20210588/quota-increase",
+                  "requests":  "https://zenodo.org/api/records/20210588/requests"
+              },
+    "updated":  "2026-05-15T16:36:05.036502+00:00",
+    "recid":  "20210588",
+    "revision":  4,
+    "files":  [
+                  {
+                      "id":  "89e60215-512a-4a60-82e2-96e135873d93",
+                      "key":  "anonymized_disco_dataset.zip",
+                      "size":  77305088,
+                      "checksum":  "md5:359890fb408e6e055d526a95a9ac1fd7",
+                      "links":  {
+                                    "self":  "https://zenodo.org/api/records/20210588/files/anonymized_disco_dataset.zip/content"
+                                }
+                  }
+              ],
+    "swh":  {
+
+            },
+    "owners":  [
+                   {
+                       "id":  "264197"
+                   }
+               ],
+    "status":  "published",
+    "stats":  {
+                  "downloads":  56,
+                  "unique_downloads":  36,
+                  "views":  49,
+                  "unique_views":  45,
+                  "version_downloads":  56,
+                  "version_unique_downloads":  36,
+                  "version_unique_views":  45,
+                  "version_views":  49
+              },
+    "state":  "done",
+    "submitted":  true
+}

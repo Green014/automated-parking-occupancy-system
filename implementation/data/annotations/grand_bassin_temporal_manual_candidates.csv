@@ -1,0 +1,2 @@
+candidate_id,x,y,width,height,occupied_fraction,longest_occupied,longest_vacant,transitions,transition_frames
+BUS_DEPART_01,1012,372,105,72,0.021437,17,776,1,17

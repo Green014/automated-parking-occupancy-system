@@ -1,0 +1,8 @@
+sequence,hypothesis_id,bbox_x,bbox_y,bbox_width,bbox_height,proposed_transition_frames,maximum_review_frame_count,decision,rejection_code,manual_note
+development,BUS_DEPART_01,960,336,105,72,17,33,rejected,circulation_vehicle,"A bus traverses or stops in the bus circulation road; the rectangle is not a fixed bus bay."
+holdout_162512,GB_HOLDOUT_DEPART_01,653,420,60,66,100;115,77,rejected,queue_overlap,"Two focused review passes show a stopped/queued red vehicle and overlap with a rear parked vehicle, not one independent marked bay."
+development,BUS_R00_VAC,1110,252,65,25,,30,rejected,not_a_parking_space,"The apparent gap is a separator/approach area above the bus row, not a marked bus bay."
+development,CAR_VAC_HATCH_01,1093,210,25,36,,30,rejected,no_parking_hatching,"The apparent empty car-sized region is diagonal no-parking hatching."
+development,CAR_VAC_HATCH_02,1109,210,25,36,,30,rejected,no_parking_hatching,"The adjacent apparent empty region is part of the same no-parking hatched area."
+development,CAR_VAC_LANE_01,410,368,69,39,,60,rejected,circulation_lane,"Cars pass through the region; it is a circulation lane rather than a fixed stall."
+development,CAR_VAC_DARK_01,410,273,38,26,,60,rejected,occupied_or_occluded,"Tighter crops reveal a dark parked vehicle/glare in the proposed polygon, so it is not a verified vacant stall."

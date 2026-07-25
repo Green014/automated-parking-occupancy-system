@@ -1,0 +1,13 @@
+# Final Comparison Table
+
+| Paper | Venue / Year | Main Task | Method | Dataset / Benchmark | Strengths | Limitations | Relevance to Parking Occupancy |
+|---|---|---|---|---|---|---|---|
+| YOLO-World | CVPR 2024 | Real-time open-vocabulary object detection | YOLO detector with vision-language pretraining and region-text learning | LVIS and downstream detection tasks | Fast; flexible categories; useful before collecting large parking-specific labels | Still needs prompt calibration or fine-tuning for overhead camera views | Strong candidate detector for vehicles, obstacles, cones, barriers, and unusual objects |
+| Multi-Object Tracking in the Dark | CVPR 2024 | Low-light MOT | Low-light tracking dataset plus LTrack | LMOT and low-light tracking benchmarks | Directly addresses night surveillance degradation | Does not solve parking-slot state estimation | Important for night occupancy stability |
+| DiffMOT | CVPR 2024 | Real-time MOT with nonlinear motion | Diffusion-based motion prediction | DanceTrack, SportsMOT | Better suited to irregular motion than simple linear models | Diffusion components may increase compute cost | Useful for vehicles stopping, reversing, and turning into spaces |
+| Towards Generalizable MOT | CVPR 2024 | Cross-scene MOT generalization | Scenario-aware relation modeling with GeneralTrack | Multiple MOT benchmarks | Emphasizes transfer across scenarios | Needs validation on parking-specific cameras | Helps deployment across different lots and camera heights |
+| TrackTrack | CVPR 2025 | Online MOT | Track-perspective association and track-aware initialization | MOT17, MOT20, DanceTrack | Online and association-focused; reduces unstable tracks | Still requires slot-level mapping | Good fit for continuous real-time occupancy updates |
+| MOTIP | CVPR 2025 | MOT as ID prediction | In-context ID prediction for association | Multiple MOT benchmarks | Reduces handcrafted matching rules | Needs strong features and parking-domain data for best use | Promising for learning identity association in crowded lots |
+| AODRaw | CVPR 2025 | Detection under diverse conditions | RAW detection benchmark and RAW-domain pretraining/distillation | AODRaw | Covers low light, rain, fog, and diverse scenes | RAW video may not be available in deployed surveillance systems | Strong reference for robustness evaluation and data design |
+| OW-OVD | CVPR 2025 | Open-world and open-vocabulary detection | Unified known/unknown object detection with attribute-based modeling | M-OWODB, S-OWODB | Can detect known classes and flag unknown objects | Unknown-object scores may create false positives in fixed scenes | Useful for unusual vehicles, obstacles, or temporary objects in spaces |
+

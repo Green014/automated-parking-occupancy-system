@@ -1,0 +1,10 @@
+# ByteTrack parameters for the low-confidence YOLOv8n development setting.
+# The detector threshold is 0.025, so track creation must not silently restore
+# the Ultralytics default threshold of 0.25.
+tracker_type: bytetrack
+track_high_thresh: 0.025
+track_low_thresh: 0.005
+new_track_thresh: 0.025
+track_buffer: 30
+match_thresh: 0.80
+fuse_score: true

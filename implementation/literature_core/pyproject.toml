@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "literature-core-parking"
+version = "0.1.0"
+description = "Literature-aligned parking slot classification and detection fusion"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "numpy>=1.26,<3",
+  "opencv-python>=4.10,<5",
+  "PyYAML>=6,<7",
+  "torch>=2.6",
+  "torchvision>=0.21",
+  "ultralytics>=8.4,<9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["src"]
+

@@ -1,0 +1,44 @@
+# Python environments and caches
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+*.py[cod]
+.coverage
+htmlcov/
+*.egg-info/
+
+# Runtime/model caches and generated experiment artifacts
+**/.ultralytics/
+**/models/
+**/outputs/
+**/runs/
+weights/
+tmp/
+**/tmp/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+
+# Downloaded or generated datasets; keep manifests and compact manual labels
+implementation/data/raw/
+implementation/data/processed/
+implementation/data/research_samples/**/*.jpg
+implementation/data/research_samples/**/*.jpeg
+implementation/data/research_samples/**/*.png
+implementation/data/finetune/*preannotations*.json
+implementation/data/annotations/*_coco.json
+datasets/
+**/datasets/
+
+# Local copies of papers and generated office artifacts
+literature_review/papers/
+literature_review/*.docx
+literature_review/*.xlsx
+*.pdf
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp

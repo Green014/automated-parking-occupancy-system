@@ -1,0 +1,11 @@
+# Parking-Specific Existing Solution Comparison
+
+| Category | Representative papers | Core idea | Datasets | Common metrics | Strengths | Limitations | Fit for our project |
+|---|---|---|---|---|---|---|---|
+| Slot-patch classification | Improved MobileNetV3; PKLot/CNRPark-style methods | Crop each parking slot and classify it as occupied or vacant | PKLot, CNRPark-EXT | Accuracy, precision, recall, F1, AUC | Simple, directly evaluates slot occupancy, easy to explain | Requires slot locations or cropped patches; weak temporal reasoning | Good baseline |
+| Automatic slot detection + classification | APSD-OC | Detect parking-slot locations from vehicle detections over time, then classify slots | PKLot, CNRPark-EXT | Slot detection precision/recall, classification accuracy | Reduces manual slot labeling | More complex setup; depends on enough observations of vehicles | Very relevant |
+| YOLO-based vehicle/space detection | YOLOv8 parking detection; Optimized YOLOv8 | Detect cars and/or empty/occupied spaces directly with object detection | Custom datasets, PKLot | Precision, recall, mAP@0.5, mAP@0.5:0.95 | Real-time and straightforward to implement | Needs bounding-box labels; occupancy may flicker frame-to-frame | Strong implementation baseline |
+| Parking surveillance object detection | CMCA-YOLO | Improve YOLO for small/overlapping objects in parking surveillance | Custom 4502-image dataset | Precision, recall, AP, mAP, FPS | Directly targets parking-lot surveillance | Custom dataset may not be public; does not fully solve per-slot occupancy | Useful design reference |
+| ROI + detector smart parking | Smart Parking with Pixel-Wise ROI + YOLO family | Detect vehicles, then use ROI post-processing to count/assign parking regions | Custom 3484-image dataset | Balanced accuracy, inference time | Explicitly combines detection with ROI logic and deployment | arXiv/preprint; not necessarily peer-reviewed | Closest to our proposed pipeline |
+| Detector + tracker + slot mapping | Proposed direction using YOLO-World + MOT | Detect vehicles/obstacles, track over time, map to slot polygons | Custom parking video plus optional PKLot/LMOT/AODRaw support | Slot F1, false free rate, latency, FPS, optional IDF1/HOTA | Video-stable and closer to real deployment | Requires more implementation and annotation effort | Recommended project direction |
+

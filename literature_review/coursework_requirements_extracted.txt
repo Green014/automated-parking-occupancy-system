@@ -1,0 +1,117 @@
+COURSEWORK PROJECT: Computer Vision System Design and 
+Evaluation 
+As part of the coursework, each student is required to select, research, and implement a project 
+based on Computer Vision, applying concepts and techniques learned in class \online. This 
+project is intended to enhance your understanding of real -world computer vision systems and 
+advance practical skills in system design, implementation, and performance evaluation. 
+  Project Topic Selection 
+ 
+✓ Projects must be based on a problem for which a suitable dataset is easily available or 
+can be acquired/created with reasonable effort. 
+✓ Each group must work on a unique topic. 
+✓ A shared Excel sheet will be provided to register your selected topic. 
+✓ The deadline to submit the selected topic is 13th May 2026 via provided link CSC 3014 
+Project Title Submission.xlsx 
+✓ Do not change any setting or edit other group details. 
+ 
+ Project Components 
+Part I: Literature Review (20%) 
+Conduct a thorough literature review focusing on: 
+✓ Existing computer vision systems or algorithms relevant to your selected topic. 
+✓ Performance metrics commonly used in the field. 
+Your review should help you: 
+✓ Understand the objectives and context of the problem. 
+✓ Identify technical steps and design considerations. 
+✓ Learn how to quantitatively evaluate your system. 
+   Optional: If interested, you may convert the literature review into a systematic review 
+for publication. The subject leader will guide and co-author if pursued. However, this will 
+not impact your coursework grades. 
+ 
+ 
+ 
+
+Part II: Project Development and Evaluation (20%) 
+Your must: 
+✓ Design and implement  a computer vision -based system or algorithm using Python 
+and OpenCV. 
+✓ Either: 
+o Improve upon an existing algorithm, or 
+o Combine multiple known algorithms to develop a new approach. 
+✓ Evaluate the system using relevant metrics identified during the literature review. 
+✓ Clearly highlight differences from existing systems. 
+✓ It is acceptable if the performance does not improve  if you analyse and explain the 
+reasons behind it. 
+ 
+ Deliverables & Deadlines 
+ 
+No. Deliverable Deadline Format Submission Platform 
+1 Topic Selection 13th May Oct 2026 Excel Sheet Shared Online 
+2 Literature 
+Review Report 
+21st  June 2026, 11:59 
+PM 
+Standard Report 
+Format Turnitin on eLearn 
+3 Project Report 2nd Aug 2026, 11:59 PM IEEE Template 
+(provided) Turnitin on eLearn 
+4 Code Files 3rd Aug Dec 2026, 11:59 
+PM Python Project Files eLearn (Do not upload to 
+Turnitin) 
+5 Project Viva Week 14 
+Project 
+Demonstration and 
+Q/A session 
+Conducted in Lab Session 
+ 
+ To-Do List 
+✓ Select and finalize your project topic. 
+✓ Conduct and write your literature review. 
+✓ Identify relevant evaluation metrics. 
+✓ Prepare or acquire your dataset (train/test/validate). 
+✓ Implement your system or algorithm. 
+✓ Evaluate and analyse system performance. 
+
+✓ Submit all required documents and code. 
+✓ Prepare for viva presentation. 
+ Requirements 
+ 
+Literature Review Report (20%) 
+Criteria Description 
+Relevance of Sources Selection of up-to-date and high-quality references 
+(minimum past 3 years) 
+Coverage of Existing Work Depth and breadth of comparison of existing algorithms 
+and systems 
+Identification of Gaps Clarity in identifying research gaps or limitations in 
+existing approaches 
+Explanation of Performance 
+Metrics 
+Understanding and explanation of standard evaluation 
+metrics 
+Structure, Clarity, and 
+Writing Style Logical structure, academic tone, grammar, and formatting 
+Referencing Proper citation using IEEE format (preferred 
+Overleaf/Latex) 
+ 
+Project Implementation (15%) 
+Criteria Description 
+System Design Creativity, complexity, and soundness of design 
+Code Functionality Proper working of the system with clean, modular code 
+Application of Computer 
+Vision Techniques Use of relevant OpenCV/Python libraries and methods 
+Novelty or Modifications Originality or meaningful modifications to existing 
+methods 
+Evaluation and Analysis Appropriate use of metrics, and analysis of results 
+ 
+Project Report (5%) 
+Criteria Description 
+Report Structure Abstract, Introduction, Methodology, Results, Discussion, 
+Conclusion 
+Use of IEEE Template Consistency with provided template (fonts, margins, layout) 
+
+Integration of Figures 
+and Tables 
+Relevant diagrams, charts, and images well-labelled and 
+referenced 
+Clarity and Grammar Academic writing, flow, and formatting 
+Referencing Use of proper citations and reference formatting 
+ 

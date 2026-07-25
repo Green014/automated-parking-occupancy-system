@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "parking-occupancy"
+version = "0.1.0"
+description = "YOLO vehicle detection to parking-slot occupancy baseline"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "numpy>=1.26,<3",
+  "opencv-python>=4.10,<5",
+  "PyYAML>=6,<7",
+  "ultralytics>=8.3,<9",
+  "lap>=0.5.12",
+  "matplotlib>=3.9,<4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<10",
+]
+
+[project.scripts]
+parking-run = "parking_occupancy.cli:main"
+parking-annotate = "parking_occupancy.annotate_slots:main"
+parking-evaluate = "parking_occupancy.evaluate:main"
+parking-evaluate-detection = "parking_occupancy.detection_evaluate:main"
+parking-evaluate-pklot = "parking_occupancy.pklot_experiment:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

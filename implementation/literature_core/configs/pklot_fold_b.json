@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "description": "Cross-camera fold B: train UFPR04, develop UFPR05, test PUCPR.",
+  "train": ["ufpr04"],
+  "development": ["ufpr05"],
+  "test": ["pucpr"]
+}
