@@ -1,25 +1,21 @@
 from __future__ import annotations
 
+import random
 import statistics
+from collections import defaultdict
 from collections.abc import Sequence
 from typing import Any
 
 
-def binary_metrics(
-    y_true: Sequence[int],
-    y_pred: Sequence[int],
+def _metrics_from_counts(
+    tn: int,
+    fp: int,
+    fn: int,
+    tp: int,
 ) -> dict[str, Any]:
-    """Return class-aware slot metrics without external metric dependencies."""
-
-    if len(y_true) != len(y_pred) or not y_true:
-        raise ValueError("Expected equally sized, non-empty label sequences")
-    if any(value not in {0, 1} for value in (*y_true, *y_pred)):
-        raise ValueError("Labels and predictions must be binary")
-    tp = sum(t == 1 and p == 1 for t, p in zip(y_true, y_pred, strict=True))
-    tn = sum(t == 0 and p == 0 for t, p in zip(y_true, y_pred, strict=True))
-    fp = sum(t == 0 and p == 1 for t, p in zip(y_true, y_pred, strict=True))
-    fn = sum(t == 1 and p == 0 for t, p in zip(y_true, y_pred, strict=True))
-
+    samples = tn + fp + fn + tp
+    if samples <= 0:
+        raise ValueError("Confusion counts must contain at least one sample")
     occupied_precision = tp / (tp + fp) if tp + fp else 0.0
     occupied_recall = tp / (tp + fn) if tp + fn else 0.0
     occupied_f1 = (
@@ -37,13 +33,13 @@ def binary_metrics(
         else 0.0
     )
     return {
-        "samples": len(y_true),
+        "samples": samples,
         "confusion_matrix": [[tn, fp], [fn, tp]],
         "tn": tn,
         "fp": fp,
         "fn": fn,
         "tp": tp,
-        "accuracy": (tp + tn) / len(y_true),
+        "accuracy": (tp + tn) / samples,
         "precision": occupied_precision,
         "recall": occupied_recall,
         "f1": occupied_f1,
@@ -54,6 +50,24 @@ def binary_metrics(
         "false_free_rate": fn / (tp + fn) if tp + fn else 0.0,
         "false_occupied_rate": fp / (tn + fp) if tn + fp else 0.0,
     }
+
+
+def binary_metrics(
+    y_true: Sequence[int],
+    y_pred: Sequence[int],
+) -> dict[str, Any]:
+    """Return class-aware slot metrics without external metric dependencies."""
+
+    if len(y_true) != len(y_pred) or not y_true:
+        raise ValueError("Expected equally sized, non-empty label sequences")
+    if any(value not in {0, 1} for value in (*y_true, *y_pred)):
+        raise ValueError("Labels and predictions must be binary")
+    tp = sum(t == 1 and p == 1 for t, p in zip(y_true, y_pred, strict=True))
+    tn = sum(t == 0 and p == 0 for t, p in zip(y_true, y_pred, strict=True))
+    fp = sum(t == 0 and p == 1 for t, p in zip(y_true, y_pred, strict=True))
+    fn = sum(t == 1 and p == 0 for t, p in zip(y_true, y_pred, strict=True))
+
+    return _metrics_from_counts(tn, fp, fn, tp)
 
 
 def evaluate_probabilities(
@@ -96,6 +110,89 @@ def select_threshold(
         ),
     )
     return float(selected["threshold"]), rows
+
+
+def grouped_bootstrap_binary_metrics(
+    y_true: Sequence[int],
+    y_pred: Sequence[int],
+    group_ids: Sequence[str],
+    *,
+    iterations: int = 2000,
+    confidence: float = 0.95,
+    seed: int = 20260725,
+) -> dict[str, dict[str, float]]:
+    """Bootstrap complete image/video groups rather than individual slots."""
+
+    if len(y_true) != len(y_pred) or len(y_true) != len(group_ids) or not y_true:
+        raise ValueError("truth, predictions, and groups must be equally sized")
+    if iterations <= 0 or not 0.0 < confidence < 1.0:
+        raise ValueError("invalid bootstrap settings")
+    group_counts: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
+    for truth, prediction, group_id in zip(
+        y_true,
+        y_pred,
+        group_ids,
+        strict=True,
+    ):
+        if truth not in {0, 1} or prediction not in {0, 1}:
+            raise ValueError("Labels and predictions must be binary")
+        index = (
+            0
+            if truth == 0 and prediction == 0
+            else 1
+            if truth == 0
+            else 2
+            if prediction == 0
+            else 3
+        )
+        group_counts[str(group_id)][index] += 1
+    groups = sorted(group_counts)
+    if len(groups) < 2:
+        raise ValueError("grouped bootstrap needs at least two groups")
+
+    metric_names = (
+        "macro_f1",
+        "occupied_recall",
+        "vacant_recall",
+        "false_free_rate",
+        "false_occupied_rate",
+    )
+    observed = binary_metrics(y_true, y_pred)
+    samples = {name: [] for name in metric_names}
+    generator = random.Random(seed)
+    for _ in range(iterations):
+        sampled_groups = generator.choices(groups, k=len(groups))
+        counts = [
+            sum(group_counts[group][index] for group in sampled_groups)
+            for index in range(4)
+        ]
+        metrics = _metrics_from_counts(
+            counts[0],
+            counts[1],
+            counts[2],
+            counts[3],
+        )
+        for name in metric_names:
+            samples[name].append(float(metrics[name]))
+
+    alpha = (1.0 - confidence) / 2.0
+
+    def percentile(values: list[float], quantile: float) -> float:
+        ordered = sorted(values)
+        position = quantile * (len(ordered) - 1)
+        lower = int(position)
+        upper = min(lower + 1, len(ordered) - 1)
+        weight = position - lower
+        return ordered[lower] * (1.0 - weight) + ordered[upper] * weight
+
+    return {
+        name: {
+            "estimate": float(observed[name]),
+            "lower": percentile(values, alpha),
+            "upper": percentile(values, 1.0 - alpha),
+        }
+        for name, values in samples.items()
+    }
 
 
 def _summary(values: list[float]) -> dict[str, float | None]:

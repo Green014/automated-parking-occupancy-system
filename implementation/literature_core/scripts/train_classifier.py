@@ -17,8 +17,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from literature_core.classifier import (  # noqa: E402
+    MOBILENET_VARIANTS,
     SlotPatchDataset,
     build_mobilenet_classifier,
+    implementation_label,
     resolve_device,
 )
 from literature_core.config import load_yaml  # noqa: E402
@@ -66,6 +68,12 @@ def main() -> None:
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--batch-size", type=int)
     parser.add_argument("--no-pretrained", action="store_true")
+    parser.add_argument(
+        "--variant",
+        choices=MOBILENET_VARIANTS,
+        default=None,
+        help="Architecture ablation; defaults to classifier.variant or standard.",
+    )
     args = parser.parse_args()
 
     config = load_yaml(args.config)
@@ -78,6 +86,9 @@ def main() -> None:
     batch_size = int(args.batch_size or classifier_config["batch_size"])
     pretrained = bool(classifier_config["pretrained"]) and not args.no_pretrained
     freeze_backbone = bool(classifier_config["freeze_backbone"])
+    variant = str(
+        args.variant or classifier_config.get("variant", "standard")
+    )
     patch_size = (int(patch_config["width"]), int(patch_config["height"]))
 
     samples = load_pklot_slot_samples(
@@ -121,7 +132,14 @@ def main() -> None:
     model = build_mobilenet_classifier(
         pretrained=pretrained,
         freeze_backbone=freeze_backbone,
+        variant=variant,
     ).to(device)
+    parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    trainable_parameter_count = sum(
+        parameter.numel()
+        for parameter in model.parameters()
+        if parameter.requires_grad
+    )
     label_counts = Counter(sample.label for sample in train_samples)
     class_weights = torch.tensor(
         [
@@ -205,11 +223,19 @@ def main() -> None:
                     {
                         "model_state": model.state_dict(),
                         "architecture": "mobilenet_v3_small",
-                        "implementation_label": (
-                            "adapted_standard_mobilenet_v3_small"
-                        ),
+                        "variant": variant,
+                        "implementation_label": implementation_label(variant),
+                        "paper_inspired_adaptation": variant != "standard",
+                        "paper_exact_reproduction": False,
+                        "components": {
+                            "cbam_supplements_se": "cbam" in variant,
+                            "shallow_leakyrelu6": "leakyrelu6" in variant,
+                            "bsconv": False,
+                        },
                         "pretrained_imagenet": pretrained,
                         "freeze_backbone": freeze_backbone,
+                        "parameter_count": parameter_count,
+                        "trainable_parameter_count": trainable_parameter_count,
                         "patch_size": patch_size,
                         "seed": seed,
                         "best_epoch": best_epoch,
@@ -221,8 +247,15 @@ def main() -> None:
                 )
 
     summary = {
-        "implementation_label": "adapted_standard_mobilenet_v3_small",
+        "implementation_label": implementation_label(variant),
+        "variant": variant,
+        "paper_inspired_adaptation": variant != "standard",
         "paper_exact_reproduction": False,
+        "components": {
+            "cbam_supplements_se": "cbam" in variant,
+            "shallow_leakyrelu6": "leakyrelu6" in variant,
+            "bsconv": False,
+        },
         "seed": seed,
         "device": str(device),
         "gpu": (
@@ -235,6 +268,8 @@ def main() -> None:
         "amp": amp_enabled,
         "pretrained_imagenet": pretrained,
         "freeze_backbone": freeze_backbone,
+        "parameter_count": parameter_count,
+        "trainable_parameter_count": trainable_parameter_count,
         "patch_size": list(patch_size),
         "train_samples": len(train_samples),
         "development_samples": len(development_samples),
@@ -259,4 +294,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

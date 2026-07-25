@@ -9,6 +9,7 @@ htmlcov/
 
 # Runtime/model caches and generated experiment artifacts
 **/.ultralytics/
+**/Ultralytics/
 **/models/
 **/outputs/
 **/runs/

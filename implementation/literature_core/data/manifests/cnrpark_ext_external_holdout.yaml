@@ -1,0 +1,66 @@
+schema_version: 1
+dataset: CNRPark+EXT
+subset_for_external_holdout: CNR-EXT
+role: external_holdout_once_only
+official_page: http://cnrpark.it/
+official_code: https://github.com/fabiocarrara/deep-parking
+license:
+  name: Open Data Commons Open Database License
+  version: "1.0"
+  identifier: ODbL-1.0
+  source_statement: http://cnrpark.it/
+verified_on: "2026-07-25"
+
+published_scope:
+  parking_spaces: 164
+  cnrpark:
+    cameras: 2
+    frames: 242
+    patches: 12584
+  cnr_ext:
+    cameras: 9
+    collection_days: 23
+    frames: 4081
+    patches: 144965
+    weather: [SUNNY, OVERCAST, RAINY]
+
+files:
+  metadata:
+    name: CNRPark+EXT.csv
+    official_url: https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark+EXT.csv
+    expected_bytes: 18132695
+    sha256: 26416454cb8b184006431d0c149d31beabb8ef65d8eb2212cf4a39914a470dc8
+    local_ignored_path: datasets/cnrpark_ext/CNRPark+EXT.csv
+    rows_including_header: 157550
+  full_images:
+    name: CNR-EXT_FULL_IMAGE_1000x750.tar
+    official_url: https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNR-EXT_FULL_IMAGE_1000x750.tar
+    published_size: 1.1 GB
+    actual_bytes: 1104364544
+    local_ignored_path: datasets/cnrpark_ext/CNR-EXT_FULL_IMAGE_1000x750.tar
+    sha256: 02a66d936433f02dfceae37a25eb3ee100969ff63eb38d891621e8bf42d1256f
+    archive_entries: 4521
+    extracted_jpeg_frames: 4278
+    official_geometry_files: 9
+
+annotation_notes:
+  occupancy: metadata CSV occupancy column, 0=vacant and 1=occupied
+  group_key: camera plus datetime
+  slot_id: global within CNR-EXT according to the official documentation
+  geometry: archive contains one bounding-box CSV per camera
+  geometry_limit: official geometry is axis-aligned boxes, not precise polygons
+  source_coordinates: [2592, 1944]
+  released_frame_coordinates: [1000, 750]
+  required_scale: [0.38580246913580246, 0.38580246913580246]
+  validated_external_rows: 144965
+  validated_labeled_frames: 4081
+  archive_frames_without_matching_metadata_group: 197
+  unlabeled_archive_frame_action: excluded_without_inferred_labels
+  validated_missing_geometry_rows: 0
+
+leakage_controls:
+  used_for_training: false
+  used_for_calibration: false
+  used_for_threshold_selection: false
+  configuration_frozen_before_prediction: configs/external_holdout_frozen.yaml
+  bootstrap_unit: complete camera_datetime image groups

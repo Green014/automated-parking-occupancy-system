@@ -12,6 +12,7 @@ report, CSV, model, or output file was edited or overwritten.
 - `EXPERIMENT_PLAN.md`
 - `RESULTS.md`
 - `TRANSITION_AUDIT.md`
+- `CONFIG_AUDIT.md`
 - `REPORT_SNIPPETS.md`
 - `FILE_MANIFEST.md`
 - `requirements.txt`
@@ -24,6 +25,8 @@ report, CSV, model, or output file was edited or overwritten.
 - `configs/pklot_fold_b.json`
 - `configs/pklot_fold_c.json`
 - `configs/pklot_camera_split.json`
+- `configs/proposed_fusion.yaml`
+- `configs/external_holdout_frozen.yaml`
 
 ## Python package
 
@@ -33,6 +36,8 @@ report, CSV, model, or output file was edited or overwritten.
 - `src/literature_core/data.py`
 - `src/literature_core/patches.py`
 - `src/literature_core/classifier.py`
+- `src/literature_core/calibration.py`
+- `src/literature_core/cnrpark.py`
 - `src/literature_core/detector.py`
 - `src/literature_core/mapping.py`
 - `src/literature_core/fusion.py`
@@ -58,6 +63,9 @@ report, CSV, model, or output file was edited or overwritten.
 - `scripts/summarize_cross_camera.py`
 - `scripts/build_transition_review.py`
 - `scripts/draw_slot_map.py`
+- `scripts/run_calibrated_fusion.py`
+- `scripts/evaluate_classifier_variants.py`
+- `scripts/run_cnr_ext_frozen_evaluation.py`
 
 ## Tests
 
@@ -73,6 +81,13 @@ report, CSV, model, or output file was edited or overwritten.
 - `tests/test_stability.py`
 - `tests/test_cross_validation.py`
 - `tests/test_annotation_review.py`
+- `tests/test_calibration.py`
+- `tests/test_cnrpark.py`
+
+## External-data manifest
+
+- `data/manifests/cnrpark_ext_external_holdout.yaml`
+- `data/manifests/frozen_artifacts_20260725.yaml`
 
 ## Continuous-sequence audit data
 
@@ -98,6 +113,11 @@ report, CSV, model, or output file was edited or overwritten.
 - `outputs/patch_audit/`
 - `outputs/candidate_search/`
 - `outputs/manual_transition_review/`
+- `outputs/calibrated_fusion_development/`
+- `outputs/mobilenet_variant_ablation/`
+- `outputs/mobilenet_variant_evaluation/`
+- `outputs/cnrpark_ext_frozen_evaluation_20260725/`
+- `datasets/cnrpark_ext/`
 
 The shared CLIP adapter cache is stored once at
 `../../weights/clip/ViT-B-32.pt`. The new `../../weights/.gitignore` prevents

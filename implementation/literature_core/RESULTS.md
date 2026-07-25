@@ -8,7 +8,7 @@ Run date: 25 July 2026 (Asia/Shanghai)
 | Check | Result |
 |---|---|
 | Existing baseline unit tests | **23/23 passed** after all work |
-| Literature-core unit tests | **37/37 passed** |
+| Literature-core unit tests | **50/50 passed** |
 | Source compilation | `python -m compileall` passed |
 | Python/OpenCV available | Yes |
 | CUDA / RTX 3060 available | Yes, 6 GiB |
@@ -91,12 +91,13 @@ UFPR05 confusion matrices (`[[TN, FP], [FN, TP]]`) were:
 - E3 `[[177, 0], [7, 174]]`.
 
 The principal result is mixed. E2 improved macro F1 over E0 by 0.002794 and
-eliminated false-occupied cases in this holdout, but had more false-free
-errors. E3 perfectly fitted the development set yet did not improve on E0 in
-test macro F1 and increased false-free errors. Therefore this pilot does not
-support a claim that weighted fusion generalizes better than either branch;
-it shows development-set over-selection and non-complementary errors on
-UFPR05.
+eliminated false-occupied cases in this internal Fold A evaluation partition,
+but had more false-free errors. E3 perfectly fitted its selection partition
+yet did not improve on E0 on the held-camera partition and increased
+false-free errors. This is a probability-scale calibration and
+threshold-transfer failure. The saved overlap analysis confirms complementary
+cases in which MobileNetV3 and YOLO-World each corrected examples missed by
+the other.
 
 Diagnostic accumulated branch times for the same run were 2.420 s
 (classifier), 7.747 s (YOLO-World), and 1.056 s (YOLOv8). These paths use
@@ -133,12 +134,14 @@ Evidence: `outputs/pklot_error_analysis/summary.json`,
 `outputs/pklot_error_analysis/error_rows.csv`, and
 `outputs/pklot_error_analysis/test_error_montage.jpg`.
 
-## Post-hoc three-camera rotation
+## Post-hoc three-camera internal development rotation
 
-Two additional train/development/test camera rotations were executed after the
-original Fold A holdout result had been observed. Every fold still kept its
-test camera out of training and parameter selection. The table reports
-camera-equal, not sample-weighted, macro F1.
+Two additional camera rotations were executed after the original Fold A
+result had been observed. Every fold kept its evaluation camera out of that
+fold's training and parameter selection, but all 27 images have now
+participated somewhere in method development. These are internal
+camera-grouped development results, not an external final test. The table
+reports camera-equal, not sample-weighted, macro F1.
 
 | Fold | Train | Development | Test | E0 | E1 | E2 | E3 |
 |---|---|---|---|---:|---:|---:|---:|
@@ -153,8 +156,9 @@ E3 beat E0 in two folds and tied it in one, with a mean macro-F1 delta of
 with E0's 0.966026/0.980214. Mean false-free and false-occupied rates fell
 from 0.033974/0.019786 to 0.013630/0.007187.
 
-The broader result is more positive for fusion than Fold A alone, but it does
-not establish one deployable universal configuration. Development-selected
+The broader internal result is more positive for fusion than Fold A alone,
+but it does not establish one deployable universal configuration.
+Development-selected
 E3 classifier weight varied from 0.30 to 0.50 and the threshold from 0.23 to
 0.38. E2 was particularly camera-sensitive: it won against E0 in two folds
 but fell to 0.823569 on PUCPR, yielding the largest standard deviation
@@ -164,6 +168,147 @@ three folds are a robustness diagnostic rather than a large-sample estimate.
 Evidence: `outputs/cross_camera/summary/summary.json`,
 `outputs/cross_camera/summary/fold_results.csv`, and per-fold training and
 ablation directories under `outputs/cross_camera/`.
+
+## E3b camera-grouped calibrated fusion development
+
+Historical held-camera predictions were reinterpreted as one out-of-fold
+development prediction set per camera. For each leave-one-camera-out fold,
+separate monotonic Platt-style calibrators were fitted to the MobileNet score
+and the YOLO-World `confidence x slot coverage` evidence. A non-negative
+logistic model then fused the calibrated log-odds. Calibration, fusion
+coefficients, and the decision threshold used only the other two cameras;
+there was no slot-level random split.
+
+| Held camera | Unified E3a Macro F1 | E3b Macro F1 | E3b occupied recall | E3b vacant recall |
+|---|---:|---:|---:|---:|
+| PUCPR | **0.993333** | 0.986665 | 0.995565 | 0.977728 |
+| UFPR04 | 0.991900 | **0.995950** | 1.000000 | 0.991803 |
+| UFPR05 | **0.988827** | 0.969262 | 0.939227 | 1.000000 |
+| Camera-equal mean | **0.991353** | 0.983959 | 0.978264 | 0.989844 |
+
+E3b is therefore a negative Macro-F1 result on these development cameras:
+calibration did not outperform the simpler E3a rule. It did, however, improve
+the meaning of the branch scores before fusion:
+
+| Held camera | Classifier Brier raw -> calibrated | Classifier ECE raw -> calibrated | Detector evidence Brier raw -> calibrated | Detector evidence ECE raw -> calibrated | E3b Brier / ECE |
+|---|---:|---:|---:|---:|---:|
+| PUCPR | 0.093158 -> 0.031308 | 0.229905 -> 0.091520 | 0.394347 -> 0.203548 | 0.440065 -> 0.236107 | 0.011576 / 0.036305 |
+| UFPR04 | 0.053667 -> 0.011180 | 0.176405 -> 0.057656 | 0.201400 -> 0.062598 | 0.304752 -> 0.186042 | 0.002155 / 0.008622 |
+| UFPR05 | 0.051772 -> 0.023627 | 0.152161 -> 0.055773 | 0.211569 -> 0.067754 | 0.308461 -> 0.206952 | 0.019571 / 0.025176 |
+
+This distinction matters: `P_det` is not described as a native probability.
+It is detector confidence multiplied by the fraction of a slot covered by
+the assigned box. The tracked `configs/proposed_fusion.yaml` freezes the
+all-development fit at classifier/detector calibration slopes
+11.008170/11.642228, non-negative fusion coefficients 1.494789/1.049488,
+intercept -0.156385, and occupied threshold 0.67. No external holdout result
+was used in that choice.
+
+Evidence:
+`outputs/calibrated_fusion_development/metrics.json`,
+`outputs/calibrated_fusion_development/predictions.csv`,
+`outputs/calibrated_fusion_development/reliability_curves.csv`,
+`outputs/calibrated_fusion_development/threshold_sensitivity.csv`,
+`outputs/calibrated_fusion_development/weighted_fusion_sensitivity.csv`, and
+`configs/proposed_fusion.yaml`.
+
+## Standard versus paper-inspired MobileNetV3 development ablation
+
+The source paper was checked again before implementation. E1a remains the
+adapted torchvision MobileNetV3-Small. E1b is explicitly a paper-inspired
+transfer-learning adaptation: it supplements each pretrained SE block with
+an identity-initialized CBAM. Shallow LeakyReLU6 was also tested separately
+and jointly. BSConv was not added because a verifiable conversion that
+preserves pretrained weights was not established.
+
+Thresholds in this table were selected on the internal UFPR04 development
+camera and applied to the internal UFPR05 evaluation camera. The 358 timed
+patches followed a 64-patch GPU warm-up on an RTX 3060 Laptop GPU.
+
+| Variant | Parameters | Train time (s) | Internal Macro F1 | Occupied recall | Vacant recall | Model ms/patch |
+|---|---:|---:|---:|---:|---:|---:|
+| E1a standard | 1,519,906 | **18.901** | 0.977647 | 0.983425 | 0.971751 | 1.980 |
+| LeakyReLU6 only | 1,519,906 | 27.404 | 0.966443 | **0.988950** | 0.943503 | **1.752** |
+| E1b CBAM supplement | 1,976,245 | 29.268 | **0.986033** | 0.977901 | **0.994350** | 2.220 |
+| CBAM + LeakyReLU6 | 1,976,245 | 32.631 | 0.972053 | 0.983425 | 0.960452 | 2.045 |
+
+The component ablation does not support claiming that every paper component
+helps this small transfer-learning regime. LeakyReLU6 reduced Macro F1, and
+the combined variant was worse than CBAM alone. An earlier direct
+SE-replacement prototype also produced a poor development result; making its
+gate nearly identity caused FP16 overflow and NaN loss. Those output
+directories were retained. The selected E1b instead preserves the pretrained
+SE path and adds a zero-initialized CBAM whose initial mapping is exactly the
+identity.
+
+Evidence:
+`outputs/mobilenet_variant_ablation/`,
+`outputs/mobilenet_variant_evaluation/metrics.json`,
+`outputs/mobilenet_variant_evaluation/probabilities.csv`, and
+`outputs/mobilenet_variant_evaluation/threshold_sensitivity.csv`.
+
+## Once-only CNR-EXT external holdout
+
+The official CNRPark+EXT metadata and full-frame archive were downloaded from
+the project GitHub release linked by the official site. The CNR-EXT subset is
+licensed ODbL-1.0. Before any external prediction, all thresholds, model
+checkpoints, prompts, fusion parameters, camera inclusion, and the bootstrap
+unit were frozen in `configs/external_holdout_frozen.yaml`.
+
+Integrity checks found 4,081 unique labeled frames, 144,965 slot labels, nine
+official camera geometry files, zero missing slot geometries, and zero
+missing/corrupt/wrong-size labeled frames. The official geometry consists of
+axis-aligned slot boxes, not precise polygons. Boxes were scaled by the
+published 2592x1944 to 1000x750 ratio. The 197 additional archive frames
+without matching metadata labels were excluded rather than assigned inferred
+labels.
+
+| Method | Macro F1 (95% image-group bootstrap CI) | Occupied recall | Vacant recall | False-free | False-occupied |
+|---|---:|---:|---:|---:|---:|
+| E0 YOLOv8 + official boxes | **0.966766** (0.965044-0.968463) | **0.948134** | 0.989617 | **0.051866** | 0.010383 |
+| E1a standard MobileNetV3 | 0.894361 (0.889323-0.899455) | 0.817333 | 0.987333 | 0.182667 | 0.012667 |
+| E1b paper-inspired CBAM | 0.910801 (0.906046-0.915660) | 0.843191 | 0.992433 | 0.156809 | 0.007567 |
+| E2 YOLO-World + official boxes | 0.963589 (0.961703-0.965410) | 0.946948 | 0.984090 | 0.053052 | 0.015910 |
+| E3a raw weighted fusion | 0.921187 (0.917048-0.925342) | 0.861455 | 0.993362 | 0.138545 | 0.006638 |
+| E3b calibrated logistic fusion | 0.909022 (0.904370-0.913586) | 0.837187 | **0.995737** | 0.162813 | **0.004263** |
+
+The external result does not support E3b as the best overall method. E0 has
+the highest Macro F1, and E2 is close but its confidence intervals remain
+below E0's. E1b improves over E1a by 0.016441 Macro F1 and reduces both error
+rates, supporting the CBAM supplement as the stronger classifier variant in
+this external domain. Both fusion variants trade occupied recall for high
+vacant recall. E3b has the lowest false-occupied rate, but its false-free
+rate is 0.162813 and its Macro F1 is below E3a.
+
+Calibration transfer is also mixed:
+
+| Score | Brier | ECE |
+|---|---:|---:|
+| Classifier raw | **0.074689** | **0.044488** |
+| Classifier after PKLot calibration | 0.099345 | 0.119239 |
+| Detector evidence raw | 0.187201 | 0.297406 |
+| Detector evidence after PKLot calibration | **0.059467** | **0.148274** |
+| E3a raw weighted | 0.101619 | 0.183965 |
+| E3b calibrated logistic | **0.078317** | **0.080631** |
+
+Thus the detector calibrator transferred usefully, while the classifier
+calibrator did not. E3b improved calibration over raw E3a but did not improve
+its frozen classification threshold. This is direct external evidence of
+probability-calibration and threshold-transfer limitations; no external
+threshold sweep or follow-up parameter selection was performed.
+
+After excluding eight warm-up frames, the complete six-method path timed
+4,073 frames at 2.299 FPS (434.904 ms/frame) on the RTX 3060 Laptop GPU.
+This includes patch extraction, both MobileNet variants, YOLOv8, YOLO-World,
+both mappings, and both fusions.
+
+Evidence:
+`data/manifests/cnrpark_ext_external_holdout.yaml`,
+`configs/external_holdout_frozen.yaml`,
+`outputs/cnrpark_ext_frozen_evaluation_20260725/metrics.json`,
+`outputs/cnrpark_ext_frozen_evaluation_20260725/predictions.csv`,
+`outputs/cnrpark_ext_frozen_evaluation_20260725/reliability_curves.csv`, and
+`outputs/cnrpark_ext_frozen_evaluation_20260725/frame_results.jsonl`.
 
 ## NDISPark night-domain detector comparison
 
@@ -297,9 +442,10 @@ a continuous sequence with suitable human truth is provided.
 - Existing Grand Bassin labels contain only continuously occupied slots, so
   its strong reduction in false-free/flicker cannot establish vacant-space or
   transition performance.
-- Standard MobileNetV3-Small is not the paper's CBAM/BSConv/LeakyReLU6 model.
+- E1a is standard MobileNetV3-Small. E1b is only a paper-inspired CBAM
+  supplement; it is not the paper's exact CBAM/LeakyReLU6/BSConv model.
 - YOLO-World's general/open-vocabulary training does not guarantee performance
   for tiny overhead vehicles.
 - The 27 PKLot images were already used during earlier baseline development.
-  The UFPR05 result is camera-disjoint for this run, but it is a pilot
-  holdout—not a globally untouched final benchmark.
+  All three PKLot cameras are therefore method-development data, even when a
+  camera is held out inside one rotation. None is a final benchmark.

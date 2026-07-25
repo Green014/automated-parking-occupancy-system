@@ -7,7 +7,9 @@ open-vocabulary object detector. It does not replace the existing
 ```text
 frame + slot polygons
   |-- OpenCV perspective warp -> adapted MobileNetV3-Small -> P_cls --|
-  |-- YOLO-World prompted boxes -> polygon mapping -> P_det ----------|-> weighted fusion
+  |-- YOLO-World prompted boxes -> polygon mapping -> evidence --------|-> E3a raw weighted
+                                                                        |-> E3b calibrated
+                                                                            logistic fusion
                                                                         -> optional hysteresis
                                                                         -> slot states/events
 ```
@@ -19,12 +21,19 @@ development-selected threshold.
 ## Executed status
 
 - Existing baseline: 23/23 tests passed.
-- Literature-core module: 37/37 tests passed.
+- Literature-core module: 50/50 tests passed.
 - Adapted MobileNetV3 pilot training: completed on CUDA.
 - YOLO-World single-image check: completed.
-- E0-E3 camera-holdout ablation: completed.
+- Historical E0-E3 Fold A camera-transfer ablation: completed.
 - Frozen E0-E3 error attribution and patch montage: completed.
-- Post-hoc three-camera rotation: completed with disjoint selection per fold.
+- Post-hoc three-camera internal development rotation: completed with
+  camera-grouped selection per fold.
+- E3b camera-grouped calibration/fusion development: completed; calibration
+  improved reliability but did not beat E3a Macro F1.
+- Standard/LeakyReLU6/CBAM/combined MobileNetV3 ablation: completed on RTX
+  3060; E1b is explicitly paper-inspired, not an exact reproduction.
+- Official CNR-EXT once-only external holdout: completed on 4,081 images and
+  144,965 slot labels with complete-image bootstrap confidence intervals.
 - NDISPark night-domain detector comparison: completed on 725 manual boxes.
 - Two-frame/100-slot end-to-end video check: completed.
 - Restricted Grand Bassin positive-only temporal check: completed.
@@ -33,7 +42,9 @@ development-selected threshold.
 - Full E4/E5 claims: intentionally not made because suitable mixed-class
   continuous/identity ground truth is not locally available.
 
-See `RESULTS.md` for the measured values and negative-result analysis.
+All 27 selected PKLot images are method-development data; none is presented as
+an external final test. See `RESULTS.md` for the measured values and
+negative-result analysis.
 
 ## Environment
 
@@ -203,6 +214,59 @@ Aggregate the three frozen metrics:
   --output-dir outputs\cross_camera\summary
 ```
 
+## Fit and audit E3b calibrated fusion
+
+This command consumes only the three historical camera-held development
+prediction files. It does not read CNR-EXT:
+
+```powershell
+..\.venv\Scripts\python.exe scripts\run_calibrated_fusion.py `
+  --fold A=outputs\pklot_ablation\branch_probabilities.csv `
+  --fold B=outputs\cross_camera\fold_b_ablation\branch_probabilities.csv `
+  --fold C=outputs\cross_camera\fold_c_ablation\branch_probabilities.csv `
+  --output-dir outputs\calibrated_fusion_development `
+  --frozen-config configs\proposed_fusion.yaml
+```
+
+The tracked YAML is the single frozen E3b configuration. `P_det` is documented
+as confidence times slot coverage evidence, not as a detector-native
+probability.
+
+## Run the MobileNetV3 structure ablation
+
+Use a new output directory for every variant:
+
+```powershell
+..\.venv\Scripts\python.exe scripts\train_classifier.py `
+  --annotations ..\data\annotations\pklot_development_samples.jsonl `
+  --project-root .. --split-config configs\pklot_camera_split.json `
+  --config configs\default.yaml `
+  --output-dir outputs\mobilenet_variant_ablation\cbam_supplement `
+  --variant cbam --epochs 4 --batch-size 32 --device 0
+```
+
+Available variants are `standard`, `leakyrelu6`, `cbam`, and
+`cbam_leakyrelu6`. CBAM supplements the pretrained SE path. BSConv is not
+implemented or claimed.
+
+## Run the frozen CNR-EXT external evaluation
+
+The official archive/metadata URLs, license, byte sizes, SHA-256 hashes,
+geometry format, and validation counts are stored in
+`data/manifests/cnrpark_ext_external_holdout.yaml`. After extracting the
+official archive, the once-only command was:
+
+```powershell
+..\.venv\Scripts\python.exe scripts\run_cnr_ext_frozen_evaluation.py `
+  --config configs\external_holdout_frozen.yaml `
+  --dataset-root datasets\cnrpark_ext `
+  --output-dir outputs\cnrpark_ext_frozen_evaluation_20260725 `
+  --device 0 --warmup-frames 8
+```
+
+The evaluator refuses to run if the output directory already exists. It does
+not calculate an external threshold sweep.
+
 ## Compare detector boxes on NDISPark night images
 
 This is separate from slot occupancy evaluation. Both methods are evaluated
@@ -308,6 +372,10 @@ positive-only labels and results were retained unchanged.
 - `RESULTS.md`: executed outcomes only.
 - `TRANSITION_AUDIT.md`: continuous-sequence search, acceptance protocol, and
   per-candidate negative result.
+- `CONFIG_AUDIT.md`: raw-result reconciliation, corrected PKLot data role, and
+  generic-versus-executed configuration differences.
+- `data/manifests/cnrpark_ext_external_holdout.yaml`: official external-data
+  license, source, hashes, geometry, and integrity record.
 - `REPORT_SNIPPETS.md`: conservative report-ready method, contribution, and
   structural-comparison text.
 - `FILE_MANIFEST.md`: complete new-file and generated-artifact inventory.

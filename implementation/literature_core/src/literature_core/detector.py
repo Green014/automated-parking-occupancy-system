@@ -10,7 +10,9 @@ import numpy as np
 from .models import Detection
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
-os.environ.setdefault("YOLO_CONFIG_DIR", str(PACKAGE_ROOT / ".ultralytics"))
+ULTRALYTICS_CONFIG_DIR = PACKAGE_ROOT / ".ultralytics"
+ULTRALYTICS_CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+os.environ.setdefault("YOLO_CONFIG_DIR", str(ULTRALYTICS_CONFIG_DIR))
 
 
 class ObjectDetector(Protocol):
@@ -193,4 +195,3 @@ class ClosedSetYOLODetector:
             "resolved_device": self._device,
             "ultralytics_version": ultralytics.__version__,
         }
-

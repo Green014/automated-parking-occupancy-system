@@ -5,13 +5,16 @@ the paper category.
 
 | Module | Part I source | Code/weights source | License | Project change | Status |
 |---|---|---|---|---|---|
-| Slot patch classification | Yuldashev et al. [2] | torchvision `mobilenet_v3_small`; ImageNet weights from PyTorch | BSD-style PyTorch/torchvision terms; ImageNet weights subject to their dataset terms | OpenCV perspective-normalized 224x224 slot patch, standard MobileNetV3-Small, two-class head, ImageNet transfer learning | **Adaptation**, not exact reproduction |
+| E1a slot patch classification | Yuldashev et al. [2] | torchvision `mobilenet_v3_small`; ImageNet weights from PyTorch | BSD-style PyTorch/torchvision terms; ImageNet weights subject to their dataset terms | OpenCV perspective-normalized 224x224 slot patch, standard MobileNetV3-Small, two-class head, ImageNet transfer learning | **Adaptation**, not exact reproduction |
+| E1b paper-inspired classification | Yuldashev et al. [2] for LeakyReLU6/CBAM/BSConv direction; Woo et al. for CBAM | Local PyTorch modules layered on torchvision | Project code plus the runtime terms above | Identity-initialized channel/spatial CBAM supplements pretrained SE; shallow capped LeakyReLU6 is separately switchable; BSConv is not implemented | **Paper-inspired local adaptation**, not exact reproduction |
 | Open-vocabulary detection | Cheng et al., YOLO-World [6] | Original: `AILab-CVC/YOLO-World`; runtime adapter: Ultralytics `YOLOWorld`; `yolov8s-worldv2.pt` | Original repository GPL-3.0; Ultralytics package/weights AGPL-3.0 for this academic workflow | Prompts restricted to `car`, `truck`, `bus`, `motorcycle`; raw box and confidence retained | **Adaptation** |
 | Detection-to-slot mapping | APSD-OC [1] supports linking detections and slot geometry; baseline provides an existing OpenCV implementation | Implemented locally with `cv2.intersectConvexConvex` | Project code | Confidence-weighted fraction of each slot polygon covered by a prompted object box, with one-to-one greedy assignment | **Inspired/local integration** |
-| Weighted evidence fusion | Combination motivated by [2] and [6] | Implemented locally | Project code | Development-selected normalized weighted sum of `P_cls`, `P_det`, and optional `P_track`; every component is logged | **Local system integration** |
+| E3a weighted evidence fusion | Combination motivated by [2] and [6] | Implemented locally | Project code | Development-selected normalized weighted sum of raw `P_cls`, detector evidence, and optional `P_track`; every component is logged | **Local system integration / baseline** |
+| E3b calibrated logistic fusion | Probability calibration literature; branch choices motivated by [2] and [6] | Implemented locally with deterministic NumPy IRLS | Project code | Separate monotonic Platt-style branch calibration followed by non-negative logistic fusion of calibrated log-odds; camera-grouped fitting only | **Local innovation / proposed** |
 | Temporal hysteresis | Existing baseline; tracking motivation from TrackTrack [7] | Reimplemented in the independent package | Project code | Asymmetric EMA with separate occupied/vacant thresholds; delayed true transitions are separated from ordinary flicker | **Adaptation/reuse** |
 | Track-aware evidence | TrackTrack [7] | No dependable implementation frozen | Not applicable | Interface reserved, but no E5 result is claimed | **Not implemented / optional** |
 | Automatic slot discovery | APSD-OC [1] | No official implementation confirmed | Not applicable | No homography/DBSCAN reproduction is claimed | **Not implemented / future work** |
+| External holdout data | Amato et al., CNRPark+EXT | Official `cnrpark.it` page and `fabiocarrara/deep-parking` GitHub release | ODbL-1.0 stated by the official page | CNR-EXT occupancy metadata joined to official camera boxes and released full frames; boxes are scaled, not converted into claimed precise polygons | **Third-party data, once-only external evaluation** |
 
 ## Code and runtime addresses
 
@@ -52,16 +55,41 @@ Their split membership, best epoch, test-not-loaded count, and training
 settings are stored in the corresponding
 `outputs/cross_camera/*_classifier/training_summary.json` files.
 
+The selected architecture-ablation checkpoints are also local outputs:
+
+- E1a standard:
+  `outputs/mobilenet_variant_ablation/standard/best.pt`,
+  SHA-256 `600C90CCB271FB1DB3E39F87E500866E81C11781A8BB5A03A4285BE1CAF276B4`;
+- E1b paper-inspired CBAM supplement:
+  `outputs/mobilenet_variant_ablation/cbam_supplement/best.pt`,
+  SHA-256 `F6966DABE0801F221CC6E67B9EE117AF1B06C93A7E34C96D25771572616DDBE3`.
+
+Their component flags, parameter counts, training time, and selected internal
+development threshold are embedded in each checkpoint and its adjacent
+`training_summary.json`.
+
 ## Important differences from the papers
 
 ### Improved MobileNetV3 [2]
 
 The paper uses LeakyReLU6 in the shallow network, CBAM instead of SE, and
 blueprint separable convolutions instead of depth-wise separable convolutions.
-This project intentionally uses the unmodified torchvision
-MobileNetV3-Small backbone with ImageNet transfer learning. It is lighter to
-audit and feasible on the available GPU, but paper result tables cannot be
-transferred to this implementation.
+E1a intentionally uses the unmodified torchvision MobileNetV3-Small backbone
+with ImageNet transfer learning. E1b implements verifiable component
+ablations, but differs from the paper in three important ways: pretrained SE
+is retained and supplemented rather than removed, LeakyReLU6 uses the local
+explicit negative slope 0.1, and BSConv is not implemented. The E1b label is
+therefore always "paper-inspired adaptation"; paper result tables cannot be
+transferred to it.
+
+### Detector evidence and E3b
+
+The quantity historically named `P_det` is `detection confidence x slot
+coverage`. Neither YOLO-World nor this geometric product makes it a native
+occupancy probability. E3b first maps each branch through a fitted monotonic
+calibrator, then uses only non-negative branch coefficients. This design and
+its optimizer are local project contributions, not algorithms claimed by the
+MobileNetV3 or YOLO-World papers.
 
 ### YOLO-World [6]
 

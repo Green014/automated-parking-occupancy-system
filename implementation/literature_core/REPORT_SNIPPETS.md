@@ -10,14 +10,19 @@ defined parking polygons are perspective-normalized with OpenCV and classified
 by a standard torchvision MobileNetV3-Small adapted with a two-class head and
 ImageNet transfer learning. The use of 224 x 224 slot patches and a lightweight
 MobileNetV3 classifier is motivated by Yuldashev et al. [2], but this
-implementation does not reproduce their LeakyReLU6, CBAM, or blueprint
-separable-convolution modifications. Second, a pretrained YOLO-World model
-[6] is prompted for vehicle categories; its object confidence is converted
-into per-slot occupancy evidence using confidence-weighted polygon coverage.
-YOLO-World does not detect vacant spaces directly. The two probabilities are
-combined by an interpretable development-selected weighted sum, followed,
-where continuous video is valid, by asymmetric EMA and ON/OFF hysteresis.
-Every intermediate value and the final state are retained for audit.
+E1a is the standard adapted model. E1b is explicitly paper-inspired rather
+than an exact reproduction: it preserves the pretrained SE path and adds an
+identity-initialized CBAM supplement; shallow LeakyReLU6 is ablated
+separately, while BSConv is not claimed. Second, a pretrained YOLO-World
+model [6] is prompted for vehicle categories; its object confidence is
+converted into per-slot evidence using confidence multiplied by slot
+coverage. This quantity is not a native occupancy probability, and
+YOLO-World does not detect vacant spaces directly. E3a retains the historical
+raw weighted sum. The proposed E3b first fits separate monotonic calibrators
+to the classifier score and detector evidence, then applies a non-negative
+logistic fusion to the calibrated log-odds. All E3b fitting and threshold
+selection uses complete development cameras rather than randomly divided
+slots. Every intermediate value and final state is retained for audit.
 
 ## Contribution statement
 
@@ -42,6 +47,33 @@ described both a complete legal parking bay and a human-visible state change.
 The project therefore retains the positive-only result and does not invent a
 full E4 score from unsuitable regions.
 
+## Experiment statement
+
+The 27 selected PKLot images are treated only as camera-grouped method
+development data. In leave-one-camera-out development diagnostics, E3b
+improved branch Brier score and ECE but reached a camera-equal Macro F1 of
+0.983959, below E3a's 0.991353; this negative result was retained. The final
+configuration was then frozen before downloading predictions from the
+official ODbL-1.0 CNR-EXT external holdout. Evaluation covered 4,081 complete
+images and 144,965 slot labels, with 95% confidence intervals obtained by
+resampling complete images. E0 achieved the best external Macro F1
+(0.966766, 95% CI 0.965044-0.968463), followed by E2 (0.963589). E1b improved
+over E1a (0.910801 versus 0.894361), but neither E3a (0.921187) nor E3b
+(0.909022) surpassed the detector baselines. E3b produced the lowest
+false-occupied rate (0.004263) but a high false-free rate (0.162813), so it is
+not presented as the most accurate method.
+
+## Calibration limitation statement
+
+Calibration quality on PKLot development did not guarantee threshold
+transfer across datasets. On CNR-EXT, calibrating YOLO-World evidence reduced
+Brier score from 0.187201 to 0.059467, but calibrating the classifier worsened
+Brier score from 0.074689 to 0.099345 and ECE from 0.044488 to 0.119239. E3b
+was better calibrated than E3a yet had lower Macro F1 because the frozen
+decision threshold favored vacant recall over occupied recall. No threshold,
+coefficient, checkpoint, or prompt was changed after the external result was
+viewed.
+
 ## Continuous-data limitation statement
 
 The available continuous Grand Bassin material is useful for testing
@@ -63,10 +95,12 @@ frame -> YOLOv8 -> optional ByteTrack -> polygon mapping
 
 Literature-core workflow
 frame + slot polygons
-  |-> OpenCV warp -> adapted MobileNetV3 -> P_cls ---------|
-  |-> YOLO-World -> confidence/coverage mapping -> P_det --|-> weighted P_occ
-                                                            -> EMA/hysteresis
-                                                            -> final slot state
+  |-> OpenCV warp -> E1a/E1b MobileNetV3 -> score -----------|
+  |-> YOLO-World -> confidence x coverage evidence ----------|
+                                                             |-> E3a raw weighted
+                                                             |-> E3b calibrate
+                                                                 -> non-negative
+                                                                    logistic fusion
 ```
 
 The baseline stays operational and unchanged. The second workflow is
