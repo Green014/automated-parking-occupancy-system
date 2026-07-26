@@ -23,12 +23,15 @@ Traceability is explicit:
 | E3b parameters/threshold | hashed `proposed_fusion.yaml`, threshold 0.67 |
 
 The verification report is a new ignored artifact at
-`outputs/phase_a_freeze_audit_20260726_v2/verification.json`; no prior output
+`outputs/phase_a_freeze_audit_20260726_v3/verification.json`; no prior output
 was overwritten.
 
 The temporal configuration is separate. Its current
-`status: pending_access` is valid but not frozen or experiment-ready. It
-cannot be substituted for an executed E4/E5 configuration.
+`status: candidate_screening` is valid but not frozen or experiment-ready. It
+cannot be substituted for an executed E4/E5 configuration. Frozen readiness
+now requires artifact-level verification of video/truth paths, SHA-256,
+decoded frame bounds, polygon bounds, full interval coverage, both occupancy
+classes, and transitions in each development/holdout partition.
 
 ## Data-role correction
 

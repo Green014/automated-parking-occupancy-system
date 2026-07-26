@@ -21,7 +21,7 @@ development-selected threshold.
 ## Executed status
 
 - Existing baseline: 23/23 tests passed.
-- Literature-core module: 56/56 tests passed.
+- Literature-core module: 67/67 tests passed.
 - Adapted MobileNetV3 pilot training: completed on CUDA.
 - YOLO-World single-image check: completed.
 - Historical E0-E3 Fold A camera-transfer ablation: completed.
@@ -41,9 +41,10 @@ development-selected threshold.
   slot or transition was found.
 - Phase A immutable-artifact verification: 17/17 hashes and both frozen CNR
   integrity counts passed.
-- Phase B continuous-video source audit: completed; VIRAT Ground 2.0 is the
-  conditional primary candidate, pending the user's personal agreement
-  acceptance and visual sequence screening.
+- Phase B continuous-video source audit: VIRAT agreement acceptance is
+  recorded; 24 official clips have been screened. The `0502` candidate has
+  verified local polygon/frame truth, but event-prioritized `0503` screening
+  has not produced a second complete marked-slot scene.
 - Full E4/E5 claims: intentionally not made because suitable mixed-class
   continuous/identity ground truth is not locally available.
 
@@ -378,14 +379,17 @@ The current protocol is intentionally not experiment-ready:
   --output outputs\phase_b_protocol_audit_20260726_rerun\validation.json
 ```
 
-The executed audit is stored under
-`outputs/phase_b_protocol_audit_20260726_v2/`. Its result is
-`schema_valid: true` and
-`ready_for_experiment: false`. The validator rejects slot/frame-level
-grouping, unapproved same-scene splits, inadequate temporal guards, missing
-source hashes, unrecorded required agreement acceptance, and missing manual
-truth verification. Do not change the protocol to `frozen` until two screened
-sequences and their immutable source hashes have been recorded.
+The latest executed audit is stored under
+`outputs/phase_b_protocol_audit_20260726_v6/`. Its result is
+`schema_valid: true`, candidate artifact verification is true, and
+`ready_for_experiment: false`. The validator checks the candidate's actual
+video/truth paths, SHA-256, decoded dimensions and frame count, polygon
+bounds, interval coverage, class counts, and transition count. A frozen
+protocol applies the same checks to both development and holdout, in addition
+to grouping and temporal guards. Each partition requires at least 100
+occupied and 100 vacant slot-frames plus one verified transition. Do not
+change the protocol to `frozen` until two screened sequences and their
+immutable source hashes have been recorded.
 
 ## Documentation
 

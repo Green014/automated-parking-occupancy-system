@@ -35,7 +35,7 @@ def main() -> None:
     if not isinstance(payload, dict):
         raise ValueError("protocol root must be a mapping")
 
-    report = validate_temporal_protocol(payload)
+    report = validate_temporal_protocol(payload, project_root=ROOT)
     report["validated_at"] = datetime.now().astimezone().isoformat()
     report["protocol"] = str(args.protocol.resolve())
     args.output.parent.mkdir(parents=True, exist_ok=True)

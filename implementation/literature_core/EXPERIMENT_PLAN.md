@@ -110,9 +110,10 @@ The next temporal source is governed by
 
 1. The user accepted the VIRAT Usage Agreement on 26 July 2026; no personal
    details are stored in Git.
-2. The bounded official screening subset is complete: 21 videos,
-   961,643,821 bytes, all hash-recorded in
-   `data/manifests/virat_screening_20260726.yaml`.
+2. The initial bounded subset contains 21 videos / 961,643,821 bytes. A
+   targeted `0503` extension added three videos / 468,762,635 bytes plus their
+   official event/mapping/object annotations. Both manifests record item IDs,
+   sizes, and SHA-256 values.
 3. Confirm complete fixed bays, occupied/vacant states, and at least one
    human-visible arrival/departure in every selected sequence.
 4. Prefer development and holdout from distinct camera/scene groups.
@@ -120,14 +121,23 @@ The next temporal source is governed by
    non-zero guard; no adjacent or random frames may cross the boundary.
 6. Lock the holdout ID, interval, and source SHA-256 before using development
    truth for any parameter.
-7. Only a protocol that validates as `ready_for_experiment: true` authorizes
-   mixed-class E4, E5, or Fusion V2 work.
+7. Only a protocol that validates source/truth paths, file hashes, decoded
+   video bounds, polygons, complete intervals, mixed counts, and transitions
+   as `ready_for_experiment: true` authorizes mixed-class E4, E5, or Fusion V2
+   work.
 
 Current gate outcome: only
 `VIRAT_S_050202_10_002159_002233.mp4` from physical scene `0502` passed visual
-transition screening, and its exact frame truth is still pending. No second
-physical scene passed. Official `XXYY` scene grouping is mandatory; six-digit
-`XXYYZZ` sequence prefixes must never be used as independent folds.
+transition screening. Its fixed polygon and occupied-to-vacant boundary
+(last occupied 1659; first vacant 1660) are now verified in
+`data/annotations/virat_0502_departure_truth.yaml`, but its partition role is
+still unassigned and it has not been used for tuning. Three official-event-
+prioritized `0503` clips were rejected: two had no slot-state change; the
+third showed departures only from an unmarked curb/edge row. The targeted
+screen remains non-exhaustive after two additional downloads encountered
+repeated official API HTTP 502 responses. No second physical scene passed.
+Official `XXYY` scene grouping is mandatory; six-digit `XXYYZZ` sequence
+prefixes must never be used as independent folds.
 
 Until then, the dataset audit and access blocker are scientific outputs, not a
 missing metric to be filled with Grand Bassin, CNR-EXT, repeated still images,

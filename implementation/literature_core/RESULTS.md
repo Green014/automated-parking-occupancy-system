@@ -8,7 +8,7 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 | Check | Result |
 |---|---|
 | Existing baseline unit tests | **23/23 passed** after all work |
-| Literature-core unit tests | **63/63 passed** |
+| Literature-core unit tests | **67/67 passed** |
 | Source compilation | `python -m compileall` passed |
 | Python/OpenCV available | Yes |
 | CUDA / RTX 3060 available | Yes, 6 GiB |
@@ -19,7 +19,7 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 | Existing baseline outputs overwritten | No |
 | Continuous mixed/transition truth found locally | No; 16 automated and 7 targeted hypotheses were rejected |
 | Frozen artifact audit | **17/17 SHA-256 checks passed**; 4,081 frames and 144,965 slot records matched |
-| VIRAT bounded screening | 21 official videos / 961,643,821 bytes; **1 eligible pending frame truth, 20 rejected** |
+| VIRAT bounded screening | 24 official videos / 1,430,406,456 video bytes; **0502 frame truth verified, 0503 targeted clips rejected** |
 | Temporal protocol gate | Schema valid; deliberately **not experiment-ready** because no second physical scene passed |
 
 ## Baseline execution check
@@ -445,31 +445,48 @@ output. A new read-only verifier checked 17 tracked references covering:
 Every SHA-256 matched. The saved metrics also reported exactly 4,081 complete
 image groups and 144,965 slot records, equal to the manifest. The verifier
 wrote its new report to
-`outputs/phase_a_freeze_audit_20260726_v2/verification.json`; it did not modify
+`outputs/phase_a_freeze_audit_20260726_v3/verification.json`; it did not modify
 the old results.
 
 The continuous-video audit did not produce a legal, locally verified pair of
-development/holdout sequences. The user accepted the VIRAT agreement and 21
-official videos totaling 961,643,821 bytes were hash-recorded and screened.
-Twenty were rejected; `VIRAT_S_050202_10_002159_002233.mp4` from physical
-scene `0502` contains one clear marked-slot departure but still needs exact
-frame truth. No second physical scene passed. DLP requires a raw-video request
-and uses a drone; EPFL currently
+development/holdout sequences. The user accepted the VIRAT agreement and 24
+official videos totaling 1,430,406,456 video bytes were hash-recorded and
+screened. The `0502` candidate now has a fixed polygon and frame-level truth:
+frame 1659 is the last occupied frame and frame 1660 (55.389 s) is the first
+vacant frame. It remains an unassigned candidate and was not used for tuning.
+
+Three event-prioritized `0503` clips and their official event/mapping/object
+annotations were then screened. An e06 clip and one e05 clip had no vehicle
+slot-state change. A longer clip with three e05 events included two subsequent
+vehicle departures, but both originated from an unmarked curb/edge row with
+no complete fixed slot polygon; the third vehicle remained parked. These are
+negative screening outcomes, not model results. Two more e05 downloads were
+attempted but the official catalog API returned HTTP 502 twice, so `0503`
+screening is explicitly non-exhaustive. No second physical scene passed.
+
+DLP requires a raw-video request and uses a drone; EPFL currently
 exposes only non-consecutive ground-truth frames; ISLab-PVD has no explicit
 dataset license located; and LMOT is not parking-slot data and its official
 repository still states that release is forthcoming.
 
-`configs/temporal_protocol_pending.yaml` passed structural validation but
-returned `ready_for_experiment: false`. This is the intended result: E4, E5,
-and Fusion V2 remain prohibited until a second physical scene, exact frame
-truth, and a scene-level frozen split are complete.
+`configs/temporal_protocol_pending.yaml` passed validation but returned
+`ready_for_experiment: false`. A frozen protocol can no longer become ready
+from valid-looking fields alone: the validator now checks source/truth
+existence, source SHA-256, decoded dimensions and frame count, selected frame
+bounds, polygon bounds, interval coverage, occupied/vacant counts, and at
+least one transition in each partition. This is the intended result: E4, E5,
+and Fusion V2 remain prohibited until a second physical scene and a
+scene-level frozen split are complete.
 
 Evidence: `DATASET_AUDIT.md`, `DATASET_ACCESS_BLOCKER.md`,
 `data/manifests/temporal_dataset_audit_20260726.yaml`,
 `data/manifests/virat_screening_20260726.yaml`,
+`data/manifests/virat_0503_targeted_screening_20260726.yaml`,
+`data/annotations/virat_0502_departure_truth.yaml`,
 `outputs/virat_screening_verification_20260726/verification.json`,
-`outputs/phase_b_protocol_audit_20260726_v3/validation.json`, and
-`outputs/phase_a_freeze_audit_20260726_v2/verification.json`.
+`outputs/phase_b_protocol_audit_20260726_v6/validation.json`,
+`outputs/virat_0503_targeted_verification_20260726/verification.json`, and
+`outputs/phase_a_freeze_audit_20260726_v3/verification.json`.
 
 ## Temporal evaluation status
 

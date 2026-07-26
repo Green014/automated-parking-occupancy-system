@@ -15,7 +15,7 @@ the paper category.
 | Track-aware evidence | TrackTrack [7] | No dependable implementation frozen | Not applicable | Interface reserved, but no E5 result is claimed | **Not implemented / optional** |
 | Automatic slot discovery | APSD-OC [1] | No official implementation confirmed | Not applicable | No homography/DBSCAN reproduction is claimed | **Not implemented / future work** |
 | External holdout data | Amato et al., CNRPark+EXT | Official `cnrpark.it` page and `fabiocarrara/deep-parking` GitHub release | ODbL-1.0 stated by the official page | CNR-EXT occupancy metadata joined to official camera boxes and released full frames; boxes are scaled, not converted into claimed precise polygons | **Third-party data, once-only external evaluation** |
-| Conditional temporal data | Oh et al., VIRAT | Official `viratdata.org` and Kitware collection | VIRAT individual Usage Agreement; restricted redistribution and PII duties | No video downloaded or used; candidate requires personal acceptance plus local manual slot/transition truth | **Third-party candidate, blocked/not yet selected** |
+| Conditional temporal data | Oh et al., VIRAT | Official `viratdata.org` and Kitware collection | VIRAT individual Usage Agreement; restricted redistribution and PII duties | User acceptance is recorded; 24 official clips were downloaded and checksum-verified for bounded candidate screening, while parking-slot polygons and transitions remain project-created truth | **Third-party candidate screening; not an executed benchmark** |
 
 ## Code and runtime addresses
 
@@ -40,11 +40,14 @@ the paper category.
 ## Temporal data provenance boundary
 
 The user personally accepted the VIRAT agreement on 26 July 2026. The project
-then downloaded 21 unmodified official video items (961,643,821 bytes) for
-candidate screening; item IDs, SHA-256 values, video properties, and negative
-screening decisions are recorded in
-`data/manifests/virat_screening_20260726.yaml`. This is data screening, not an
-executed model experiment or a claimed VIRAT occupancy benchmark.
+then downloaded 24 unmodified official video items (1,430,406,456 video bytes)
+for candidate screening. The targeted `0503` extension also downloaded the
+official event/mapping/object files for its three clips. Item IDs, SHA-256
+values, video properties, event-selection evidence, and negative decisions
+are recorded in `data/manifests/virat_screening_20260726.yaml` and
+`data/manifests/virat_0503_targeted_screening_20260726.yaml`. This is data
+screening, not an executed model experiment or a claimed VIRAT occupancy
+benchmark.
 
 The official Release 2.0 document defines filename digits `XXYY` as the
 physical scene and `ZZ` as the sequence. The local acquisition helper enforces
@@ -58,12 +61,13 @@ break fixed ROIs. EPFL's current official page provides only non-consecutive
 ground-truth archives, ISLab-PVD lacks an explicit dataset license, and LMOT
 lacks parking-slot truth and a released licensed dataset.
 
-The single visually eligible VIRAT clip is only
-`eligible_pending_frame_truth`; no occupancy metric has been computed. Any
-future local parking-slot polygons, interval labels, transition adjudication,
-scene-level split, dwell rules, or track-to-slot state machine will be a
-project adaptation. They must not be attributed to the source dataset or to
-Part I papers.
+The single visually eligible VIRAT clip has project-created candidate truth:
+a fixed polygon plus half-open occupied/vacant intervals with frame 1660 as
+the first vacant frame. It remains unassigned, has not been used for tuning,
+and no occupancy metric has been computed. These polygon coordinates,
+interval labels, transition adjudication, scene-level split, future dwell
+rules, and any track-to-slot state machine are project adaptations. They must
+not be attributed to VIRAT or to Part I papers.
 
 ## Frozen runtime artifacts
 

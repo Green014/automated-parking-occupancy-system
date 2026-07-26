@@ -136,9 +136,14 @@ report, CSV, model, or output file was edited or overwritten.
 - `outputs/cnrpark_ext_frozen_evaluation_20260725/`
 - `outputs/phase_a_freeze_audit_20260726/`
 - `outputs/phase_a_freeze_audit_20260726_v2/`
+- `outputs/phase_a_freeze_audit_20260726_v3/`
 - `outputs/phase_b_protocol_audit_20260726/`
 - `outputs/phase_b_protocol_audit_20260726_v2/`
 - `outputs/phase_b_protocol_audit_20260726_v3/`
+- `outputs/phase_b_protocol_audit_20260726_v4/`
+- `outputs/phase_b_protocol_audit_20260726_v5/`
+- `outputs/phase_b_protocol_audit_20260726_v6/`
+- `outputs/virat_0503_targeted_verification_20260726/`
 - `outputs/virat_screening*/`
 - `outputs/virat_review_*/`
 - `outputs/virat_grid_*/`

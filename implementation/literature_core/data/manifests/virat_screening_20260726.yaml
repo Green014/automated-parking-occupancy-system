@@ -204,8 +204,9 @@ candidates:
     bytes: 86850675
     sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
     video: {width: 1920, height: 1080, fps: 29.97003, frames: 1974}
-    decision: eligible_pending_frame_truth
-    reason: clear_departure_from_a_complete_marked_slot_at_approximately_45_to_56_seconds
+    decision: eligible_frame_truth_verified_candidate
+    reason: clear_departure_from_fixed_polygon_with_first_vacant_frame_1660
+    truth_path: data/annotations/virat_0502_departure_truth.yaml
   - name: VIRAT_S_000203_03_000736_000785.mp4
     item_id: 56f586ac8d777f753209ca8c
     physical_scene_id: "0002"

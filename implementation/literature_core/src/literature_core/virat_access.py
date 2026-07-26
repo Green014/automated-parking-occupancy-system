@@ -18,6 +18,10 @@ ANNOTATIONS_FOLDER_ID = "56f57e748d777f753209bed8"
 _CLIP_PATTERN = re.compile(
     r"^(VIRAT_S_((\d{4})(\d{2}))(?:_[^.]+)?)\.mp4$"
 )
+_ANNOTATION_PATTERN = re.compile(
+    r"^(VIRAT_S_((\d{4})(\d{2}))(?:_[^.]+)?)"
+    r"\.viratdata\.(?:events|mapping|objects)\.txt$"
+)
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -50,6 +54,26 @@ def parse_video_item(raw: dict[str, Any]) -> ViratItem | None:
         # Release 2.0 defines XXYY as the physical scene and ZZ as the
         # sequence. Six-digit prefixes must not be treated as independent
         # scenes.
+        scene_id=match.group(3),
+        sequence_id=match.group(4),
+    )
+
+
+def parse_annotation_item(raw: dict[str, Any]) -> ViratItem | None:
+    """Parse an official event/mapping/object annotation item."""
+
+    name = str(raw.get("name", ""))
+    match = _ANNOTATION_PATTERN.fullmatch(name)
+    if match is None:
+        return None
+    item_id = str(raw.get("_id", ""))
+    size = raw.get("size")
+    if not item_id or not isinstance(size, int) or isinstance(size, bool) or size < 0:
+        raise ValueError(f"invalid VIRAT item metadata for {name!r}")
+    return ViratItem(
+        item_id=item_id,
+        name=name,
+        size=size,
         scene_id=match.group(3),
         sequence_id=match.group(4),
     )

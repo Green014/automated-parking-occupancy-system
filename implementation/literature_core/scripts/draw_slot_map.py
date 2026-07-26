@@ -12,15 +12,45 @@ import numpy as np
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--image", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--image", type=Path)
+    source.add_argument("--video", type=Path)
+    parser.add_argument(
+        "--frame-index",
+        type=int,
+        default=0,
+        help="Zero-based source frame used with --video.",
+    )
     parser.add_argument("--slots", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--grid-size", type=int, default=0)
     args = parser.parse_args()
 
-    image = cv2.imread(str(args.image))
-    if image is None:
-        raise RuntimeError(f"could not read {args.image}")
+    if args.image is not None:
+        image = cv2.imread(str(args.image))
+        if image is None:
+            raise RuntimeError(f"could not read {args.image}")
+    else:
+        if args.frame_index < 0:
+            parser.error("--frame-index must be non-negative")
+        capture = cv2.VideoCapture(str(args.video))
+        try:
+            if not capture.isOpened():
+                raise RuntimeError(f"could not open {args.video}")
+            frame_count = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
+            if args.frame_index >= frame_count:
+                raise ValueError(
+                    f"frame index {args.frame_index} exceeds the last source "
+                    f"frame {frame_count - 1}"
+                )
+            capture.set(cv2.CAP_PROP_POS_FRAMES, args.frame_index)
+            ok, image = capture.read()
+            if not ok:
+                raise RuntimeError(
+                    f"could not read frame {args.frame_index} from {args.video}"
+                )
+        finally:
+            capture.release()
     payload = json.loads(args.slots.read_text(encoding="utf-8"))
 
     overlay = image.copy()

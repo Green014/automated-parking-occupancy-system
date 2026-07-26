@@ -22,11 +22,15 @@ dataset:
     manual_slot_and_transition_truth_required: true
   screening:
     manifest: data/manifests/virat_screening_20260726.yaml
-    downloaded_video_count: 21
-    downloaded_bytes: 961643821
+    targeted_0503_manifest: data/manifests/virat_0503_targeted_screening_20260726.yaml
+    downloaded_video_count: 24
+    downloaded_video_bytes: 1430406456
+    downloaded_annotation_bytes: 12176729
     official_physical_scene_rule: first_four_filename_digits_XXYY
-    eligible_pending_frame_truth:
+    eligible_frame_truth_verified:
       - VIRAT_S_050202_10_002159_002233.mp4
+    verified_candidate_truth:
+      VIRAT_S_050202_10_002159_002233.mp4: data/annotations/virat_0502_departure_truth.yaml
     cross_scene_pair_found: false
 
 split_policy:
@@ -43,12 +47,27 @@ truth_requirements:
   mixed_classes_verified: false
   transition_verified: false
   annotation_consistency_checked: false
+validation_requirements:
+  minimum_slots: 1
+  minimum_occupied_slot_frames: 100
+  minimum_vacant_slot_frames: 100
+  minimum_transitions_per_partition: 1
 selections:
   development: null
   holdout: null
+  candidate:
+    dataset_id: virat_ground_release_2_0
+    scene_id: "0502"
+    source_video_id: VIRAT_S_050202_10_002159_002233
+    partition_id: unassigned_candidate
+    start_frame: 0
+    end_frame: 1974
+    source_path: datasets/virat/screening/videos_round4/VIRAT_S_050202_10_002159_002233.mp4
+    source_sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
+    truth_path: data/annotations/virat_0502_departure_truth.yaml
 
 experiment_gate:
   e4_allowed: false
   e5_allowed: false
   fusion_v2_allowed: false
-  reason: only one physical scene has a verified slot transition; frame truth and a cross-scene pair are incomplete
+  reason: only scene 0502 has verified local frame truth; a distinct-scene development/holdout pair is incomplete

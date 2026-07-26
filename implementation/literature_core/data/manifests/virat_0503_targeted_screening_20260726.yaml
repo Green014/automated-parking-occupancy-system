@@ -1,0 +1,95 @@
+schema_version: 1
+dataset_id: virat_ground_release_2_0
+purpose: targeted_second_scene_screening_only
+created_at: "2026-07-26"
+official:
+  landing_page: https://viratdata.org/
+  api_root: https://data.kitware.com/api/v1
+  videos_folder_id: 56f581ce8d777f753209ca43
+  annotations_folder_id: 56f57e748d777f753209bed8
+license_access:
+  individual_acceptance_required: true
+  user_acceptance_recorded: true
+  acceptance_recorded_at: "2026-07-26"
+  personal_details_stored: false
+
+selection:
+  physical_scene_id: "0503"
+  policy: >-
+    prioritize clips with official e05 person-enters-vehicle or e06
+    person-exits-vehicle events, then manually verify fixed marked-slot
+    occupancy transitions over the complete clip
+  event_boundary: >-
+    VIRAT Release 2.0 has human interaction events e05/e06 but no
+    vehicle-starts or vehicle-stops event class; events are candidate
+    locators and never parking-slot truth
+  exhaustive: false
+  screened_clip_count: 3
+  video_bytes: 468762635
+  annotation_bytes: 12176729
+  total_downloaded_bytes: 480939364
+  attempted_not_downloaded:
+    - VIRAT_S_050300_07_001623_001690.mp4
+    - VIRAT_S_050300_09_001789_001858.mp4
+  attempt_note: official catalog API returned HTTP 502 on two consecutive attempts
+
+candidates:
+  - name: VIRAT_S_050300_03_000726_000834.mp4
+    item_id: 56f5905f8d777f753209cdfd
+    physical_scene_id: "0503"
+    sequence_id: "00"
+    bytes: 139328383
+    sha256: 2f72673d2e4f447312559377ddfa7d42f52b14f3ff16f2cb31041b0fba5925c0
+    video: {width: 1920, height: 1080, fps: 29.97002997002997, frames: 3228}
+    official_event_evidence:
+      - {event_id: 67, type: e06_person_exits_vehicle, start_frame: 1563, end_frame_inclusive: 1621}
+    annotation_items:
+      events: {item_id: 56f581af8d777f753209c95e, bytes: 192294, sha256: f660c9226fdb2ce33898cb96560f73155feeea9d96dcf66ac7352db2a1d39a4c}
+      mapping: {item_id: 56f581b08d777f753209c961, bytes: 3460, sha256: 120023c9337ff46580921fbe6bda7f591a067d4801c30a7cb7ecba833efdb891}
+      objects: {item_id: 56f581b08d777f753209c964, bytes: 3981929, sha256: 538161c9934b4067b8da552e1d2b994ece371877d2f3c67f632d89d672aad8aa}
+    decision: reject
+    reason: e06 person exits but associated parked vehicle never changes its slot state in the complete clip
+  - name: VIRAT_S_050300_04_001057_001122.mp4
+    item_id: 56f590828d777f753209ce00
+    physical_scene_id: "0503"
+    sequence_id: "00"
+    bytes: 84974266
+    sha256: e04a6d4dba8f19349a4ffeaa4e8d519da7f83ed39cf523f16351a1ab6a784de6
+    video: {width: 1920, height: 1080, fps: 29.97002997002997, frames: 1947}
+    official_event_evidence:
+      - {event_id: 15, type: e05_person_enters_vehicle, start_frame: 759, end_frame_inclusive: 1043}
+    annotation_items:
+      events: {item_id: 56f581b28d777f753209c967, bytes: 124606, sha256: d067c8b62fdba10de2b15336f79e7a2e5c1502d5ad0bb49e4ab086929b478196}
+      mapping: {item_id: 56f581b38d777f753209c96a, bytes: 1225, sha256: 5a797f28b406da3173f7944d588148f065ea145b26b96edc2b352b99272d930c}
+      objects: {item_id: 56f581b38d777f753209c96d, bytes: 1874947, sha256: 181e03366b00e910a2a8b49d9452ea07eb6ef864009e5324b6ee570c3f2712bf}
+    decision: reject
+    reason: e05 person enters but associated parked vehicle never changes its slot state in the complete clip
+  - name: VIRAT_S_050300_06_001427_001616.mp4
+    item_id: 56f590ac8d777f753209ce06
+    physical_scene_id: "0503"
+    sequence_id: "00"
+    bytes: 244459986
+    sha256: 96d49a2e388345f73fd2d34d6af3201507fa94e0de72d3933286ba5aa75895d8
+    video: {width: 1920, height: 1080, fps: 29.97002997002997, frames: 5664}
+    official_event_evidence:
+      - {event_id: 87, type: e05_person_enters_vehicle, start_frame: 1066, end_frame_inclusive: 1124}
+      - {event_id: 94, type: e05_person_enters_vehicle, start_frame: 2574, end_frame_inclusive: 3282}
+      - {event_id: 91, type: e05_person_enters_vehicle, start_frame: 4270, end_frame_inclusive: 4752}
+    annotation_items:
+      events: {item_id: 56f581b68d777f753209c975, bytes: 144059, sha256: d8379d132f5bfa78a6aec11866b3b7608ae9ab48d0f315f1fa7ec38be3df6218}
+      mapping: {item_id: 56f581b68d777f753209c978, bytes: 5281, sha256: d64e3e14eafb80af4b55b081cf95922269c318df15fed6ae14f31abf14213bfb}
+      objects: {item_id: 56f581b68d777f753209c97b, bytes: 5848928, sha256: 7c8b93c6916e8b99d6ecaa22984ebe4b92b8d520574c00f70f2370b01352e74c}
+    decision: reject
+    reason: >-
+      events 87 and 94 are followed by vehicle departures from an unmarked
+      curb/edge row without a complete fixed parking-slot polygon; event 91
+      has no slot-state change
+
+screening:
+  downloaded_video_count: 3
+  downloaded_bytes: 468762635
+  budget_bytes: 469000000
+  result: no_eligible_complete_marked_slot_transition
+  cross_scene_pair_found: false
+  experiment_gate: closed
+  gate_reason: scene 0503 did not yield a valid complete marked-slot transition in the three event-prioritized clips

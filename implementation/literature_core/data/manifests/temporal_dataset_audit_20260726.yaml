@@ -170,13 +170,16 @@ selected_source:
   user_acceptance_recorded_at: "2026-07-26"
   personal_details_stored: false
   screening_manifest: data/manifests/virat_screening_20260726.yaml
-  downloaded_video_count: 21
-  downloaded_bytes: 961643821
-  eligible_pending_frame_truth:
+  targeted_0503_manifest: data/manifests/virat_0503_targeted_screening_20260726.yaml
+  downloaded_video_count: 24
+  downloaded_video_bytes: 1430406456
+  downloaded_annotation_bytes: 12176729
+  eligible_frame_truth_verified:
     - VIRAT_S_050202_10_002159_002233.mp4
+  candidate_truth: data/annotations/virat_0502_departure_truth.yaml
   development_sequence: null
   holdout_sequence: null
-  reason_not_frozen: no second physical scene with a verified slot transition; exact frame truth remains incomplete
+  reason_not_frozen: no second physical scene with a verified complete marked-slot transition
   protocol: configs/temporal_protocol_pending.yaml
 
 prohibitions:

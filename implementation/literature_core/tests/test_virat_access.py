@@ -8,6 +8,7 @@ import yaml
 from literature_core.virat_access import (
     ViratItem,
     download_item,
+    parse_annotation_item,
     parse_video_item,
     select_cross_scene_candidates,
     select_named_items,
@@ -36,6 +37,22 @@ def test_parse_video_item_extracts_scene() -> None:
     assert item is not None
     assert item.scene_id == "0100"
     assert item.sequence_id == "03"
+
+
+def test_parse_annotation_item_extracts_scene() -> None:
+    item = parse_annotation_item(
+        {
+            "_id": "annotation-id",
+            "name": (
+                "VIRAT_S_050300_04_001057_001122."
+                "viratdata.events.txt"
+            ),
+            "size": 124_606,
+        }
+    )
+    assert item is not None
+    assert item.scene_id == "0503"
+    assert item.sequence_id == "00"
 
 
 def test_cross_scene_selection_respects_count_and_byte_budget() -> None:
@@ -121,7 +138,8 @@ def test_screening_manifest_reconciles_bytes_hashes_and_official_grouping() -> N
     ]
     assert len({item["name"] for item in candidates}) == len(candidates)
     assert sum(
-        item["decision"] == "eligible_pending_frame_truth" for item in candidates
+        item["decision"] == "eligible_frame_truth_verified_candidate"
+        for item in candidates
     ) == 1
     for record in candidates:
         parsed = parse_video_item(
