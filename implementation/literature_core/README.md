@@ -21,7 +21,7 @@ development-selected threshold.
 ## Executed status
 
 - Existing baseline: 23/23 tests passed.
-- Literature-core module: 67/67 tests passed.
+- Literature-core module: 78/78 tests passed.
 - Adapted MobileNetV3 pilot training: completed on CUDA.
 - YOLO-World single-image check: completed.
 - Historical E0-E3 Fold A camera-transfer ablation: completed.
@@ -42,11 +42,13 @@ development-selected threshold.
 - Phase A immutable-artifact verification: 17/17 hashes and both frozen CNR
   integrity counts passed.
 - Phase B continuous-video source audit: VIRAT agreement acceptance is
-  recorded; 24 official clips have been screened. The `0502` candidate has
-  verified local polygon/frame truth, but event-prioritized `0503` screening
-  has not produced a second complete marked-slot scene.
-- Full E4/E5 claims: intentionally not made because suitable mixed-class
-  continuous/identity ground truth is not locally available.
+  recorded; 26 official clips have been screened. Distinct `0502` development
+  and `0503` holdout sequences have machine-verified local polygon/frame truth.
+- Frozen E4/E5 departure case studies: executed. Neither beat E0 on holdout;
+  E5 failed its development reliability gate, so Fusion V2 remains closed.
+- General tracking, arrival, IDF1, and HOTA claims: intentionally not made
+  because the temporal truth contains only one slot and one departure per
+  video and no identity annotations.
 
 All 27 selected PKLot images are method-development data; none is presented as
 an external final test. See `RESULTS.md` for the measured values and
@@ -369,9 +371,10 @@ See `TRANSITION_AUDIT.md` and the adjudication CSVs under
 `data/annotations/`. Review sheets are evidence, not ground truth. The
 positive-only labels and results were retained unchanged.
 
-## Validate the pending temporal-data protocol
+## Validate the frozen temporal-data protocol
 
-The current protocol is intentionally not experiment-ready:
+The historical `pending` filename is retained for command compatibility, but
+its status is now frozen:
 
 ```powershell
 ..\.venv\Scripts\python.exe scripts\validate_temporal_protocol.py `
@@ -380,16 +383,23 @@ The current protocol is intentionally not experiment-ready:
 ```
 
 The latest executed audit is stored under
-`outputs/phase_b_protocol_audit_20260726_v6/`. Its result is
-`schema_valid: true`, candidate artifact verification is true, and
-`ready_for_experiment: false`. The validator checks the candidate's actual
-video/truth paths, SHA-256, decoded dimensions and frame count, polygon
-bounds, interval coverage, class counts, and transition count. A frozen
-protocol applies the same checks to both development and holdout, in addition
-to grouping and temporal guards. Each partition requires at least 100
-occupied and 100 vacant slot-frames plus one verified transition. Do not
-change the protocol to `frozen` until two screened sequences and their
-immutable source hashes have been recorded.
+`outputs/phase_b_protocol_audit_20260726_v7/`. Its result is
+`schema_valid: true`, both partition artifact checks are true, and
+`ready_for_experiment: true`. Each partition has at least 100 occupied and 100
+vacant slot-frames plus one verified transition.
+
+Run the frozen case-study implementation only into a new output directory:
+
+```powershell
+..\.venv\Scripts\python.exe scripts\run_frozen_temporal_case_study.py `
+  --partition development `
+  --output-dir outputs\virat_temporal_case_study_dev_rerun `
+  --device 0
+```
+
+The once-only `0503` holdout has already been consumed and must not be rerun
+for model selection. The executed E4/E5 outputs are frozen by
+`data/manifests/temporal_case_study_frozen_20260726.yaml`.
 
 ## Documentation
 
@@ -404,12 +414,12 @@ immutable source hashes have been recorded.
   generic-versus-executed configuration differences.
 - `DATASET_AUDIT.md`: licensed continuous-video candidate comparison and
   conditional VIRAT acquisition/split protocol.
-- `DATASET_ACCESS_BLOCKER.md`: exact human action needed before video
-  acquisition, annotation, E4/E5, or Fusion V2.
+- `DATASET_ACCESS_BLOCKER.md`: resolved access history and the remaining
+  methodological blocker for Fusion V2.
 - `data/manifests/cnrpark_ext_external_holdout.yaml`: official external-data
   license, source, hashes, geometry, and integrity record.
 - `data/manifests/temporal_dataset_audit_20260726.yaml`: machine-readable
-  dataset facts, decisions, and current non-selection.
+  dataset facts and frozen split.
 - `REPORT_SNIPPETS.md`: conservative report-ready method, contribution, and
   structural-comparison text.
 - `FILE_MANIFEST.md`: complete new-file and generated-artifact inventory.

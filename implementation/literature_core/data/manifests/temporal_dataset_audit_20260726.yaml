@@ -1,7 +1,7 @@
 schema_version: 1
 audit_date: "2026-07-26"
 purpose: select licensed continuous video for manual parking-slot temporal truth
-selection_status: candidate_screening_after_user_acceptance
+selection_status: frozen_distinct_scene_development_holdout
 
 hard_requirements:
   camera: fixed_or_nearly_fixed
@@ -166,25 +166,33 @@ candidates:
 
 selected_source:
   dataset_id: virat_ground_release_2_0
-  status: candidate_screening
+  status: frozen
   user_acceptance_recorded_at: "2026-07-26"
   personal_details_stored: false
   screening_manifest: data/manifests/virat_screening_20260726.yaml
   targeted_0503_manifest: data/manifests/virat_0503_targeted_screening_20260726.yaml
-  downloaded_video_count: 24
-  downloaded_video_bytes: 1430406456
-  downloaded_annotation_bytes: 12176729
+  downloaded_video_count: 26
+  downloaded_video_bytes: 1605720653
+  downloaded_annotation_bytes: 15925504
   eligible_frame_truth_verified:
     - VIRAT_S_050202_10_002159_002233.mp4
-  candidate_truth: data/annotations/virat_0502_departure_truth.yaml
-  development_sequence: null
-  holdout_sequence: null
-  reason_not_frozen: no second physical scene with a verified complete marked-slot transition
+    - VIRAT_S_050300_09_001789_001858.mp4
+  development_sequence:
+    scene_id: "0502"
+    source_video_id: VIRAT_S_050202_10_002159_002233
+    truth: data/annotations/virat_0502_departure_truth.yaml
+    transition: {type: departure, last_occupied_frame: 1659, first_vacant_frame: 1660}
+  holdout_sequence:
+    scene_id: "0503"
+    source_video_id: VIRAT_S_050300_09_001789_001858
+    truth: data/annotations/virat_0503_departure_truth.yaml
+    transition: {type: departure, last_occupied_frame: 1549, first_vacant_frame: 1550}
+    locked_before_model_output_inspection: true
   protocol: configs/temporal_protocol_pending.yaml
 
 prohibitions:
   download_or_accept_agreement_on_users_behalf: true
   run_e4_before_frozen_truth: true
   run_e5_before_frozen_truth: true
-  implement_fusion_v2_before_temporal_truth: true
+  implement_fusion_v2_before_reliable_e5: true
   report_pending_candidates_as_selected_sequences: true

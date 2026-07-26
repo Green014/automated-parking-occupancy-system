@@ -1,0 +1,55 @@
+schema_version: 1
+dataset_id: virat_ground_release_2_0
+scene_id: "0503"
+source_video_id: VIRAT_S_050300_09_001789_001858
+source_sha256: b0bff7008afa69054b0c200a6fd0f1c04f8b7be5c5abb237b27f0c34aeca3079
+video:
+  frame_count: 2057
+  width: 1920
+  height: 1080
+  fps: 29.97002997002997
+
+review:
+  status: verified
+  partition_role: holdout
+  verified_at: "2026-07-26"
+  evidence:
+    full_clip_review: outputs/virat_slot_review_0503_09_20260726/event22_e05_full_context.jpg
+    polygon_at_first_frame: outputs/virat_slot_review_0503_09_polygon_v1/frame_0000.jpg
+    polygon_at_last_frame: outputs/virat_slot_review_0503_09_polygon_v1/frame_2056.jpg
+    boundary_review_directory: outputs/virat_slot_review_0503_09_polygon_boundary_exact
+    official_object_track_id: 32
+  note: >-
+    This is local project-created parking truth, not a native VIRAT label.
+    The distinct-scene holdout was selected and locked before any temporal
+    model output was generated or inspected for this video.
+
+label_policy:
+  interval_semantics: half_open
+  occupied_definition: >-
+    occupied while the visible departing-vehicle silhouette intersects the
+    fixed parking-slot polygon
+  vacant_definition: >-
+    vacant from the first reviewed frame at which that silhouette no longer
+    intersects the fixed polygon
+  transition:
+    type: departure
+    last_occupied_frame: 1549
+    first_vacant_frame: 1550
+    first_vacant_timestamp_s: 51.718333333333334
+    adjudication_window: [1548, 1551]
+
+slots:
+  - slot_id: 0503-departing-01
+    polygon:
+      - [600, 666]
+      - [897, 678]
+      - [910, 763]
+      - [615, 753]
+    intervals:
+      - start_frame: 0
+        end_frame: 1550
+        state: occupied
+      - start_frame: 1550
+        end_frame: 2057
+        state: vacant

@@ -24,14 +24,15 @@ selection:
     vehicle-starts or vehicle-stops event class; events are candidate
     locators and never parking-slot truth
   exhaustive: false
-  screened_clip_count: 3
-  video_bytes: 468762635
-  annotation_bytes: 12176729
-  total_downloaded_bytes: 480939364
-  attempted_not_downloaded:
-    - VIRAT_S_050300_07_001623_001690.mp4
-    - VIRAT_S_050300_09_001789_001858.mp4
-  attempt_note: official catalog API returned HTTP 502 on two consecutive attempts
+  screened_clip_count: 5
+  video_bytes: 644076832
+  annotation_bytes: 15925504
+  total_downloaded_bytes: 660002336
+  stopped_on_holdout_lock: true
+  stop_note: >-
+    screening stopped after 050300_09 yielded an eligible marked-slot
+    transition and was locked as holdout; remaining candidates were not used
+    to choose among model outcomes
 
 candidates:
   - name: VIRAT_S_050300_03_000726_000834.mp4
@@ -84,12 +85,48 @@ candidates:
       events 87 and 94 are followed by vehicle departures from an unmarked
       curb/edge row without a complete fixed parking-slot polygon; event 91
       has no slot-state change
+  - name: VIRAT_S_050300_07_001623_001690.mp4
+    item_id: 56f590e98d777f753209ce09
+    physical_scene_id: "0503"
+    sequence_id: "00"
+    bytes: 87777645
+    sha256: a21778ce289d459132897848bd3be33aead1b67555c49c310247ea6ccc398b05
+    video: {width: 1920, height: 1080, fps: 29.97002997002997, frames: 2002}
+    official_event_evidence:
+      - {event_id: 39, type: e05_person_enters_vehicle, start_frame: 682, end_frame_inclusive: 819}
+    annotation_items:
+      events: {item_id: 56f581ba8d777f753209c97e, bytes: 5382, sha256: fca64df091b3336bdbab78ffdb010f141d20ea581ad3def9f6ba786cf7946a0b}
+      mapping: {item_id: 56f581ba8d777f753209c981, bytes: 267, sha256: 9b5716308315ec5c0cabb4354eef9ca345f19a303800dbae5f5a74235eb49834}
+      objects: {item_id: 56f581ba8d777f753209c984, bytes: 2131603, sha256: 317711d35081ac082d133bf9bb43ce746bf136da3732e23d6c4acb05bd17a5c8}
+    decision: reject
+    reason: e05 person enters but the associated parked vehicle remains in its marked slot through the complete clip
+  - name: VIRAT_S_050300_09_001789_001858.mp4
+    item_id: 56f591188d777f753209ce0f
+    physical_scene_id: "0503"
+    sequence_id: "00"
+    bytes: 87536552
+    sha256: b0bff7008afa69054b0c200a6fd0f1c04f8b7be5c5abb237b27f0c34aeca3079
+    video: {width: 1920, height: 1080, fps: 29.97002997002997, frames: 2057}
+    official_event_evidence:
+      - {event_id: 22, type: e05_person_enters_vehicle, start_frame: 984, end_frame_inclusive: 1147}
+    annotation_items:
+      events: {item_id: 56f581bd8d777f753209c98c, bytes: 28465, sha256: f0d328b6ea5941573db446026a0fdeb22abff9d1d23a30d262e5916aa5617357}
+      mapping: {item_id: 56f581bd8d777f753209c98f, bytes: 405, sha256: b27e2f106b415bfe3c1fa7ca0fd216af8230cc64d7367c201bc1c005bf8f2299}
+      objects: {item_id: 56f581bd8d777f753209c992, bytes: 1582653, sha256: 4f984beae468900b9fa6d41d3662682b765d35d9e559ff1a9f79c8c7a6da460e}
+    project_truth: data/annotations/virat_0503_departure_truth.yaml
+    decision: eligible_frame_truth_verified_holdout
+    reason: >-
+      a tracked vehicle departs a fixed marked slot; the final 507 frames
+      preserve the vacant state and the distinct physical scene is locked as
+      holdout before any temporal model output is inspected
 
 screening:
-  downloaded_video_count: 3
-  downloaded_bytes: 468762635
-  budget_bytes: 469000000
-  result: no_eligible_complete_marked_slot_transition
-  cross_scene_pair_found: false
-  experiment_gate: closed
-  gate_reason: scene 0503 did not yield a valid complete marked-slot transition in the three event-prioritized clips
+  downloaded_video_count: 5
+  downloaded_bytes: 644076832
+  budget_bytes: 645000000
+  result: one_eligible_complete_marked_slot_transition
+  cross_scene_pair_found: true
+  experiment_gate: e4_e5_open_fusion_v2_closed
+  gate_reason: >-
+    0503 is frozen as the distinct-scene holdout; Fusion V2 remains closed
+    until E5 has a reliable predeclared implementation result

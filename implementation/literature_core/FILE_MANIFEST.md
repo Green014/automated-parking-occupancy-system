@@ -28,6 +28,7 @@ report, CSV, model, or output file was edited or overwritten.
 - `configs/proposed_fusion.yaml`
 - `configs/external_holdout_frozen.yaml`
 - `configs/temporal_protocol_pending.yaml`
+- `configs/temporal_e4_e5_frozen.yaml`
 
 ## Python package
 
@@ -49,6 +50,7 @@ report, CSV, model, or output file was edited or overwritten.
 - `src/literature_core/cross_validation.py`
 - `src/literature_core/annotation_review.py`
 - `src/literature_core/temporal_protocol.py`
+- `src/literature_core/temporal_tracking.py`
 - `src/literature_core/pipeline.py`
 
 ## Reproduction scripts
@@ -73,6 +75,7 @@ report, CSV, model, or output file was edited or overwritten.
 - `scripts/acquire_virat_screening.py`
 - `scripts/build_virat_screening_contact_sheet.py`
 - `scripts/verify_virat_screening.py`
+- `scripts/run_frozen_temporal_case_study.py`
 
 ## Tests
 
@@ -92,6 +95,8 @@ report, CSV, model, or output file was edited or overwritten.
 - `tests/test_cnrpark.py`
 - `tests/test_frozen_artifacts.py`
 - `tests/test_temporal_protocol.py`
+- `tests/test_temporal_tracking.py`
+- `tests/test_detector_tracking.py`
 - `tests/test_virat_access.py`
 
 ## External-data manifest
@@ -100,6 +105,8 @@ report, CSV, model, or output file was edited or overwritten.
 - `data/manifests/frozen_artifacts_20260725.yaml`
 - `data/manifests/temporal_dataset_audit_20260726.yaml`
 - `data/manifests/virat_screening_20260726.yaml`
+- `data/manifests/virat_0503_targeted_screening_20260726.yaml`
+- `data/manifests/temporal_case_study_frozen_20260726.yaml`
 
 ## Stage A/B audit reports
 
@@ -113,6 +120,8 @@ report, CSV, model, or output file was edited or overwritten.
 - `data/annotations/grand_bassin_development_rejected_review_candidates.csv`
 - `data/annotations/grand_bassin_holdout_rejected_review_candidates.csv`
 - `data/annotations/grand_bassin_bus_area_review.csv`
+- `data/annotations/virat_0502_departure_truth.yaml`
+- `data/annotations/virat_0503_departure_truth.yaml`
 
 ## Generated, intentionally ignored artifacts
 
@@ -137,13 +146,22 @@ report, CSV, model, or output file was edited or overwritten.
 - `outputs/phase_a_freeze_audit_20260726/`
 - `outputs/phase_a_freeze_audit_20260726_v2/`
 - `outputs/phase_a_freeze_audit_20260726_v3/`
+- `outputs/phase_a_freeze_audit_20260726_v4/`
+- `outputs/phase_a_freeze_audit_20260726_v5/`
 - `outputs/phase_b_protocol_audit_20260726/`
 - `outputs/phase_b_protocol_audit_20260726_v2/`
 - `outputs/phase_b_protocol_audit_20260726_v3/`
 - `outputs/phase_b_protocol_audit_20260726_v4/`
 - `outputs/phase_b_protocol_audit_20260726_v5/`
 - `outputs/phase_b_protocol_audit_20260726_v6/`
+- `outputs/phase_b_protocol_audit_20260726_v7/`
+- `outputs/phase_b_protocol_audit_20260726_v8/`
 - `outputs/virat_0503_targeted_verification_20260726/`
+- `outputs/virat_0503_targeted_verification_20260726_v2/`
+- `outputs/virat_temporal_case_study_dev_20260726_v1/`
+- `outputs/virat_temporal_case_study_holdout_20260726_v1/`
+- `outputs/temporal_case_study_freeze_audit_20260726_v1/`
+- `outputs/temporal_case_study_freeze_audit_20260726_v2/`
 - `outputs/virat_screening*/`
 - `outputs/virat_review_*/`
 - `outputs/virat_grid_*/`

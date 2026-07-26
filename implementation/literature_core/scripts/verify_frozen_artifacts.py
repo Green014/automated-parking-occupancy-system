@@ -25,18 +25,17 @@ def sha256_file(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
 
 def artifact_entries(payload: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
     entries: list[tuple[str, dict[str, Any]]] = []
-    for section_name in (
-        "configurations",
-        "model_artifacts",
-        "data_artifacts",
-        "result_artifacts",
-    ):
-        section = payload.get(section_name, {})
-        if not isinstance(section, dict):
-            raise ValueError(f"{section_name} must be a mapping")
-        for name, value in section.items():
-            if isinstance(value, dict) and "path" in value and "sha256" in value:
-                entries.append((f"{section_name}.{name}", value))
+
+    def visit(prefix: str, value: Any) -> None:
+        if not isinstance(value, dict):
+            return
+        if "path" in value and "sha256" in value:
+            entries.append((prefix, value))
+            return
+        for key, child in value.items():
+            visit(f"{prefix}.{key}" if prefix else str(key), child)
+
+    visit("", payload)
     if not entries:
         raise ValueError("manifest contains no path/hash artifact entries")
     return entries
@@ -64,6 +63,13 @@ def verify_manifest(manifest: Path) -> dict[str, Any]:
         expected = str(entry["sha256"]).lower()
         exists = path.is_file()
         actual = sha256_file(path) if exists else None
+        expected_bytes = entry.get("bytes")
+        actual_bytes = path.stat().st_size if exists else None
+        size_matches = (
+            True
+            if expected_bytes is None
+            else actual_bytes == int(expected_bytes)
+        )
         rows.append(
             {
                 "name": name,
@@ -72,7 +78,9 @@ def verify_manifest(manifest: Path) -> dict[str, Any]:
                 "expected_sha256": expected,
                 "actual_sha256": actual,
                 "sha256_matches": actual == expected,
-                "bytes": path.stat().st_size if exists else None,
+                "expected_bytes": expected_bytes,
+                "bytes": actual_bytes,
+                "size_matches": size_matches,
             }
         )
 
@@ -101,7 +109,9 @@ def verify_manifest(manifest: Path) -> dict[str, Any]:
                         "matches": expected_count == actual_count,
                     }
 
-    passed = all(row["sha256_matches"] for row in rows) and all(
+    passed = all(
+        row["sha256_matches"] and row["size_matches"] for row in rows
+    ) and all(
         check["matches"] for check in count_checks.values()
     )
     return {

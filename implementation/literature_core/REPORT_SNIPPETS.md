@@ -41,11 +41,16 @@ the selected weights and thresholds varied by camera. A positive-only
 external-domain check further showed that
 hysteresis could greatly reduce flicker while simultaneously reducing
 occupied recall, demonstrating why stability and correctness must be reported
-separately. A subsequent three-sequence search reviewed 16 automated temporal
+separately. A subsequent Grand Bassin search reviewed 16 automated temporal
 hypotheses and seven targeted apparent vacancies/departures, but none
 described both a complete legal parking bay and a human-visible state change.
-The project therefore retains the positive-only result and does not invent a
-full E4 score from unsuitable regions.
+That negative result remains unchanged. A separate, licensed VIRAT search
+later produced two distinct-scene, one-slot departure sequences: the
+repeatedly reviewed `0502` sequence was assigned to development, and the
+previously unused `0503` scene was locked as holdout before any model output.
+Frozen E4 and E5 case studies were then executed. Neither exceeded raw E0 on
+holdout, and E5 failed to recognize the vacant state on development; Fusion
+V2 therefore remained closed.
 
 ## Experiment statement
 
@@ -62,6 +67,21 @@ over E1a (0.910801 versus 0.894361), but neither E3a (0.921187) nor E3b
 (0.909022) surpassed the detector baselines. E3b produced the lowest
 false-occupied rate (0.004263) but a high false-free rate (0.162813), so it is
 not presented as the most accurate method.
+
+## Temporal experiment statement
+
+The temporal protocol verifies source hashes, video metadata, fixed polygons,
+continuous per-frame labels, class counts, transitions, and separation of the
+`0502` development and `0503` holdout scenes. Every model and gate parameter
+was frozen before temporal prediction. On the once-only `0503` holdout, raw
+E0 achieved Macro F1 0.954119, compared with 0.940952 for raw E3b, 0.834272
+for E4 calibrated fusion with hysteresis, and 0.919147 for E5 YOLOv8n,
+ByteTrack, stationary-motion suppression, and dwell. E4 still produced 11
+unsupported state changes, while E5 changed twice but declared the departure
+59 frames early. On `0502` development, E4 and E5 both had zero vacant
+recall. These results do not show that tracking or hysteresis improves parking
+occupancy; they show that persistent or adjacent vehicle evidence can survive
+both smoothing and a simple track-to-slot gate.
 
 ## Calibration limitation statement
 
@@ -82,9 +102,13 @@ evaluation. Motion-based preannotations primarily proposed access-road
 vehicles, image-edge fragments, stationary parked vehicles with detector
 dropout, and queued vehicles overlapping adjacent bays. Apparent empty
 regions were visually identified as circulation lanes, no-parking hatching,
-or occupied/occluded spaces. Consequently, vacant recall, false-occupied
-rate, transition latency, mixed-class flicker, IDF1, and HOTA are left
-unclaimed until suitable manual ground truth is collected.
+or occupied/occluded spaces. Consequently, Grand Bassin vacant recall,
+false-occupied rate, transition latency, mixed-class flicker, IDF1, and HOTA
+remain unclaimed. The later VIRAT case study supplies per-frame occupancy
+truth, but only for one slot and one departure in each of two scenes. Its slot
+metrics and event timing are reported without frame-level confidence
+intervals; they do not support broad arrival/departure,
+tracking-generalization, low-light, IDF1, or HOTA claims.
 
 ## Structural comparison
 
@@ -101,6 +125,10 @@ frame + slot polygons
                                                              |-> E3b calibrate
                                                                  -> non-negative
                                                                     logistic fusion
+
+Frozen temporal case-study path
+frame -> YOLOv8n -> ByteTrack IDs -> one-to-one track/slot assignment
+      -> stationary-motion gate -> occupied/vacant dwell -> E5 state
 ```
 
 The baseline stays operational and unchanged. The second workflow is

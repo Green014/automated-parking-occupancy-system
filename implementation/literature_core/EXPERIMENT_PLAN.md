@@ -43,8 +43,8 @@ configuration.
 | E2 | YOLO-World | Polygon coverage | None | Open-vocabulary detector branch |
 | E3a | E1a + YOLO-World | Raw weighted evidence fusion | None | Historical fusion baseline |
 | E3b | E1a + YOLO-World | Separately calibrated, non-negative logistic fusion | None | Proposed interpretable unified fusion |
-| E4 | E3 | Fusion | Hysteresis | Restricted positive-only Grand Bassin run completed; a three-sequence audit found no valid local mixed/transition truth |
-| E5 | E3 + track evidence | Fusion | Optional | Only after a tracker affects occupancy and suitable truth exists |
+| E4 | Frozen E3b | Calibrated fusion | EMA/hysteresis | Executed as a two-sequence departure case study; negative external result |
+| E5 | YOLOv8n + ByteTrack | Track-to-slot gate | Stationary/moving and dwell rules | Executed as a two-sequence departure case study; did not beat E0 |
 
 Detector-level domain check (separate from E0-E5 slot metrics):
 
@@ -111,9 +111,9 @@ The next temporal source is governed by
 1. The user accepted the VIRAT Usage Agreement on 26 July 2026; no personal
    details are stored in Git.
 2. The initial bounded subset contains 21 videos / 961,643,821 bytes. A
-   targeted `0503` extension added three videos / 468,762,635 bytes plus their
-   official event/mapping/object annotations. Both manifests record item IDs,
-   sizes, and SHA-256 values.
+   targeted `0503` extension added five videos, bringing the total to 26
+   videos / 1,605,720,653 video bytes plus 15,925,504 annotation bytes. Both
+   manifests record item IDs, sizes, and SHA-256 values.
 3. Confirm complete fixed bays, occupied/vacant states, and at least one
    human-visible arrival/departure in every selected sequence.
 4. Prefer development and holdout from distinct camera/scene groups.
@@ -123,25 +123,21 @@ The next temporal source is governed by
    truth for any parameter.
 7. Only a protocol that validates source/truth paths, file hashes, decoded
    video bounds, polygons, complete intervals, mixed counts, and transitions
-   as `ready_for_experiment: true` authorizes mixed-class E4, E5, or Fusion V2
-   work.
+   as `ready_for_experiment: true` authorizes mixed-class E4/E5. Fusion V2 has
+   the additional prerequisite that E5 first behave reliably on development.
 
-Current gate outcome: only
-`VIRAT_S_050202_10_002159_002233.mp4` from physical scene `0502` passed visual
-transition screening. Its fixed polygon and occupied-to-vacant boundary
-(last occupied 1659; first vacant 1660) are now verified in
-`data/annotations/virat_0502_departure_truth.yaml`, but its partition role is
-still unassigned and it has not been used for tuning. Three official-event-
-prioritized `0503` clips were rejected: two had no slot-state change; the
-third showed departures only from an unmarked curb/edge row. The targeted
-screen remains non-exhaustive after two additional downloads encountered
-repeated official API HTTP 502 responses. No second physical scene passed.
-Official `XXYY` scene grouping is mandatory; six-digit `XXYYZZ` sequence
-prefixes must never be used as independent folds.
+Current gate outcome: `0502` is frozen as development (last occupied 1659,
+first vacant 1660), and the subsequently found `0503` clip is the distinct-
+scene once-only holdout (last occupied 1549, first vacant 1550). The holdout
+identity, hash, polygon, truth, and `temporal_e4_e5_frozen.yaml` were locked
+before any model output was inspected. Official `XXYY` scene grouping remains
+mandatory; six-digit `XXYYZZ` sequence prefixes are never independent folds.
 
-Until then, the dataset audit and access blocker are scientific outputs, not a
-missing metric to be filled with Grand Bassin, CNR-EXT, repeated still images,
-or unlicensed web video.
+E4 and E5 were then executed without retuning. Neither exceeded E0 on the
+holdout, and E5 had zero vacant recall on development. Therefore the
+detector-primary/classifier-fallback Fusion V2 gate remains closed. No
+Grand Bassin, CNR-EXT, repeated still image, or unlicensed video was substituted
+for this result.
 
 ## Metrics
 

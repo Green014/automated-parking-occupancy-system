@@ -42,6 +42,7 @@ def test_verify_manifest_checks_hashes_and_result_counts(tmp_path: Path) -> None
     assert report["passed"] is True
     assert report["artifact_count"] == 2
     assert report["count_checks"]["frames"]["matches"] is True
+    assert all(row["size_matches"] for row in report["artifacts"])
 
 
 def test_verify_manifest_fails_when_hash_changes(tmp_path: Path) -> None:

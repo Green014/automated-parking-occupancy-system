@@ -83,8 +83,8 @@ def map_detections_to_slots(
             detection_confidence=detection.confidence,
             detection_label=detection.label,
             detection_bbox=detection.bbox,
+            track_id=detection.track_id,
         )
         assigned_slots.add(slot_index)
         assigned_detections.add(detection_index)
     return tuple(result)
-

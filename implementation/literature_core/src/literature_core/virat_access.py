@@ -8,7 +8,9 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import time
 from typing import Any, BinaryIO
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
@@ -23,6 +25,7 @@ _ANNOTATION_PATTERN = re.compile(
     r"\.viratdata\.(?:events|mapping|objects)\.txt$"
 )
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+_RETRYABLE_HTTP_STATUSES = frozenset({429, 500, 502, 503, 504})
 
 
 @dataclass(frozen=True)
@@ -139,12 +142,23 @@ def fetch_folder_items(
     folder_id: str,
     *,
     page_size: int = 100,
+    max_attempts: int = 3,
+    retry_delay_s: float = 1.0,
     opener: Callable[..., BinaryIO] = urlopen,
+    sleeper: Callable[[float], None] = time.sleep,
 ) -> list[dict[str, Any]]:
-    """Fetch every item in one public Girder folder using explicit pagination."""
+    """Fetch a public Girder folder, retrying only transient request failures."""
 
-    if not folder_id or page_size < 1:
-        raise ValueError("folder_id and a positive page_size are required")
+    if (
+        not folder_id
+        or page_size < 1
+        or max_attempts < 1
+        or retry_delay_s < 0.0
+    ):
+        raise ValueError(
+            "folder_id, positive page_size/max_attempts, and non-negative "
+            "retry_delay_s are required"
+        )
     records: list[dict[str, Any]] = []
     offset = 0
     while True:
@@ -157,8 +171,23 @@ def fetch_folder_items(
                 "sortdir": 1,
             }
         )
-        with opener(f"{API_ROOT}/item?{query}", timeout=30) as response:
-            page = json.load(response)
+        url = f"{API_ROOT}/item?{query}"
+        for attempt in range(1, max_attempts + 1):
+            try:
+                with opener(url, timeout=30) as response:
+                    page = json.load(response)
+                break
+            except HTTPError as error:
+                if (
+                    error.code not in _RETRYABLE_HTTP_STATUSES
+                    or attempt == max_attempts
+                ):
+                    raise
+                sleeper(retry_delay_s * attempt)
+            except (URLError, TimeoutError):
+                if attempt == max_attempts:
+                    raise
+                sleeper(retry_delay_s * attempt)
         if not isinstance(page, list):
             raise ValueError("unexpected VIRAT catalog response")
         records.extend(page)
@@ -279,11 +308,19 @@ def download_item(
     *,
     opener: Callable[..., BinaryIO] = urlopen,
     chunk_size: int = 1024 * 1024,
+    max_attempts: int = 3,
+    retry_delay_s: float = 1.0,
+    sleeper: Callable[[float], None] = time.sleep,
 ) -> dict[str, Any]:
     """Download one item atomically without replacing any existing file."""
 
     if Path(item.name).name != item.name:
         raise ValueError("item name must not contain a path")
+    if chunk_size < 1 or max_attempts < 1 or retry_delay_s < 0.0:
+        raise ValueError(
+            "positive chunk_size/max_attempts and non-negative retry_delay_s "
+            "are required"
+        )
     output_dir.mkdir(parents=True, exist_ok=True)
     target = output_dir / item.name
     partial = output_dir / f"{item.name}.part"
@@ -302,29 +339,48 @@ def download_item(
     if partial.exists():
         raise FileExistsError(f"partial file already exists: {partial}")
 
-    written = 0
-    digest = hashlib.sha256()
-    try:
-        with opener(
-            f"{API_ROOT}/item/{item.item_id}/download",
-            timeout=60,
-        ) as response, partial.open("xb") as handle:
-            for chunk in _iter_response(response, chunk_size):
-                written += len(chunk)
-                if written > item.size:
-                    raise ValueError("download exceeded the declared official size")
-                digest.update(chunk)
-                handle.write(chunk)
-        if written != item.size:
-            raise ValueError(
-                f"downloaded {written} bytes but official metadata declares "
-                f"{item.size}"
-            )
-        partial.rename(target)
-    except Exception:
-        if partial.exists():
-            partial.unlink()
-        raise
+    for attempt in range(1, max_attempts + 1):
+        written = 0
+        digest = hashlib.sha256()
+        try:
+            with opener(
+                f"{API_ROOT}/item/{item.item_id}/download",
+                timeout=60,
+            ) as response, partial.open("xb") as handle:
+                for chunk in _iter_response(response, chunk_size):
+                    written += len(chunk)
+                    if written > item.size:
+                        raise ValueError(
+                            "download exceeded the declared official size"
+                        )
+                    digest.update(chunk)
+                    handle.write(chunk)
+            if written != item.size:
+                raise ValueError(
+                    f"downloaded {written} bytes but official metadata declares "
+                    f"{item.size}"
+                )
+            partial.rename(target)
+            break
+        except HTTPError as error:
+            if partial.exists():
+                partial.unlink()
+            if (
+                error.code not in _RETRYABLE_HTTP_STATUSES
+                or attempt == max_attempts
+            ):
+                raise
+            sleeper(retry_delay_s * attempt)
+        except (URLError, TimeoutError):
+            if partial.exists():
+                partial.unlink()
+            if attempt == max_attempts:
+                raise
+            sleeper(retry_delay_s * attempt)
+        except Exception:
+            if partial.exists():
+                partial.unlink()
+            raise
 
     return {
         "status": "downloaded",

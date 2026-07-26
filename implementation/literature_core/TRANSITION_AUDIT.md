@@ -89,16 +89,22 @@ large dark gaps were circulation aisles.
 
 ## Consequence for E4/E5
 
-The following metrics remain unsupported on the local continuous data:
+The following metrics remain unsupported on the Grand Bassin continuous data:
 vacant recall, false-occupied rate, mixed-class macro F1, transition latency,
 mixed-class flicker, IDF1, and HOTA. The already executed positive-only check
 may report occupied recall and unsupported state changes, but it cannot be
 promoted to a full temporal evaluation.
 
-A valid next experiment requires a continuous sequence with:
+A later, separate VIRAT search met the minimum occupancy-truth requirements
+for a bounded two-scene case study and is documented in `RESULTS.md`. It does
+not change this Grand Bassin adjudication. Each VIRAT partition contains only
+one slot and one departure, so it cannot support broad tracking
+generalization, arrival robustness, IDF1, or HOTA claims.
 
-- at least one manually bounded marked bay in each class;
-- at least one unambiguous arrival or departure;
+A stronger next experiment still requires continuous sequences with:
+
+- multiple manually bounded marked bays with both classes;
+- multiple unambiguous arrivals and departures;
 - complete per-frame slot state near every transition; and
 - identity ground truth only if tracking metrics are claimed.
 

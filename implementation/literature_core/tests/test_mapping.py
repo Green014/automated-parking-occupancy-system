@@ -16,13 +16,14 @@ def test_slot_coverage_is_fraction_of_slot_not_box() -> None:
 def test_mapping_retains_raw_detection_details() -> None:
     slot = ParkingSlot("A", ((0, 0), (10, 0), (10, 10), (0, 10)))
     result = map_detections_to_slots(
-        [detection((0, 0, 5, 10), confidence=0.8)],
+        [Detection((0, 0, 5, 10), 0.8, 0, "car", track_id=17)],
         [slot],
         minimum_slot_coverage=0.4,
     )
     assert result[0].probability == pytest.approx(0.4)
     assert result[0].detection_confidence == pytest.approx(0.8)
     assert result[0].detection_bbox == (0, 0, 5, 10)
+    assert result[0].track_id == 17
 
 
 def test_one_detection_cannot_occupy_two_slots() -> None:
@@ -44,4 +45,3 @@ def test_vacant_is_zero_when_no_object_evidence() -> None:
     result = map_detections_to_slots([], [slot])
     assert result[0].probability == 0.0
     assert result[0].detection_index is None
-

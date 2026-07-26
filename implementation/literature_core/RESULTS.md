@@ -8,7 +8,7 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 | Check | Result |
 |---|---|
 | Existing baseline unit tests | **23/23 passed** after all work |
-| Literature-core unit tests | **67/67 passed** |
+| Literature-core unit tests | **78/78 passed** |
 | Source compilation | `python -m compileall` passed |
 | Python/OpenCV available | Yes |
 | CUDA / RTX 3060 available | Yes, 6 GiB |
@@ -17,10 +17,10 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 | Local MobileNetV3 pretrained checkpoint | Official weight acquired and hash verified |
 | Local YOLO-World/CLIP checkpoints | Official weights acquired and hashes verified |
 | Existing baseline outputs overwritten | No |
-| Continuous mixed/transition truth found locally | No; 16 automated and 7 targeted hypotheses were rejected |
-| Frozen artifact audit | **17/17 SHA-256 checks passed**; 4,081 frames and 144,965 slot records matched |
-| VIRAT bounded screening | 24 official videos / 1,430,406,456 video bytes; **0502 frame truth verified, 0503 targeted clips rejected** |
-| Temporal protocol gate | Schema valid; deliberately **not experiment-ready** because no second physical scene passed |
+| Continuous mixed/transition truth found locally | Yes; one departure sequence each in distinct VIRAT scenes `0502` and `0503` |
+| Frozen artifact audit | **17/17 static and 11/11 temporal SHA-256 checks passed**; declared result sizes, 4,081 frames, and 144,965 slot records matched |
+| VIRAT bounded screening | 26 official videos / 1,605,720,653 video bytes; **0502 development and 0503 holdout truth verified** |
+| Temporal protocol gate | Frozen, artifact-verified, and `ready_for_experiment: true`; Fusion V2 remains closed |
 
 ## Baseline execution check
 
@@ -448,54 +448,100 @@ wrote its new report to
 `outputs/phase_a_freeze_audit_20260726_v3/verification.json`; it did not modify
 the old results.
 
-The continuous-video audit did not produce a legal, locally verified pair of
-development/holdout sequences. The user accepted the VIRAT agreement and 24
-official videos totaling 1,430,406,456 video bytes were hash-recorded and
-screened. The `0502` candidate now has a fixed polygon and frame-level truth:
-frame 1659 is the last occupied frame and frame 1660 (55.389 s) is the first
-vacant frame. It remains an unassigned candidate and was not used for tuning.
+The continuous-video audit now has a legal, locally verified pair of distinct
+physical scenes. The user accepted the VIRAT agreement and 26 official videos
+totaling 1,605,720,653 video bytes were hash-recorded and screened. `0502` is
+the development sequence: frame 1659 is the last occupied frame and frame 1660
+(55.389 s) is the first vacant frame. `0503` is the locked once-only holdout:
+frame 1549 is the last occupied frame and frame 1550 (51.718 s) is the first
+vacant frame. Both truth files contain one fixed polygon, continuous half-open
+frame intervals, both classes, and one verified departure.
 
-Three event-prioritized `0503` clips and their official event/mapping/object
-annotations were then screened. An e06 clip and one e05 clip had no vehicle
-slot-state change. A longer clip with three e05 events included two subsequent
-vehicle departures, but both originated from an unmarked curb/edge row with
-no complete fixed slot polygon; the third vehicle remained parked. These are
-negative screening outcomes, not model results. Two more e05 downloads were
-attempted but the official catalog API returned HTTP 502 twice, so `0503`
-screening is explicitly non-exhaustive. No second physical scene passed.
+Five event-prioritized `0503` clips and their official event/mapping/object
+annotations were screened. Three had no valid marked-slot state change, and
+one contained departures only from an unmarked curb/edge row. The fifth,
+`VIRAT_S_050300_09_001789_001858.mp4`, contains a departure from a fixed
+marked slot followed by 507 vacant frames. Screening stopped when this
+holdout was locked; no model output was inspected before the identity, hash,
+polygon, truth interval, and E4/E5 configuration were frozen.
 
 DLP requires a raw-video request and uses a drone; EPFL currently
 exposes only non-consecutive ground-truth frames; ISLab-PVD has no explicit
 dataset license located; and LMOT is not parking-slot data and its official
 repository still states that release is forthcoming.
 
-`configs/temporal_protocol_pending.yaml` passed validation but returned
-`ready_for_experiment: false`. A frozen protocol can no longer become ready
-from valid-looking fields alone: the validator now checks source/truth
-existence, source SHA-256, decoded dimensions and frame count, selected frame
-bounds, polygon bounds, interval coverage, occupied/vacant counts, and at
-least one transition in each partition. This is the intended result: E4, E5,
-and Fusion V2 remain prohibited until a second physical scene and a
-scene-level frozen split are complete.
+`configs/temporal_protocol_pending.yaml` retains its historical filename for
+command compatibility but now has `status: frozen` and returned
+`ready_for_experiment: true`. The validator checked source/truth existence,
+source SHA-256, decoded dimensions and frame count, selected frame bounds,
+polygon bounds, interval coverage, occupied/vacant counts, one transition per
+partition, and distinct scene IDs. E4/E5 were therefore authorized. Fusion V2
+remained prohibited until E5 could first demonstrate reliable development
+behavior.
 
 Evidence: `DATASET_AUDIT.md`, `DATASET_ACCESS_BLOCKER.md`,
 `data/manifests/temporal_dataset_audit_20260726.yaml`,
 `data/manifests/virat_screening_20260726.yaml`,
 `data/manifests/virat_0503_targeted_screening_20260726.yaml`,
 `data/annotations/virat_0502_departure_truth.yaml`,
+`data/annotations/virat_0503_departure_truth.yaml`,
 `outputs/virat_screening_verification_20260726/verification.json`,
-`outputs/phase_b_protocol_audit_20260726_v6/validation.json`,
+`outputs/phase_b_protocol_audit_20260726_v7/validation.json`,
 `outputs/virat_0503_targeted_verification_20260726/verification.json`, and
 `outputs/phase_a_freeze_audit_20260726_v3/verification.json`.
 
 ## Temporal evaluation status
 
-A restricted positive-only E4-style check has been run, but full E4/E5 remain
-unavailable. PKLot captures are not frame-contiguous, and Grand Bassin has no
-verified negatives or transitions. Vacant recall, false-occupied rate,
-transition latency, mixed-class flicker, IDF1, and HOTA remain unclaimed until
-a continuous sequence with suitable human truth is provided. CNR-EXT remains
-a consumed once-only static evaluation and is excluded from all new tuning.
+Frozen E4/E5 case studies were run on every frame after excluding a
+predeclared 30-frame warm-up from metrics. The methods were:
+
+- E0 raw: YOLOv8n plus polygon mapping, without temporal filtering;
+- E3b raw: the frozen calibrated logistic fusion;
+- E4: E3b plus pre-registered asymmetric EMA/hysteresis; and
+- E5: YOLOv8n + ByteTrack + one-to-one track-to-slot mapping, stationary-motion
+  suppression, and 15-frame occupied/vacant dwell. E5 contains no classifier
+  fallback and is not Fusion V2.
+
+| Partition | Method | Macro F1 | Occupied recall | Vacant recall | False-free rate | False-occupied rate |
+|---|---|---:|---:|---:|---:|---:|
+| `0502` development | E0 raw | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
+| `0502` development | E3b raw | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
+| `0502` development | E4 | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
+| `0502` development | E5 | 0.453626 | 0.990184 | 0.000000 | 0.009816 | 1.000000 |
+| `0503` holdout | E0 raw | **0.954119** | 0.951974 | **1.000000** | 0.048026 | **0.000000** |
+| `0503` holdout | E3b raw | 0.940952 | 0.980921 | 0.883629 | 0.019079 | 0.116371 |
+| `0503` holdout | E4 | 0.834272 | **0.990132** | 0.599606 | **0.009868** | 0.400394 |
+| `0503` holdout | E5 | 0.919147 | 0.912500 | **1.000000** | 0.087500 | **0.000000** |
+
+These are negative E4/E5 results. On development, all methods remained
+occupied after the true departure because an adjacent/stationary detection
+continued to overlap the fixed polygon; E5 mapped that evidence to persistent
+track 3. On holdout, E0 raw remained strongest. E4 reduced raw E3b flicker
+(29 to 11 unsupported changes) but retained false occupied states too long.
+E5 reduced changes to two but first declared vacant at frame 1491, 59 frames
+before the true frame 1550, and did not initialize occupied until frame 104.
+Consequently, a nominal zero exit-latency value would be misleading and is not
+presented as a tracking success.
+
+Post-warm-up timing covered 1,944 development frames and 2,027 holdout frames,
+well over the 100-frame requirement:
+
+| Path | Development FPS | Holdout FPS |
+|---|---:|---:|
+| E4 (classifier + YOLO-World + E3b + hysteresis) | 14.608 | 15.010 |
+| E5 (YOLOv8n + ByteTrack + track gate) | 31.778 | 34.248 |
+| Combined audit runner | 10.008 | 10.436 |
+
+No per-frame bootstrap interval is reported because each partition contains
+only one video group. The results are case studies, not evidence of
+cross-video tracking generalization. E5 failed its development reliability
+gate, so Fusion V2 remains closed. IDF1 and HOTA remain unreported because no
+identity ground truth was created. CNR-EXT remains a consumed once-only static
+evaluation and is excluded from all new tuning.
+
+The executed outputs and configuration are frozen by
+`data/manifests/temporal_case_study_frozen_20260726.yaml`; all 11 listed
+artifacts passed SHA-256 and size verification.
 
 - The existing baseline's Proposed configuration underperformed B0 on the
   repeated-frame static smoke clip because tracker gating/start-up delay

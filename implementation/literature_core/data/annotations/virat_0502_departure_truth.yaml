@@ -11,7 +11,7 @@ video:
 
 review:
   status: verified
-  partition_role: unassigned_candidate
+  partition_role: development
   verified_at: "2026-07-26"
   evidence:
     full_clip_review: outputs/virat_slot_review_0502/scene_0502_departing_slot_full_context.jpg
@@ -20,7 +20,8 @@ review:
     boundary_review_directory: outputs/virat_slot_review_0502_polygon_transition_exact
   note: >-
     This is local project-created parking truth, not a native VIRAT label.
-    The candidate remains unassigned and was not used for parameter tuning.
+    This repeatedly reviewed sequence is assigned to development. No temporal
+    algorithm parameter was selected from it before the holdout was locked.
 
 label_policy:
   interval_semantics: half_open

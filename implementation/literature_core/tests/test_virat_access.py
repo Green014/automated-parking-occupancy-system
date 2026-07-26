@@ -1,6 +1,7 @@
 from io import BytesIO
 import hashlib
 from pathlib import Path
+from urllib.error import HTTPError
 
 import pytest
 import yaml
@@ -8,6 +9,7 @@ import yaml
 from literature_core.virat_access import (
     ViratItem,
     download_item,
+    fetch_folder_items,
     parse_annotation_item,
     parse_video_item,
     select_cross_scene_candidates,
@@ -105,6 +107,37 @@ def test_download_refuses_existing_size_mismatch(tmp_path: Path) -> None:
         download_item(item, tmp_path)
 
 
+def test_download_retries_transient_http_error_and_stays_atomic(
+    tmp_path: Path,
+) -> None:
+    item = ViratItem("abc", "sample.mp4", 4, "scene", "sequence")
+    responses: list[object] = [
+        HTTPError("https://example.invalid", 502, "temporary", {}, None),
+        BytesIO(b"data"),
+    ]
+    delays: list[float] = []
+
+    def opener(*_args, **_kwargs):
+        response = responses.pop(0)
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    result = download_item(
+        item,
+        tmp_path,
+        opener=opener,
+        max_attempts=3,
+        retry_delay_s=0.5,
+        sleeper=delays.append,
+    )
+
+    assert result["status"] == "downloaded"
+    assert (tmp_path / "sample.mp4").read_bytes() == b"data"
+    assert not (tmp_path / "sample.mp4.part").exists()
+    assert delays == [0.5]
+
+
 def test_named_selection_requires_official_names_and_budget() -> None:
     items = [_item("0001", 8), _item("0002", 4)]
     with pytest.raises(ValueError, match="not present"):
@@ -121,6 +154,52 @@ def test_named_selection_requires_official_names_and_budget() -> None:
             max_total_bytes=10,
             max_item_bytes=10,
         )
+
+
+def test_catalog_fetch_retries_transient_http_error_without_duplicate_records() -> None:
+    responses: list[object] = [
+        HTTPError("https://example.invalid", 502, "temporary", {}, None),
+        BytesIO(b'[{"_id": "one"}]'),
+    ]
+    delays: list[float] = []
+
+    def opener(*_args, **_kwargs):
+        response = responses.pop(0)
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    records = fetch_folder_items(
+        "folder",
+        page_size=2,
+        max_attempts=3,
+        retry_delay_s=0.25,
+        opener=opener,
+        sleeper=delays.append,
+    )
+
+    assert records == [{"_id": "one"}]
+    assert delays == [0.25]
+    assert responses == []
+
+
+def test_catalog_fetch_does_not_retry_non_transient_http_error() -> None:
+    calls = 0
+
+    def opener(*_args, **_kwargs):
+        nonlocal calls
+        calls += 1
+        raise HTTPError("https://example.invalid", 404, "missing", {}, None)
+
+    with pytest.raises(HTTPError) as error:
+        fetch_folder_items(
+            "folder",
+            max_attempts=3,
+            opener=opener,
+            sleeper=lambda _delay: pytest.fail("must not sleep"),
+        )
+    assert error.value.code == 404
+    assert calls == 1
 
 
 def test_screening_manifest_reconciles_bytes_hashes_and_official_grouping() -> None:

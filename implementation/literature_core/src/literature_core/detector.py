@@ -27,6 +27,20 @@ def _name(names: dict[int, str] | list[str], class_id: int) -> str:
     return str(names[class_id])
 
 
+def track_ids_from_output(
+    tracks: np.ndarray,
+    detection_count: int,
+) -> list[int | None]:
+    """Map ByteTrack output IDs to raw detections without dropping unmatched boxes."""
+
+    track_ids: list[int | None] = [None] * detection_count
+    for track in tracks:
+        detection_index = int(track[-1])
+        if 0 <= detection_index < detection_count:
+            track_ids[detection_index] = int(track[4])
+    return track_ids
+
+
 class YOLOWorldDetector:
     """Lazy Ultralytics YOLO-World adapter with explicit text categories."""
 
@@ -127,14 +141,19 @@ class ClosedSetYOLODetector:
         confidence: float = 0.025,
         image_size: int = 1280,
         device: str = "auto",
+        use_tracking: bool = False,
+        tracker_config: str | Path = "bytetrack.yaml",
     ) -> None:
         self.weights = str(weights)
         self.class_ids = tuple(int(value) for value in class_ids)
         self.confidence = float(confidence)
         self.image_size = int(image_size)
         self.requested_device = device
+        self.use_tracking = use_tracking
+        self.tracker_config = str(tracker_config)
         self._device: str | int | None = None
         self._model: Any | None = None
+        self._tracker: Any | None = None
 
     def _ensure_model(self) -> None:
         if self._model is not None:
@@ -151,8 +170,22 @@ class ClosedSetYOLODetector:
         )
         self._model = YOLO(self.weights)
 
+    def _ensure_tracker(self) -> None:
+        if not self.use_tracking or self._tracker is not None:
+            return
+        from ultralytics.trackers.byte_tracker import BYTETracker
+        from ultralytics.utils import IterableSimpleNamespace, YAML
+        from ultralytics.utils.checks import check_yaml
+
+        tracker_path = check_yaml(self.tracker_config)
+        tracker_args = IterableSimpleNamespace(**YAML.load(tracker_path))
+        if tracker_args.tracker_type != "bytetrack":
+            raise ValueError("Only ByteTrack is supported for E5")
+        self._tracker = BYTETracker(args=tracker_args)
+
     def detect(self, frame: np.ndarray) -> list[Detection]:
         self._ensure_model()
+        self._ensure_tracker()
         results = self._model.predict(  # type: ignore[union-attr]
             source=frame,
             conf=self.confidence,
@@ -164,6 +197,13 @@ class ClosedSetYOLODetector:
         result = results[0]
         if result.boxes is None or len(result.boxes) == 0:
             return []
+        if self.use_tracking:
+            assert self._tracker is not None
+            raw_boxes = result.boxes.cpu().numpy()
+            tracks = self._tracker.update(raw_boxes, frame)
+            track_ids = track_ids_from_output(tracks, len(raw_boxes))
+        else:
+            track_ids = [None] * len(result.boxes)
         boxes = result.boxes.xyxy.detach().cpu().numpy()
         confidences = result.boxes.conf.detach().cpu().numpy()
         class_ids = result.boxes.cls.detach().cpu().numpy().astype(int)
@@ -173,11 +213,13 @@ class ClosedSetYOLODetector:
                 confidence=float(score),
                 class_id=int(class_id),
                 label=_name(result.names, int(class_id)),
+                track_id=track_id,
             )
-            for box, score, class_id in zip(
+            for box, score, class_id, track_id in zip(
                 boxes,
                 confidences,
                 class_ids,
+                track_ids,
                 strict=True,
             )
         ]
@@ -192,6 +234,13 @@ class ClosedSetYOLODetector:
             "class_ids": list(self.class_ids),
             "confidence": self.confidence,
             "image_size": self.image_size,
+            "tracking": self.use_tracking,
+            "tracker_config": self.tracker_config if self.use_tracking else None,
+            "tracking_output_policy": (
+                "retain_raw_detections_attach_matched_ids"
+                if self.use_tracking
+                else None
+            ),
             "resolved_device": self._device,
             "ultralytics_version": ultralytics.__version__,
         }

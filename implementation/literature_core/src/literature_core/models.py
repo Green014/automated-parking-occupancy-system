@@ -15,6 +15,7 @@ class Detection:
     confidence: float
     class_id: int
     label: str
+    track_id: int | None = None
 
     def __post_init__(self) -> None:
         x1, y1, x2, y2 = self.bbox
@@ -51,6 +52,7 @@ class DetectionEvidence:
     detection_confidence: float = 0.0
     detection_label: str | None = None
     detection_bbox: BBox | None = None
+    track_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)

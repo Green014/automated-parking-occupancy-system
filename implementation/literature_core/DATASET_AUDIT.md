@@ -4,18 +4,18 @@ Audit date: 26 July 2026 (Asia/Shanghai)
 
 ## Outcome
 
-No source currently provides the required fixed marked bays, both occupancy
-classes, and a verified arrival/departure in two leakage-safe physical scenes.
-Accordingly, no temporal development or holdout pair has been falsely
-declared.
+VIRAT now provides the minimum legal two-scene pair required for a bounded
+temporal case study: fixed marked bays, both occupancy classes, and one
+verified departure in each distinct physical scene. It does not provide a
+large tracking benchmark: each partition still contains only one slot and one
+departure, with no arrival or identity truth.
 
 The user accepted the VIRAT Usage Agreement, and a bounded official subset was
-screened. Twenty-four clips totaling 1,430,406,456 video bytes were downloaded
-without overwriting any prior file. The `0502` candidate now has a verified
-fixed polygon and exact frame boundary (last occupied 1659, first vacant
-1660), but remains unassigned. Three official-event-prioritized `0503` clips
-were rejected; the extension is not exhaustive. No second physical scene
-passed, so the repository will not start E4, E5, or Fusion V2.
+screened. Twenty-six clips totaling 1,605,720,653 video bytes were downloaded
+without overwriting any prior file. `0502` is development (last occupied 1659,
+first vacant 1660). `0503` is the once-only holdout (last occupied 1549, first
+vacant 1550). The split, files, hashes, polygons, and continuous intervals all
+passed programmatic validation before model execution.
 
 ## Audit table
 
@@ -51,20 +51,24 @@ event counts were useful for prioritization but were not treated as occupancy
 truth because VIRAT events describe human actions and its static-object
 annotations are optional.
 
-Only `VIRAT_S_050202_10_002159_002233.mp4` passed visual eligibility: a dark
+In the first pass, `VIRAT_S_050202_10_002159_002233.mp4` passed visual
+eligibility: a dark
 vehicle begins in a complete diagonal marked bay, backs out, and leaves the
 bay vacant. Its polygon and per-frame boundary are recorded in
 `data/annotations/virat_0502_departure_truth.yaml`; frame 1659 is occupied and
 frame 1660 is vacant under the fixed visible-silhouette intersection rule.
-This is not yet an experiment partition. Its development/holdout role and an
-independent second scene remain required.
+It is assigned to development because it had already been repeatedly reviewed.
 
 The targeted `0503` pass used official e05/e06 events only as candidate
-locators. In two clips the interacted-with vehicle never changed slot state.
-In the 189-second high-yield clip, two vehicles later departed from an
-unmarked curb/edge row that lacks a complete fixed parking polygon; the third
-remained parked. The official event taxonomy contains person-enter/exit
-events, not vehicle-start/stop events, and none is treated as occupancy truth.
+locators. In three rejected clips the interacted-with vehicle either never
+changed slot state or departed only from an unmarked curb/edge row. After
+bounded retry support recovered two temporary HTTP 502 failures,
+`VIRAT_S_050300_09_001789_001858.mp4` yielded a marked-slot departure followed
+by 507 vacant frames. Its fixed polygon and exact boundary are recorded in
+`data/annotations/virat_0503_departure_truth.yaml`; frame 1549 is occupied and
+frame 1550 is vacant. This unseen distinct scene was locked as holdout and
+screening stopped. The official event taxonomy contains person-enter/exit
+events, not vehicle-start/stop or occupancy truth.
 
 ## Why the seemingly easiest alternatives were rejected
 
@@ -90,23 +94,27 @@ The bounded-screening workflow is:
    details. **Completed.**
 2. Download official annotations plus bounded screening clips from distinct
    official scene IDs rather than the whole 37.63-GB folder.
-   **Initial pass completed: 961,643,821 bytes; targeted `0503` extension:
-   468,762,635 video bytes plus 12,176,729 annotation bytes.**
+   **Completed: 1,605,720,653 video bytes and 15,925,504 annotation bytes.**
 3. Record URL/item ID, byte size, SHA-256, resolution, FPS, duration, and
    scene/camera key for every file.
 4. Screen full clips for complete marked bays, both classes, at least one
    true arrival/departure, and no camera movement that invalidates fixed ROIs.
-   **Current result: one `0502` clip eligible with candidate truth; all three
-   event-prioritized `0503` clips rejected.**
+   **Completed: `0502` development and distinct-scene `0503` holdout both
+   contain one verified departure and both states.**
 5. Prefer two distinct scenes/cameras. Only if that fails may one long source
    be split with an explicit temporal guard and no adjacent-frame leakage.
 6. Lock the holdout identity and checksum before any development label is used
    for dwell, threshold, or hysteresis selection.
 7. Change `configs/temporal_protocol_pending.yaml` to `status: frozen` only
    when its validator reports `ready_for_experiment: true`.
+   **Completed; the filename is retained for command compatibility.**
 
 The protocol validator explicitly rejects slot/frame grouping, same-scene use
 without permission, overlapping/adjacent clips that violate the guard,
 unrecorded required agreement acceptance, missing source/truth files, hash or
 decoded-video mismatches, out-of-range frames/polygons, incomplete truth
 intervals, missing classes, and missing transitions.
+
+The resulting E4/E5 execution remains only a case study. The once-only holdout
+has been consumed, no per-frame bootstrap interval is reported from a single
+video group, and E5's development vacant recall of zero keeps Fusion V2 closed.

@@ -153,8 +153,11 @@ untouched final test.
    batch 32 with AMP and a frozen backbone.
 4. PKLot images are roughly five minutes apart and must not be used for
    tracking, flicker, or transition-latency claims.
-5. A complete E4/E5 temporal comparison remains blocked by the lack of a
-   mixed occupied/vacant continuous sequence with verified transitions.
+5. This Phase 0 audit originally blocked E4/E5 for lack of mixed
+   occupied/vacant truth. A later VIRAT search resolved the minimum access
+   gate with one verified departure in each of two distinct scenes. The
+   resulting frozen E4/E5 case study was negative and remains too small for a
+   general tracking claim; details are in `RESULTS.md`.
 
 ## Phase 0 conclusion
 
@@ -162,5 +165,6 @@ The decision was to proceed with the adapted MobileNetV3, YOLO-World adapter,
 OpenCV slot warp, polygon mapping, interpretable fusion, corrected temporal
 metrics, tests, and pilot ablation. That minimum closure has now been
 implemented and executed; results are in `RESULTS.md`. Exact Improved
-MobileNetV3, TrackTrack, and APSD-OC reproduction remain deferred unless
-official code/weights and suitable ground truth become available.
+MobileNetV3, TrackTrack, and APSD-OC reproduction remain deferred. E5 is a
+simpler local ByteTrack-based gate, not a TrackTrack reproduction, and Fusion
+V2 remains closed because E5 failed its development reliability gate.

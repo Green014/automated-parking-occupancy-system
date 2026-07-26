@@ -26,12 +26,19 @@ The verification report is a new ignored artifact at
 `outputs/phase_a_freeze_audit_20260726_v3/verification.json`; no prior output
 was overwritten.
 
-The temporal configuration is separate. Its current
-`status: candidate_screening` is valid but not frozen or experiment-ready. It
-cannot be substituted for an executed E4/E5 configuration. Frozen readiness
-now requires artifact-level verification of video/truth paths, SHA-256,
-decoded frame bounds, polygon bounds, full interval coverage, both occupancy
-classes, and transitions in each development/holdout partition.
+The temporal configuration is separate. The compatibility-named
+`configs/temporal_protocol_pending.yaml` now has `status: frozen` and is
+experiment-ready. Artifact-level verification passed for video/truth paths,
+SHA-256, decoded frame bounds, polygon bounds, full interval coverage, both
+occupancy classes, transitions, and distinct `0502`/`0503` scenes.
+
+`configs/temporal_e4_e5_frozen.yaml` was written before any VIRAT model output.
+It fixes model/checkpoint hashes, E3b calibration, generic E4 EMA/hysteresis,
+ByteTrack settings, E5 mapping/motion/dwell rules, 30 warm-up frames, and the
+once-only holdout identity. No value was altered after development or holdout
+results. The 11 configuration, truth, runner, and result artifacts in
+`data/manifests/temporal_case_study_frozen_20260726.yaml` all passed hash and
+size verification.
 
 ## Data-role correction
 

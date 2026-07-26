@@ -12,10 +12,10 @@ the paper category.
 | E3a weighted evidence fusion | Combination motivated by [2] and [6] | Implemented locally | Project code | Development-selected normalized weighted sum of raw `P_cls`, detector evidence, and optional `P_track`; every component is logged | **Local system integration / baseline** |
 | E3b calibrated logistic fusion | Probability calibration literature; branch choices motivated by [2] and [6] | Implemented locally with deterministic NumPy IRLS | Project code | Separate monotonic Platt-style branch calibration followed by non-negative logistic fusion of calibrated log-odds; camera-grouped fitting only | **Local innovation / proposed** |
 | Temporal hysteresis | Existing baseline; tracking motivation from TrackTrack [7] | Reimplemented in the independent package | Project code | Asymmetric EMA with separate occupied/vacant thresholds; delayed true transitions are separated from ordinary flicker | **Adaptation/reuse** |
-| Track-aware evidence | TrackTrack [7] | No dependable implementation frozen | Not applicable | Interface reserved, but no E5 result is claimed | **Not implemented / optional** |
+| E5 track-aware gate | Tracking motivation from TrackTrack [7], but no code copied | Local project code plus Ultralytics ByteTrack runtime | Project code; Ultralytics runtime terms apply | YOLOv8 detections receive ByteTrack IDs, then deterministic one-to-one slot assignment, stationary-motion suppression, and occupied/vacant dwell; synthetic tests precede a frozen negative case study | **Local paper-inspired adaptation**, not TrackTrack reproduction |
 | Automatic slot discovery | APSD-OC [1] | No official implementation confirmed | Not applicable | No homography/DBSCAN reproduction is claimed | **Not implemented / future work** |
 | External holdout data | Amato et al., CNRPark+EXT | Official `cnrpark.it` page and `fabiocarrara/deep-parking` GitHub release | ODbL-1.0 stated by the official page | CNR-EXT occupancy metadata joined to official camera boxes and released full frames; boxes are scaled, not converted into claimed precise polygons | **Third-party data, once-only external evaluation** |
-| Conditional temporal data | Oh et al., VIRAT | Official `viratdata.org` and Kitware collection | VIRAT individual Usage Agreement; restricted redistribution and PII duties | User acceptance is recorded; 24 official clips were downloaded and checksum-verified for bounded candidate screening, while parking-slot polygons and transitions remain project-created truth | **Third-party candidate screening; not an executed benchmark** |
+| Conditional temporal data | Oh et al., VIRAT | Official `viratdata.org` and Kitware collection | VIRAT individual Usage Agreement; restricted redistribution and PII duties | User acceptance is recorded; 26 official clips were checksum-verified; two distinct-scene single-slot departure truths are project-created and support a limited frozen case study | **Third-party data with local truth; not a native VIRAT occupancy benchmark** |
 
 ## Code and runtime addresses
 
@@ -28,8 +28,9 @@ the paper category.
 - APSD-OC and the Improved MobileNetV3 paper: no official implementation was
   confirmed during this audit, so no unofficial repository is presented as
   authoritative.
-- TrackTrack: no implementation was frozen into this project; the paper is
-  used only to scope the optional tracking extension.
+- TrackTrack: no implementation was copied or reproduced. It only motivates
+  the E5 tracking direction; the implemented gate is a simpler local rule
+  system and is reported under that narrower label.
 - VIRAT Ground Release 2.0:
   https://viratdata.org/
 - VIRAT Usage Agreement:
@@ -40,34 +41,36 @@ the paper category.
 ## Temporal data provenance boundary
 
 The user personally accepted the VIRAT agreement on 26 July 2026. The project
-then downloaded 24 unmodified official video items (1,430,406,456 video bytes)
-for candidate screening. The targeted `0503` extension also downloaded the
-official event/mapping/object files for its three clips. Item IDs, SHA-256
-values, video properties, event-selection evidence, and negative decisions
-are recorded in `data/manifests/virat_screening_20260726.yaml` and
-`data/manifests/virat_0503_targeted_screening_20260726.yaml`. This is data
-screening, not an executed model experiment or a claimed VIRAT occupancy
-benchmark.
+then downloaded 26 unmodified official video items (1,605,720,653 video bytes)
+for bounded screening. The targeted `0503` extension also downloaded the
+official event/mapping/object files for five clips. Item IDs, SHA-256 values,
+video properties, event-selection evidence, and negative decisions are
+recorded in `data/manifests/virat_screening_20260726.yaml` and
+`data/manifests/virat_0503_targeted_screening_20260726.yaml`.
 
 The official Release 2.0 document defines filename digits `XXYY` as the
 physical scene and `ZZ` as the sequence. The local acquisition helper enforces
-that grouping, an explicit byte budget, recorded agreement acceptance, atomic
-non-overwriting downloads, and checksum verification. Those safeguards and
-the parking-suitability decisions are project adaptations, not VIRAT methods
-or labels.
+that grouping, explicit byte budgets, recorded agreement acceptance, atomic
+non-overwriting downloads, bounded retry of transient 429/5xx/network errors,
+and checksum verification. Those safeguards and the parking-suitability
+decisions are project adaptations, not VIRAT methods or labels.
 
 DLP is deferred because the raw video requires a request and drone motion may
 break fixed ROIs. EPFL's current official page provides only non-consecutive
 ground-truth archives, ISLab-PVD lacks an explicit dataset license, and LMOT
 lacks parking-slot truth and a released licensed dataset.
 
-The single visually eligible VIRAT clip has project-created candidate truth:
-a fixed polygon plus half-open occupied/vacant intervals with frame 1660 as
-the first vacant frame. It remains unassigned, has not been used for tuning,
-and no occupancy metric has been computed. These polygon coordinates,
-interval labels, transition adjudication, scene-level split, future dwell
-rules, and any track-to-slot state machine are project adaptations. They must
-not be attributed to VIRAT or to Part I papers.
+The two eligible VIRAT clips have project-created truth. `0502` development
+uses frame 1660 as first vacant; `0503` holdout uses frame 1550. Both contain a
+fixed polygon and half-open occupied/vacant intervals. The holdout was locked
+before any model output. Polygon coordinates, interval labels, transition
+adjudication, scene-level split, track-to-slot assignment, motion threshold,
+and dwell rules are local project adaptations; none is a native VIRAT label or
+a Part I paper implementation.
+
+The frozen E4/E5 run is explicitly a two-video, one-slot-per-video departure
+case study. E5 did not beat E0 on holdout and failed to recognize vacancy on
+development, so it cannot support a general tracking-improvement claim.
 
 ## Frozen runtime artifacts
 

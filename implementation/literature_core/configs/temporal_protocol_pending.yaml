@@ -1,5 +1,5 @@
 schema_version: 1
-status: candidate_screening
+status: frozen
 created_at: "2026-07-26T00:00:00+08:00"
 
 dataset:
@@ -23,15 +23,17 @@ dataset:
   screening:
     manifest: data/manifests/virat_screening_20260726.yaml
     targeted_0503_manifest: data/manifests/virat_0503_targeted_screening_20260726.yaml
-    downloaded_video_count: 24
-    downloaded_video_bytes: 1430406456
-    downloaded_annotation_bytes: 12176729
+    downloaded_video_count: 26
+    downloaded_video_bytes: 1605720653
+    downloaded_annotation_bytes: 15925504
     official_physical_scene_rule: first_four_filename_digits_XXYY
     eligible_frame_truth_verified:
       - VIRAT_S_050202_10_002159_002233.mp4
+      - VIRAT_S_050300_09_001789_001858.mp4
     verified_candidate_truth:
       VIRAT_S_050202_10_002159_002233.mp4: data/annotations/virat_0502_departure_truth.yaml
-    cross_scene_pair_found: false
+      VIRAT_S_050300_09_001789_001858.mp4: data/annotations/virat_0503_departure_truth.yaml
+    cross_scene_pair_found: true
 
 split_policy:
   group_unit: scene
@@ -41,33 +43,44 @@ split_policy:
   frame_level_random_split_prohibited: true
   preferred_boundary: distinct_camera_scene
 
-holdout_locked_before_development: false
+holdout_locked_before_development: true
 truth_requirements:
-  slot_polygons_verified: false
-  mixed_classes_verified: false
-  transition_verified: false
-  annotation_consistency_checked: false
+  slot_polygons_verified: true
+  mixed_classes_verified: true
+  transition_verified: true
+  annotation_consistency_checked: true
 validation_requirements:
   minimum_slots: 1
   minimum_occupied_slot_frames: 100
   minimum_vacant_slot_frames: 100
   minimum_transitions_per_partition: 1
 selections:
-  development: null
-  holdout: null
-  candidate:
+  development:
     dataset_id: virat_ground_release_2_0
     scene_id: "0502"
     source_video_id: VIRAT_S_050202_10_002159_002233
-    partition_id: unassigned_candidate
+    partition_id: virat-0502-development
     start_frame: 0
     end_frame: 1974
     source_path: datasets/virat/screening/videos_round4/VIRAT_S_050202_10_002159_002233.mp4
     source_sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
     truth_path: data/annotations/virat_0502_departure_truth.yaml
+  holdout:
+    dataset_id: virat_ground_release_2_0
+    scene_id: "0503"
+    source_video_id: VIRAT_S_050300_09_001789_001858
+    partition_id: virat-0503-holdout
+    start_frame: 0
+    end_frame: 2057
+    source_path: datasets/virat/screening/videos_0503_targeted/VIRAT_S_050300_09_001789_001858.mp4
+    source_sha256: b0bff7008afa69054b0c200a6fd0f1c04f8b7be5c5abb237b27f0c34aeca3079
+    truth_path: data/annotations/virat_0503_departure_truth.yaml
+  candidate: null
 
 experiment_gate:
-  e4_allowed: false
-  e5_allowed: false
+  e4_allowed: true
+  e5_allowed: true
   fusion_v2_allowed: false
-  reason: only scene 0502 has verified local frame truth; a distinct-scene development/holdout pair is incomplete
+  reason: >-
+    the distinct-scene development/holdout protocol is frozen; Fusion V2
+    remains closed until E5 has a reliable predeclared implementation result
