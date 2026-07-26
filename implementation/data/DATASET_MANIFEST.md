@@ -1,6 +1,10 @@
 # Dataset Manifest
 
-Audit date: 24 July 2026
+Audit date: 26 July 2026
+
+The focused Stage B continuous-video audit and current access blocker are in
+`../literature_core/DATASET_AUDIT.md` and
+`../literature_core/DATASET_ACCESS_BLOCKER.md`.
 
 This manifest separates suitability for slot occupancy, vehicle detection, and
 tracking. "Publicly downloadable" is not treated as a license. A source enters
@@ -10,11 +14,12 @@ the main experiments only when its use terms can be cited.
 
 | Dataset | License/use terms | Fixed/high view | Continuous | Slot truth | Vehicle/track truth | Decision |
 |---|---|---:|---:|---:|---:|---|
+| VIRAT Ground 2.0 | Individual VIRAT Usage Agreement; restricted redistribution/PII duties | Yes, 11 stationary outdoor scenes | Yes, about 8.5 h | No; manual truth required | Activity annotations and mover tracks | Conditional primary after user acceptance and visual screening |
 | PKLot | CC BY 4.0 | Yes | No; about 5-minute intervals | Polygon + occupied/vacant | No track IDs | Primary slot evaluation |
 | Grand Bassin Traffic | CC BY-NC-SA 4.0 | Fixed-looking high aerial surveillance view | Yes within each segment; frames supplied at 2 FPS | No slot truth | Machine-generated COCO boxes; no persistent IDs | Continuous stability development only |
 | CNRPark+EXT | ODbL 1.0 | Yes | No | Slot patches/labels; camera views | No track IDs | Primary slot/robustness evaluation |
 | NDISPark | ODC Attribution 1.0 | Seven surveillance views | No; about 250 images | No slot states | Vehicle boxes/masks | Detection/night failure analysis |
-| EPFL Multi-view Multi-class | Copyright; explicit free research use with citation | Six fixed calibrated cameras; several elevated | Yes, 23:57 at 25 FPS | No | Boxes on 242 non-consecutive frames | Engineering/tracking source only |
+| EPFL Multi-view Multi-class | Copyright; explicit free research use with citation | Six fixed calibrated cameras; several elevated | Described as 23:57 at 25 FPS, but full video is not linked on the current official page | No | Boxes on 242 non-consecutive frames | Excluded from temporal work until continuous media access is restored |
 | Dragon Lake Parking (DLP) | Project terms: non-commercial research/teaching, citation, no redistribution | Overhead but drone, not fixed CCTV | Yes, 3.5 h at 25 FPS | Parking map, but not slot-state labels | Dense trajectories/agents | Strong tracking extension; raw video requires request |
 | Barcelona DISCO | CC BY 4.0 | Roadside study, not a parking-camera video set | No raw video in archive | Loading-zone event/status data | No usable visual tracks | Supportive event-data source only |
 | KIOS multimodal parking-area data | CC BY 4.0 | Hovering drone at five waypoints | Short sequences converted to frames | No slot states | Car/person boxes | Deferred because Part 1 is 44 GB |
@@ -108,10 +113,15 @@ the main experiments only when its use terms can be cited.
 - Content: 23 minutes 57 seconds of synchronized frames at 25 FPS from six
   calibrated fixed cameras; parking slots, road, bus stop, people, cars, and
   buses; box annotations on 242 non-consecutive multi-view frames.
+- Access correction (26 July 2026): the current official page exposes two
+  ground-truth archives for the 242 non-consecutive frames/annotations, but no
+  complete continuous-video download link. The described duration must not be
+  treated as locally accessible video.
 - Intended use:
-  - continuous-video engineering and detector/tracker sanity checks;
+  - static multi-view feasibility only with currently exposed files;
   - no slot-level score without a separate verified annotation pass;
-  - no IDF1/HOTA unless persistent IDs are confirmed in the selected truth.
+  - no temporal, IDF1, or HOTA claim without restored full-video access and
+    suitable truth.
 
 ## 6. Dragon Lake Parking
 

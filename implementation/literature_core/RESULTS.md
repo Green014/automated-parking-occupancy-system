@@ -3,12 +3,12 @@
 This file is updated only with executed commands. No placeholder value is
 presented as an experiment result.
 
-Run date: 25 July 2026 (Asia/Shanghai)
+Run date: 25-26 July 2026 (Asia/Shanghai)
 
 | Check | Result |
 |---|---|
 | Existing baseline unit tests | **23/23 passed** after all work |
-| Literature-core unit tests | **50/50 passed** |
+| Literature-core unit tests | **56/56 passed** |
 | Source compilation | `python -m compileall` passed |
 | Python/OpenCV available | Yes |
 | CUDA / RTX 3060 available | Yes, 6 GiB |
@@ -18,6 +18,8 @@ Run date: 25 July 2026 (Asia/Shanghai)
 | Local YOLO-World/CLIP checkpoints | Official weights acquired and hashes verified |
 | Existing baseline outputs overwritten | No |
 | Continuous mixed/transition truth found locally | No; 16 automated and 7 targeted hypotheses were rejected |
+| Frozen artifact audit | **17/17 SHA-256 checks passed**; 4,081 frames and 144,965 slot records matched |
+| Temporal protocol gate | Schema valid; deliberately **not experiment-ready** while licensed source access is pending |
 
 ## Baseline execution check
 
@@ -427,13 +429,50 @@ Evidence: `TRANSITION_AUDIT.md`,
 `data/annotations/grand_bassin_rejected_manual_hypotheses.csv`, and
 `outputs/candidate_search/*_review/`.
 
+## Phase A freeze verification and Phase B data gate
+
+The existing methods were frozen without rerunning or altering any scientific
+output. A new read-only verifier checked 17 tracked references covering:
+
+- generic and executed configurations;
+- all three PKLot camera split files;
+- E0, E1a, E1b, and E2 model artifacts;
+- E1a/E1b training summaries and the Fold A selected parameters;
+- the CNR-EXT metadata/full-frame archives; and
+- the once-only external metrics file.
+
+Every SHA-256 matched. The saved metrics also reported exactly 4,081 complete
+image groups and 144,965 slot records, equal to the manifest. The verifier
+wrote its new report to
+`outputs/phase_a_freeze_audit_20260726_v2/verification.json`; it did not modify
+the old results.
+
+The continuous-video audit did not produce a legal, locally verified pair of
+development/holdout sequences. VIRAT Ground 2.0 is the conditional primary
+candidate, but every individual user must personally accept its Usage
+Agreement. DLP requires a raw-video request and uses a drone; EPFL currently
+exposes only non-consecutive ground-truth frames; ISLab-PVD has no explicit
+dataset license located; and LMOT is not parking-slot data and its official
+repository still states that release is forthcoming.
+
+`configs/temporal_protocol_pending.yaml` passed structural validation but
+returned `ready_for_experiment: false`. This is the intended result: E4, E5,
+and Fusion V2 remain prohibited until access, visual transition screening,
+hashing, and a scene-level frozen split are complete.
+
+Evidence: `DATASET_AUDIT.md`, `DATASET_ACCESS_BLOCKER.md`,
+`data/manifests/temporal_dataset_audit_20260726.yaml`,
+`outputs/phase_b_protocol_audit_20260726_v2/validation.json`, and
+`outputs/phase_a_freeze_audit_20260726_v2/verification.json`.
+
 ## Temporal evaluation status
 
 A restricted positive-only E4-style check has been run, but full E4/E5 remain
 unavailable. PKLot captures are not frame-contiguous, and Grand Bassin has no
 verified negatives or transitions. Vacant recall, false-occupied rate,
 transition latency, mixed-class flicker, IDF1, and HOTA remain unclaimed until
-a continuous sequence with suitable human truth is provided.
+a continuous sequence with suitable human truth is provided. CNR-EXT remains
+a consumed once-only static evaluation and is excluded from all new tuning.
 
 - The existing baseline's Proposed configuration underperformed B0 on the
   repeated-frame static smoke clip because tracker gating/start-up delay

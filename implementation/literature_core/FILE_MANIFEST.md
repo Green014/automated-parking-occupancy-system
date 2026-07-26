@@ -27,6 +27,7 @@ report, CSV, model, or output file was edited or overwritten.
 - `configs/pklot_camera_split.json`
 - `configs/proposed_fusion.yaml`
 - `configs/external_holdout_frozen.yaml`
+- `configs/temporal_protocol_pending.yaml`
 
 ## Python package
 
@@ -47,6 +48,7 @@ report, CSV, model, or output file was edited or overwritten.
 - `src/literature_core/stability.py`
 - `src/literature_core/cross_validation.py`
 - `src/literature_core/annotation_review.py`
+- `src/literature_core/temporal_protocol.py`
 - `src/literature_core/pipeline.py`
 
 ## Reproduction scripts
@@ -66,6 +68,8 @@ report, CSV, model, or output file was edited or overwritten.
 - `scripts/run_calibrated_fusion.py`
 - `scripts/evaluate_classifier_variants.py`
 - `scripts/run_cnr_ext_frozen_evaluation.py`
+- `scripts/verify_frozen_artifacts.py`
+- `scripts/validate_temporal_protocol.py`
 
 ## Tests
 
@@ -83,11 +87,19 @@ report, CSV, model, or output file was edited or overwritten.
 - `tests/test_annotation_review.py`
 - `tests/test_calibration.py`
 - `tests/test_cnrpark.py`
+- `tests/test_frozen_artifacts.py`
+- `tests/test_temporal_protocol.py`
 
 ## External-data manifest
 
 - `data/manifests/cnrpark_ext_external_holdout.yaml`
 - `data/manifests/frozen_artifacts_20260725.yaml`
+- `data/manifests/temporal_dataset_audit_20260726.yaml`
+
+## Stage A/B audit reports
+
+- `DATASET_AUDIT.md`
+- `DATASET_ACCESS_BLOCKER.md`
 
 ## Continuous-sequence audit data
 
@@ -117,6 +129,10 @@ report, CSV, model, or output file was edited or overwritten.
 - `outputs/mobilenet_variant_ablation/`
 - `outputs/mobilenet_variant_evaluation/`
 - `outputs/cnrpark_ext_frozen_evaluation_20260725/`
+- `outputs/phase_a_freeze_audit_20260726/`
+- `outputs/phase_a_freeze_audit_20260726_v2/`
+- `outputs/phase_b_protocol_audit_20260726/`
+- `outputs/phase_b_protocol_audit_20260726_v2/`
 - `datasets/cnrpark_ext/`
 
 The shared CLIP adapter cache is stored once at

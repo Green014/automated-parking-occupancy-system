@@ -2,6 +2,34 @@
 
 Audit date: 25 July 2026 (Asia/Shanghai)
 
+## Immutable artifact verification
+
+On 26 July the freeze manifest was expanded to cover the actual method
+templates/protocols, all three PKLot camera splits, E0/E1a/E1b/E2 weights,
+E1a/E1b training summaries, Fold A selected parameters, the two CNR-EXT input
+artifacts, and the once-only metrics file. All 17 SHA-256 checks passed.
+
+Traceability is explicit:
+
+| Item | Frozen source |
+|---|---|
+| Training seed | E1a/E1b `training_summary.json`: 20260725 |
+| Bootstrap seed | `external_holdout_frozen.yaml`: 20260725 |
+| YOLO-World prompts | `car`, `truck`, `bus`, `motorcycle` |
+| E0 mapping threshold | minimum slot coverage 0.40 |
+| E1a/E1b thresholds | 0.61 / 0.76 |
+| E2 evidence threshold | 0.08 |
+| E3a weights/threshold | 0.50/0.50, threshold 0.37 |
+| E3b parameters/threshold | hashed `proposed_fusion.yaml`, threshold 0.67 |
+
+The verification report is a new ignored artifact at
+`outputs/phase_a_freeze_audit_20260726_v2/verification.json`; no prior output
+was overwritten.
+
+The temporal configuration is separate. Its current
+`status: pending_access` is valid but not frozen or experiment-ready. It
+cannot be substituted for an executed E4/E5 configuration.
+
 ## Data-role correction
 
 All 27 locally selected PKLot images have now contributed to method

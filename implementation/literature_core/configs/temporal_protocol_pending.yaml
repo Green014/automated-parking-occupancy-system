@@ -1,0 +1,44 @@
+schema_version: 1
+status: pending_access
+created_at: "2026-07-26T00:00:00+08:00"
+
+dataset:
+  id: virat_ground_release_2_0
+  name: VIRAT Ground Camera Dataset, Release 2.0
+  official_page: https://viratdata.org/
+  official_collection: https://data.kitware.com/#collection/56f56db28d777f753209ba9f/folder/56f57e748d777f753209bed6
+  usage_agreement: https://viratdata.org/resources/VIRAT-Video-Data-Set-Protection-Agreement-1-4-11.pdf
+  access:
+    requires_individual_acceptance: true
+    user_acceptance_recorded: false
+    download_started: false
+  suitability:
+    stationary_ground_video: true
+    published_hours: 8.5
+    published_scenes: 11
+    native_slot_occupancy_labels: false
+    manual_slot_and_transition_truth_required: true
+
+split_policy:
+  group_unit: scene
+  allow_same_scene_fallback: false
+  minimum_guard_frames: 250
+  slot_level_random_split_prohibited: true
+  frame_level_random_split_prohibited: true
+  preferred_boundary: distinct_camera_scene
+
+holdout_locked_before_development: false
+truth_requirements:
+  slot_polygons_verified: false
+  mixed_classes_verified: false
+  transition_verified: false
+  annotation_consistency_checked: false
+selections:
+  development: null
+  holdout: null
+
+experiment_gate:
+  e4_allowed: false
+  e5_allowed: false
+  fusion_v2_allowed: false
+  reason: individual agreement and visual sequence screening are incomplete

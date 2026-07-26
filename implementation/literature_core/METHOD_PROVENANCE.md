@@ -15,6 +15,7 @@ the paper category.
 | Track-aware evidence | TrackTrack [7] | No dependable implementation frozen | Not applicable | Interface reserved, but no E5 result is claimed | **Not implemented / optional** |
 | Automatic slot discovery | APSD-OC [1] | No official implementation confirmed | Not applicable | No homography/DBSCAN reproduction is claimed | **Not implemented / future work** |
 | External holdout data | Amato et al., CNRPark+EXT | Official `cnrpark.it` page and `fabiocarrara/deep-parking` GitHub release | ODbL-1.0 stated by the official page | CNR-EXT occupancy metadata joined to official camera boxes and released full frames; boxes are scaled, not converted into claimed precise polygons | **Third-party data, once-only external evaluation** |
+| Conditional temporal data | Oh et al., VIRAT | Official `viratdata.org` and Kitware collection | VIRAT individual Usage Agreement; restricted redistribution and PII duties | No video downloaded or used; candidate requires personal acceptance plus local manual slot/transition truth | **Third-party candidate, blocked/not yet selected** |
 
 ## Code and runtime addresses
 
@@ -29,6 +30,28 @@ the paper category.
   authoritative.
 - TrackTrack: no implementation was frozen into this project; the paper is
   used only to scope the optional tracking extension.
+- VIRAT Ground Release 2.0:
+  https://viratdata.org/
+- VIRAT Usage Agreement:
+  https://viratdata.org/resources/VIRAT-Video-Data-Set-Protection-Agreement-1-4-11.pdf
+- Dragon Lake Parking candidate:
+  https://sites.google.com/berkeley.edu/dlp-dataset
+
+## Temporal data provenance boundary
+
+The Stage B dataset audit is source research, not an executed model
+experiment. VIRAT is conditional because the agreement must be accepted by
+each individual user. DLP is deferred because the raw video requires a
+request and drone motion may break fixed ROIs. EPFL's current official page
+provides only non-consecutive ground-truth archives, ISLab-PVD lacks an
+explicit dataset license, and LMOT lacks parking-slot truth and a released
+licensed dataset. None of these sources is presented as downloaded, annotated,
+or evaluated.
+
+Any future local parking-slot polygons, interval labels, transition
+adjudication, scene-level split, dwell rules, or track-to-slot state machine
+will be a project adaptation. They must not be attributed to the source
+dataset or to Part I papers.
 
 ## Frozen runtime artifacts
 

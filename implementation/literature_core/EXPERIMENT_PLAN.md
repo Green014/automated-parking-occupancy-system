@@ -91,7 +91,40 @@ camera/datetime groups, and computes confidence intervals by resampling
 complete image groups rather than individual slots. CNR-EXT is not used for
 training, calibration, model choice, fusion weights, or thresholds. If an
 official archive cannot be acquired or validated, no final metric is
-substituted; `DATASET_BLOCKER.md` must record the exact blocker.
+substituted; `DATASET_ACCESS_BLOCKER.md` must record the exact blocker.
+
+## Phase A/B continuation boundary
+
+The completed CNR-EXT run is now a consumed once-only external evaluation.
+No new threshold, weight, calibration, temporal parameter, or method choice
+may use CNR-EXT.
+
+The immutable-artifact manifest
+`data/manifests/frozen_artifacts_20260725.yaml` hashes the method configs,
+three PKLot split files, E0/E1a/E1b/E2 models, training summaries, Fold A
+selected parameters, CNR inputs, and external metrics. Re-verification on 26
+July passed all 17 artifact hashes and both result-count checks.
+
+The next temporal source is governed by
+`configs/temporal_protocol_pending.yaml`:
+
+1. VIRAT Ground 2.0 is only a conditional primary candidate until the user
+   personally accepts its Usage Agreement.
+2. Acquire and hash a small official screening subset; do not download the
+   complete 37.63-GB original-video folder initially.
+3. Confirm complete fixed bays, occupied/vacant states, and at least one
+   human-visible arrival/departure in every selected sequence.
+4. Prefer development and holdout from distinct camera/scene groups.
+5. If one long video must be split, record half-open frame intervals and a
+   non-zero guard; no adjacent or random frames may cross the boundary.
+6. Lock the holdout ID, interval, and source SHA-256 before using development
+   truth for any parameter.
+7. Only a protocol that validates as `ready_for_experiment: true` authorizes
+   mixed-class E4, E5, or Fusion V2 work.
+
+Until then, the dataset audit and access blocker are scientific outputs, not a
+missing metric to be filled with Grand Bassin, CNR-EXT, repeated still images,
+or unlicensed web video.
 
 ## Metrics
 
