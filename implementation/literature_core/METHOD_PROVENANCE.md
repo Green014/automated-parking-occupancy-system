@@ -39,19 +39,31 @@ the paper category.
 
 ## Temporal data provenance boundary
 
-The Stage B dataset audit is source research, not an executed model
-experiment. VIRAT is conditional because the agreement must be accepted by
-each individual user. DLP is deferred because the raw video requires a
-request and drone motion may break fixed ROIs. EPFL's current official page
-provides only non-consecutive ground-truth archives, ISLab-PVD lacks an
-explicit dataset license, and LMOT lacks parking-slot truth and a released
-licensed dataset. None of these sources is presented as downloaded, annotated,
-or evaluated.
+The user personally accepted the VIRAT agreement on 26 July 2026. The project
+then downloaded 21 unmodified official video items (961,643,821 bytes) for
+candidate screening; item IDs, SHA-256 values, video properties, and negative
+screening decisions are recorded in
+`data/manifests/virat_screening_20260726.yaml`. This is data screening, not an
+executed model experiment or a claimed VIRAT occupancy benchmark.
 
-Any future local parking-slot polygons, interval labels, transition
-adjudication, scene-level split, dwell rules, or track-to-slot state machine
-will be a project adaptation. They must not be attributed to the source
-dataset or to Part I papers.
+The official Release 2.0 document defines filename digits `XXYY` as the
+physical scene and `ZZ` as the sequence. The local acquisition helper enforces
+that grouping, an explicit byte budget, recorded agreement acceptance, atomic
+non-overwriting downloads, and checksum verification. Those safeguards and
+the parking-suitability decisions are project adaptations, not VIRAT methods
+or labels.
+
+DLP is deferred because the raw video requires a request and drone motion may
+break fixed ROIs. EPFL's current official page provides only non-consecutive
+ground-truth archives, ISLab-PVD lacks an explicit dataset license, and LMOT
+lacks parking-slot truth and a released licensed dataset.
+
+The single visually eligible VIRAT clip is only
+`eligible_pending_frame_truth`; no occupancy metric has been computed. Any
+future local parking-slot polygons, interval labels, transition adjudication,
+scene-level split, dwell rules, or track-to-slot state machine will be a
+project adaptation. They must not be attributed to the source dataset or to
+Part I papers.
 
 ## Frozen runtime artifacts
 

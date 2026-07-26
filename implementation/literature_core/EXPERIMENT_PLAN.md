@@ -108,10 +108,11 @@ July passed all 17 artifact hashes and both result-count checks.
 The next temporal source is governed by
 `configs/temporal_protocol_pending.yaml`:
 
-1. VIRAT Ground 2.0 is only a conditional primary candidate until the user
-   personally accepts its Usage Agreement.
-2. Acquire and hash a small official screening subset; do not download the
-   complete 37.63-GB original-video folder initially.
+1. The user accepted the VIRAT Usage Agreement on 26 July 2026; no personal
+   details are stored in Git.
+2. The bounded official screening subset is complete: 21 videos,
+   961,643,821 bytes, all hash-recorded in
+   `data/manifests/virat_screening_20260726.yaml`.
 3. Confirm complete fixed bays, occupied/vacant states, and at least one
    human-visible arrival/departure in every selected sequence.
 4. Prefer development and holdout from distinct camera/scene groups.
@@ -121,6 +122,12 @@ The next temporal source is governed by
    truth for any parameter.
 7. Only a protocol that validates as `ready_for_experiment: true` authorizes
    mixed-class E4, E5, or Fusion V2 work.
+
+Current gate outcome: only
+`VIRAT_S_050202_10_002159_002233.mp4` from physical scene `0502` passed visual
+transition screening, and its exact frame truth is still pending. No second
+physical scene passed. Official `XXYY` scene grouping is mandatory; six-digit
+`XXYYZZ` sequence prefixes must never be used as independent folds.
 
 Until then, the dataset audit and access blocker are scientific outputs, not a
 missing metric to be filled with Grand Bassin, CNR-EXT, repeated still images,

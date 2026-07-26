@@ -1,5 +1,5 @@
 schema_version: 1
-status: pending_access
+status: candidate_screening
 created_at: "2026-07-26T00:00:00+08:00"
 
 dataset:
@@ -10,14 +10,24 @@ dataset:
   usage_agreement: https://viratdata.org/resources/VIRAT-Video-Data-Set-Protection-Agreement-1-4-11.pdf
   access:
     requires_individual_acceptance: true
-    user_acceptance_recorded: false
-    download_started: false
+    user_acceptance_recorded: true
+    acceptance_recorded_at: "2026-07-26"
+    acceptance_record: user_confirmed_in_project_session; no_personal_details_stored
+    download_started: true
   suitability:
     stationary_ground_video: true
     published_hours: 8.5
     published_scenes: 11
     native_slot_occupancy_labels: false
     manual_slot_and_transition_truth_required: true
+  screening:
+    manifest: data/manifests/virat_screening_20260726.yaml
+    downloaded_video_count: 21
+    downloaded_bytes: 961643821
+    official_physical_scene_rule: first_four_filename_digits_XXYY
+    eligible_pending_frame_truth:
+      - VIRAT_S_050202_10_002159_002233.mp4
+    cross_scene_pair_found: false
 
 split_policy:
   group_unit: scene
@@ -41,4 +51,4 @@ experiment_gate:
   e4_allowed: false
   e5_allowed: false
   fusion_v2_allowed: false
-  reason: individual agreement and visual sequence screening are incomplete
+  reason: only one physical scene has a verified slot transition; frame truth and a cross-scene pair are incomplete

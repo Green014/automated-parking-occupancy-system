@@ -70,6 +70,9 @@ report, CSV, model, or output file was edited or overwritten.
 - `scripts/run_cnr_ext_frozen_evaluation.py`
 - `scripts/verify_frozen_artifacts.py`
 - `scripts/validate_temporal_protocol.py`
+- `scripts/acquire_virat_screening.py`
+- `scripts/build_virat_screening_contact_sheet.py`
+- `scripts/verify_virat_screening.py`
 
 ## Tests
 
@@ -89,12 +92,14 @@ report, CSV, model, or output file was edited or overwritten.
 - `tests/test_cnrpark.py`
 - `tests/test_frozen_artifacts.py`
 - `tests/test_temporal_protocol.py`
+- `tests/test_virat_access.py`
 
 ## External-data manifest
 
 - `data/manifests/cnrpark_ext_external_holdout.yaml`
 - `data/manifests/frozen_artifacts_20260725.yaml`
 - `data/manifests/temporal_dataset_audit_20260726.yaml`
+- `data/manifests/virat_screening_20260726.yaml`
 
 ## Stage A/B audit reports
 
@@ -133,7 +138,13 @@ report, CSV, model, or output file was edited or overwritten.
 - `outputs/phase_a_freeze_audit_20260726_v2/`
 - `outputs/phase_b_protocol_audit_20260726/`
 - `outputs/phase_b_protocol_audit_20260726_v2/`
+- `outputs/phase_b_protocol_audit_20260726_v3/`
+- `outputs/virat_screening*/`
+- `outputs/virat_review_*/`
+- `outputs/virat_grid_*/`
+- `outputs/virat_slot_review_*/`
 - `datasets/cnrpark_ext/`
+- `datasets/virat/screening/`
 
 The shared CLIP adapter cache is stored once at
 `../../weights/clip/ViT-B-32.pt`. The new `../../weights/.gitignore` prevents

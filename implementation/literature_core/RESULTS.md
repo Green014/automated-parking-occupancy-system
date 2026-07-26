@@ -8,7 +8,7 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 | Check | Result |
 |---|---|
 | Existing baseline unit tests | **23/23 passed** after all work |
-| Literature-core unit tests | **56/56 passed** |
+| Literature-core unit tests | **63/63 passed** |
 | Source compilation | `python -m compileall` passed |
 | Python/OpenCV available | Yes |
 | CUDA / RTX 3060 available | Yes, 6 GiB |
@@ -19,7 +19,8 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 | Existing baseline outputs overwritten | No |
 | Continuous mixed/transition truth found locally | No; 16 automated and 7 targeted hypotheses were rejected |
 | Frozen artifact audit | **17/17 SHA-256 checks passed**; 4,081 frames and 144,965 slot records matched |
-| Temporal protocol gate | Schema valid; deliberately **not experiment-ready** while licensed source access is pending |
+| VIRAT bounded screening | 21 official videos / 961,643,821 bytes; **1 eligible pending frame truth, 20 rejected** |
+| Temporal protocol gate | Schema valid; deliberately **not experiment-ready** because no second physical scene passed |
 
 ## Baseline execution check
 
@@ -448,21 +449,26 @@ wrote its new report to
 the old results.
 
 The continuous-video audit did not produce a legal, locally verified pair of
-development/holdout sequences. VIRAT Ground 2.0 is the conditional primary
-candidate, but every individual user must personally accept its Usage
-Agreement. DLP requires a raw-video request and uses a drone; EPFL currently
+development/holdout sequences. The user accepted the VIRAT agreement and 21
+official videos totaling 961,643,821 bytes were hash-recorded and screened.
+Twenty were rejected; `VIRAT_S_050202_10_002159_002233.mp4` from physical
+scene `0502` contains one clear marked-slot departure but still needs exact
+frame truth. No second physical scene passed. DLP requires a raw-video request
+and uses a drone; EPFL currently
 exposes only non-consecutive ground-truth frames; ISLab-PVD has no explicit
 dataset license located; and LMOT is not parking-slot data and its official
 repository still states that release is forthcoming.
 
 `configs/temporal_protocol_pending.yaml` passed structural validation but
 returned `ready_for_experiment: false`. This is the intended result: E4, E5,
-and Fusion V2 remain prohibited until access, visual transition screening,
-hashing, and a scene-level frozen split are complete.
+and Fusion V2 remain prohibited until a second physical scene, exact frame
+truth, and a scene-level frozen split are complete.
 
 Evidence: `DATASET_AUDIT.md`, `DATASET_ACCESS_BLOCKER.md`,
 `data/manifests/temporal_dataset_audit_20260726.yaml`,
-`outputs/phase_b_protocol_audit_20260726_v2/validation.json`, and
+`data/manifests/virat_screening_20260726.yaml`,
+`outputs/virat_screening_verification_20260726/verification.json`,
+`outputs/phase_b_protocol_audit_20260726_v3/validation.json`, and
 `outputs/phase_a_freeze_audit_20260726_v2/verification.json`.
 
 ## Temporal evaluation status

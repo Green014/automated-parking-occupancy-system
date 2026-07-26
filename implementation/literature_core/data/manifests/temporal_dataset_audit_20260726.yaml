@@ -1,7 +1,7 @@
 schema_version: 1
 audit_date: "2026-07-26"
 purpose: select licensed continuous video for manual parking-slot temporal truth
-selection_status: blocked_pending_individual_access_acceptance
+selection_status: candidate_screening_after_user_acceptance
 
 hard_requirements:
   camera: fixed_or_nearly_fixed
@@ -35,7 +35,7 @@ candidates:
       redistribution: only_to_other_agreement_signatories
       pii_protection_required: true
     access: public_catalog_but_content_use_requires_individual_agreement
-    decision: conditional_primary_after_user_acceptance_and_visual_screening
+    decision: bounded_screening_complete; one_eligible_clip_but_no_cross_scene_pair
 
   - id: dlp
     dataset: Dragon Lake Parking Dataset
@@ -166,10 +166,17 @@ candidates:
 
 selected_source:
   dataset_id: virat_ground_release_2_0
-  status: conditional_not_downloaded
+  status: candidate_screening
+  user_acceptance_recorded_at: "2026-07-26"
+  personal_details_stored: false
+  screening_manifest: data/manifests/virat_screening_20260726.yaml
+  downloaded_video_count: 21
+  downloaded_bytes: 961643821
+  eligible_pending_frame_truth:
+    - VIRAT_S_050202_10_002159_002233.mp4
   development_sequence: null
   holdout_sequence: null
-  reason_not_frozen: individual agreement and visual transition screening incomplete
+  reason_not_frozen: no second physical scene with a verified slot transition; exact frame truth remains incomplete
   protocol: configs/temporal_protocol_pending.yaml
 
 prohibitions:

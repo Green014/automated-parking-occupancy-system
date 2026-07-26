@@ -4,17 +4,17 @@ Audit date: 26 July 2026 (Asia/Shanghai)
 
 ## Outcome
 
-No source is currently both legally accessible and verified to contain the
-required fixed marked bays, both occupancy classes, and an arrival/departure
-in two leakage-safe sequences. Accordingly, no temporal development or
-holdout sequence has been falsely declared.
+No source currently provides the required fixed marked bays, both occupancy
+classes, and a verified arrival/departure in two leakage-safe physical scenes.
+Accordingly, no temporal development or holdout pair has been falsely
+declared.
 
-VIRAT Ground Release 2.0 is the conditional primary source. It is the closest
-match because it contains about 8.5 hours of stationary ground video from 11
-outdoor scenes. It still requires two gates: the user must personally accept
-the VIRAT Usage Agreement, and the downloaded clips must pass visual screening
-for complete marked bays and real occupancy transitions. The repository will
-not start E4, E5, or Fusion V2 before those gates pass.
+The user accepted the VIRAT Usage Agreement, and a bounded official subset was
+screened. Twenty-one clips totaling 961,643,821 bytes were downloaded without
+overwriting any prior file. One clip from physical scene `0502` contains a
+clear departure from a complete marked slot and remains eligible pending exact
+frame truth. The other 20 clips were rejected. No second physical scene passed,
+so the repository will not start E4, E5, or Fusion V2.
 
 ## Audit table
 
@@ -29,8 +29,31 @@ not start E4, E5, or Fusion V2 before those gates pass.
 | CNR-EXT | Fixed surveillance | No | Yes | Sparse snapshots only | Weather/light variation | ODbL 1.0 | 4,081 images, 144,965 slot labels | Local; once-only evaluation already consumed | Frozen static external result only; never retune |
 | PKLot selected 27 | Fixed surveillance | No | Yes | Roughly five-minute sampling | Weather, no night | CC BY 4.0 | 27 local development images | Local | Method development only; never temporal truth |
 
-The machine-readable form is
-`data/manifests/temporal_dataset_audit_20260726.yaml`.
+The candidate audit is in
+`data/manifests/temporal_dataset_audit_20260726.yaml`; exact downloaded-file
+metadata and every negative decision are in
+`data/manifests/virat_screening_20260726.yaml`.
+
+## VIRAT bounded screening result
+
+The official Release 2.0 introduction defines `XXYY` (the first four digits
+after `VIRAT_S_`) as the scene and `ZZ` as the sequence. This matters:
+`000201`, `000203`, `000205`, and `000207` are all sequences from physical
+scene `0002`, not independent scenes. The acquisition helper and regression
+tests now enforce this grouping.
+
+The screening covered 21 clips from physical scenes `0002`, `0100`, `0101`,
+`0102`, `0400`, `0401`, `0500`, and `0502`. Most either lacked complete marked
+parking bays or showed only vehicles moving through lanes. Vehicle-interaction
+event counts were useful for prioritization but were not treated as occupancy
+truth because VIRAT events describe human actions and its static-object
+annotations are optional.
+
+Only `VIRAT_S_050202_10_002159_002233.mp4` passed visual eligibility: a dark
+vehicle begins in a complete diagonal marked bay, backs out at approximately
+45-55 seconds, and leaves the bay vacant. This is not yet an experiment
+partition. Exact slot polygon coordinates, the per-frame state boundary, and
+an independent second scene remain required.
 
 ## Why the seemingly easiest alternatives were rejected
 
@@ -50,16 +73,18 @@ The machine-readable form is
 
 ## Conditional VIRAT selection protocol
 
-After the user accepts the agreement, acquisition remains deliberately small:
+The bounded-screening workflow is:
 
 1. Record acceptance date locally; do not commit the agreement or personal
-   details.
+   details. **Completed.**
 2. Download official annotations plus a sub-1-GB screening set of short clips
    from distinct official scene IDs rather than the whole 37.63-GB folder.
+   **Completed: 961,643,821 bytes.**
 3. Record URL/item ID, byte size, SHA-256, resolution, FPS, duration, and
    scene/camera key for every file.
-4. Screen full clips for 5-20 complete marked bays, both classes, at least one
+4. Screen full clips for complete marked bays, both classes, at least one
    true arrival/departure, and no camera movement that invalidates fixed ROIs.
+   **Completed for the current subset: one clip eligible, 20 rejected.**
 5. Prefer two distinct scenes/cameras. Only if that fails may one long source
    be split with an explicit temporal guard and no adjacent-frame leakage.
 6. Lock the holdout identity and checksum before any development label is used
