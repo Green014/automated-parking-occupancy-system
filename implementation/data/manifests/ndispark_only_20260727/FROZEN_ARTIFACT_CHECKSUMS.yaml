@@ -1,0 +1,22 @@
+schema_version: 1
+protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+frozen_at: "2026-07-27T15:53:42.1557501+08:00"
+artifacts:
+  - path: implementation/configs/ndispark_only_dataset_frozen_20260727.yaml
+    bytes: 6303
+    sha256: 1a3a8747eb16867a9a846d8ad279591dc96731091c96549b50d041ecf8a0e0e8
+  - path: implementation/data/NDISPARK_ONLY_DATASET_CARD.md
+    bytes: 5260
+    sha256: f2363b6572ce59b0899a8bdd0fb88810b30d1d680ba6af40d4c2c1d7255f91a6
+  - path: implementation/data/manifests/ndispark_only_20260727/ndispark_source_manifest_frozen_20260727.yaml
+    bytes: 3886
+    sha256: f067aedd903caeed3a3b3cff57e1e573097ac4d8645b42c8cafd9351610047ec
+  - path: implementation/data/manifests/ndispark_only_20260727/ndispark_train_frozen_20260727.csv
+    bytes: 24054
+    sha256: 9231cd310d2ce64c6bc06727c1835ba05a4229de1837954a7409f525de0a0b32
+  - path: implementation/data/manifests/ndispark_only_20260727/ndispark_validation_frozen_20260727.csv
+    bytes: 7260
+    sha256: abbcf72d193afbdbe64fea46c5d2553dfba6c978406f1c2dd76f4b68aa471c99
+  - path: implementation/data/manifests/ndispark_only_20260727/ndispark_test_frozen_20260727.csv
+    bytes: 24630
+    sha256: 79cc80392c8d3c3723f31f68242f1e5ec0610f10ff81c02fc58a9a0215a2b35d

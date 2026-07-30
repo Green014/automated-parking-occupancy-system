@@ -1,0 +1,3 @@
+variant,tracker,macro_f1,occupied_recall,vacant_recall,false_free_rate,false_occupied_rate,accuracy,balanced_accuracy,state_changes,events,steady_state_fps_p50_proxy,claim_class
+TT0,none,0.456796918,1.000000000,0.000000000,0.000000000,1.000000000,0.840932118,0.500000000,0,1,33.521276,consumed-development diagnostic
+TT1,tracktrack,0.456796918,1.000000000,0.000000000,0.000000000,1.000000000,0.840932118,0.500000000,0,1,14.215096,consumed-development diagnostic

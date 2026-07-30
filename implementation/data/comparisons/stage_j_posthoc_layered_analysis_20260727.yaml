@@ -1,0 +1,38 @@
+schema_version: 1
+record_id: P-COMP-PKLOT-DEV-STAGEJ-POSTHOC-RECORD-20260727-01
+protocol_id: P-COMP-PKLOT-DEV-STAGEJ-POSTHOC-20260727-01
+frozen_at: "2026-07-27T23:20:00+08:00"
+status: read_only_consumed_development_analysis_complete
+predictions_run: false
+parameters_selected: false
+detector_reselected: false
+untouched_test_claim: prohibited
+
+artifacts:
+  - {role: analysis_protocol, root: source, path: configs/stage_j_posthoc_layered_analysis_frozen_20260727.yaml, bytes: 2465, sha256: 735fc42dc71e17e2c31dce9a9eee310a6d2658e22269d2d090e90cd540bba36c}
+  - {role: source_P0_occupancy, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/occupancy.csv, bytes: 179019, sha256: a6059c01382d590e25e6b4462f7c2818113c7f27f73aa870baadb801a4dc8d8f}
+  - {role: source_P1_occupancy, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/occupancy.csv, bytes: 179019, sha256: 937ba4f8d091d6c90a82b0f5775f5fa2a1718991e2ada6b20dd4a5247af00421}
+  - {role: source_P2_occupancy, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/occupancy.csv, bytes: 179019, sha256: 76de3d6694d4d355a1ce1eaac87318505768ca1f7f4f0115a8991f398cf51743}
+  - {role: preflight_only, root: external, path: outputs/stage_j_posthoc_layered_analysis_preflight_20260727_v1.json, bytes: 1417, sha256: e6ade56fa401a646e6aafdde0d22fa2efccaa4c9510bd8d13088cae115f64dcb}
+  - {role: run_preflight, root: external, path: outputs/stage_j_posthoc_layered_analysis_20260727_v1/preflight.json, bytes: 1417, sha256: e6ade56fa401a646e6aafdde0d22fa2efccaa4c9510bd8d13088cae115f64dcb}
+  - {role: analysis, root: external, path: outputs/stage_j_posthoc_layered_analysis_20260727_v1/analysis.json, bytes: 12112, sha256: e74e7f8d64db7c8322d0334fd2de96408274de7485d408756dece04d2987ffe3}
+  - {role: camera_metrics, root: external, path: outputs/stage_j_posthoc_layered_analysis_20260727_v1/camera_metrics.csv, bytes: 1174, sha256: 6d03cc4666824c173548da16b6ce6913e40cabfb6aff383ae9e64f13872d6785}
+  - {role: paired_image_differences, root: external, path: outputs/stage_j_posthoc_layered_analysis_20260727_v1/paired_image_differences.csv, bytes: 5269, sha256: 19ddc218af3e0068e77d225daf578b0617ea44b55ce51d404a8bdca9655b0f9e}
+
+result_summary:
+  camera_macro_f1: {P0: 0.851682, P1: 0.857300, P2: 0.823301}
+  P1_minus_P0:
+    pooled_macro_f1_difference: 0.057683
+    camera_macro_f1_difference: 0.005618
+    win_tie_loss: {win: 6, tie: 2, loss: 19}
+    mean_paired_image_difference: -0.020935
+    paired_bootstrap_95_ci: [-0.080493, 0.044616]
+    contains_zero: true
+  P2_minus_P0:
+    pooled_macro_f1_difference: -0.032872
+    camera_macro_f1_difference: -0.028381
+    win_tie_loss: {win: 6, tie: 9, loss: 12}
+    mean_paired_image_difference: -0.026864
+    paired_bootstrap_95_ci: [-0.052380, -0.002275]
+    contains_zero: false
+  conclusion: P1 leads the pooled consumed-development comparison, but the gain is camera-dependent and is not yet confirmed on an untouched test.

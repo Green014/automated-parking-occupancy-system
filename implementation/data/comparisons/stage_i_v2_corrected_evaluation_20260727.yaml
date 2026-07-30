@@ -1,0 +1,76 @@
+schema_version: 1
+record_id: D-STAGE-I-V2-RECORD-NDISPARK-20260727-01
+frozen_at: "2026-07-27T22:22:28.7787951+08:00"
+status: corrected_development_and_consumed_test_sensitivity_complete
+historical_stage_i_v1_immutable: true
+dataset_roles:
+  detector_and_threshold_selection: consumed_development_validation
+  count_sensitivity: consumed_test_posthoc_sensitivity
+  untouched_test_claim: prohibited
+settings:
+  agnostic_nms: true
+  final_max_detections: 300
+  common_threshold_diagnostic: 0.10
+  per_model_thresholds: {D0: 0.10, D1: 0.30, D2: 0.10}
+  selected_detector_before_posthoc: D1
+  detector_reselected_after_posthoc: false
+artifacts:
+  - {role: maxdet300_config, root: source, path: configs/detector_comparison_stage_i_v2_maxdet300_frozen_20260727.yaml, bytes: 5682, sha256: 5c7b3a85b533c2642dae666c860741747ee8d310d6a108b8c994a0b689bbe662}
+  - {role: maxdet1000_config, root: source, path: configs/detector_comparison_stage_i_v2_maxdet1000_frozen_20260727.yaml, bytes: 4867, sha256: aab3c28c79ef08e1a3dc23b63c966dc38387a43db21fa99fcee135a64a12b528}
+  - {role: posthoc_count_config, root: source, path: configs/stage_i_v2_posthoc_count_frozen_20260727.yaml, bytes: 3849, sha256: 1a2c6132dbd8375a3e31803c677c769d27ed1cd92e26f3e3c3578d778fcc057c}
+  - {role: maxdet300_preflight_only, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_preflight_20260727_v1.json, bytes: 1995, sha256: 63e644cbe5c883735c56b06a7308be5fb08d08beb7f287433b95160f48b17caf}
+  - {role: maxdet1000_preflight_only, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_preflight_20260727_v1.json, bytes: 1996, sha256: 3c93b4dcfa821ee8139d92b1f2a00ab8a243a71c97e341dfc027cafd5c09cd49}
+  - {role: retained_timeout_preflight, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v1/preflight.json, bytes: 1995, sha256: 63e644cbe5c883735c56b06a7308be5fb08d08beb7f287433b95160f48b17caf}
+  - {role: operating_points, root: external, path: outputs/stage_i_v2_operating_points_20260727_v1.json, bytes: 18302, sha256: d288a15abd735dbd95f2704b13a57d58c01f8f4b95a1240625df1370ef128524}
+  - {role: maxdet_decision, root: external, path: outputs/stage_i_v2_maxdet_decision_20260727_v1.json, bytes: 3850, sha256: c43d0b27f201e511875ca499b4324791329c573331bf6576ea8f4d2fdc45df66}
+  - {role: maxdet300_preflight, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/preflight.json, bytes: 1995, sha256: 63e644cbe5c883735c56b06a7308be5fb08d08beb7f287433b95160f48b17caf}
+  - {role: maxdet300_comparison, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/comparison.json, bytes: 9642, sha256: 2c98417a143deac54027e1e62bf2060950df1a32bf248dc95d5a0e178ff119f5}
+  - {role: maxdet300_runtime_table, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/model_runtime_table.csv, bytes: 395, sha256: ce9d9e21e4c08d84839abcead2ed087c3cbb55a8d666a1bea9a16a114b5eb0e7}
+  - {role: maxdet300_D0_metrics, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D0/metrics.json, bytes: 2445, sha256: c3b3af130938448d51a47e573d5c82cea22ece9e2385ca7bcf7fa2bf0b379f5b}
+  - {role: maxdet300_D0_runtime, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D0/runtime_metadata.json, bytes: 700, sha256: f3829c0a20a51641f5cbb34a911223220db063b37637932a483898baa931bc16}
+  - {role: maxdet300_D0_detections, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D0/detections.jsonl, bytes: 744486, sha256: a8c2219eb3913fef265c9fed446f4aa63db7350059d036f3b243fef24bc8e10d}
+  - {role: maxdet300_D1_metrics, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D1/metrics.json, bytes: 2347, sha256: 39d2b6e9fe7e15f37cd1a89a4d835de1e26663d91ff1879de1dcdb796ca8f8fc}
+  - {role: maxdet300_D1_runtime, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D1/runtime_metadata.json, bytes: 636, sha256: 863a76faecfc805cef19060bf455cece0cb1e4a67b60d3924115a47102dc730d}
+  - {role: maxdet300_D1_detections, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D1/detections.jsonl, bytes: 1320827, sha256: 2f60711680025a0e3ef7ee9dc6ba45906eb63e4daeda9610fff5dd56108b0616}
+  - {role: maxdet300_D2_metrics, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D2/metrics.json, bytes: 2526, sha256: 102ade8be583ba5d444977b21525c5b4d3904b2f1f7ef6abdd203e66a6c83a4e}
+  - {role: maxdet300_D2_runtime, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D2/runtime_metadata.json, bytes: 774, sha256: 736f8fa9e6ae8ce29a94cf370e1f0117e639f88c00940c44767702ba33b5cc30}
+  - {role: maxdet300_D2_detections, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/D2/detections.jsonl, bytes: 763963, sha256: b3902ae14144aabf4267e4609f340813e0cf919d31e1551fecaee669883c7bc8}
+  - {role: maxdet1000_preflight, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/preflight.json, bytes: 1996, sha256: 3c93b4dcfa821ee8139d92b1f2a00ab8a243a71c97e341dfc027cafd5c09cd49}
+  - {role: maxdet1000_comparison, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/comparison.json, bytes: 9637, sha256: 1158267cee3521ee6b8fc057aecaf820f553c3e3a6a9cc7499d8573f60ddc356}
+  - {role: maxdet1000_runtime_table, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/model_runtime_table.csv, bytes: 394, sha256: 4c1ebcd72bf3375d296f39b4b12eed901888582a13529ea4ea539da10521d5df}
+  - {role: maxdet1000_D0_metrics, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D0/metrics.json, bytes: 2446, sha256: a3e0ef4ccec5e77ab8c3ae8ed1e2322fe55fb05cdbf3b9fd89e111f936aafe8d}
+  - {role: maxdet1000_D0_runtime, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D0/runtime_metadata.json, bytes: 700, sha256: f3829c0a20a51641f5cbb34a911223220db063b37637932a483898baa931bc16}
+  - {role: maxdet1000_D0_detections, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D0/detections.jsonl, bytes: 798500, sha256: fc4eb0b33352e04e6eff2eb0ac75ae832051e0d05eb7b3fac3578445fc60c008}
+  - {role: maxdet1000_D1_metrics, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D1/metrics.json, bytes: 2337, sha256: 27c14c5ee2f8343c2638ff7da4e9eadcefdc04fc970375c88762d518127bbafc}
+  - {role: maxdet1000_D1_runtime, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D1/runtime_metadata.json, bytes: 636, sha256: 863a76faecfc805cef19060bf455cece0cb1e4a67b60d3924115a47102dc730d}
+  - {role: maxdet1000_D1_detections, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D1/detections.jsonl, bytes: 4486610, sha256: 67f07c83954495386af66fe293dd4714c7b0bf127219bfa6c9075d5692d80871}
+  - {role: maxdet1000_D2_metrics, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D2/metrics.json, bytes: 2528, sha256: c857264912f447f85121edfadb1de1d23d6b43a69c9ecf9addb580af793b3d88}
+  - {role: maxdet1000_D2_runtime, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D2/runtime_metadata.json, bytes: 774, sha256: 736f8fa9e6ae8ce29a94cf370e1f0117e639f88c00940c44767702ba33b5cc30}
+  - {role: maxdet1000_D2_detections, root: external, path: outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/D2/detections.jsonl, bytes: 848923, sha256: 68defb34809359fd000ecbd635e9f1e996c2ec54522d41b42e2ab559da7863aa}
+  - {role: posthoc_preflight, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/preflight.json, bytes: 1492, sha256: 89ce82463070f87a0b48a61f3d3a35c56246487f152f3ed6085b31492950ce3d}
+  - {role: posthoc_count_comparison, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/count_comparison.json, bytes: 18897, sha256: 4f0ac0932dd7897ec90232499893da4be2054382e63e656d5bb7fec817630de7}
+  - {role: posthoc_runtime_table, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/count_runtime_table.csv, bytes: 152, sha256: aa4acd56f4ebcf5d9d892d10f06c7fde708559a0c3ef821566c85210505797cb}
+  - {role: posthoc_D0_metrics, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D0/metrics.json, bytes: 5386, sha256: 5c8b813453a69f6fc09d094d34fdf10bff4e0f3ac1b7bb08ab111449806d2a14}
+  - {role: posthoc_D0_predictions, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D0/count_predictions.csv, bytes: 3073, sha256: ecc64ff4e3412ada6e93c5ec81e7fc014fd94c03e91c6577153ce49b39f911ac}
+  - {role: posthoc_D0_detections, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D0/detections.jsonl, bytes: 1966581, sha256: 9be0156a66497abe4a151dc429ad7b7a2861443c8bf0a889ced3cca612c4cc03}
+  - {role: posthoc_D1_metrics, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D1/metrics.json, bytes: 5350, sha256: 52ce44b523af3cbc76af13ee15b7a3d8aba885af5a65f02291013db0861cd7f9}
+  - {role: posthoc_D1_predictions, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D1/count_predictions.csv, bytes: 3078, sha256: 0fad4d1392cdcefa12f687785eafa88beadb6f2281bb672cbc5420b2c7d4c38c}
+  - {role: posthoc_D1_detections, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D1/detections.jsonl, bytes: 4994948, sha256: 56169fe28a03a717694bb05249015de5a76c453b70983d7bf9b9514541181e8c}
+  - {role: posthoc_D2_metrics, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D2/metrics.json, bytes: 5498, sha256: 162d6e798217f36f770e12970312eb706c6a94a12da5d0d6f842eeb3f75c0a46}
+  - {role: posthoc_D2_predictions, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D2/count_predictions.csv, bytes: 3071, sha256: 613ece500e79e2af8262b7a4f034ee9c00c29634510db4dcb7f59c55aa6cba2b}
+  - {role: posthoc_D2_detections, root: external, path: outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/D2/detections.jsonl, bytes: 2188628, sha256: 71012cd17eb99ea5d56fd77f2832a36154bd00fbeda15f2c9b3fe107d5a244a0}
+result_summary:
+  corrected_development_maxdet300:
+    ranking: [D1, D2, D0]
+    D0: {precision: 0.636692, recall: 0.533793, mAP50: 0.599543, mAP50_95: 0.306720, cap_hits: 4}
+    D1: {precision: 0.885903, recall: 0.846057, mAP50: 0.906526, mAP50_95: 0.655770, cap_hits: 30}
+    D2: {precision: 0.790140, recall: 0.620690, mAP50: 0.740252, mAP50_95: 0.402945, cap_hits: 5}
+  maxdet1000:
+    ranking: [D1, D2, D0]
+    D0: {mAP50_95: 0.303723, cap_hits: 0}
+    D1: {mAP50_95: 0.652433, cap_hits: 30}
+    D2: {mAP50_95: 0.401724, cap_hits: 0}
+  posthoc_count_MAE:
+    common_threshold_0_10: {D0: 2.965812, D1: 3.452991, D2: 2.589744}
+    per_model_development_calibration: {D0: 2.965812, D1: 1.529915, D2: 2.589744}
+  boundary: Count MAE/RMSE are not detector mAP or parking-slot occupancy accuracy.

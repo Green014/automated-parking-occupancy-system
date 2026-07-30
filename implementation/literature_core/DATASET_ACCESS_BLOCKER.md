@@ -55,7 +55,7 @@ The access blocker is resolved, and `configs/temporal_protocol_pending.yaml`
 now validates as frozen and experiment-ready despite its compatibility
 filename. E4 and E5 were executed under
 `configs/temporal_e4_e5_frozen.yaml`. Both are negative case-study results:
-neither beat E0 on holdout, and E5 had zero vacant recall on development.
+neither beat T0 on holdout, and E5 had zero vacant recall on development.
 
 The remaining blocker is methodological rather than access-related:
 

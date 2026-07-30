@@ -1,7 +1,89 @@
 # Delivery File Manifest
 
-All implementation files below are new. No pre-existing baseline source,
-report, CSV, model, or output file was edited or overwritten.
+The original literature-core delivery files are listed below. Its initial
+creation did not overwrite the pre-existing baseline. The later baseline
+closure intentionally edits baseline source/documentation and is recorded in
+the addendum; no historical CSV, model, or frozen output was edited.
+
+## 26 July evaluation/baseline-closure addendum
+
+New cross-package files:
+
+- `../BASELINE_CLOSURE.md`
+- `../configs/baseline_methods.yaml`
+- `../src/parking_occupancy/method_registry.py`
+- `../tests/test_method_registry.py`
+- `../tests/test_pipeline_outputs.py`
+
+Updated implementation/evaluation files:
+
+- `../PLAN.md`
+- `../README.md`
+- `../src/parking_occupancy/cli.py`
+- `../src/parking_occupancy/pipeline.py`
+- `src/literature_core/metrics.py`
+- `scripts/evaluate_predictions.py`
+- `tests/test_metrics.py`
+- `README.md`
+- `RESULTS.md`
+- `METHOD_PROVENANCE.md`
+- `EXPERIMENT_PLAN.md`
+- `REPORT_SNIPPETS.md`
+- `DATASET_ACCESS_BLOCKER.md`
+- `FILE_MANIFEST.md`
+
+The addendum contains code, tests, configuration, and documentation only. It
+does not contain a recomputed experiment result.
+
+## 27 July Stage I-v2 and Stage J/K addendum
+
+- `../configs/detector_comparison_stage_i_v2_maxdet300_frozen_20260727.yaml`
+- `../configs/detector_comparison_stage_i_v2_maxdet1000_frozen_20260727.yaml`
+- `../configs/stage_i_v2_posthoc_count_frozen_20260727.yaml`
+- `../data/STAGE_I_V2_CORRECTED_EVALUATION_REPORT.md`
+- `../data/comparisons/stage_i_v2_corrected_evaluation_20260727.yaml`
+- `../scripts/verify_stage_i_v2_artifacts.py`
+- `../configs/stage_j_p0_p1_p2_pklot_development_frozen_20260727.yaml`
+- `../data/manifests/stage_j_pklot_development_20260727.csv`
+- `../data/STAGE_J_K_OCCUPANCY_REPORT.md`
+- `../data/comparisons/stage_j_p0_p1_p2_development_20260727.yaml`
+- `../data/comparisons/stage_k_slot_occupancy_data_gate_20260727.yaml`
+- `../src/parking_occupancy/stage_j_occupancy.py`
+- `../scripts/run_stage_j_occupancy.py`
+- `../scripts/verify_stage_j_artifacts.py`
+- `../tests/test_stage_j_occupancy.py`
+
+Generated Stage I-v2 and Stage J outputs remain under ignored
+`../outputs/` directories. No v1 output, weight or raw dataset is included.
+
+## 28 July Stage K closure addendum
+
+- `../configs/stage_k_p0_p1_p2_pklot_test_frozen_20260727.yaml`
+- `../configs/stage_k_posthoc_stratified_analysis_frozen_20260728.yaml`
+- `../data/annotations/pklot_stage_k_candidate_20260727_v2.jsonl`
+- `../data/manifests/pklot_stage_k_candidate_20260727_v2.csv`
+- `../data/preprocessing/pklot_stage_k_candidate_audit_20260727_v2.json`
+- `../data/preprocessing/pklot_stage_k_manual_visual_review_20260727_v2.json`
+- `../data/comparisons/stage_k_slot_occupancy_data_gate_20260728_v2.yaml`
+- `../data/comparisons/stage_k_p0_p1_p2_test_20260727.yaml`
+- `../data/comparisons/stage_k_posthoc_stratified_analysis_20260728.yaml`
+- `../data/STAGE_K_FINAL_REPORT.md`
+- `../src/parking_occupancy/stage_k_data_gate.py`
+- `../src/parking_occupancy/stage_k_occupancy.py`
+- `../src/parking_occupancy/stage_k_stratified_analysis.py`
+- `../scripts/freeze_stage_k_data_gate_v2.py`
+- `../scripts/verify_stage_k_data_gate_v2.py`
+- `../scripts/verify_stage_k_artifacts.py`
+- `../scripts/verify_stage_k_strata_artifacts.py`
+- `../tests/test_stage_k_data_gate.py`
+- `../tests/test_stage_k_occupancy.py`
+- `../tests/test_stage_k_stratified_analysis.py`
+
+Generated Stage K predictions remain under ignored
+`../outputs/P0_P1_P2_stage_k_20260727_v1/`. The read-only date/weather
+outputs remain under ignored `../outputs/stage_k_posthoc_strata_20260728_v1/`.
+The registries bind those outputs by byte count and SHA-256; no model output
+is copied into the tracked source tree.
 
 ## Documentation and packaging
 
@@ -98,6 +180,32 @@ report, CSV, model, or output file was edited or overwritten.
 - `tests/test_temporal_tracking.py`
 - `tests/test_detector_tracking.py`
 - `tests/test_virat_access.py`
+- `../src/parking_occupancy/gpu_decision.py`
+- `../scripts/analyze_gpu_decision.py`
+- `../tests/test_gpu_decision.py`
+- `../tests/test_gpu_decision_freeze.py`
+- `../configs/d1_ndispark_formal_frozen_20260727.yaml`
+- `../data/GPU_DECISION_REPORT.md`
+- `../data/training/d1_gpu_decision_20260727.yaml`
+- `../data/training/D1_GPU_DECISION_FROZEN_CHECKSUMS.yaml`
+- `../src/parking_occupancy/formal_training.py`
+- `../scripts/run_d1_formal.py`
+- `../scripts/finalize_d1_formal.py`
+- `../scripts/verify_d1_formal_artifacts.py`
+- `../tests/test_formal_training.py`
+- `../tests/test_formal_training_freeze.py`
+- `../data/D1_FORMAL_TRAINING_REPORT.md`
+- `../data/training/d1_formal_training_20260727.yaml`
+- `../data/training/D1_FORMAL_TRAINING_FROZEN_CHECKSUMS.yaml`
+- `../configs/stage_i_count_test_frozen_20260727.yaml`
+- `../src/parking_occupancy/stage_i_evaluation.py`
+- `../scripts/run_stage_i_evaluation.py`
+- `../scripts/verify_stage_i_artifacts.py`
+- `../tests/test_stage_i_evaluation.py`
+- `../data/DETECTOR_EVALUATION_REPORT.md`
+- `../data/comparisons/stage_i_detector_evaluation_20260727.yaml`
+- `../data/comparisons/stage_i_timestamp_correction_20260727.yaml`
+- `../data/comparisons/STAGE_I_FROZEN_CHECKSUMS.yaml`
 
 ## External-data manifest
 
@@ -162,6 +270,25 @@ report, CSV, model, or output file was edited or overwritten.
 - `outputs/virat_temporal_case_study_holdout_20260726_v1/`
 - `outputs/temporal_case_study_freeze_audit_20260726_v1/`
 - `outputs/temporal_case_study_freeze_audit_20260726_v2/`
+- `../outputs/d1_ndispark_smoke_20260727_v1/`
+- `../outputs/d1_ndispark_smoke_20260727_v2/`
+- `../outputs/d1_ndispark_smoke_20260727_v3/`
+- `../outputs/gpu_decision_20260727_v1.json`
+- `../outputs/d1_ndispark_formal_20260727_v1/`
+- `../outputs/d1_formal_launcher_stdout_20260727_v1.log`
+- `../outputs/d1_formal_launcher_stderr_20260727_v1.log`
+- `../outputs/d1_formal_training_verification_20260727_v1.json`
+- `../outputs/detector_comparison_stage_i_20260727_v1/`
+- `../outputs/stage_i_detector_selection_20260727_v1.json`
+- `../outputs/detector_count_test_stage_i_20260727_v1/`
+- `../outputs/detector_count_test_stage_i_20260727_v2/`
+- `../outputs/detector_qualitative_stage_i_20260727_v1/`
+- `../outputs/stage_i_artifact_verification_20260727_v1.json`
+- `../outputs/detector_comparison_stage_i_v2_maxdet300_20260727_v2/`
+- `../outputs/detector_comparison_stage_i_v2_maxdet1000_20260727_v1/`
+- `../outputs/detector_count_test_stage_i_v2_posthoc_20260727_v1/`
+- `../outputs/P0_P1_P2_stage_j_20260727_v1/`
+- `../outputs/stage_j_artifact_verification_20260727_v1.json`
 - `outputs/virat_screening*/`
 - `outputs/virat_review_*/`
 - `outputs/virat_grid_*/`

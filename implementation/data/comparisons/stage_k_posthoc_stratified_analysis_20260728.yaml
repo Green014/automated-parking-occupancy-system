@@ -1,0 +1,65 @@
+schema_version: 1
+record_id: P-COMP-PKLOT-TEST-STAGEK-STRATA-POSTHOC-RECORD-20260728-01
+protocol_id: P-COMP-PKLOT-TEST-STAGEK-STRATA-POSTHOC-20260728-01
+status: frozen_after_read_only_posthoc_analysis
+frozen_at_utc: '2026-07-28T00:16:57.152466+00:00'
+data_role: untouched_test_already_evaluated
+predictions_run: false
+parameters_selected: false
+detector_reselected: false
+D1_retrained: false
+artifact_count: 9
+summary:
+  dates:
+  - '2012-09-15'
+  - '2013-01-16'
+  - '2013-04-14'
+  weather:
+  - cloudy
+  - sunny
+artifacts:
+- role: protocol
+  root: source
+  path: configs/stage_k_posthoc_stratified_analysis_frozen_20260728.yaml
+  bytes: 1744
+  sha256: 794a089633c3835f46f79f324c05a3888a41ae8c4fd6708cbc0f366b0ea3247e
+- role: stage_k_result_record
+  root: source
+  path: data/comparisons/stage_k_p0_p1_p2_test_20260727.yaml
+  bytes: 19563
+  sha256: 3a2b878791255a9f0a21a895cbcff88233636867f70ececc4244f8281d5d5cbe
+- role: P0_occupancy
+  root: external
+  path: outputs/P0_P1_P2_stage_k_20260727_v1/P0/occupancy.csv
+  bytes: 584656
+  sha256: 5a0a58f52855ff3dd0096940389e03a99db411c90c5d7c6145884460cdb82545
+- role: P1_occupancy
+  root: external
+  path: outputs/P0_P1_P2_stage_k_20260727_v1/P1/occupancy.csv
+  bytes: 584656
+  sha256: 2b582c0f2a28ae70c6233fef5567c760ea599f53dcaa2e560eadab7093319f79
+- role: P2_occupancy
+  root: external
+  path: outputs/P0_P1_P2_stage_k_20260727_v1/P2/occupancy.csv
+  bytes: 584656
+  sha256: 89d7629ab17e244563e8b0d692e27f7ba1ac0097dad25fcf05d9f602b11a9b91
+- role: preflight
+  root: external
+  path: outputs/stage_k_posthoc_strata_20260728_v1/preflight.json
+  bytes: 728
+  sha256: 12cbb333acba31a4710d672c9bcd8b24e99e3b465a4c02fc2115a5ba967873fd
+- role: analysis
+  root: external
+  path: outputs/stage_k_posthoc_strata_20260728_v1/analysis.json
+  bytes: 11784
+  sha256: bbbf1822f120701b303c988e3531af582066c0e2d4986c88b8486e636d82a89a
+- role: date_metrics
+  root: external
+  path: outputs/stage_k_posthoc_strata_20260728_v1/date_metrics.csv
+  bytes: 1490
+  sha256: ef976dff0ca4a7cbe50d917a93ac4e78f011d45362c4fa29bb6ce65d4cde763b
+- role: weather_metrics
+  root: external
+  path: outputs/stage_k_posthoc_strata_20260728_v1/weather_metrics.csv
+  bytes: 1016
+  sha256: 2aa7ac315e08f9810f7b6b3a021b0fecd47d1d6650325f60e7c765c9138913f8

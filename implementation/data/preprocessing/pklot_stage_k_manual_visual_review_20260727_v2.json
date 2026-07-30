@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "review_id": "P-COMP-PKLOT-TEST-STAGEK-VISUAL-REVIEW-20260727-02",
+  "candidate_id": "P-COMP-PKLOT-TEST-STAGEK-CANDIDATE-20260727-02",
+  "reviewed_at": "2026-07-27T23:40:10.7034189+08:00",
+  "review_scope": {
+    "images": 90,
+    "raw_contact_sheet_images_reviewed": 90,
+    "truth_overlay_images_reviewed": 90
+  },
+  "inputs": {
+    "candidate_audit": {
+      "path": "pklot_stage_k_candidate_audit_20260727_v2.json",
+      "bytes": 2528,
+      "sha256": "173b100688965e41eaf6b13131c56344d27ffb84420fd1b786a055d97ef4fcec"
+    },
+    "raw_contact_sheet": {
+      "external_artifact_name": "stage_k_pklot_candidate_contact_sheet_20260727_v2.png",
+      "bytes": 4633410,
+      "sha256": "6ecef306565dfb919e21331a713ae5ab595a7bee24d09409354e128c8e10685c"
+    },
+    "truth_overlay_contact_sheet": {
+      "external_artifact_name": "stage_k_pklot_truth_contact_sheet_20260727_v2.png",
+      "bytes": 4610203,
+      "sha256": "1374f253bbd0850a951ba90e09fc5ff9e598bca84b28bf2227c20a335b2315be",
+      "legend": {
+        "occupied": "red",
+        "vacant": "green",
+        "unknown": "yellow"
+      }
+    }
+  },
+  "checks": {
+    "all_images_decode": "pass",
+    "fixed_camera_within_each_camera_date_group": "pass",
+    "stable_parking_layout_within_each_group": "pass",
+    "real_parking_scenes_not_synthetic": "pass",
+    "no_blank_or_visibly_corrupt_frames": "pass",
+    "occupied_and_vacant_intervals_visible": "pass",
+    "official_xml_polygons_visibly_align_with_slots": "pass",
+    "official_xml_occupancy_labels_visibly_align_with_vehicles": "pass",
+    "weather_and_illumination_variation_present": "pass"
+  },
+  "observations": [
+    "PUCPR spans early morning through evening with large occupancy changes and strong illumination variation.",
+    "UFPR04 contains tree occlusion and a clear occupied-to-vacant progression.",
+    "UFPR05 contains dense angled parking and partial tree occlusion.",
+    "Six unknown slot labels are retained in source annotations and must be excluded from metrics."
+  ],
+  "selection_disclosure": {
+    "camera_date_groups_selected_using_official_truth_distribution": true,
+    "membership_within_groups_selected_using_truth_labels": false,
+    "membership_rule": "timestamp-sorted evenly spaced sampling",
+    "model_predictions_or_outputs_viewed": false,
+    "threshold_or_mapping_selection_from_candidate": false
+  },
+  "decision": "pass_for_protocol_freeze_before_predictions"
+}

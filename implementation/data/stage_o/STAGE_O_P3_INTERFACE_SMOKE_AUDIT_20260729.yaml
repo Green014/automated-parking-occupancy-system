@@ -1,0 +1,43 @@
+schema_version: 1
+protocol_id: STAGE-O-LOW-LIGHT-DETECTOR-ADAPTATION-20260729-01
+claim_scope: interface_smoke_only
+accuracy_or_occupancy_improvement_claim: false
+selected_detector:
+  role: D1-LL
+  method: O3
+  weights_sha256: 99b658bba0ef117d3206b85fc982c81cc0b94839932bfb9e99780027bab1c5da
+attempts:
+  - id: stage_o_p3_D1_LL_interface_smoke_20260729_v1
+    status: blocked_before_integrated_frame_processing
+    evidence:
+      - Unicode-unsafe OpenCV warning on the external source-image path
+      - Ultralytics roaming-profile configuration directory was not writable
+    generated_input_retained: implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v1
+    output_directory_created: false
+    reported_result: false
+  - id: stage_o_p3_D1_LL_interface_smoke_20260729_v2
+    status: completed
+    compatibility_correction:
+      - use the existing Unicode-safe image reader
+      - direct Ultralytics mutable settings to the additive smoke input root
+    generated_input: implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v2
+    output: implementation/outputs/stage_o_p3_D1_LL_interface_smoke_20260729_v2
+    frames: 4
+    slots: 5
+    truth_supplied: false
+    parameter_selection_from_run: false
+    tracker_backend: none
+    temporal_enabled: true
+    metrics_status: not_computed_no_truth
+    output_contract:
+      - occupancy.csv
+      - events.csv
+      - detections.jsonl
+      - annotated.mp4
+      - metrics.json
+      - summary.json
+      - runtime_metadata.json
+boundaries:
+  b1_e1b_f2_e4_frozen: true
+  virat_0502_reused: false
+  nighttime_occupancy_claim: false

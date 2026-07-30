@@ -44,7 +44,7 @@ configuration.
 | E3a | E1a + YOLO-World | Raw weighted evidence fusion | None | Historical fusion baseline |
 | E3b | E1a + YOLO-World | Separately calibrated, non-negative logistic fusion | None | Proposed interpretable unified fusion |
 | E4 | Frozen E3b | Calibrated fusion | EMA/hysteresis | Executed as a two-sequence departure case study; negative external result |
-| E5 | YOLOv8n + ByteTrack | Track-to-slot gate | Stationary/moving and dwell rules | Executed as a two-sequence departure case study; did not beat E0 |
+| E5 | YOLOv8n + ByteTrack | Track-to-slot gate | Stationary/moving and dwell rules | Executed as a two-sequence departure case study; did not beat T0 raw comparator |
 
 Detector-level domain check (separate from E0-E5 slot metrics):
 
@@ -133,7 +133,7 @@ identity, hash, polygon, truth, and `temporal_e4_e5_frozen.yaml` were locked
 before any model output was inspected. Official `XXYY` scene grouping remains
 mandatory; six-digit `XXYYZZ` sequence prefixes are never independent folds.
 
-E4 and E5 were then executed without retuning. Neither exceeded E0 on the
+E4 and E5 were then executed without retuning. Neither exceeded T0 on the
 holdout, and E5 had zero vacant recall on development. Therefore the
 detector-primary/classifier-fallback Fusion V2 gate remains closed. No
 Grand Bassin, CNR-EXT, repeated still image, or unlicensed video was substituted
@@ -163,3 +163,48 @@ for this result.
   truth without one complete marked bay and a human-visible arrival/departure.
 - Failure to download a checkpoint is an environment limitation, not an
   algorithm result.
+
+## D1 formal-training resource gate
+
+`GPU-GATE-NDISPARK-D1-20260727-01` passed from the executed Stage F evidence
+without training or prediction. The selected formal experiment is
+`D1-NDISPARK-FT-20260727-01`: fresh COCO-pretrained YOLOv8n, NDISPark official
+train plus consumed development validation, image size 640, physical batch 4,
+nominal batch 64, 16 post-warm-up accumulation steps, 50 maximum epochs,
+patience 10, and seed 20260727.
+
+The local 6 GiB RTX 3060 is selected. Paid/remote GPU use, A100 use, batch 8,
+larger image sizes, additional seeds, and hyperparameter search are outside
+this frozen run. NDISPark count-only test, CNR-EXT, PKLot, and VIRAT remain
+unavailable to training and epoch selection.
+
+Stage H outcome: the one frozen seed completed 47 epochs and stopped under
+patience 10. Epoch 37 is the selected D1 checkpoint. The initial runner's
+post-run resource callback audit failed after training completed and is
+retained; existing artifacts were recovered without retraining.
+
+Stage I outcome: D1 was selected on consumed development validation before
+test prediction, using mAP@0.5:0.95 and recall. One confidence of 0.10 was
+selected from the declared development grid by aggregate D0/D1/D2 count MAE
+and frozen for all three models. On the count-only test D2 had the lowest MAE;
+this negative D1 result is retained without post-test threshold or detector
+changes. The test has no box truth, so no test detector mAP or FP/FN box claim
+is permitted.
+
+Stage I-v2 retained v1, corrected class merging with class-agnostic NMS,
+calibrated each detector on the same development grid, and retained
+`max_det=300` after a 300/1000 development sensitivity check.
+
+Stage J then froze `P-COMP-PKLOT-DEV-STAGEJ-20260727-01` before prediction and
+connected D0/D1/D2 to the same B1 geometry and logging contract. P0/P1/P2
+used the Stage I-v2 development thresholds without slot-truth selection.
+Their consumed-development Macro F1 values were 0.768040, 0.825723 and
+0.735168. All negative errors and the cold-start runtime confound are
+retained.
+
+The original Stage K local-inventory blocker is retained. An additive v2 gate
+later admitted 90 complete PKLot JPG/XML pairs from three previously unused
+camera/date groups, with zero image-hash overlap against Stage J. The frozen
+P0/P1/P2 test was executed once on 5,034 known slot labels. Its output may not
+be used for threshold changes, detector reselection or a new fusion
+development cycle.

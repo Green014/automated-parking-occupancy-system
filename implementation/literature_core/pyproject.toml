@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "literature-core-parking"
 version = "0.1.0"
 description = "Literature-aligned parking slot classification and detection fusion"
+license = "AGPL-3.0-only"
 requires-python = ">=3.10,<3.14"
 dependencies = [
   "numpy>=1.26,<3",
@@ -28,5 +29,5 @@ where = ["src"]
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = [".", "src"]
 

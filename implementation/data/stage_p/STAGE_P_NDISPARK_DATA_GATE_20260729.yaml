@@ -1,0 +1,35 @@
+schema_version: 1
+gate_id: STAGE-P-NDISPARK-DATA-GATE-20260729-01
+protocol_id: STAGE-P-PARKING-DOMAIN-RETENTION-20260729-01
+status: PASS_FOR_RETROSPECTIVE_DETECTOR_AND_COUNT_DIAGNOSTICS
+formal_final_test: false
+dataset: NDISPark-1.0
+license: ODC-By-1.0
+source_archive_sha256: 87ca20dfe5e5a5659a9a41e03724fdc38eed050de6ed6742995955fc0bd785c0
+local_audit:
+  train: {images: 112, labels: 112, boxes: 2577, lighting: daylight}
+  validation: {images: 30, labels: 30, boxes: 725, lighting: night}
+  test: {images: 117, labels: 0, vehicle_count_sum: 1402, lighting: night}
+  missing_images: 0
+  exact_cross_split_duplicate_images: 0
+truth_capabilities:
+  daytime_boxes: true
+  night_validation_boxes: true
+  night_test_counts: true
+  night_test_boxes: false
+  parking_slot_polygons: false
+  per_slot_occupancy: false
+  per_frame_transition_truth: false
+data_roles:
+  train: training_resubstitution_diagnostic
+  validation: consumed_development_diagnostic
+  test: consumed_posthoc_count_diagnostic
+execution_allowed:
+  D1_vs_D1_LL_same_settings_box_comparison: true
+  D1_vs_D1_LL_same_settings_count_comparison: true
+  P3_D1_vs_P3_LL_occupancy_comparison: false
+boundaries:
+  ignored_class_suppression: false
+  standard_COCO_AP_claim: false
+  occupancy_improvement_claim: false
+  threshold_reselection: false

@@ -1,0 +1,27 @@
+schema_version: 1
+clarification_id: STAGE-O-PROTOCOL-TIMESTAMP-CLARIFICATION-20260729-01
+protocol_id: STAGE-O-LOW-LIGHT-DETECTOR-ADAPTATION-20260729-01
+status: additive_metadata_clarification
+original_files_modified: false
+issue: >-
+  The created_at value 2026-07-29T18:00:00+08:00 in the frozen YAML was a
+  nominal same-day record label and is not the actual wall-clock freeze time.
+  It is later than the file's observed final write and must not be used as
+  execution chronology.
+observed_local_filesystem_chronology:
+  O1_internal_selection_final_write: "2026-07-29T14:48:32+08:00"
+  frozen_config_final_write: "2026-07-29T14:49:18+08:00"
+  protocol_markdown_final_write: "2026-07-29T14:49:19+08:00"
+  data_manifest_final_write: "2026-07-29T14:49:28+08:00"
+  O0_formal_metrics_write: "2026-07-29T15:18:28+08:00"
+  O1_formal_metrics_write: "2026-07-29T15:29:57+08:00"
+  O3_formal_metrics_write: "2026-07-29T15:37:56+08:00"
+freeze_before_formal_metrics: true
+frozen_config:
+  bytes: 7429
+  sha256: 370ea667dc32fe0dd2f2d231305d61267c9c79ccc41444c1cdceee2eb4788e6e
+formal_config_snapshots:
+  semantic_equality_to_frozen_config: true
+  serialized_snapshot_sha256: 64aed0aa33018582fa2add17cb1bd555b4bcb7690e993c95143268d731e2f35b
+  methods_checked: [O0, O1, O2_v7, O3]
+selection_rule_or_result_changed: false

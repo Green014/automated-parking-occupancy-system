@@ -1,0 +1,87 @@
+schema_version: 1
+config_id: P3-TT-OPTIONAL-TRACKTRACK-20260729-01
+method_id: P3
+variant_id: P3-TT
+method_name: D1 + TrackTrack + B1 + F2 optional identity-enhanced variant
+status: frozen_for_stage_t_consumed_development_diagnostic
+frozen_on: "2026-07-29"
+
+parameter_provenance:
+  source: p3_stage_r_recommended_default_20260729.yaml
+  source_sha256: 198f627689cd93f66ca0f087af6686d3afc697ff51e2aa77ee56124187b981b0
+  tracktrack_source: tracktrack_stage_m_frozen_20260728.yaml
+  tracktrack_source_sha256: 54a158728a3dd41b523c7d9054fa0e187548075f563adb71c5db72e797328f37
+  threshold_reselection: prohibited
+  tracker_parameter_reselection: prohibited
+  model_retraining: prohibited
+  stage_s_default_replacement: prohibited
+
+detector:
+  id: D1
+  role: stage_s_default_detector_unchanged
+  confidence: 0.30
+  image_size: 640
+  class_ids: [0]
+  nms_iou: 0.70
+  agnostic_nms: true
+  max_detections: 300
+
+mapping:
+  id: B1
+  mode: overlap
+  minimum_slot_coverage: 0.40
+  one_to_one: true
+
+classifier:
+  id: E1b
+  occupied_threshold: 0.76
+  patch_size: [224, 224]
+  perspective_warp: true
+  detector_negative_slots_only: true
+
+fusion:
+  id: F2
+  mode: asymmetric_uncertainty_gate
+  detector_positive_is_occupied: true
+  classifier_reviews_detector_negative_only: true
+
+temporal:
+  id: E4
+  default_enabled: false
+  availability: excluded_from_stage_t_TT0_TT1_comparison
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+  raw_threshold: 0.76
+  stable_frames_for_evaluation: 3
+
+tracking:
+  default_backend: tracktrack
+  availability: explicit_optional_variant_only
+  bytetrack:
+    config_path: bytetrack_stage_m_frozen_20260728.yaml
+    config_sha256: 9c46e5796711065c1e3e2784f9ed2c2775833801c01b1a548c0ee0b092331f1f
+  tracktrack:
+    config_path: tracktrack_stage_m_frozen_20260728.yaml
+    config_sha256: 54a158728a3dd41b523c7d9054fa0e187548075f563adb71c5db72e797328f37
+
+claims:
+  data_role: consumed_development_diagnostic_only
+  deployment_ready: false
+  replaces_stage_s_default: false
+  tracktrack_occupancy_improvement_claimed: false
+  occupancy_improvement_formal_conclusion: blocked_without_new_continuous_parking_truth
+
+output:
+  codec: mp4v
+  root_must_not_exist: true
+  files:
+    - occupancy.csv
+    - events.csv
+    - detections.jsonl
+    - tracks.jsonl
+    - annotated.mp4
+    - metrics.json
+    - summary.json
+    - runtime_metadata.json

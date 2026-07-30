@@ -1,0 +1,10 @@
+schema_version: 1
+registry_id: D-STAGE-I-FREEZE-NDISPARK-20260727-01
+frozen_at: "2026-07-27T18:40:00+08:00"
+artifacts:
+  - path: data/comparisons/stage_i_detector_evaluation_20260727.yaml
+    bytes: 10088
+    sha256: a8e267e9061b11ec084912c4a25a1314460d1f8b1275da3cf6f50688496ee2f3
+  - path: data/comparisons/stage_i_timestamp_correction_20260727.yaml
+    bytes: 1640
+    sha256: f01152783107f96c24fde784c9d6590b59628db1dfd2b4d7b20b921db8a7c0c3

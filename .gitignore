@@ -1,11 +1,14 @@
 # Python environments and caches
 **/.venv/
+implementation/.venv_*/
 **/__pycache__/
 **/.pytest_cache/
 *.py[cod]
 .coverage
 htmlcov/
 *.egg-info/
+**/build/
+**/dist/
 
 # Runtime/model caches and generated experiment artifacts
 **/.ultralytics/
@@ -25,6 +28,10 @@ tmp/
 # Downloaded or generated datasets; keep manifests and compact manual labels
 implementation/data/raw/
 implementation/data/processed/
+implementation/data/external/stage_q_upm_gti_20260729/
+implementation/data/external/
+implementation/data/external/stage_o_training_*/
+implementation/data/external/*.partial/
 implementation/data/research_samples/**/*.jpg
 implementation/data/research_samples/**/*.jpeg
 implementation/data/research_samples/**/*.png

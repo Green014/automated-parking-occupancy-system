@@ -1,0 +1,110 @@
+schema_version: 1
+registry_id: STAGE-V-MULTI-BACKEND-INTEGRATION-20260730-01
+stage: V
+stage_name: Multi-Backend Occupancy Integration
+created_on: "2026-07-30"
+status: local_implementation_and_smoke_complete_public_release_gated
+
+reference_audit:
+  repository: https://github.com/prestzy/OpenCV-Car-Parking
+  commit: 12271576be39a4ac0eb456526eca122685799e8c
+  license_file_present: false
+  direct_code_reuse: false
+  direct_model_reuse: false
+
+frozen_model_requirements:
+  D1:
+    bytes: 6255409
+    sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+    verified_for_smoke: true
+    included_in_repository: false
+  E1b:
+    bytes: 8045704
+    sha256: f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3
+    verified_for_smoke: true
+    included_in_repository: false
+
+registered_source_artifacts:
+  - path: src/parking_occupancy/stage_v.py
+    bytes: 23705
+    sha256: 9e4d061b30ad411715c9c98f9f739e0480ab1fdf8628e742008010bb5cc4cd3c
+  - path: src/parking_occupancy/stage_v_runner.py
+    bytes: 40293
+    sha256: 5f45035f6e1b9183ac5ec92805c478c1d0d6013ecca1554e10842115c417e7f0
+  - path: scripts/run_stage_v_multimode_demo.py
+    bytes: 90
+    sha256: dcaac732698f07db848b80c926db3480ee721b00dd3abd746ff3a41bd25a48c3
+  - path: tests/test_stage_v_multimode.py
+    bytes: 12306
+    sha256: 23a3b46f81ba8b761fb602ed80e5171f4fc639aac72d955410cc9a1aeca02ee0
+  - path: data/STAGE_V_INTEGRATION_AUDIT.md
+    bytes: 4920
+    sha256: 198303f8b3c277fbd234912eaa672b0cca5615aaa170628e5c165cfa84ae937d
+  - path: data/STAGE_V_MULTI_BACKEND_REPORT.md
+    bytes: 6506
+    sha256: d6b536eee008896d67ad1b43f82401c54b49f8ce701e71122763b72d8ba1081e
+  - path: data/STAGE_V_METHOD_PROVENANCE.md
+    bytes: 3286
+    sha256: 291e4c96170e6968f8fd8ebabf8550bff8056d0a77fc511654a48a6da5bbf1a9
+  - path: data/STAGE_V_REPRODUCTION_GUIDE.md
+    bytes: 3270
+    sha256: be73a116b344228328a1c11d17ad803206abbf4fde04f68d236cfc1520ec92b5
+
+smoke_input:
+  data_role: consumed_demonstration
+  truth_supplied: false
+  video:
+    path: data/stage_o/p3_interface_smoke_inputs_20260729_v2/input.mp4
+    bytes: 131984
+    sha256: 60ef00313102fa990be57041ef0d37a3ceec8e9125ce9cb30197cc12acf047a4
+  slots:
+    path: data/stage_o/p3_interface_smoke_inputs_20260729_v2/slots.json
+    bytes: 1546
+    sha256: e7b05a7fe6c6e10ceb8e9f5ea3900e215c91fd157a62f0813644ff6f69487d48
+
+smoke_outputs:
+  root: outputs/stage_v_multimode_smoke_20260730_v3
+  availability: local_ignored_runtime_output
+  frames: 4
+  slots: 5
+  slot_frame_rows_per_mode: 20
+  accuracy_metrics_computed: false
+  transition_metrics_computed: false
+  tracking_enabled: false
+  temporal_enabled: false
+  comparison:
+    path: outputs/stage_v_multimode_smoke_20260730_v3/comparison.json
+    bytes: 846
+    sha256: a363b0abd07d9118a13a3e19ccc098072c717aad7097a9a08983d029cb558b47
+  method_metrics:
+    path: outputs/stage_v_multimode_smoke_20260730_v3/method_metrics.csv
+    bytes: 361
+    sha256: 36cf4b269948f9d1f415dada72e8423aaf2110530ecc17c791d53e0c1c21e950
+  runtime_comparison:
+    path: outputs/stage_v_multimode_smoke_20260730_v3/runtime_comparison.csv
+    bytes: 450
+    sha256: eee08f516013e4cbc25c687b50ae9f758fe6b4a9768e5f6633e18d8ed1faea8b
+  annotated_videos:
+    classic:
+      path: outputs/stage_v_multimode_smoke_20260730_v3/classic/annotated.mp4
+      bytes: 131651
+      sha256: e458e1a839af79e0e8dd9902cf8b41551b041e5113a5f0bba6d5f79bb1468d01
+    detection:
+      path: outputs/stage_v_multimode_smoke_20260730_v3/detection/annotated.mp4
+      bytes: 206496
+      sha256: 9b746af5d4dd666403197293944da5e17ab3d0360dda6061b8c34f08caaa60bc
+    fusion:
+      path: outputs/stage_v_multimode_smoke_20260730_v3/fusion/annotated.mp4
+      bytes: 207058
+      sha256: b54a0d5f604cb50133ff9c8b4c88dcb0566c60027fac09613c23169632267e00
+
+claims:
+  default_mode: fusion
+  teaching_or_engineering_baseline: classic
+  tracking_used_in_smoke: false
+  quantitative_accuracy_claim_created: false
+  public_release_recommended_now: false
+  blockers:
+    - missing_top_level_project_license
+    - unresolved_ultralytics_agpl_or_enterprise_release_boundary
+    - reference_repository_has_no_license_for_direct_reuse

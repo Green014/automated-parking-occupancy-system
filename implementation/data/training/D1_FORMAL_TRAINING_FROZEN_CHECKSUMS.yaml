@@ -1,0 +1,7 @@
+schema_version: 1
+registry_id: D1-NDISPARK-FORMAL-FREEZE-20260727-01
+frozen_at: "2026-07-27T20:34:57.9769996+08:00"
+artifacts:
+  - path: data/training/d1_formal_training_20260727.yaml
+    bytes: 8272
+    sha256: 4dc2a2d066ee7535fa23dc6083d97aafa003042fa94c47b3d285ffbf548e8244

@@ -1,0 +1,2809 @@
+{
+  "schema_version": 1,
+  "protocol_id": "STAGE-S-FINAL-DEFAULT-AND-DEMO-20260729-01",
+  "status": "PASS",
+  "candidate_files": 554,
+  "candidate_bytes": 36235423,
+  "category_summary": {
+    "other": {
+      "files": 18,
+      "bytes": 2949019
+    },
+    "documentation_or_compact_evidence": {
+      "files": 127,
+      "bytes": 2464825
+    },
+    "code_or_configuration": {
+      "files": 397,
+      "bytes": 5207520
+    },
+    "presentation_artifact": {
+      "files": 12,
+      "bytes": 25614059
+    }
+  },
+  "required_gitignore_patterns": [
+    "implementation/.venv_*/",
+    "implementation/data/external/stage_o_training_*/",
+    "implementation/data/external/*.partial/"
+  ],
+  "forbidden_content": {
+    "model_weights": false,
+    "datasets": false,
+    "virtual_environments": false,
+    "outputs": false
+  },
+  "violations": [],
+  "records": [
+    {
+      "path": ".gitignore",
+      "bytes": 1112,
+      "category": "other"
+    },
+    {
+      "path": "implementation/.gitignore",
+      "bytes": 148,
+      "category": "other"
+    },
+    {
+      "path": "implementation/BASELINE_CLOSURE.md",
+      "bytes": 4819,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/configs/baseline_methods.yaml",
+      "bytes": 3569,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/bytetrack_parking.yaml",
+      "bytes": 355,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/bytetrack_parking_lowconf.yaml",
+      "bytes": 359,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/bytetrack_stage_m_frozen_20260728.yaml",
+      "bytes": 345,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/d1_ndispark_formal_frozen_20260727.yaml",
+      "bytes": 3017,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/detector_comparison_frozen_20260727.yaml",
+      "bytes": 4892,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/detector_comparison_stage_i_v2_maxdet1000_frozen_20260727.yaml",
+      "bytes": 4867,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/detector_comparison_stage_i_v2_maxdet300_frozen_20260727.yaml",
+      "bytes": 5682,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/ndispark_only_dataset_frozen_20260727.yaml",
+      "bytes": 6303,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/p1_b1_virat_0502_continuous_case_frozen_20260727.yaml",
+      "bytes": 3862,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/p3_integrated_runtime_defaults_20260729.yaml",
+      "bytes": 1498,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/p3_stage_r_recommended_default_20260729.yaml",
+      "bytes": 2236,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_i_count_test_frozen_20260727.yaml",
+      "bytes": 3160,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_i_v2_posthoc_count_frozen_20260727.yaml",
+      "bytes": 3849,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_j_p0_p1_p2_pklot_development_frozen_20260727.yaml",
+      "bytes": 3596,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_j_posthoc_layered_analysis_frozen_20260727.yaml",
+      "bytes": 2465,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_k_p0_p1_p2_pklot_test_frozen_20260727.yaml",
+      "bytes": 6302,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_k_posthoc_stratified_analysis_frozen_20260728.yaml",
+      "bytes": 1744,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_l_integrated_workflow_frozen_20260728.yaml",
+      "bytes": 6268,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_m_open_source_tracking_frozen_20260728.yaml",
+      "bytes": 6663,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_n_lmot_tracking_diagnostic_frozen_20260728.yaml",
+      "bytes": 6110,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_n_v2_lmot_tracking_diagnostic_frozen_20260729.yaml",
+      "bytes": 7062,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_o_low_light_adaptation_frozen_20260729.yaml",
+      "bytes": 7429,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_p_parking_domain_retention_frozen_20260729.yaml",
+      "bytes": 6101,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_q_v2_external_night_occupancy_frozen_20260729.yaml",
+      "bytes": 5102,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/stage_q_v2_external_night_occupancy_frozen_20260729_v2.yaml",
+      "bytes": 1441,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/configs/tracktrack_stage_m_frozen_20260728.yaml",
+      "bytes": 564,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/annotations/grand_bassin_bus_stability_ground_truth.csv",
+      "bytes": 314154,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/annotations/grand_bassin_bus_stability_slots.json",
+      "bytes": 1018,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/annotations/grand_bassin_temporal_manual_candidates.csv",
+      "bytes": 163,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/annotations/pklot_development_samples.jsonl",
+      "bytes": 522284,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/annotations/pklot_sample_slots.json",
+      "bytes": 31131,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/annotations/pklot_smoke_truth.csv",
+      "bytes": 35048,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/annotations/pklot_stage_k_candidate_20260727.jsonl",
+      "bytes": 1206480,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/annotations/pklot_stage_k_candidate_20260727_v2.jsonl",
+      "bytes": 1199128,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/comparisons/detector_comparison_frozen_checksums.yaml",
+      "bytes": 440,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/detector_comparison_preflight_20260727.yaml",
+      "bytes": 2371,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/p1_b1_virat0502_continuous_20260727.yaml",
+      "bytes": 9818,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/p1_b1_virat0502_continuous_failed_attempt_20260727_v1.yaml",
+      "bytes": 1363,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_i_detector_evaluation_20260727.yaml",
+      "bytes": 10088,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/STAGE_I_FROZEN_CHECKSUMS.yaml",
+      "bytes": 445,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_i_timestamp_correction_20260727.yaml",
+      "bytes": 1640,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_i_v2_corrected_evaluation_20260727.yaml",
+      "bytes": 11209,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/STAGE_I_V2_PRESERVATION_AUDIT.md",
+      "bytes": 5320,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_j_p0_p1_p2_development_20260727.yaml",
+      "bytes": 6107,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_j_posthoc_layered_analysis_20260727.yaml",
+      "bytes": 2945,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_k_p0_p1_p2_test_20260727.yaml",
+      "bytes": 19563,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_k_posthoc_stratified_analysis_20260728.yaml",
+      "bytes": 2324,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_k_slot_occupancy_data_gate_20260727.yaml",
+      "bytes": 1775,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_k_slot_occupancy_data_gate_20260728_v2.yaml",
+      "bytes": 4983,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/comparisons/stage_l_integrated_workflow_20260728.yaml",
+      "bytes": 5495,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/D1_FORMAL_TRAINING_REPORT.md",
+      "bytes": 5335,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/D1_SMOKE_REPORT.md",
+      "bytes": 5157,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/DATASET_MANIFEST.md",
+      "bytes": 17642,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/DETECTOR_COMPARISON_PROTOCOL.md",
+      "bytes": 5703,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/DETECTOR_EVALUATION_REPORT.md",
+      "bytes": 6625,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/FINAL_RESULTS_INDEX.md",
+      "bytes": 3112,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/finetune/ANNOTATION_PLAN.md",
+      "bytes": 1422,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/finetune/grand_bassin_annotation_checksums.csv",
+      "bytes": 12997,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/finetune/grand_bassin_annotation_manifest.csv",
+      "bytes": 34101,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/GPU_DECISION_REPORT.md",
+      "bytes": 5195,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/manifests/ndispark_only_20260727/FROZEN_ARTIFACT_CHECKSUMS.yaml",
+      "bytes": 1225,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/manifests/ndispark_only_20260727/ndispark_source_manifest_frozen_20260727.yaml",
+      "bytes": 3886,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/manifests/ndispark_only_20260727/ndispark_test_frozen_20260727.csv",
+      "bytes": 24630,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/manifests/ndispark_only_20260727/ndispark_train_frozen_20260727.csv",
+      "bytes": 24054,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/manifests/ndispark_only_20260727/ndispark_validation_frozen_20260727.csv",
+      "bytes": 7260,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/manifests/pklot_stage_k_candidate_20260727.csv",
+      "bytes": 43773,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/manifests/pklot_stage_k_candidate_20260727_v2.csv",
+      "bytes": 43826,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/manifests/stage_j_pklot_development_20260727.csv",
+      "bytes": 5457,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/NDISPARK_ONLY_DATASET_CARD.md",
+      "bytes": 5260,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/NDISPARK_PREPROCESSING_REPORT.md",
+      "bytes": 3922,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/ndispark_source_audit.yaml",
+      "bytes": 3809,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/PART1_DATASET_ALIGNMENT.md",
+      "bytes": 23476,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/part1_dataset_alignment.yaml",
+      "bytes": 27851,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/preprocessing/ndispark_only_20260727.yaml",
+      "bytes": 3390,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/preprocessing/pklot_stage_k_candidate_audit_20260727.json",
+      "bytes": 2526,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/preprocessing/pklot_stage_k_candidate_audit_20260727_v2.json",
+      "bytes": 2528,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/preprocessing/pklot_stage_k_manual_visual_review_20260727_v2.json",
+      "bytes": 2450,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/research_samples/zenodo_20210588_metadata.json",
+      "bytes": 14634,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/splits/grand_bassin_aerial_candidate_133033.csv",
+      "bytes": 151329,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/splits/grand_bassin_aerial_candidate_133033_checksums.csv",
+      "bytes": 64843,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/splits/grand_bassin_aerial_development.csv",
+      "bytes": 333651,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/splits/grand_bassin_aerial_development_checksums.csv",
+      "bytes": 143485,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/splits/grand_bassin_aerial_holdout_162512.csv",
+      "bytes": 81703,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/splits/pklot_development.csv",
+      "bytes": 8843,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_I_V2_CORRECTED_EVALUATION_REPORT.md",
+      "bytes": 5486,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_J_K_OCCUPANCY_REPORT.md",
+      "bytes": 7186,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_K_FINAL_REPORT.md",
+      "bytes": 4857,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_L_INTEGRATED_WORKFLOW_REPORT.md",
+      "bytes": 7340,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_m/STAGE_M_ARTIFACT_REGISTRY_20260728.yaml",
+      "bytes": 11331,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_m/STAGE_M_DATA_GATES_20260728.yaml",
+      "bytes": 3588,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_m/STAGE_M_FEASIBILITY_ADDENDUM_20260728.md",
+      "bytes": 4265,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_m/stage_m_smoke_regions_20260728.json",
+      "bytes": 498,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/STAGE_M_OPEN_SOURCE_TRACKING_ROBUSTNESS_REPORT.md",
+      "bytes": 11474,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_ARTIFACT_REGISTRY_20260728.yaml",
+      "bytes": 8980,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_FORMAL_PARKING_CANDIDATE_AUDIT_20260728.md",
+      "bytes": 2795,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_FORMAL_PARKING_DATA_GATE_20260728.yaml",
+      "bytes": 2812,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_LMOT_ACQUISITION_AUDIT_20260728.md",
+      "bytes": 3816,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_LMOT_DATA_GATE_20260728.yaml",
+      "bytes": 2006,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_SYNTHETIC_OUTPUT_MANIFEST_20260728_V2.json",
+      "bytes": 2397,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_TRACKEVAL_SOURCE_AUDIT_20260728.yaml",
+      "bytes": 1933,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/STAGE_N_LMOT_TRACKING_REPORT.md",
+      "bytes": 7492,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/LMOT_CLASS_ID6_EXTENDED_CONTACT_SHEET_20260729.jpg",
+      "bytes": 103676,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/LMOT_CLASS_ID6_EXTENDED_CONTACT_SHEET_20260729.json",
+      "bytes": 1769,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/LMOT_CLASS_ID6_TRACK_TIMELINE_20260729.jpg",
+      "bytes": 344087,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/LMOT_CLASS_MAP_FROZEN_20260729.yaml",
+      "bytes": 509,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/LMOT_CLASS_MAPPING_CONTACT_SHEET_20260729.jpg",
+      "bytes": 401981,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/LMOT_CLASS_MAPPING_EVIDENCE_20260729.yaml",
+      "bytes": 10043,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/STAGE_N_V2_ACQUISITION_INVENTORY_20260729.yaml",
+      "bytes": 13662,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/STAGE_N_V2_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 23822,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_n_v2/STAGE_N_V2_EXTRACTED_FILE_MANIFEST_20260729.json",
+      "bytes": 1685884,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/STAGE_N_V2_LMOT_TRACKING_REPORT.md",
+      "bytes": 6674,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_n_v3/STAGE_N_V3_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 12831,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/STAGE_N_V3_EMITTED_BOX_CORRECTION_REPORT.md",
+      "bytes": 3763,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v1/input.mp4",
+      "bytes": 131984,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v1/input_manifest.json",
+      "bytes": 1924,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v1/slots.json",
+      "bytes": 1546,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v2/input.mp4",
+      "bytes": 131984,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v2/input_manifest.json",
+      "bytes": 1924,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/p3_interface_smoke_inputs_20260729_v2/slots.json",
+      "bytes": 1546,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 78776,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_DATA_MANIFEST_20260729.yaml",
+      "bytes": 6604,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_DATA_MANIFEST_PATH_CORRECTION_20260729.yaml",
+      "bytes": 1596,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_DETECTOR_ONLY_OUTPUT_AUDIT_20260729.json",
+      "bytes": 12481,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_FROZEN_HISTORY_PRESERVATION_20260729.json",
+      "bytes": 63716,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_FROZEN_HISTORY_PRESERVATION_20260729_v2.json",
+      "bytes": 61585,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v2.stderr.log",
+      "bytes": 0,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v2.stdout.log",
+      "bytes": 0,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v4.stderr.log",
+      "bytes": 1819,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v4.stdout.log",
+      "bytes": 0,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v5.stderr.log",
+      "bytes": 1819,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v5.stdout.log",
+      "bytes": 0,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v6.stderr.log",
+      "bytes": 1075,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v6.stdout.log",
+      "bytes": 0,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v7.stderr.log",
+      "bytes": 0,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/stage_o_o2_formal_v7.stdout.log",
+      "bytes": 5709,
+      "category": "other"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_O2_RUNTIME_DECISION_20260729.yaml",
+      "bytes": 3105,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_O3_FORMAL_TRAINING_COMPLETION_AUDIT_20260729.json",
+      "bytes": 1065,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_P3_INTERFACE_SMOKE_AUDIT_20260729.yaml",
+      "bytes": 1602,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_PROTOCOL_20260729.md",
+      "bytes": 5804,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_PROTOCOL_TIMESTAMP_CLARIFICATION_20260729.yaml",
+      "bytes": 1308,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_SELECTION_20260729.json",
+      "bytes": 4999,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_STAGE_J_PRESERVATION_20260729.json",
+      "bytes": 11374,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_STAGE_K_PRESERVATION_20260729.json",
+      "bytes": 18153,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/STAGE_O_LOW_LIGHT_ADAPTATION_REPORT.md",
+      "bytes": 14533,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_p/STAGE_P_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 13210,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_p/STAGE_P_FINAL_NIGHT_PARKING_DATA_GATE_20260729.yaml",
+      "bytes": 2568,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_p/STAGE_P_NDISPARK_DATA_AUDIT_20260729.md",
+      "bytes": 2575,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_p/STAGE_P_NDISPARK_DATA_GATE_20260729.yaml",
+      "bytes": 1301,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_p/STAGE_P_PARKING_RETENTION_DECISION_20260729.json",
+      "bytes": 1343,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/STAGE_P_PARKING_DOMAIN_VALIDATION_REPORT.md",
+      "bytes": 10057,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_q/STAGE_Q_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 6531,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q/STAGE_Q_CANDIDATE_GATE_20260729.yaml",
+      "bytes": 5756,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q/STAGE_Q_ONLINE_DATASET_AUDIT_20260729.md",
+      "bytes": 6817,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_Q_EXTERNAL_NIGHT_OCCUPANCY_REPORT.md",
+      "bytes": 11458,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_ANNOTATION_FREEZE_20260729.yaml",
+      "bytes": 2659,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 298206,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_FORMAL_ATTEMPT_V1_FAILURE_20260729.yaml",
+      "bytes": 1749,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_NIGHT_TEST_GATE_20260729.yaml",
+      "bytes": 2026,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_OCCUPANCY_TRUTH_20260729.csv",
+      "bytes": 174683,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_POLYGON_CONFIRMATION_20260729.yaml",
+      "bytes": 1464,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_POLYGON_VALIDATION_20260729.png",
+      "bytes": 850958,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_SEQUENCE_CONTACT_SHEET_20260729.png",
+      "bytes": 13493371,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_SEQUENCE_INVENTORY_20260729.csv",
+      "bytes": 8047,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_SLOT_POLYGONS_20260729.json",
+      "bytes": 2728,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_SOURCE_ARCHIVE_AUDIT_20260729.yaml",
+      "bytes": 1619,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_STRUCTURE_AUDIT_20260729.md",
+      "bytes": 6271,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_TEST_IMAGE_MANIFEST_20260729.csv",
+      "bytes": 72184,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_TEST_SCENE_SELECTION_20260729.yaml",
+      "bytes": 11054,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_q_v2/UPM_GTI_USE_CONFIRMATION_EMAIL_TEMPLATE.md",
+      "bytes": 747,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_Q_V2_UPM_GTI_EXTERNAL_EVALUATION_REPORT.md",
+      "bytes": 12121,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 2671,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_COMPONENT_COMPARISON.csv",
+      "bytes": 68983,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_COMPONENT_COMPARISON.json",
+      "bytes": 415483,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_COMPONENT_DELTAS.csv",
+      "bytes": 49321,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_ERROR_TRANSITIONS.csv",
+      "bytes": 817,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_FINAL_SYSTEM_EVIDENCE.csv",
+      "bytes": 931,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_SYSTEM_FLOW.svg",
+      "bytes": 4446,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_TEMPORAL_VALIDITY_AUDIT.csv",
+      "bytes": 9143,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_R_COMPONENT_ATTRIBUTION_REPORT.md",
+      "bytes": 17716,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_s/demo/demo_keyframe_d1_vs_d1ll.png",
+      "bytes": 990156,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_s/demo/demo_keyframe_default.png",
+      "bytes": 696675,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_s/demo/demo_keyframe_f2_recovery.png",
+      "bytes": 708465,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_s/demo/demo_main.mp4",
+      "bytes": 7756276,
+      "category": "presentation_artifact"
+    },
+    {
+      "path": "implementation/data/stage_s/demo/STAGE_S_DEMO_METADATA.json",
+      "bytes": 13089,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_FINAL_SYSTEM_EVIDENCE.csv",
+      "bytes": 796,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_HISTORICAL_REGISTRY_GATE.json",
+      "bytes": 304,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_HISTORICAL_REGISTRY_POST_SNAPSHOT.json",
+      "bytes": 3452,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_HISTORICAL_REGISTRY_PRE_SNAPSHOT.json",
+      "bytes": 3452,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_SUBMISSION_AUDIT.json",
+      "bytes": 87953,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_SUBMISSION_CANDIDATES.csv",
+      "bytes": 48449,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/STAGE_S_FINAL_DEFAULT_AND_DEMO_REPORT.md",
+      "bytes": 6683,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/SYSTEM_RELEASE_INDEX.md",
+      "bytes": 1813,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/data/training/d1_formal_training_20260727.yaml",
+      "bytes": 8272,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/training/D1_FORMAL_TRAINING_FROZEN_CHECKSUMS.yaml",
+      "bytes": 277,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/training/d1_gpu_decision_20260727.yaml",
+      "bytes": 4417,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/training/D1_GPU_DECISION_FROZEN_CHECKSUMS.yaml",
+      "bytes": 427,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/training/d1_ndispark_smoke_20260727.yaml",
+      "bytes": 6411,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/data/training/D1_SMOKE_FROZEN_CHECKSUMS.yaml",
+      "bytes": 274,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/.gitignore",
+      "bytes": 65,
+      "category": "other"
+    },
+    {
+      "path": "implementation/literature_core/CONFIG_AUDIT.md",
+      "bytes": 4013,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/configs/default.yaml",
+      "bytes": 875,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/external_holdout_frozen.yaml",
+      "bytes": 2024,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/grand_bassin_frozen.yaml",
+      "bytes": 709,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/pklot_camera_split.json",
+      "bytes": 198,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/pklot_fold_b.json",
+      "bytes": 189,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/pklot_fold_c.json",
+      "bytes": 189,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/proposed_fusion.yaml",
+      "bytes": 1203,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/temporal_e4_e5_frozen.yaml",
+      "bytes": 2401,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/configs/temporal_protocol_pending.yaml",
+      "bytes": 3396,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/grand_bassin_bus_area_review.csv",
+      "bytes": 523,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/grand_bassin_development_rejected_review_candidates.csv",
+      "bytes": 350,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/grand_bassin_holdout_rejected_review_candidates.csv",
+      "bytes": 160,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/grand_bassin_rejected_manual_hypotheses.csv",
+      "bytes": 1360,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/grand_bassin_transition_candidate_adjudication.csv",
+      "bytes": 2889,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/virat_0502_departure_truth.yaml",
+      "bytes": 1804,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/annotations/virat_0503_departure_truth.yaml",
+      "bytes": 1820,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/manifests/cnrpark_ext_external_holdout.yaml",
+      "bytes": 2433,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/manifests/frozen_artifacts_20260725.yaml",
+      "bytes": 3403,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/manifests/temporal_case_study_frozen_20260726.yaml",
+      "bytes": 3476,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/manifests/temporal_dataset_audit_20260726.yaml",
+      "bytes": 8227,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/manifests/virat_0503_targeted_screening_20260726.yaml",
+      "bytes": 7373,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/data/manifests/virat_screening_20260726.yaml",
+      "bytes": 9306,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/DATASET_ACCESS_BLOCKER.md",
+      "bytes": 3520,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/DATASET_AUDIT.md",
+      "bytes": 8943,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/EXPERIMENT_PLAN.md",
+      "bytes": 11170,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/FEASIBILITY_REPORT.md",
+      "bytes": 8490,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/FILE_MANIFEST.md",
+      "bytes": 11854,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/METHOD_PROVENANCE.md",
+      "bytes": 31379,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/pyproject.toml",
+      "bytes": 696,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/README.md",
+      "bytes": 19768,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/REPORT_SNIPPETS.md",
+      "bytes": 9523,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/requirements.txt",
+      "bytes": 123,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/RESULTS.md",
+      "bytes": 48781,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/literature_core/scripts/acquire_virat_annotations.py",
+      "bytes": 2889,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/acquire_virat_screening.py",
+      "bytes": 3857,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/analyze_ablation_errors.py",
+      "bytes": 8989,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/build_transition_review.py",
+      "bytes": 17200,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/build_virat_screening_contact_sheet.py",
+      "bytes": 4636,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/draw_slot_map.py",
+      "bytes": 4059,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/evaluate_classifier_variants.py",
+      "bytes": 10196,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/evaluate_positive_stability.py",
+      "bytes": 7356,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/evaluate_predictions.py",
+      "bytes": 5760,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/extract_patches.py",
+      "bytes": 2445,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/run_calibrated_fusion.py",
+      "bytes": 18756,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/run_cnr_ext_frozen_evaluation.py",
+      "bytes": 19485,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/run_frozen_temporal_case_study.py",
+      "bytes": 19104,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/run_ndispark_detection.py",
+      "bytes": 4974,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/run_pklot_ablation.py",
+      "bytes": 12489,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/run_video.py",
+      "bytes": 10010,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/summarize_cross_camera.py",
+      "bytes": 5704,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/train_classifier.py",
+      "bytes": 11002,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/validate_temporal_protocol.py",
+      "bytes": 1553,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/verify_frozen_artifacts.py",
+      "bytes": 5187,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/verify_virat_screening.py",
+      "bytes": 1651,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/scripts/verify_yolo_world.py",
+      "bytes": 2642,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/__init__.py",
+      "bytes": 836,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/annotation_review.py",
+      "bytes": 3279,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/calibration.py",
+      "bytes": 13032,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/classifier.py",
+      "bytes": 11049,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/cnrpark.py",
+      "bytes": 5172,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/config.py",
+      "bytes": 388,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/cross_validation.py",
+      "bytes": 4211,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/data.py",
+      "bytes": 6474,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/detector.py",
+      "bytes": 8888,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/error_analysis.py",
+      "bytes": 3428,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/fusion.py",
+      "bytes": 2166,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/mapping.py",
+      "bytes": 3282,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/metrics.py",
+      "bytes": 15204,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/models.py",
+      "bytes": 2567,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/patches.py",
+      "bytes": 3925,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/pipeline.py",
+      "bytes": 5319,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/stability.py",
+      "bytes": 4676,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/temporal.py",
+      "bytes": 2910,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/temporal_protocol.py",
+      "bytes": 26704,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/temporal_tracking.py",
+      "bytes": 8608,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/src/literature_core/virat_access.py",
+      "bytes": 13618,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_annotation_review.py",
+      "bytes": 1126,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_calibration.py",
+      "bytes": 2329,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_classifier.py",
+      "bytes": 2307,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_cnrpark.py",
+      "bytes": 1996,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_cross_validation.py",
+      "bytes": 1571,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_data.py",
+      "bytes": 2601,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_detector_tracking.py",
+      "bytes": 504,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_error_analysis.py",
+      "bytes": 1581,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_frozen_artifacts.py",
+      "bytes": 2597,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_fusion.py",
+      "bytes": 920,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_mapping.py",
+      "bytes": 1684,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_metrics.py",
+      "bytes": 4877,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_patches.py",
+      "bytes": 1284,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_pipeline.py",
+      "bytes": 2650,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_stability.py",
+      "bytes": 1643,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_temporal.py",
+      "bytes": 1293,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_temporal_protocol.py",
+      "bytes": 10596,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_temporal_tracking.py",
+      "bytes": 3487,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/tests/test_virat_access.py",
+      "bytes": 8031,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/literature_core/TRANSITION_AUDIT.md",
+      "bytes": 6410,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/ENVIRONMENT_CHECK.md",
+      "bytes": 1655,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/EXPERIMENT_SUMMARY.csv",
+      "bytes": 1006,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/FINETUNING_GATE_ASSESSMENT.md",
+      "bytes": 1708,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/GRAND_BASSIN_TEMPORAL_REPORT.md",
+      "bytes": 3039,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/NDISPARK_DETECTION_REPORT.md",
+      "bytes": 1677,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/PKLOT_DEVELOPMENT_REPORT.md",
+      "bytes": 3139,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/metadata/PKLOT_INVENTORY.json",
+      "bytes": 5857,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/metadata/SMOKE_TEST_REPORT.md",
+      "bytes": 3024,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/PLAN.md",
+      "bytes": 20518,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/pyproject.toml",
+      "bytes": 1607,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/README.md",
+      "bytes": 31235,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/requirements.txt",
+      "bytes": 123,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "implementation/scripts/__init__.py",
+      "bytes": 52,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/acquire_stage_n_lmot.py",
+      "bytes": 6505,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/analyze_gpu_decision.py",
+      "bytes": 1438,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/analyze_stage_j_posthoc.py",
+      "bytes": 1683,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/analyze_stage_k_strata.py",
+      "bytes": 672,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/analyze_stage_l.py",
+      "bytes": 1836,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/analyze_stage_r_components.py",
+      "bytes": 1842,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/audit_stage_s_release.py",
+      "bytes": 2679,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/benchmark_detector.py",
+      "bytes": 2618,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/check_stage_m_data_gates.py",
+      "bytes": 1564,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/convert_coco_detection.py",
+      "bytes": 5744,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/convert_stage_n_lmot.py",
+      "bytes": 4332,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/decide_stage_p_retention.py",
+      "bytes": 2226,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/download_manifest_images.py",
+      "bytes": 2560,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/evaluate_count_predictions.py",
+      "bytes": 844,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/export_coco_subset.py",
+      "bytes": 2734,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/extract_fiftyone_sample.py",
+      "bytes": 3539,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/finalize_d1_formal.py",
+      "bytes": 1212,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/finalize_stage_s.py",
+      "bytes": 5887,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/find_temporal_slot_candidates.py",
+      "bytes": 9480,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_ndispark_protocol.py",
+      "bytes": 16058,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_p1_temporal_results.py",
+      "bytes": 5139,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_k_data_gate_v2.py",
+      "bytes": 11555,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_k_results.py",
+      "bytes": 5611,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_k_strata_results.py",
+      "bytes": 3627,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_l_results.py",
+      "bytes": 4442,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_m_artifacts.py",
+      "bytes": 6801,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_n_artifacts.py",
+      "bytes": 8241,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_n_v2_artifacts.py",
+      "bytes": 5081,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_n_v3_correction.py",
+      "bytes": 5494,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_o_artifacts.py",
+      "bytes": 7388,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_p_artifacts.py",
+      "bytes": 4342,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_q_artifacts.py",
+      "bytes": 4760,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_q_v2_artifacts.py",
+      "bytes": 7910,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_q_v2_night_gate.py",
+      "bytes": 7119,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/freeze_stage_r_artifacts.py",
+      "bytes": 2349,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/inventory_pklot.py",
+      "bytes": 2208,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/make_constant_ground_truth.py",
+      "bytes": 2177,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/make_image_video.py",
+      "bytes": 1175,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/manifest_to_video.py",
+      "bytes": 4188,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/pklot_metadata.py",
+      "bytes": 1696,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/prepare_ndispark.py",
+      "bytes": 1215,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/prepare_stage_k_pklot_candidate.py",
+      "bytes": 2113,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/prepare_stage_n_lmot_v2.py",
+      "bytes": 5738,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/prepare_stage_o_training.py",
+      "bytes": 1371,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/prepare_stage_q_v2_annotations.py",
+      "bytes": 4366,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/recompute_stage_n_v3_emitted_box_metrics.py",
+      "bytes": 1552,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/record_stage_o_o2_blocked.py",
+      "bytes": 8660,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/render_candidate_timelines.py",
+      "bytes": 3844,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/render_coordinate_grid.py",
+      "bytes": 2580,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/render_stage_k_truth_contact_sheet.py",
+      "bytes": 803,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/render_stage_n_lmot_v2_mapping_evidence.py",
+      "bytes": 3831,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/render_stage_s_demo.py",
+      "bytes": 1001,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_d1_formal.py",
+      "bytes": 1597,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_d1_smoke.py",
+      "bytes": 1523,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_detector_comparison.py",
+      "bytes": 2550,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_p1_temporal_case.py",
+      "bytes": 1920,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_i_evaluation.py",
+      "bytes": 6878,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_j_occupancy.py",
+      "bytes": 3022,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_k_occupancy.py",
+      "bytes": 2096,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_l_classifier_ablation.py",
+      "bytes": 1446,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_l_static.py",
+      "bytes": 2593,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_l_video.py",
+      "bytes": 2496,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_m.py",
+      "bytes": 9140,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_m_smoke.py",
+      "bytes": 6780,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_n_lmot.py",
+      "bytes": 14961,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_n_lmot_v2.py",
+      "bytes": 8700,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_n_synthetic_trackeval.py",
+      "bytes": 4385,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_o_detector_eval.py",
+      "bytes": 3592,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_o_p3_interface_smoke.py",
+      "bytes": 5654,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_o_training.py",
+      "bytes": 1369,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_p_retention.py",
+      "bytes": 2019,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_q_v2_data_audit.py",
+      "bytes": 4797,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/run_stage_q_v2_formal.py",
+      "bytes": 1285,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/select_annotation_frames.py",
+      "bytes": 2082,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/select_grand_bassin_sequence.py",
+      "bytes": 3796,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/select_pklot_subset.py",
+      "bytes": 5245,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/select_stage_o_o1.py",
+      "bytes": 4137,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/select_stage_o_results.py",
+      "bytes": 3663,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/sweep_temporal_filter.py",
+      "bytes": 4762,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_d1_formal_artifacts.py",
+      "bytes": 1230,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_p1_temporal_artifacts.py",
+      "bytes": 1074,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_i_artifacts.py",
+      "bytes": 1104,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_i_v2_artifacts.py",
+      "bytes": 1255,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_j_artifacts.py",
+      "bytes": 1245,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_j_posthoc_artifacts.py",
+      "bytes": 1252,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_k_artifacts.py",
+      "bytes": 1184,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_k_data_gate_v2.py",
+      "bytes": 1183,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_k_strata_artifacts.py",
+      "bytes": 1061,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_n_lmot_v2_output.py",
+      "bytes": 4993,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_n_output.py",
+      "bytes": 2418,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_o_frozen_history.py",
+      "bytes": 6984,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_o_outputs.py",
+      "bytes": 2547,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_q_gate.py",
+      "bytes": 2018,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/scripts/verify_stage_q_v2_premodel.py",
+      "bytes": 3548,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/__init__.py",
+      "bytes": 207,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/annotate_slots.py",
+      "bytes": 5007,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/cli.py",
+      "bytes": 5123,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/coco_conversion.py",
+      "bytes": 2090,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/count_metrics.py",
+      "bytes": 5123,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/dataset_preparation.py",
+      "bytes": 21774,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/detection_evaluate.py",
+      "bytes": 4632,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/detector.py",
+      "bytes": 7746,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/detector_comparison.py",
+      "bytes": 35717,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/evaluate.py",
+      "bytes": 15460,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/formal_training.py",
+      "bytes": 40457,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/geometry.py",
+      "bytes": 5429,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/gpu_decision.py",
+      "bytes": 12779,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/image_io.py",
+      "bytes": 910,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/integrated_cli.py",
+      "bytes": 2567,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/integrated_runner.py",
+      "bytes": 26870,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/integrated_workflow.py",
+      "bytes": 4599,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/method_registry.py",
+      "bytes": 4991,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/models.py",
+      "bytes": 1619,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/p1_temporal_case.py",
+      "bytes": 22225,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/pipeline.py",
+      "bytes": 16142,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/pklot_experiment.py",
+      "bytes": 18515,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/sequence_io.py",
+      "bytes": 412,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/slots.py",
+      "bytes": 4361,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_i_evaluation.py",
+      "bytes": 67106,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_j_occupancy.py",
+      "bytes": 27823,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_j_posthoc_analysis.py",
+      "bytes": 21831,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_k_data_gate.py",
+      "bytes": 22919,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_k_occupancy.py",
+      "bytes": 22343,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_k_stratified_analysis.py",
+      "bytes": 7591,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_l_analysis.py",
+      "bytes": 5913,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_l_classifier_ablation.py",
+      "bytes": 7224,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_l_integrated.py",
+      "bytes": 18545,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_l_video.py",
+      "bytes": 24388,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_m_data_gate.py",
+      "bytes": 6726,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_m_evaluation.py",
+      "bytes": 23422,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_m_tracking.py",
+      "bytes": 25519,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_n_lmot.py",
+      "bytes": 35150,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_n_lmot_v2.py",
+      "bytes": 23885,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_n_v3_correction.py",
+      "bytes": 11107,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_o_artifacts.py",
+      "bytes": 5954,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_o_enhancement.py",
+      "bytes": 4740,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_o_low_light.py",
+      "bytes": 32672,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_o_training.py",
+      "bytes": 25844,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_p_artifacts.py",
+      "bytes": 3302,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_p_retention.py",
+      "bytes": 40028,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_q_artifacts.py",
+      "bytes": 2117,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_q_external.py",
+      "bytes": 14774,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_q_v2_artifacts.py",
+      "bytes": 4212,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_q_v2_evaluation.py",
+      "bytes": 47633,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_q_v2_upm.py",
+      "bytes": 25256,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_r_component_attribution.py",
+      "bytes": 45909,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_s_demo.py",
+      "bytes": 21947,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/stage_s_release.py",
+      "bytes": 16202,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/temporal.py",
+      "bytes": 3286,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/training_smoke.py",
+      "bytes": 25502,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/src/parking_occupancy/visualization.py",
+      "bytes": 2469,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_coco_conversion.py",
+      "bytes": 1033,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_count_metrics.py",
+      "bytes": 1815,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_dataset_preparation.py",
+      "bytes": 7224,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_detector.py",
+      "bytes": 1130,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_detector_comparison.py",
+      "bytes": 17834,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_evaluate.py",
+      "bytes": 4250,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_formal_training.py",
+      "bytes": 5095,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_formal_training_freeze.py",
+      "bytes": 1541,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_freeze_ndispark_protocol.py",
+      "bytes": 5225,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_geometry.py",
+      "bytes": 1965,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_gpu_decision.py",
+      "bytes": 3996,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_gpu_decision_freeze.py",
+      "bytes": 1676,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_image_io.py",
+      "bytes": 426,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_integrated_runner.py",
+      "bytes": 7346,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_integrated_workflow.py",
+      "bytes": 3164,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_manifest_to_video.py",
+      "bytes": 320,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_method_registry.py",
+      "bytes": 2083,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_p1_temporal_case.py",
+      "bytes": 2369,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_pipeline_outputs.py",
+      "bytes": 4230,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_pklot_experiment.py",
+      "bytes": 1337,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_slots.py",
+      "bytes": 1956,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_i_evaluation.py",
+      "bytes": 16156,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_j_occupancy.py",
+      "bytes": 4187,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_j_posthoc_analysis.py",
+      "bytes": 5500,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_k_data_gate.py",
+      "bytes": 5690,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_k_occupancy.py",
+      "bytes": 3069,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_k_stratified_analysis.py",
+      "bytes": 1735,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_l_analysis.py",
+      "bytes": 2595,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_l_integrated.py",
+      "bytes": 1682,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_m_data_gate.py",
+      "bytes": 4500,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_m_evaluation.py",
+      "bytes": 5153,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_m_tracking.py",
+      "bytes": 6380,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_n_lmot.py",
+      "bytes": 10472,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_n_lmot_v2.py",
+      "bytes": 4872,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_n_v3_correction.py",
+      "bytes": 2145,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_o_artifacts.py",
+      "bytes": 3890,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_o_low_light.py",
+      "bytes": 11481,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_o_training.py",
+      "bytes": 4226,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_p_artifacts.py",
+      "bytes": 2786,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_p_retention.py",
+      "bytes": 8566,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_q_artifacts.py",
+      "bytes": 1653,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_q_external.py",
+      "bytes": 8484,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_q_v2_artifacts.py",
+      "bytes": 4422,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_q_v2_evaluation.py",
+      "bytes": 12418,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_q_v2_upm.py",
+      "bytes": 8556,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_r_component_attribution.py",
+      "bytes": 4976,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_s_demo.py",
+      "bytes": 2558,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_stage_s_release.py",
+      "bytes": 3524,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_temporal.py",
+      "bytes": 1888,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_training_smoke.py",
+      "bytes": 9727,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "implementation/tests/test_training_smoke_freeze.py",
+      "bytes": 791,
+      "category": "code_or_configuration"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P01_YOLO-World_中文导读.md",
+      "bytes": 2742,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P02_Multi-Object_Tracking_in_the_Dark_中文导读.md",
+      "bytes": 2477,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P03_DiffMOT_中文导读.md",
+      "bytes": 2264,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P04_Generalizable_MOT_中文导读.md",
+      "bytes": 2280,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P05_TrackTrack_中文导读.md",
+      "bytes": 2210,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P06_MOTIP_中文导读.md",
+      "bytes": 2094,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P07_AODRaw_中文导读.md",
+      "bytes": 2314,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P08_MoME_中文导读.md",
+      "bytes": 2004,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P09_OW-OVD_中文导读.md",
+      "bytes": 2165,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P10_WeatherAware_Segmentation_中文导读.md",
+      "bytes": 1834,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P11_DeCLIP_中文导读.md",
+      "bytes": 1908,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P12_SearchDet_中文导读.md",
+      "bytes": 1968,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P13_OmniTrack_中文导读.md",
+      "bytes": 1756,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P14_MITracker_中文导读.md",
+      "bytes": 1720,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P15_EventCamera_Detection_中文导读.md",
+      "bytes": 1760,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/P16_Cant_Slow_Me_Down_中文导读.md",
+      "bytes": 1927,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/chinese_reading_notes/README_中文阅读指南.md",
+      "bytes": 2190,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/condensed_literature_review_10refs.md",
+      "bytes": 10648,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/coursework_aligned_literature_review.md",
+      "bytes": 39125,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/coursework_requirements_extracted.txt",
+      "bytes": 4674,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/final_comparison_table.md",
+      "bytes": 2734,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/final_literature_review.md",
+      "bytes": 25796,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/candidate_papers.md",
+      "bytes": 6316,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/code_availability.md",
+      "bytes": 3367,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/condensed_10refs_selection.md",
+      "bytes": 3406,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/coursework_alignment_assessment.md",
+      "bytes": 2216,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/dataset_availability.md",
+      "bytes": 8014,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/evaluation_metrics_plan.md",
+      "bytes": 3997,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/overall_plan.md",
+      "bytes": 1349,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/paper_collection_plan.md",
+      "bytes": 1433,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/parking_specific_solution_comparison.md",
+      "bytes": 2383,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/metadata/references.bib",
+      "bytes": 9165,
+      "category": "other"
+    },
+    {
+      "path": "literature_review/metadata/role2_prompt_alignment_notes.md",
+      "bytes": 1747,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/notes/selected_paper_notes.md",
+      "bytes": 6812,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/paper_comparison_table.md",
+      "bytes": 2928,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/review_draft.md",
+      "bytes": 13935,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/role2_method_based_literature_review.md",
+      "bytes": 32597,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "literature_review/role2_reference_list.md",
+      "bytes": 1953,
+      "category": "documentation_or_compact_evidence"
+    },
+    {
+      "path": "pytest.ini",
+      "bytes": 215,
+      "category": "other"
+    }
+  ]
+}

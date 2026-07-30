@@ -53,9 +53,19 @@ class UltralyticsDetector:
         vehicle_class_ids: Sequence[int] = COCO_VEHICLE_CLASS_IDS,
         use_tracking: bool = False,
         tracker_config: str = "bytetrack.yaml",
+        nms_iou: float | None = None,
+        agnostic_nms: bool | None = None,
+        max_detections: int | None = None,
+        augmentation: bool | None = None,
+        rect: bool | None = None,
+        half: bool | None = None,
     ) -> None:
         if not 0.0 <= confidence <= 1.0:
             raise ValueError("confidence must be in [0, 1]")
+        if nms_iou is not None and not 0.0 <= nms_iou <= 1.0:
+            raise ValueError("nms_iou must be in [0, 1]")
+        if max_detections is not None and max_detections <= 0:
+            raise ValueError("max_detections must be positive")
         self.weights = weights
         self.confidence = confidence
         self.image_size = image_size
@@ -63,6 +73,12 @@ class UltralyticsDetector:
         self.vehicle_class_ids = tuple(int(value) for value in vehicle_class_ids)
         self.use_tracking = use_tracking
         self.tracker_config = tracker_config
+        self.nms_iou = nms_iou
+        self.agnostic_nms = agnostic_nms
+        self.max_detections = max_detections
+        self.augmentation = augmentation
+        self.rect = rect
+        self.half = half
         self._model: Any | None = None
         self._resolved_device: str | int | None = None
         self._tracker: Any | None = None
@@ -106,6 +122,21 @@ class UltralyticsDetector:
             "device": self._resolved_device,
             "verbose": False,
         }
+        optional = {
+            "iou": self.nms_iou,
+            "agnostic_nms": self.agnostic_nms,
+            "max_det": self.max_detections,
+            "augment": self.augmentation,
+            "rect": self.rect,
+            "half": self.half,
+        }
+        kwargs.update(
+            {
+                key: value
+                for key, value in optional.items()
+                if value is not None and not (key == "half" and value is False)
+            }
+        )
         results = self._model.predict(**kwargs)
 
         result = results[0]
@@ -162,6 +193,12 @@ class UltralyticsDetector:
                 if self.use_tracking
                 else None
             ),
+            "nms_iou": self.nms_iou,
+            "agnostic_nms": self.agnostic_nms,
+            "max_detections": self.max_detections,
+            "augmentation": self.augmentation,
+            "rect": self.rect,
+            "half": self.half,
             "requested_device": self.requested_device,
             "resolved_device": self._resolved_device,
             "torch_version": torch.__version__,

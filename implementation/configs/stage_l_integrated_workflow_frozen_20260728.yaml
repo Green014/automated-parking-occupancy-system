@@ -1,0 +1,198 @@
+schema_version: 1
+protocol_id: P3-INTEGRATED-LITERATURE-WORKFLOW-20260728-01
+status: frozen_before_P3_predictions
+frozen_at: "2026-07-28T12:00:00+08:00"
+
+scope:
+  stage: L
+  purpose: >-
+    Connect the strongest Part I-derived components into one auditable
+    detector-to-slot workflow without modifying the frozen P0/P1/P2 results.
+  primary_method: P3
+  parameter_selection_from_stage_k: prohibited
+  parameter_selection_from_virat: prohibited
+  historical_artifact_overwrite: prohibited
+
+method:
+  id: P3
+  name: D1 + B1 + E1b uncertainty gate + E4 + optional ByteTrack
+  steps:
+    - D1_NDISPark_finetuned_YOLOv8n
+    - B1_polygon_coverage_one_to_one_mapping
+    - E1b_MobileNetV3_CBAM_detector_negative_review
+    - F2_asymmetric_uncertainty_gate
+    - E4_asymmetric_EMA_hysteresis
+    - E5_optional_ByteTrack_moving_vehicle_suppression
+  detector_primary_rule: >-
+    A mapped D1 vehicle is occupied and cannot be overturned by E1b.
+  uncertainty_rule: >-
+    A detector-negative slot is reviewed by E1b because absence of a mapped
+    detection may indicate either a truly vacant slot or a missed vehicle.
+  fusion_rule: >-
+    Recover a detector-negative slot only when E1b occupied probability is
+    at least 0.76. This is an asymmetric gate, not global score averaging.
+  classifier_invocation: detector_negative_slots_only
+
+literature_alignment:
+  D1:
+    component: YOLO_based_vehicle_detection_and_domain_finetuning
+    relation: category_level_implementation_not_CMCA_YOLO_reproduction
+  B1:
+    component: detector_to_slot_geometry
+    relation: APSD_OC_inspired_local_integration
+    automatic_slot_discovery_implemented: false
+  E1b:
+    component: paper_inspired_MobileNetV3_CBAM_slot_classifier
+    exact_reproduction: false
+  F2:
+    component: uncertainty_gated_detector_classifier_fusion
+    relation: local_modification_combining_D1_B1_and_E1b
+  E4:
+    component: temporal_stabilization
+    relation: local_adaptation_motivated_by_tracking_literature
+  E5:
+    component: ByteTrack_identity_and_motion_support
+    relation: optional_supporting_variant_not_TrackTrack_reproduction
+  D2:
+    component: YOLO_World_open_vocabulary_detector
+    role: already_evaluated_detector_replacement_variant_not_parallel_vote
+
+models:
+  D1:
+    weights_name: best.pt
+    sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+    confidence: 0.30
+    imgsz: 640
+    source_class_ids: [0]
+    nms_iou: 0.70
+    agnostic_nms: true
+    max_detections: 300
+    augmentation: false
+    rect: false
+    half: false
+  E1b:
+    checkpoint_name: best.pt
+    sha256: f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3
+    implementation_label: paper_inspired_mobilenet_v3_cbam_supplement
+    occupied_threshold: 0.76
+    threshold_source: frozen_before_CNR_EXT_external_prediction
+    patch_size: [224, 224]
+    perspective_warp: true
+
+mapping:
+  id: B1
+  algorithm: slot_polygon_coverage
+  minimum_slot_coverage: 0.40
+  one_to_one: true
+  evidence: detector_confidence_times_slot_coverage
+  slot_source: predefined_official_or_project_reviewed_polygons
+
+temporal:
+  id: E4
+  enabled_for_continuous_video_only: true
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+  raw_threshold: 0.76
+  parameter_source: prior_generic_repository_defaults_not_selected_on_virat
+
+tracking:
+  id: E5
+  enabled_for_P3_full_variant: true
+  backend: ByteTrack
+  tracker_config_sha256: 9c46e5796711065c1e3e2784f9ed2c2775833801c01b1a548c0ee0b092331f1f
+  minimum_slot_coverage: 0.40
+  maximum_stationary_displacement_px: 4.0
+  occupied_dwell_frames: 15
+  vacant_dwell_frames: 15
+  policy: >-
+    A confirmed stationary track supplies occupied evidence. A moving track
+    overlapping a slot suppresses that frame before temporal stabilization.
+  parameter_source: prior_E5_frozen_case_study_not_selected_on_virat
+
+static_partitions:
+  development:
+    data_role: consumed_development
+    annotations:
+      path: ../data/annotations/pklot_development_samples.jsonl
+      bytes: 522284
+      sha256: ac9dbc48b491b3f6a657b38b53a422a59fef70a40bf3a2b91a98132abbeb2074
+    cached_D1_detections:
+      bytes: 239364
+      sha256: e7b11af5dbaf767569da502910ea65fcf72e3bb251a15a7fb5323b41541251e8
+    expected:
+      images: 27
+      known_slot_labels: 1505
+    claims: method_development_diagnostic_only
+  retrospective:
+    data_role: previously_consumed_test_retrospective_extension
+    annotations:
+      path: ../data/annotations/pklot_stage_k_candidate_20260727_v2.jsonl
+      bytes: 1199128
+      sha256: 0d20ea28b2ba92ecc55567e2882f0258587395784ade7d9131b1433881137046
+    cached_D1_detections:
+      bytes: 572045
+      sha256: a5d863de4ffbf78c06d76072e7e5e0f83962fb33cd6203cf52c1c510a02c273a
+    expected:
+      images: 90
+      known_slot_labels: 5034
+    claims: not_untouched_for_P3_no_parameter_selection_allowed
+
+continuous_partition:
+  data_role: consumed_development_case_study
+  dataset: VIRAT
+  source_video_id: VIRAT_S_050202_10_002159_002233
+  source_sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
+  source_bytes: 86850675
+  truth:
+    path: ../literature_core/data/annotations/virat_0502_departure_truth.yaml
+    bytes: 1804
+    sha256: 325ab6fac1970532cd86d0fc88e2b6acfd66cc8abd5ad8a70b070a318f58c760
+  expected:
+    frames: 1974
+    slots: 1
+    transitions: 1
+  warmup_frames: 30
+  stable_frames: 3
+  claims: single_slot_single_departure_case_study_only
+
+evaluation:
+  static_methods: [P1_D1_B1, P3_static_gate]
+  continuous_methods:
+    - P1_raw
+    - P3_gate
+    - P3_temporal
+    - P3_full_tracking_temporal
+  slot_metrics:
+    - macro_F1
+    - occupied_recall
+    - vacant_recall
+    - false_free_rate
+    - false_occupied_rate
+  temporal_metrics:
+    - signed_transition_error
+    - transition_outcome
+    - unsupported_flicker_count
+    - transition_instability_changes
+  runtime:
+    - component_latency
+    - end_to_end_FPS
+
+output_contract:
+  root_must_not_exist: true
+  static:
+    - annotated.mp4
+    - predictions.csv
+    - events.csv
+    - metrics.json
+    - summary.json
+    - runtime_metadata.json
+  continuous:
+    - annotated.mp4
+    - occupancy.csv
+    - events.csv
+    - detections.jsonl
+    - metrics.json
+    - summary.json
+    - runtime_metadata.json

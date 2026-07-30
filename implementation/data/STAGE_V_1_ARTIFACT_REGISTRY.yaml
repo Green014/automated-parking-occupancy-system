@@ -1,0 +1,233 @@
+schema_version: 1
+registry_id: STAGE-V-1-RELEASE-20260730-01
+stage: V.1
+created_at: '2026-07-30'
+artifact_count: 43
+registry_self_path: data/STAGE_V_1_ARTIFACT_REGISTRY.yaml
+historical_predecessor: data/STAGE_V_ARTIFACT_REGISTRY.yaml
+local_optional_policy: ignored smoke artifacts are verified when present and
+  reported as optional_unavailable in a portable checkout
+managed_artifact_globs:
+  - src/parking_occupancy/stage_v*.py
+  - src/parking_occupancy/artifact_registry.py
+  - tests/test_stage_v*.py
+  - tests/test_stage_u_portable_release.py
+  - scripts/run_stage_v*.py
+  - scripts/verify_stage_v_w_registries.py
+  - data/STAGE_V_1_CLOSURE_REPORT.md
+artifacts:
+  - path: src/parking_occupancy/stage_v.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 24875
+    sha256: 9bb81c00c09d9c0a40a15b166e3032c895fe71163f247ced1368783915576569
+  - path: src/parking_occupancy/stage_v_runner.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 47982
+    sha256: 43630aeeba4e5c7cd75d6963290161712b90307b89651170acf75bcba5834bbb
+  - path: src/parking_occupancy/artifact_registry.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 9283
+    sha256: a7b3ebbdfd436c8821a53922655d052873a4184a1038daa2f4dbfe92245ab0d2
+  - path: tests/test_stage_v_multimode.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 22337
+    sha256: ee3997cb3ea221f7674ecc2abeba36a2c61018495fd6dc0c755dbe42847edf4b
+  - path: tests/test_stage_u_portable_release.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 6022
+    sha256: 1e24e8db74796e5604e3b347b4d4bc8d9dad7aa1d9af8c6005fed2dbc2261903
+  - path: scripts/run_stage_v_multimode_demo.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 90
+    sha256: dcaac732698f07db848b80c926db3480ee721b00dd3abd746ff3a41bd25a48c3
+  - path: scripts/verify_stage_v_w_registries.py
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 1097
+    sha256: 82bd5d98b0d0a20b2360691f8820e821316277fda22ae0ba7fa700b2f14ecad1
+  - path: data/STAGE_V_1_CLOSURE_REPORT.md
+    role: stage_v_1_release_artifact
+    availability: required
+    bytes: 5197
+    sha256: 4740074946a9ef508da545db0804ef4377d2f0609db672f3fe3ef003930effbd
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/comparison.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1021
+    sha256: fd408eabc64acd5e1c407a2d7077bc0031e6617219e414c673b51484b0a6d29c
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/method_metrics.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 361
+    sha256: 359201c9fc788ab10f73c3455eb4a984c5d4c9bbb9b1f27490726efbd832c4be
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/runtime_comparison.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 448
+    sha256: 452c4a3c78ec0a8c95a91c3c15f59eeee81a4f2efe7df550509f1ef9f6b3ff59
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/annotated.mp4
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 132765
+    sha256: cfb597d504720351922edf38b3075b8d7fc41960d381a2632401479747bf3e52
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/configuration_snapshot.yaml
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1435
+    sha256: dffa524d49682af4e6e84b448b2bc85cce09b97703e4576b68e4432ff9e6208b
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/detections.jsonl
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 316
+    sha256: 5ea69adeb9e5ef07eace10e3eabf5eca858a35b74b451127c5a9b4c3e590ad8a
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/events.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 95
+    sha256: 99dfdb60a0093240fbf7f93fe7a52e8dac7db93366cfd25f964db82becf79abd
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/metrics.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 241
+    sha256: 44fa8aca2dd0d68f553f2cfdde1ec57c2a2f8b706ea049ba1f27c993f2b5e374
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/occupancy.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 4787
+    sha256: 1665553a6ffab31b7000fbc8df4d49494ff8ed1529459b2ce0ee82a2f09f9a03
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/runtime_metadata.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 2333
+    sha256: a20a4dbf4fe5110fa2760d1a9a369253246951702218b9be550939980a81be40
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/classic/summary.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1131
+    sha256: 9cec1b66b9d8d1a105f79aee80cf366b9b4f25017cae671f7675220fe84503a2
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/annotated.mp4
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 208670
+    sha256: d4c301bde65398462217ab9c526a44217c2b992883fd9a510779d65a41d33d79
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/configuration_snapshot.yaml
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1437
+    sha256: e0df05c9cfcc1730c8e38b15cfbc3cad98532b4070accbae0be525dd971bcc92
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/detections.jsonl
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 72022
+    sha256: 674f72b00266a9da87c02a752f0a1bc7d9442f3dbe5cd540ab46b3b7b0f7612a
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/events.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 95
+    sha256: 99dfdb60a0093240fbf7f93fe7a52e8dac7db93366cfd25f964db82becf79abd
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/metrics.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 241
+    sha256: 44fa8aca2dd0d68f553f2cfdde1ec57c2a2f8b706ea049ba1f27c993f2b5e374
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/occupancy.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 3333
+    sha256: a9219af2cb410d235ea1c0f37e5ffd9455917c6fc5d3e6b4acc501962ec6ab83
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/runtime_metadata.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 3140
+    sha256: afb1a4c850f1e782f77399b24db193aada2984dfba162bab258beb0573fa992a
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/detection/summary.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1133
+    sha256: 9ed3fdcb839a405512f4a43933ddbf79da05e0a92ca24810a191869b2987e1a8
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/annotated.mp4
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 207259
+    sha256: b8ba06135220212b69d7e50563e6410b1f973940468727c3ce8af6cc6f44073e
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/configuration_snapshot.yaml
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1434
+    sha256: 00122dc049b8eb0a3b3428bde8fcf0625123a997a8c3bb55ceba9cc58e10387b
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/detections.jsonl
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 72022
+    sha256: 674f72b00266a9da87c02a752f0a1bc7d9442f3dbe5cd540ab46b3b7b0f7612a
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/events.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 95
+    sha256: 99dfdb60a0093240fbf7f93fe7a52e8dac7db93366cfd25f964db82becf79abd
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/metrics.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 241
+    sha256: 44fa8aca2dd0d68f553f2cfdde1ec57c2a2f8b706ea049ba1f27c993f2b5e374
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/occupancy.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 5932
+    sha256: 6782c5bf88a4c9976879b6a6267ace784b02c31ac7858f549a86b953dbaf8008
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/runtime_metadata.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 4763
+    sha256: 33e57b6b0d5aa96f2e874b4f1bddcbb63f691743b98f473d86c2319b1863f9dc
+  - path: outputs/stage_v_1_multimode_smoke_20260730_v3/fusion/summary.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1130
+    sha256: d3f970fbc2e8bc8aabb751cbdf7bc77a37fd9a66c5740688ca8e9217e617f7c5
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/annotated.mp4
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 206901
+    sha256: f76ab916314bd84f0064f69bc8488b675bf4cdb2125e2b847c5860b72f4f7713
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/configuration_snapshot.yaml
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1434
+    sha256: 00122dc049b8eb0a3b3428bde8fcf0625123a997a8c3bb55ceba9cc58e10387b
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/detections.jsonl
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 72022
+    sha256: 674f72b00266a9da87c02a752f0a1bc7d9442f3dbe5cd540ab46b3b7b0f7612a
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/events.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 95
+    sha256: 99dfdb60a0093240fbf7f93fe7a52e8dac7db93366cfd25f964db82becf79abd
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/metrics.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 241
+    sha256: 44fa8aca2dd0d68f553f2cfdde1ec57c2a2f8b706ea049ba1f27c993f2b5e374
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/occupancy.csv
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 5192
+    sha256: fdf1957c79d42343919d071670c80aa681353bfe98b5b5aaa453cf9c3231336d
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/runtime_metadata.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 4831
+    sha256: 99bccd43a8f0dea496377b9e303a5e5b73bf73cc67663872efdfd06766cc4bd2
+  - path: outputs/stage_v_1_fusion_smoke_20260730_v3/summary.json
+    role: local_model_backed_smoke_evidence
+    availability: local_ignored_optional
+    bytes: 1130
+    sha256: d3f970fbc2e8bc8aabb751cbdf7bc77a37fd9a66c5740688ca8e9217e617f7c5

@@ -48,7 +48,7 @@ That negative result remains unchanged. A separate, licensed VIRAT search
 later produced two distinct-scene, one-slot departure sequences: the
 repeatedly reviewed `0502` sequence was assigned to development, and the
 previously unused `0503` scene was locked as holdout before any model output.
-Frozen E4 and E5 case studies were then executed. Neither exceeded raw E0 on
+Frozen E4 and E5 case studies were then executed. Neither exceeded raw T0 on
 holdout, and E5 failed to recognize the vacant state on development; Fusion
 V2 therefore remained closed.
 
@@ -74,7 +74,7 @@ The temporal protocol verifies source hashes, video metadata, fixed polygons,
 continuous per-frame labels, class counts, transitions, and separation of the
 `0502` development and `0503` holdout scenes. Every model and gate parameter
 was frozen before temporal prediction. On the once-only `0503` holdout, raw
-E0 achieved Macro F1 0.954119, compared with 0.940952 for raw E3b, 0.834272
+T0 achieved Macro F1 0.954119, compared with 0.940952 for raw E3b, 0.834272
 for E4 calibrated fusion with hysteresis, and 0.919147 for E5 YOLOv8n,
 ByteTrack, stationary-motion suppression, and dwell. E4 still produced 11
 unsupported state changes, while E5 changed twice but declared the departure
@@ -109,6 +109,34 @@ truth, but only for one slot and one departure in each of two scenes. Its slot
 metrics and event timing are reported without frame-level confidence
 intervals; they do not support broad arrival/departure,
 tracking-generalization, low-light, IDF1, or HOTA claims.
+
+## Corrected detector and Stage J statement
+
+Historical Stage I-v1 was retained unchanged. Stage I-v2 corrected
+cross-category duplicate counting with class-agnostic NMS, selected D0/D1/D2
+confidence thresholds independently on the same consumed development set,
+and retained `max_det=300` after a 300/1000 development sensitivity check.
+One subsequent NDISPark count run is reported only as post-hoc
+consumed-test sensitivity.
+
+Using those frozen operating points, P0, P1 and P2 connected D0, D1 and D2 to
+identical B1 polygon mapping on 1,505 already-consumed PKLot slot labels.
+Macro F1 was 0.768040, 0.825723 and 0.735168 respectively. P1 led this
+integration diagnostic but still missed 249 occupied slots; P2 had no
+false-occupied slots but missed 375 occupied slots. No setting or model was
+changed after these results. At Stage J closure, the first local inventory
+contained no additional unused PKLot camera/date group with verified slot
+truth, so the initial Stage K gate was blocked.
+
+An additive data gate later recovered 90 complete, previously unused PKLot
+JPG/XML pairs with zero image-hash overlap against Stage J. The frozen Stage K
+test contains 5,034 known slot labels. Pooled Macro F1 was 0.785612 for P0,
+0.808398 for P1 and 0.796548 for P2. However, camera-macro F1 was 0.841099,
+0.824835 and 0.849168, and P1 versus P0 produced 17 wins, 11 ties and 62
+losses by image. The mean paired difference was -0.040322 with 95% interval
+[-0.068804, -0.009457]. Thus fine-tuned P1 improved the PUCPR-weighted pooled
+score but did not demonstrate consistent cross-camera superiority. No
+Stage K result changed the frozen detector, threshold or mapping rule.
 
 ## Structural comparison
 

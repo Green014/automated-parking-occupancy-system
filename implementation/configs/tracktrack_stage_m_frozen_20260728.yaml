@@ -1,0 +1,23 @@
+# Ultralytics TrackTrack defaults frozen for Stage M.
+# Upstream package: ultralytics==8.4.104
+# Upstream license: AGPL-3.0
+# Upstream cfg SHA-256: 33fcd0cf42023fabc1cff93e8769f949e3f92a39219a8b7de157fc612a1de37a
+tracker_type: tracktrack
+track_high_thresh: 0.6
+track_low_thresh: 0.25
+new_track_thresh: 0.7
+track_buffer: 30
+match_thresh: 0.7
+lost_match_thr: 0.0
+iou_weight: 0.5
+reid_weight: 0.5
+conf_weight: 0.1
+angle_weight: 0.05
+penalty_p: 0.2
+penalty_q: 0.4
+reduce_step: 0.05
+tai_thr: 0.55
+min_track_len: 3
+gmc_method: sparseOptFlow
+with_reid: false
+model: auto

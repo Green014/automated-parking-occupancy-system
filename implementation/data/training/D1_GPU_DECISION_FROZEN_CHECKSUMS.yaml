@@ -1,0 +1,10 @@
+schema_version: 1
+registry_id: GPU-GATE-NDISPARK-D1-FREEZE-20260727-01
+frozen_at: "2026-07-27T17:28:53.2225633+08:00"
+artifacts:
+  - path: configs/d1_ndispark_formal_frozen_20260727.yaml
+    bytes: 3017
+    sha256: 8cf5f22db403ba361a01842e10e3ca7852bf25947366fef28d324daddb1648df
+  - path: data/training/d1_gpu_decision_20260727.yaml
+    bytes: 4417
+    sha256: 45c22146a0f0aa4d0dd1cc076f95162a20bf4e39eca727c574053806e5b2dcb6

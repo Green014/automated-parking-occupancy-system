@@ -1,0 +1,187 @@
+schema_version: 2
+comparison_protocol_id: D-COMP-NDISPARK-DEV-V2-MAXDET300-20260727-01
+protocol_generation: stage_i_v2
+status: frozen_before_corrected_predictions
+frozen_at: "2026-07-27T21:57:49.8789310+08:00"
+evaluation_role: corrected_development_evaluation
+
+methodology_correction:
+  historical_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+  historical_results_immutable: true
+  corrections:
+    - class_agnostic_NMS_before_source_classes_are_mapped_to_vehicle
+    - common_threshold_is_diagnostic_only
+    - per_model_thresholds_are_selected_on_development
+    - max_det_is_checked_by_a_separate_development_sensitivity_arm
+  excluded_claims:
+    - This is not a new untouched test.
+    - Vehicle count MAE is not parking-slot occupancy accuracy.
+
+data:
+  dataset_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  preparation_id: DPREP-NDISPARK-ONLY-20260727-01
+  preparation_record:
+    path: ../data/preprocessing/ndispark_only_20260727.yaml
+    bytes: 3390
+    sha256: f831311b7e43db27005511f9838ab8e12641421cea531b66787885c15f08fc88
+  validation_manifest:
+    path: ../data/manifests/ndispark_only_20260727/ndispark_validation_frozen_20260727.csv
+    rows: 30
+    bytes: 7260
+    sha256: abbcf72d193afbdbe64fea46c5d2553dfba6c978406f1c2dd76f4b68aa471c99
+  expected:
+    train_images: 112
+    train_boxes: 2577
+    validation_images: 30
+    validation_boxes: 725
+    ground_truth_class_id: 0
+    ground_truth_class_name: vehicle
+  role: consumed_development_validation
+  prohibited_role_names: [untouched_test, final_test]
+
+models:
+  D0:
+    name: COCO-pretrained YOLOv8n
+    backend: ultralytics_yolo
+    status: ready
+    weights_name: yolov8n.pt
+    weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+    source_class_ids: [2, 3, 5, 7]
+    source_class_names: [car, motorcycle, bus, truck]
+    project_class_id: 0
+    project_class_name: vehicle
+  D1:
+    name: NDISPark-fine-tuned YOLOv8n
+    backend: ultralytics_yolo
+    status: ready
+    initialization: D0
+    weights_name: best.pt
+    weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+    training_artifact_role: frozen_formal_D1
+    source_class_ids: [0]
+    source_class_names: [vehicle]
+    project_class_id: 0
+    project_class_name: vehicle
+  D2:
+    name: YOLO-World zero-shot
+    backend: ultralytics_yolo_world
+    status: ready
+    weights_name: yolov8s-worldv2.pt
+    weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+    prompts: [car, motorcycle, bus, truck]
+    source_class_ids: [0, 1, 2, 3]
+    source_class_names: [car, motorcycle, bus, truck]
+    project_class_id: 0
+    project_class_name: vehicle
+  D3:
+    name: fine-tuned YOLO-World
+    backend: ultralytics_yolo_world
+    status: deferred
+    reason: Optional extension only after required D0/D1/D2 and occupancy work.
+
+common_inference:
+  split: val
+  imgsz: 640
+  confidence_floor: 0.001
+  nms_iou: 0.7
+  agnostic_nms: true
+  max_detections: 300
+  batch: 1
+  single_class_evaluation: true
+  augmentation: false
+  rect: false
+  half: false
+  device: local_explicit_or_auto
+  preprocessing: ultralytics_default_letterbox_same_version
+
+threshold_evaluation:
+  candidate_thresholds:
+    - 0.05
+    - 0.10
+    - 0.15
+    - 0.20
+    - 0.25
+    - 0.30
+    - 0.35
+    - 0.40
+    - 0.45
+    - 0.50
+    - 0.55
+    - 0.60
+    - 0.65
+    - 0.70
+    - 0.75
+    - 0.80
+    - 0.85
+    - 0.90
+    - 0.95
+  common_threshold_diagnostic:
+    role: controlled_sensitivity_only
+    selection_objective: lowest_mean_development_count_MAE
+    tie_break: [lowest_mean_RMSE, highest_threshold]
+    deployment_selection_allowed: false
+  per_model_development_calibration:
+    role: primary_deployment_operating_point
+    selection_objective: lowest_development_count_MAE
+    tie_break: [lowest_RMSE, highest_threshold]
+    same_membership_and_grid_required: true
+    test_labels_visible: false
+
+metric_definitions:
+  primary: [mAP50_95, recall]
+  secondary:
+    - precision
+    - mAP50
+    - framework_pipeline_latency_ms_per_image
+    - framework_pipeline_FPS
+    - peak_cuda_memory_bytes
+    - images_reaching_max_det
+  iou_thresholds:
+    mAP50: 0.50
+    mAP50_95: "0.50:0.05:0.95"
+  evaluation_implementation: Apply class-agnostic NMS while source classes are distinct, map retained source vehicle classes to project class 0 vehicle, then use one-to-one IoU matching.
+
+selection_policy:
+  select_on: NDISPark_validation_consumed_development
+  primary_order: [mAP50_95, recall]
+  deployment_constraint: framework_pipeline_FPS
+  test_counts_visible_during_selection: false
+  slot_occupancy_results_visible_during_selection: false
+  no_claim: Detector mAP improvement does not imply slot Macro F1 improvement.
+
+max_det_sensitivity:
+  arm: max_det_300
+  paired_protocol_id: D-COMP-NDISPARK-DEV-V2-MAXDET1000-20260727-01
+  comparison_data_role: consumed_development_validation
+  final_setting_not_selected_from_test: true
+
+output_contract:
+  root_must_not_exist: true
+  top_level: [preflight.json, comparison.json, model_runtime_table.csv]
+  per_model:
+    - metrics.json
+    - runtime_metadata.json
+    - detections.jsonl
+    - PR_curve.png
+    - F1_curve.png
+    - P_curve.png
+    - R_curve.png
+    - confusion_matrix.png
+    - confusion_matrix_normalized.png
+  negative_results_retained: true
+
+runtime:
+  python: 3.12.13
+  torch: 2.13.0+cu130
+  cuda: "13.0"
+  ultralytics: 8.4.104
+  opencv: 4.13.0
+  device: NVIDIA GeForce RTX 3060 Laptop GPU
+  vram_bytes: 6441926656
+
+gates:
+  preflight_must_pass_before_output_creation: true
+  NDISPark_test_role: consumed_posthoc_only
+  no_test_threshold_selection: true
+  no_D1_retraining: true
+  paid_GPU: prohibited_without_user_approval

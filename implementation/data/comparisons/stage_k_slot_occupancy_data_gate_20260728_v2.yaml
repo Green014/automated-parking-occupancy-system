@@ -1,0 +1,131 @@
+schema_version: 2
+record_id: STAGE-K-PKLOT-DATA-GATE-RECORD-20260728-02
+gate_id: STAGE-K-PKLOT-DATA-GATE-20260728-02
+status: closed_passed_before_predictions
+recorded_at_utc: '2026-07-28T00:19:12.863271+00:00'
+supersedes:
+  gate_id: STAGE-K-PKLOT-DATA-GATE-20260727-01
+  reason: The v1 local-inventory blocker was valid when written; additional complete PKLot JPG/XML pairs were later recovered from the partial official archive.
+decision_basis: pre_prediction_evidence_only
+recorded_after_single_execution: true
+data_role: untouched_test
+candidate_id: P-COMP-PKLOT-TEST-STAGEK-CANDIDATE-20260727-02
+protocol_id: P-COMP-PKLOT-TEST-STAGEK-20260727-01
+result_record_id: P-COMP-PKLOT-TEST-STAGEK-RECORD-20260727-01
+selection_disclosure:
+  camera_date_groups_selected_using_truth_distribution: true
+  within_group_membership_selected_using_truth: false
+  within_group_rule: timestamp-sorted evenly spaced sampling, 30 images per group
+  model_outputs_viewed_before_freeze: false
+  parameters_selected_from_candidate: false
+summary:
+  images: 90
+  known_slots: 5034
+  occupied: 1943
+  vacant: 3091
+  unknown: 6
+  unknown_excluded_from_metrics: 6
+  cameras:
+  - pucpr
+  - ufpr04
+  - ufpr05
+  dates:
+  - '2012-09-15'
+  - '2013-01-16'
+  - '2013-04-14'
+  weather:
+  - cloudy
+  - sunny
+  camera_date_weather_groups:
+  - camera: pucpr
+    date: '2012-09-15'
+    weather: sunny
+    images: 30
+  - camera: ufpr04
+    date: '2013-01-16'
+    weather: cloudy
+    images: 30
+  - camera: ufpr05
+    date: '2013-04-14'
+    weather: sunny
+    images: 30
+  selected_unique_image_hashes: 90
+  prior_development_image_sha256_overlap: 0
+source_boundary:
+  dataset: PKLot
+  license: CC-BY-4.0
+  official_archive_url: https://www.inf.ufpr.br/lesoliveira/download/PKLot.tar.gz
+  local_archive_complete: false
+  eligible_members: Only complete, individually hashed JPG/XML pairs before the truncated archive boundary.
+chronology:
+  candidate_prepared_without_predictions: true
+  manual_review_passed_before_protocol_freeze: true
+  protocol_frozen_before_predictions: true
+  preflight_opened_gate_without_predictions: true
+  single_test_execution_frozen_afterward: true
+restrictions:
+  test_parameter_selection: false
+  post_result_detector_reselection: false
+  D1_retraining: false
+  temporal_claim_from_sampled_images: false
+limitations:
+- The local official archive is truncated; only complete pairs before the stream boundary were eligible.
+- Each camera contributes one date, so camera and date effects are confounded.
+- Cloudy weather occurs only for UFPR04, so weather and camera effects are also confounded.
+artifact_count: 11
+artifacts:
+- role: superseded_local_inventory_gate_v1
+  root: source
+  path: data/comparisons/stage_k_slot_occupancy_data_gate_20260727.yaml
+  bytes: 1775
+  sha256: 6d50626303ac8a43c49e14c2e583a347b1e7a0c3c7913a451696463659a4b792
+- role: candidate_audit
+  root: source
+  path: data/preprocessing/pklot_stage_k_candidate_audit_20260727_v2.json
+  bytes: 2528
+  sha256: 173b100688965e41eaf6b13131c56344d27ffb84420fd1b786a055d97ef4fcec
+- role: manual_visual_review
+  root: source
+  path: data/preprocessing/pklot_stage_k_manual_visual_review_20260727_v2.json
+  bytes: 2450
+  sha256: 51b17b4ff6595cce6740b6d9e9e97c07739646696d1550297652f1ece47da59b
+- role: membership_manifest
+  root: source
+  path: data/manifests/pklot_stage_k_candidate_20260727_v2.csv
+  bytes: 43826
+  sha256: d7d802e9dbf3bf3523d903d2623cb1ffa334f54bbf5cc9b184cc92c2f24e4a79
+- role: annotations
+  root: source
+  path: data/annotations/pklot_stage_k_candidate_20260727_v2.jsonl
+  bytes: 1199128
+  sha256: 0d20ea28b2ba92ecc55567e2882f0258587395784ade7d9131b1433881137046
+- role: prior_development_manifest
+  root: source
+  path: data/manifests/stage_j_pklot_development_20260727.csv
+  bytes: 5457
+  sha256: eb548c61eda7dd24a658fb07229131ddac8be4fb4cdee8fab37faa0edf022519
+- role: frozen_test_protocol
+  root: source
+  path: configs/stage_k_p0_p1_p2_pklot_test_frozen_20260727.yaml
+  bytes: 6302
+  sha256: c936b10a5d7c46c0f72bd8f054a000c5f18f0098065c60757d195b686fece2d1
+- role: frozen_test_result_record
+  root: source
+  path: data/comparisons/stage_k_p0_p1_p2_test_20260727.yaml
+  bytes: 19563
+  sha256: 3a2b878791255a9f0a21a895cbcff88233636867f70ececc4244f8281d5d5cbe
+- role: candidate_contact_sheet
+  root: external
+  path: outputs/stage_k_pklot_candidate_contact_sheet_20260727_v2.png
+  bytes: 4633410
+  sha256: 6ecef306565dfb919e21331a713ae5ab595a7bee24d09409354e128c8e10685c
+- role: truth_contact_sheet
+  root: external
+  path: outputs/stage_k_pklot_truth_contact_sheet_20260727_v2.png
+  bytes: 4610203
+  sha256: 1374f253bbd0850a951ba90e09fc5ff9e598bca84b28bf2227c20a335b2315be
+- role: pre_prediction_preflight
+  root: external
+  path: outputs/P0_P1_P2_stage_k_20260727_preflight_v1.json
+  bytes: 1116
+  sha256: f4e3226e08c70e52084adb6d775b52290ba2599fed98dfa127c6b47a014b3d9b

@@ -1,0 +1,143 @@
+schema_version: 1
+protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+frozen_at: '2026-07-27T15:53:42.1557501+08:00'
+status: frozen
+source_contract:
+  dataset: NDISPark
+  version: '1.0'
+  doi: 10.5281/zenodo.6560823
+  source_root: --source-root or PARKING_DATA_ROOT
+  committed_absolute_paths: false
+  archive:
+    name: ndis_park.zip
+    bytes: 118187828
+    sha256: 87ca20dfe5e5a5659a9a41e03724fdc38eed050de6ed6742995955fc0bd785c0
+  files:
+  - relative_path: README.pdf
+    bytes: 61306
+    sha256: f3cb272a815ae9453164d6faab45c4404b319d359dad8effbfdfdcb51f38d290
+  - relative_path: train/train_coco_annotations.json
+    bytes: 89890475
+    sha256: 7c6d475ac520d4a4b4d74edeb2301533265c3abf6f567177e4949d2598b418e5
+  - relative_path: train/train_dot_annotations.csv
+    bytes: 86186
+    sha256: e0bd90f1c02bc2dce31df22134c608d48bf2edc445b189d575cfee99c79a4425
+  - relative_path: validation/val_coco_annotations.json
+    bytes: 24842506
+    sha256: 4ef96ce3be4ab70b585f8cc5a040ce63f5118ea1a1824acb65bc3493f95d911b
+  - relative_path: validation/val_dot_annotations.csv
+    bytes: 24288
+    sha256: 7f73067bd77320ae0575d959818d7497872306d9b1c7d13393cc9a7da4dd35c2
+  - relative_path: test/ground_truth_test_counting.csv
+    bytes: 2052
+    sha256: 5d20edd3b8e42eec9f79178dbec8d9bb004c9c8a9b3f52842ef06597298dd24a
+class_mapping:
+  source_category_id: 3
+  source_category_name: car
+  target_category_id: 0
+  target_category_name: vehicle
+  mapped_source_categories:
+  - car
+splits:
+  train:
+    images: 112
+    vehicle_boxes: 2577
+    cameras:
+    - '60'
+    - '62'
+    - '64'
+    - '69'
+    - '73'
+    - '78'
+    - '83'
+    annotation_file: train_coco_annotations.json
+    annotation_bytes: 89890475
+    annotation_sha256: 7c6d475ac520d4a4b4d74edeb2301533265c3abf6f567177e4949d2598b418e5
+  validation:
+    images: 30
+    vehicle_boxes: 725
+    cameras:
+    - '60'
+    - '62'
+    - '64'
+    - '69'
+    - '73'
+    - '78'
+    - '83'
+    annotation_file: val_coco_annotations.json
+    annotation_bytes: 24842506
+    annotation_sha256: 4ef96ce3be4ab70b585f8cc5a040ce63f5118ea1a1824acb65bc3493f95d911b
+  test:
+    images: 117
+    vehicle_boxes: null
+    vehicle_count_sum: 1402
+    zero_count_images: 0
+    cameras:
+    - '60'
+    - '64'
+    - '69'
+    - '73'
+    - '78'
+    - '83'
+    annotation_file: ground_truth_test_counting.csv
+    annotation_bytes: 2052
+    annotation_sha256: 5d20edd3b8e42eec9f79178dbec8d9bb004c9c8a9b3f52842ef06597298dd24a
+manifests:
+  train:
+    file: ndispark_train_frozen_20260727.csv
+    rows: 112
+    bytes: 24054
+    sha256: 9231cd310d2ce64c6bc06727c1835ba05a4229de1837954a7409f525de0a0b32
+  validation:
+    file: ndispark_validation_frozen_20260727.csv
+    rows: 30
+    bytes: 7260
+    sha256: abbcf72d193afbdbe64fea46c5d2553dfba6c978406f1c2dd76f4b68aa471c99
+  test:
+    file: ndispark_test_frozen_20260727.csv
+    rows: 117
+    bytes: 24630
+    sha256: 79cc80392c8d3c3723f31f68242f1e5ec0610f10ff81c02fc58a9a0215a2b35d
+integrity:
+  missing_images: 0
+  decode_failures: 0
+  bbox_violations: 0
+  exact_duplicate_sha256_groups_across_splits: 0
+leakage_audit:
+  camera_independent: false
+  camera_membership:
+    '60':
+    - test
+    - train
+    - validation
+    '62':
+    - train
+    - validation
+    '64':
+    - test
+    - train
+    - validation
+    '69':
+    - test
+    - train
+    - validation
+    '73':
+    - test
+    - train
+    - validation
+    '78':
+    - test
+    - train
+    - validation
+    '83':
+    - test
+    - train
+    - validation
+  finding: The official split is condition-based rather than camera-independent; six
+    cameras span train, validation, and test.
+  controls:
+  - Preserve official split membership.
+  - Treat validation as consumed development validation.
+  - Do not select thresholds, epochs, or augmentations from test counts.
+  - Report test count metrics per camera.
+  - Do not report detector mAP, box precision, or box recall on test.

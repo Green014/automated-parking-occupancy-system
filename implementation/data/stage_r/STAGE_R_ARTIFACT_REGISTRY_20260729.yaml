@@ -1,0 +1,63 @@
+schema_version: 1
+protocol_id: STAGE-R-QV2-POSTHOC-COMPONENT-ATTRIBUTION-20260729-01
+registry_id: STAGE-R-ARTIFACT-REGISTRY-20260729-01
+status: POSTHOC_ANALYSIS_COMPLETE_AND_HASH_VERIFIED
+created_on: '2026-07-29'
+path_base: implementation_root
+artifact_count: 13
+registry_self_hash_included: false
+frozen_stage_q_v2_outputs_modified: false
+model_inference_run: false
+artifacts:
+- path: src/parking_occupancy/stage_r_component_attribution.py
+  role: analysis_implementation
+  bytes: 45909
+  sha256: c821c13b0d7fbc286f1bd1a269cb56c800d6730005fc16132116961f5925c2c4
+- path: scripts/analyze_stage_r_components.py
+  role: analysis_entrypoint
+  bytes: 1842
+  sha256: b49985e6580ed7405978f8251722f8c6145a737b78da48fd08b6930b24284c8b
+- path: scripts/freeze_stage_r_artifacts.py
+  role: registry_entrypoint
+  bytes: 2349
+  sha256: f63a54bff344d4179df8b1a516543cf4483fd269fc8ffe5b3181c4cb88d14410
+- path: tests/test_stage_r_component_attribution.py
+  role: verification_test
+  bytes: 4976
+  sha256: fa5dd6babe516ffa1decebde733072686a4905e7c32b5ee2652504d841526306
+- path: data/STAGE_R_COMPONENT_ATTRIBUTION_REPORT.md
+  role: final_report
+  bytes: 17716
+  sha256: c95b8f9986f240d358d8b9cbec64aeded2239b1de6b0eb1d6d01ffb2f42c427c
+- path: data/FINAL_RESULTS_INDEX.md
+  role: final_results_index
+  bytes: 3112
+  sha256: b28e95bc4ffd759f0a2b9f5b8fe3c4da9196f0d670547492bb752d437f973256
+- path: data/stage_r/STAGE_R_COMPONENT_COMPARISON.csv
+  role: generated_stage_r_artifact
+  bytes: 68983
+  sha256: 82905e25c7ab447fb98ca46fa715b009443b5b4b8d32619e1669b17e741531b8
+- path: data/stage_r/STAGE_R_COMPONENT_COMPARISON.json
+  role: generated_stage_r_artifact
+  bytes: 415483
+  sha256: 1277f298f2ceb92022d0de028c6d31ad5eac0265dcc52d94109dd96d42ae5c9d
+- path: data/stage_r/STAGE_R_COMPONENT_DELTAS.csv
+  role: generated_stage_r_artifact
+  bytes: 49321
+  sha256: d9e1b2463045379ba98446cc270181b3fc3167b199cf9f975202a2991a9b56bd
+- path: data/stage_r/STAGE_R_ERROR_TRANSITIONS.csv
+  role: generated_stage_r_artifact
+  bytes: 817
+  sha256: 34122fee5f2bdceefabd0f6a872f5c2f9b9ebf96085f62237d761f8ab75a66b8
+- path: data/stage_r/STAGE_R_FINAL_SYSTEM_EVIDENCE.csv
+  role: generated_stage_r_artifact
+  bytes: 931
+  sha256: 83dd5c4330d5a3db709284cc865b24c0373be3dc117986c7c8174dc8b4f07959
+- path: data/stage_r/STAGE_R_SYSTEM_FLOW.svg
+  role: generated_stage_r_artifact
+  bytes: 4446
+  sha256: e62e179d8c56cf5e666e33bff3b0de717021187ad1a5cfe035a20170a3cb0ff2
+- path: data/stage_r/STAGE_R_TEMPORAL_VALIDITY_AUDIT.csv
+  role: generated_stage_r_artifact
+  bytes: 9143
+  sha256: 676d3d9040b732101684e5d667ed26420ebceeda1f896fa6dd88d74aa967b78f

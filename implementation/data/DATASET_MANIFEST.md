@@ -1,10 +1,39 @@
 # Dataset Manifest
 
-Audit date: 26 July 2026
+Audit date: 27 July 2026
 
 The focused Stage B continuous-video audit and current access blocker are in
 `../literature_core/DATASET_AUDIT.md` and
 `../literature_core/DATASET_ACCESS_BLOCKER.md`.
+
+The newer Part I detector/slot alignment decision is in
+`PART1_DATASET_ALIGNMENT.md`, with the complete machine-readable record in
+`part1_dataset_alignment.yaml`. It supersedes this file when assigning Part I
+train/development/test roles; this wider manifest remains the Part II source
+inventory.
+
+The user-selected active backup protocol is
+`../configs/ndispark_only_dataset_frozen_20260727.yaml`. Its dataset card is
+`NDISPARK_ONLY_DATASET_CARD.md`, and its immutable source/split evidence is in
+`manifests/ndispark_only_20260727/`.
+
+Stage D execution evidence is in `NDISPARK_PREPROCESSING_REPORT.md` and
+`preprocessing/ndispark_only_20260727.yaml`. Generated images, YOLO labels,
+runtime `dataset.yaml`, caches, and detailed manifests remain under the
+Git-ignored `processed/` tree.
+
+The Stage E development comparison is frozen in
+`../configs/detector_comparison_frozen_20260727.yaml`, explained in
+`DETECTOR_COMPARISON_PROTOCOL.md`, and preflighted in
+`comparisons/detector_comparison_preflight_20260727.yaml`. It uses NDISPark
+validation only as consumed development validation. No detector prediction or
+count-test evaluation was run during the protocol stage.
+
+Stage F training-smoke evidence is in `D1_SMOKE_REPORT.md` and
+`training/d1_ndispark_smoke_20260727.yaml`. It used only the frozen 112-image
+train and consumed 30-image development-validation splits. The count-only test
+was not accessed. Runtime checkpoints and plots remain below the Git-ignored
+`outputs/d1_ndispark_smoke_20260727_v3/` directory.
 
 This manifest separates suitability for slot occupancy, vehicle detection, and
 tracking. "Publicly downloadable" is not treated as a license. A source enters
@@ -209,12 +238,50 @@ retained.
 |---|---:|---|
 | PKLot metadata | 266,961,322 bytes | SHA-256 `f2cef3361cb2698cadb59a920fc3a88504607d5f64c900aa549d24ba0aa6d37f` |
 | PKLot development images | 27 images / 8,182,054 bytes | Listed in `splits/pklot_development.csv` |
+| PKLot partial official archive | 2,760,421,376 bytes | SHA-256 `e197ae7fa97045354a115e515d6568d86d540c628907803d3bf640a67734c621`; truncated stream, complete pairs only |
+| PKLot Stage K test | 90 images / 5,034 known slot labels | 90 unique hashes, zero overlap with Stage J; membership in `manifests/pklot_stage_k_candidate_20260727_v2.csv` |
 | Grand Bassin `16-34-07` | 793 images / 399,758,079 bytes | Per-frame hashes in `splits/grand_bassin_aerial_development_checksums.csv` |
 | Reconstructed `16-34-07` MP4 | 57,254,582 bytes | SHA-256 `5fe48eb0ef687022411b379d9f870934accb68e68dd1cb1feebbdee7b86b3a9b` |
 | Grand Bassin `13-30-33` | 361 images / 191,989,846 bytes | Per-frame hashes in `splits/grand_bassin_aerial_candidate_133033_checksums.csv` |
 | Reconstructed `13-30-33` MP4 | local derived video | SHA-256 `6d5b187791c579ddae38729ae534a39854f6b20a39563750b88ea51b95792815` |
 | Fine-tuning preparation set | 72 selected images; 24 per video-level split | Per-frame hashes in `finetune/grand_bassin_annotation_checksums.csv` |
 | NDISPark archive | 118,187,828 bytes | MD5 `2825a2403794d233c278e2532d061359`; SHA-256 `87ca20dfe5e5a5659a9a41e03724fdc38eed050de6ed6742995955fc0bd785c0` |
+
+## Stage J/K PKLot role audit
+
+The local PKLot inventory used by Stage J contains exactly the 27 images in
+`manifests/stage_j_pklot_development_20260727.csv`: nine each from PUCPR,
+UFPR04 and UFPR05. All hashes passed before prediction. The 1,505 known slot
+labels and seven unknown labels come from
+`annotations/pklot_development_samples.jsonl`.
+
+Every one of these 27 images was already consumed by historical geometry,
+classifier and calibration development. Stage J therefore labels them
+`consumed_development`. The first local-inventory audit found zero additional
+eligible groups and is preserved in
+`comparisons/stage_k_slot_occupancy_data_gate_20260727.yaml`.
+
+Additional complete JPG/XML pairs were later recovered from the partial
+official PKLot archive. Before prediction, Stage K selected 30 evenly spaced
+images from each of three previously unused camera/date groups:
+
+| Camera | Date | Weather | Images | Known slots |
+|---|---|---|---:|---:|
+| PUCPR | 2012-09-15 | sunny | 30 | 2,996 |
+| UFPR04 | 2013-01-16 | cloudy | 30 | 838 |
+| UFPR05 | 2013-04-14 | sunny | 30 | 1,200 |
+
+The Stage K manifest has 90 unique image hashes, zero overlap with Stage J,
+5,034 known labels and six unknown labels excluded from metrics. Selection,
+truth-overlay review and the protocol were frozen before model output. The
+additive passing gate is
+`comparisons/stage_k_slot_occupancy_data_gate_20260728_v2.yaml`.
+
+The archive remains incomplete. Only complete, individually hashed JPG/XML
+pairs before the truncated stream boundary were eligible. Each camera has one
+selected date and cloudy weather appears only for UFPR04; date/weather
+analyses are therefore confounded with camera and cannot establish
+independent condition generalization.
 
 ## Planned data layout
 

@@ -1,0 +1,11 @@
+evidence_area,TT0,TT1,interpretation,claim_class
+occupancy_macro_f1,0.456796918,0.456796918,identical all-occupied failure,consumed-development diagnostic
+occupied_recall,1.000000000,1.000000000,all occupied frames recovered but not discriminative,consumed-development diagnostic
+vacant_recall,0.000000000,0.000000000,all 314 vacant frames false occupied,consumed-development diagnostic
+state_changes,0,0,stuck occupied rather than useful stability,consumed-development diagnostic
+event_rows,1,1,only initial entry and no departure event,consumed-development diagnostic
+steady_state_fps_p50_proxy,33.521276,14.215096,TrackTrack descriptive runtime cost,consumed-development diagnostic
+tracked_observations,0,23426,TT1 emits identity-bearing detections,descriptive no identity truth
+unique_source_track_ids,0,18,identity output exists but correctness is unscored,descriptive no identity truth
+short_gap_reacquisitions,0,17,mechanical continuity within frozen 30-frame buffer,descriptive no identity truth
+formal_occupancy_improvement,not established,blocked,new continuous parking video with independent slot truth required,blocked

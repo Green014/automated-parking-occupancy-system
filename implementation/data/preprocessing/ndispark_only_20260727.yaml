@@ -1,0 +1,110 @@
+schema_version: 1
+preparation_id: DPREP-NDISPARK-ONLY-20260727-01
+protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+executed_at: "2026-07-27T16:18:05.661627+08:00"
+status: complete
+git_state: uncommitted_worktree_preserved
+
+path_contract:
+  source: --source-root or PARKING_DATA_ROOT
+  output: --output-root
+  committed_absolute_paths: false
+  generated_output_name: ndispark_only_20260727_v1
+  generated_output_ignored_by_git: true
+  note: The ignored dataset.yaml contains the runtime output path required by Ultralytics; no user path is committed.
+
+source:
+  dataset: NDISPark
+  version: "1.0"
+  protocol: ../../configs/ndispark_only_dataset_frozen_20260727.yaml
+  archive_sha256: 87ca20dfe5e5a5659a9a41e03724fdc38eed050de6ed6742995955fc0bd785c0
+
+class_mapping:
+  source: {category_id: 3, name: car}
+  target: {category_id: 0, name: vehicle}
+
+results:
+  train:
+    images: 112
+    source_boxes: 2577
+    written_boxes: 2577
+    background_images: 1
+  validation:
+    images: 30
+    source_boxes: 725
+    written_boxes: 725
+    background_images: 0
+  count_test:
+    images: 117
+    label_files_created: 0
+  total:
+    frozen_source_images_verified: 259
+    source_boxes: 3302
+    written_boxes: 3302
+    clipped_boxes: 0
+    excluded_invalid_boxes: 0
+    excluded_duplicate_boxes: 0
+    duplicate_image_groups: 0
+    duplicate_label_groups: 0
+    invalid_or_out_of_range_YOLO_values: 0
+
+generated_artifacts:
+  before_Ultralytics_cache:
+    files: 406
+    bytes: 110595770
+  dataset_yaml:
+    bytes: 195
+    sha256: 8e000ba2fe912edf09c9386426da58315950c708726468df36a7c25163eab170
+  class_mapping_yaml:
+    bytes: 106
+    sha256: 14a55c6e2eb0a88cb97a4e6e3de2467c488be82761dacb0d10d9a5efcbca3c16
+  prepared_manifest_csv:
+    rows: 259
+    bytes: 78775
+    sha256: cf6f653512ac91b1bb7afe40fa5034f378f3e128011cc8e49da890e40a6282c5
+  annotation_actions_csv:
+    rows: 0
+    bytes: 99
+    sha256: 90de297a565a86c7c57dd9c5e209ca7ec4f3358f727fcdf33a2f6f2f6da9cf84
+  preparation_summary_yaml:
+    bytes: 1767
+    sha256: 2f629bc48494bcc50874f3df52e60ef4246adcaa68bb8ef8d45700756253644b
+
+Ultralytics_load_validation:
+  version: 8.4.104
+  image_size: 640
+  train_images: 112
+  train_boxes: 2577
+  validation_images: 30
+  validation_boxes: 725
+  observed_classes: [0]
+  corrupt_images: 0
+  generated_cache_files: [labels/train.cache, labels/val.cache]
+  model_loaded: false
+  predictions_run: false
+
+count_metric_implementation:
+  metrics: [MAE, RMSE, mean_predicted_count, mean_true_count]
+  per_camera: true
+  zero_truth_supported: true
+  MAPE_reported_by_default: false
+  detector_mAP_claim: prohibited
+
+implementation_hashes:
+  coco_conversion_py: f76ee05e6239f6803f9e8cb868fea675fdbeffba4b3a6f7f853fc41ea52cbd8f
+  dataset_preparation_py: c8cc654440b5081721b2c976a6303009d25dc7a15e13b4f2dadea40728fdcfe2
+  count_metrics_py: 5a0a51d86502b7cdfe4c32f665d15e8558f122d7bb008b2a73be538ca10e1460
+  prepare_ndispark_py: 7087d8622fc2d4c9231d2d73bb4241e9e334a67dbfbb4eaa63ec1c5585f26d1f
+  evaluate_count_predictions_py: d3d6424d5c5e690bd4e87da3095913457efa37099025ff9aedc713e881e549c1
+
+tests:
+  targeted: 16_passed
+  implementation: 46_passed
+  literature_core: 82_passed
+  read_only_syntax_compile: 116_files
+
+gate:
+  stage_D_passed: true
+  stage_E_may_start: true
+  detector_training_allowed_now: false
+  reason: Freeze and validate the Stage E comparison/evaluation implementation before the D1 smoke run.

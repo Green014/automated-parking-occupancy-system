@@ -1,0 +1,9 @@
+{
+  "protocol_id": "STAGE-S-FINAL-DEFAULT-AND-DEMO-20260729-01",
+  "unchanged": true,
+  "historical_registry_count": 10,
+  "all_after_verified": false,
+  "changes": [],
+  "status": "PASS",
+  "interpretation": "All Stage L-R registry files and their entry-state binding results are unchanged."
+}

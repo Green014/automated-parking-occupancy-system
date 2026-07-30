@@ -1,0 +1,39 @@
+schema_version: 1
+correction_id: D-STAGE-I-TIMESTAMP-CORRECTION-20260727-01
+recorded_at: "2026-07-27T21:11:08.7143877+08:00"
+status: authoritative_timestamp_correction
+
+reason: The manually entered rounded frozen_at and completed_at values were not wall-clock observations and must not be cited as execution timestamps.
+
+superseded_metadata:
+  configs/stage_i_count_test_frozen_20260727.yaml:
+    field: frozen_at
+    non_authoritative_value: "2026-07-27T18:20:00+08:00"
+  data/comparisons/stage_i_detector_evaluation_20260727.yaml:
+    field: completed_at
+    non_authoritative_value: "2026-07-27T18:35:00+08:00"
+  data/comparisons/STAGE_I_FROZEN_CHECKSUMS.yaml:
+    field: frozen_at
+    non_authoritative_value: "2026-07-27T18:40:00+08:00"
+
+authoritative_filesystem_evidence:
+  detector_selection_written_at: "2026-07-27T20:50:47.5322936+08:00"
+  count_protocol_file_created_at: "2026-07-27T20:51:41.5956659+08:00"
+  count_comparison_written_at: "2026-07-27T20:54:03.5440973+08:00"
+  qualitative_manifest_written_at: "2026-07-27T20:56:01.9438944+08:00"
+  stage_i_record_created_at: "2026-07-27T21:00:14.4041374+08:00"
+  stage_i_registry_created_at: "2026-07-27T21:01:03.9272935+08:00"
+
+ordering_claim:
+  selection_preceded_count_protocol_freeze: true
+  count_protocol_freeze_preceded_test_result: true
+  test_result_preceded_qualitative_export: true
+
+scope:
+  scientific_configuration_changed: false
+  predictions_rerun: false
+  metrics_changed: false
+  generated_artifacts_modified: false
+  historical_frozen_artifacts_modified: false
+
+reporting_rule: Cite the authoritative filesystem evidence above, not the superseded rounded values.

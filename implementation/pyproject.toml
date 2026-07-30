@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "parking-occupancy"
 version = "0.1.0"
 description = "YOLO vehicle detection to parking-slot occupancy baseline"
+license = "AGPL-3.0-only"
 requires-python = ">=3.10,<3.14"
 dependencies = [
   "numpy>=1.26,<3",
@@ -17,16 +18,41 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+integrated = [
+  "literature-core-parking>=0.1.0",
+  "torch>=2.6",
+  "torchvision>=0.21",
+]
+dashboard = [
+  "Flask>=3.1,<4",
+]
+official-parking = [
+  "shapely>=2.1,<3",
+]
+trackeval = [
+  "trackeval @ git+https://github.com/JonathonLuiten/TrackEval.git@12c8791b303e0a0b50f753af204249e622d0281a",
+]
+research = [
+  "literature-core-parking>=0.1.0",
+  "torch>=2.6",
+  "torchvision>=0.21",
+  "shapely>=2.1,<3",
+  "trackeval @ git+https://github.com/JonathonLuiten/TrackEval.git@12c8791b303e0a0b50f753af204249e622d0281a",
+]
 dev = [
   "pytest>=8,<10",
 ]
 
 [project.scripts]
 parking-run = "parking_occupancy.cli:main"
+parking-run-integrated = "parking_occupancy.integrated_cli:main"
+parking-run-final = "parking_occupancy.integrated_cli:main"
 parking-annotate = "parking_occupancy.annotate_slots:main"
 parking-evaluate = "parking_occupancy.evaluate:main"
 parking-evaluate-detection = "parking_occupancy.detection_evaluate:main"
 parking-evaluate-pklot = "parking_occupancy.pklot_experiment:main"
+parking-compare = "parking_occupancy.stage_v_runner:main"
+parking-dashboard = "parking_occupancy.stage_w_cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -34,6 +60,13 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+parking_occupancy = [
+  "stage_w_web/templates/*.html",
+  "stage_w_web/static/*.css",
+]
+
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
+pythonpath = [".", "src"]

@@ -1,0 +1,157 @@
+schema_version: 1
+comparison_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+status: frozen_before_new_predictions
+frozen_at: "2026-07-27T16:26:07.2046290+08:00"
+
+data:
+  dataset_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  preparation_id: DPREP-NDISPARK-ONLY-20260727-01
+  preparation_record:
+    path: ../data/preprocessing/ndispark_only_20260727.yaml
+    bytes: 3390
+    sha256: f831311b7e43db27005511f9838ab8e12641421cea531b66787885c15f08fc88
+  validation_manifest:
+    path: ../data/manifests/ndispark_only_20260727/ndispark_validation_frozen_20260727.csv
+    rows: 30
+    bytes: 7260
+    sha256: abbcf72d193afbdbe64fea46c5d2553dfba6c978406f1c2dd76f4b68aa471c99
+  expected:
+    train_images: 112
+    train_boxes: 2577
+    validation_images: 30
+    validation_boxes: 725
+    ground_truth_class_id: 0
+    ground_truth_class_name: vehicle
+  role: consumed_development_validation
+  prohibited_role_names:
+    - untouched_test
+    - final_test
+
+models:
+  D0:
+    name: COCO-pretrained YOLOv8n
+    backend: ultralytics_yolo
+    status: ready
+    weights_name: yolov8n.pt
+    weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+    source_class_ids: [2, 3, 5, 7]
+    source_class_names: [car, motorcycle, bus, truck]
+    project_class_id: 0
+    project_class_name: vehicle
+  D1:
+    name: NDISPark-fine-tuned YOLOv8n
+    backend: ultralytics_yolo
+    status: not_trained
+    initialization: D0
+    weights_name: null
+    weights_sha256: null
+    runtime_binding_rule: Require the Stage F/H recorded SHA-256 before comparison.
+    source_class_ids: [0]
+    source_class_names: [vehicle]
+    project_class_id: 0
+    project_class_name: vehicle
+  D2:
+    name: YOLO-World zero-shot
+    backend: ultralytics_yolo_world
+    status: ready
+    weights_name: yolov8s-worldv2.pt
+    weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+    prompts: [car, motorcycle, bus, truck]
+    source_class_ids: [0, 1, 2, 3]
+    source_class_names: [car, motorcycle, bus, truck]
+    project_class_id: 0
+    project_class_name: vehicle
+  D3:
+    name: fine-tuned YOLO-World
+    backend: ultralytics_yolo_world
+    status: deferred
+    reason: Optional extension only after required D0/D1/D2 and occupancy work.
+
+common_inference:
+  split: val
+  imgsz: 640
+  confidence_floor: 0.001
+  nms_iou: 0.7
+  max_detections: 300
+  batch: 1
+  single_class_evaluation: true
+  augmentation: false
+  rect: false
+  half: false
+  device: local_explicit_or_auto
+  preprocessing: ultralytics_default_letterbox_same_version
+
+metric_definitions:
+  primary:
+    - mAP50_95
+    - recall
+  secondary:
+    - precision
+    - mAP50
+    - framework_pipeline_latency_ms_per_image
+    - framework_pipeline_FPS
+    - weights_bytes
+    - parameter_count
+  iou_thresholds:
+    mAP50: 0.50
+    mAP50_95: "0.50:0.05:0.95"
+  latency_definition: Mean per-image sum of Ultralytics predict preprocess, inference, and postprocess speed fields.
+  fps_definition: 1000 divided by framework_pipeline_latency_ms_per_image.
+  evaluation_implementation: Filter source vehicle classes during prediction, map them to class 0 vehicle, then use one-to-one IoU matching and Ultralytics ap_per_class on the canonical detections.
+  exclusions:
+    - model_initialization_time
+    - first_download_time
+    - data_loading_time_outside_Ultralytics_speed
+
+selection_policy:
+  select_on: NDISPark_validation_consumed_development
+  primary_order: [mAP50_95, recall]
+  deployment_constraint: framework_pipeline_FPS
+  test_counts_visible_during_selection: false
+  slot_occupancy_results_visible_during_selection: false
+  no_claim: Detector mAP improvement does not imply slot Macro F1 improvement.
+
+qualitative_categories:
+  - daylight
+  - night
+  - occlusion
+  - small_vehicles
+  - dense_or_overlapping_vehicles
+  - false_positives
+  - false_negatives
+qualitative_scope_note: NDISPark validation directly supports night, occlusion, small/dense vehicles, FP, and FN review; daylight examples belong to training and cannot be validation metrics.
+
+output_contract:
+  root_must_not_exist: true
+  top_level:
+    - preflight.json
+    - comparison.json
+    - model_runtime_table.csv
+  per_model:
+    - metrics.json
+    - runtime_metadata.json
+    - detections.jsonl
+    - PR_curve.png
+    - F1_curve.png
+    - P_curve.png
+    - R_curve.png
+    - confusion_matrix.png
+    - confusion_matrix_normalized.png
+  negative_results_retained: true
+  partial_runs_not_presented_as_comparisons: true
+
+runtime:
+  python: 3.12.13
+  torch: 2.13.0+cu130
+  cuda: "13.0"
+  ultralytics: 8.4.104
+  opencv: 4.13.0
+  device: NVIDIA GeForce RTX 3060 Laptop GPU
+  vram_bytes: 6441926656
+
+gates:
+  preflight_must_pass_before_output_creation: true
+  D1_missing_blocks_execute: true
+  Stage_F_smoke_may_create_D1: true
+  NDISPark_test_count_evaluation: blocked_until_detector_and_count_rule_are_selected
+  paid_GPU: prohibited_without_user_approval

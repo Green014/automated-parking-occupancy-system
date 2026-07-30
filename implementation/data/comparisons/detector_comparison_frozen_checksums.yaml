@@ -1,0 +1,10 @@
+schema_version: 1
+registry_id: D-COMP-FREEZE-NDISPARK-20260727-01
+frozen_at: "2026-07-27T16:39:10.9221578+08:00"
+artifacts:
+  - path: configs/detector_comparison_frozen_20260727.yaml
+    bytes: 4892
+    sha256: 21daff1090d7a734d864916d4e0f2f3a787a4d5d57f6a469d8b43343acb9cb7d
+  - path: data/comparisons/detector_comparison_preflight_20260727.yaml
+    bytes: 2371
+    sha256: 1b67728bceae9a0e5ba2ee681a1bde2b403af911fab22fe27e1e7fde09909bbf

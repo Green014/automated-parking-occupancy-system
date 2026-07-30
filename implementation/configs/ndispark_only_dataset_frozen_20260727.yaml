@@ -1,0 +1,191 @@
+schema_version: 1
+protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+status: frozen
+frozen_at: "2026-07-27T15:53:42.1557501+08:00"
+selected_route:
+  name: local_NDISPark_only_detector_flow
+  selected_by: user
+  selected_on: "2026-07-27"
+  replaces_active_plan: CARPK_plus_NDISPark_with_PKLot_slot_protocol
+  deferred_sources:
+    - CARPK
+    - PKLot_full_archive
+
+source:
+  dataset: NDISPark
+  version: "1.0"
+  doi: 10.5281/zenodo.6560823
+  license: ODC-By-1.0
+  archive:
+    name: ndis_park.zip
+    bytes: 118187828
+    sha256: 87ca20dfe5e5a5659a9a41e03724fdc38eed050de6ed6742995955fc0bd785c0
+  source_manifest: ../data/manifests/ndispark_only_20260727/ndispark_source_manifest_frozen_20260727.yaml
+  path_contract:
+    source: --source-root or PARKING_DATA_ROOT
+    generated: --output-root
+    committed_absolute_paths: false
+
+class_mapping:
+  source:
+    category_id: 3
+    name: car
+  target:
+    category_id: 0
+    name: vehicle
+  accepted_training_categories:
+    - car
+  note: All 3302 train/validation instances use COCO category ID 3 (car).
+
+splits:
+  train:
+    role: detector_fine_tuning
+    membership: official_train_unchanged
+    images: 112
+    vehicle_boxes: 2577
+    lighting: daylight
+    manifest: ../data/manifests/ndispark_only_20260727/ndispark_train_frozen_20260727.csv
+  validation:
+    role: consumed_development_validation
+    membership: official_validation_unchanged
+    images: 30
+    vehicle_boxes: 725
+    lighting: night
+    manifest: ../data/manifests/ndispark_only_20260727/ndispark_validation_frozen_20260727.csv
+    restriction: May select operating threshold and epoch; must not be called untouched test.
+  test:
+    role: count_only_test
+    membership: official_test_unchanged
+    images: 117
+    vehicle_boxes: null
+    true_vehicle_count_sum: 1402
+    zero_count_images: 0
+    lighting: night
+    manifest: ../data/manifests/ndispark_only_20260727/ndispark_test_frozen_20260727.csv
+    restriction: No detector mAP, box precision, box recall, or qualitative box ground-truth claims.
+
+formal_data_roles:
+  A_detection_train: NDISPark_official_train
+  B_detection_validation: NDISPark_official_validation_consumed_development
+  C_detection_test: NDISPark_official_test_count_truth_only
+  D_slot_classifier_train: existing_E1b_historical_checkpoint_only
+  E_slot_occupancy_development: historical_27_image_PKLot_consumed_development
+  F_slot_occupancy_test: unavailable
+  G_temporal_test: unavailable
+  H_low_light_test: NDISPark_official_test_count_truth_only
+
+leakage_control:
+  exact_duplicate_images_across_splits: 0
+  camera_independent: false
+  finding: Six cameras occur in train, validation, and test; the official protocol is a day-to-night condition split.
+  rules:
+    - Preserve official split membership.
+    - Do not carve validation or test images into training.
+    - Do not use validation results as final test claims.
+    - Do not inspect test counts until D0/D1/D2 selection and the counting operating rule are frozen.
+    - Never select confidence, epochs, augmentation, or model weights using test counts.
+    - Report count metrics by camera because source cameras span splits.
+
+training_configuration_space:
+  initialization: yolov8n.pt_COCO_pretrained_only
+  fixed:
+    imgsz: 640
+    seed: 20260727
+    amp: true
+    deterministic: true
+    optimizer: AdamW
+    lr0: 0.001
+    weight_decay: 0.0005
+    device: local_RTX_3060_Laptop_GPU
+  smoke:
+    experiment_id: D1-NDISPARK-SMOKE-20260727-01
+    epochs: 3
+    batch: 4
+    purpose:
+      - validate_data_loading
+      - confirm_loss_changes
+      - confirm_weights_update
+      - measure_peak_VRAM_and_epoch_time
+  formal:
+    reserved_experiment_id: D1-NDISPARK-FT-20260727-01
+    max_epochs: 50
+    early_stopping_patience: 10
+    allowed_batch_after_smoke: [2, 4, 8]
+    selection_rule: Choose the largest batch that fits measured local VRAM; do not use accuracy to choose batch.
+    hyperparameter_search: prohibited
+
+detector_comparison:
+  protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+  models:
+    D0:
+      name: COCO-pretrained YOLOv8n
+      weights_name: yolov8n.pt
+      weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+      accepted_vehicle_labels: [car, motorcycle, bus, truck]
+    D1:
+      name: NDISPark-fine-tuned YOLOv8n
+      initialization: D0
+      output_class: vehicle
+      weights_sha256: null
+      status: not_trained
+    D2:
+      name: YOLO-World zero-shot
+      weights_name: yolov8s-worldv2.pt
+      weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+      prompts: [car, motorcycle, bus, truck]
+    D3:
+      name: fine-tuned YOLO-World
+      status: deferred
+  common_validation:
+    split: NDISPark_official_validation_consumed_development
+    imgsz: 640
+    ground_truth_class: vehicle
+    nms_iou: 0.7
+    pr_curve_confidence_floor: 0.001
+    iou_metric_range: "0.50:0.05:0.95"
+  primary_metrics:
+    - mAP50_95
+    - recall
+  secondary_metrics:
+    - precision
+    - mAP50
+    - latency_ms
+    - FPS
+    - model_size_bytes
+    - parameter_count
+
+count_test_policy:
+  metrics:
+    - MAE
+    - RMSE
+    - mean_predicted_count
+    - mean_true_count
+    - per_camera_MAE
+    - per_camera_RMSE
+  MAPE: prohibited_by_default
+  zero_truth_rule: Absolute and squared error remain defined; percentage error is not introduced.
+  gate: Do not run until detector selection and one shared counting rule are frozen on development data.
+
+parking_pipeline_status:
+  P0_P1_P2_new_untouched_slot_test: unavailable
+  historical_PKLot_27_images: development_only
+  historical_CNR_EXT: consumed_external_result_only
+  VIRAT_0503: viewed_case_study_only
+  consequence: Detector fine-tuning can proceed, but no final claim that detector gains improve slot Macro F1 is available in this route.
+
+environment_at_freeze:
+  python: 3.12.13
+  torch: 2.13.0+cu130
+  cuda: "13.0"
+  ultralytics: 8.4.104
+  opencv: 4.13.0
+  device: NVIDIA GeForce RTX 3060 Laptop GPU
+  vram_bytes: 6441926656
+
+prohibitions:
+  - No CNR-EXT parameter selection.
+  - No NDISPark test-count parameter selection.
+  - No PKLot or VIRAT parameter selection for D1.
+  - No random initialization.
+  - No paid GPU, school HPC, Ultralytics upgrade, or YOLO-World fine-tuning without a new approval gate.
+  - No overwrite of historical or frozen outputs.

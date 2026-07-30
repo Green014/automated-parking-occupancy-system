@@ -77,8 +77,16 @@ def main() -> None:
     total_flicker = 0
     total_instability = 0
     total_frames = 0
+    total_outcomes = {
+        "early": 0,
+        "on_time": 0,
+        "delayed": 0,
+        "missed": 0,
+    }
     entry_latency: list[float] = []
     exit_latency: list[float] = []
+    entry_signed_error: list[float] = []
+    exit_signed_error: list[float] = []
     for (video_id, slot_id), frames in sorted(grouped.items()):
         frames.sort()
         y_true = [
@@ -99,10 +107,18 @@ def main() -> None:
         total_flicker += metrics["unsupported_flicker_count"]
         total_instability += metrics["transition_instability_changes"]
         total_frames += len(frames)
+        for outcome in total_outcomes:
+            total_outcomes[outcome] += metrics["transition_outcomes"][outcome]
         entry_latency.extend(
             metrics["transition_latency_values_s"]["entry"]
         )
         exit_latency.extend(metrics["transition_latency_values_s"]["exit"])
+        entry_signed_error.extend(
+            metrics["signed_transition_error_values_s"]["entry"]
+        )
+        exit_signed_error.extend(
+            metrics["signed_transition_error_values_s"]["exit"]
+        )
 
     slot_minutes = total_frames / args.fps / 60.0
     report = {
@@ -114,10 +130,16 @@ def main() -> None:
                 total_flicker / slot_minutes if slot_minutes else 0.0
             ),
             "transition_instability_changes": total_instability,
+            "transition_outcomes": total_outcomes,
             "transition_latency_s": {
                 "all": summary(entry_latency + exit_latency),
                 "entry": summary(entry_latency),
                 "exit": summary(exit_latency),
+            },
+            "signed_transition_error_s": {
+                "all": summary(entry_signed_error + exit_signed_error),
+                "entry": summary(entry_signed_error),
+                "exit": summary(exit_signed_error),
             },
             "stable_frames": args.stable_frames,
             "tolerance_frames": args.tolerance_frames,
@@ -137,4 +159,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

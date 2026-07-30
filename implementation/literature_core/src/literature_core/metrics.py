@@ -214,20 +214,36 @@ def sequence_temporal_metrics(
     fps: float,
     stable_frames: int = 3,
     tolerance_frames: int = 0,
+    warmup_frames: int = 0,
 ) -> dict[str, Any]:
-    """Measure flicker and transition latency for one ordered slot sequence.
+    """Measure flicker and signed transition timing for one slot sequence.
 
-    A delayed transition that reaches a stable correct state is assigned to
-    the ground-truth transition window and is not counted as ordinary flicker.
-    Extra changes inside that window are reported separately as transition
-    instability.
+    A ground-truth transition is matched to the nearest *observed prediction
+    change* into the target state that remains correct for ``stable_frames``.
+    Each search is bounded by the adjacent ground-truth transitions. Searching
+    on both sides of the current transition prevents an early change that is
+    already active at the truth frame from being reported as zero latency,
+    while the next transition prevents a late prediction of the old target
+    state from being credited to the wrong event. Extra changes inside a
+    matched event window are reported as transition instability rather than
+    ordinary flicker. ``warmup_frames`` filters flicker only; it does not
+    remove or shift truth events.
+
+    ``transition_latency_s`` remains a non-negative, post-truth latency
+    summary for compatibility.  Early events are excluded from that summary
+    and are represented by ``signed_transition_error_s`` and
+    ``transition_events`` instead of a misleading zero.
     """
 
     if len(y_true) != len(y_pred) or not y_true:
         raise ValueError("Expected equally sized, non-empty sequences")
     if fps <= 0:
         raise ValueError("fps must be positive")
-    if stable_frames <= 0 or tolerance_frames < 0:
+    if (
+        stable_frames <= 0
+        or tolerance_frames < 0
+        or warmup_frames < 0
+    ):
         raise ValueError("Invalid temporal window")
     if any(value not in {0, 1} for value in (*y_true, *y_pred)):
         raise ValueError("Temporal states must be binary")
@@ -245,34 +261,110 @@ def sequence_temporal_metrics(
     supported_windows: list[tuple[int, int]] = []
     entry_latency: list[float] = []
     exit_latency: list[float] = []
+    entry_signed_error: list[float] = []
+    exit_signed_error: list[float] = []
+    transition_events: list[dict[str, Any]] = []
+    outcome_counts = {
+        "early": 0,
+        "on_time": 0,
+        "delayed": 0,
+        "missed": 0,
+    }
     missed = 0
 
     for transition_index, start in enumerate(truth_changes):
         target = y_true[start]
+        direction = "entry" if target == 1 else "exit"
+        search_start = (
+            truth_changes[transition_index - 1]
+            if transition_index > 0
+            else 1
+        )
         stop = (
             truth_changes[transition_index + 1]
             if transition_index + 1 < len(truth_changes)
             else len(y_true)
         )
-        stable_start = next(
-            (
-                candidate
-                for candidate in range(start, stop)
-                if candidate + stable_frames <= stop
-                and all(
+        stable_candidates = [
+            candidate
+            for candidate in prediction_changes
+            if search_start <= candidate < stop
+            and y_pred[candidate] == target
+            and candidate + stable_frames <= stop
+            and all(
+                y_pred[offset] == target
+                for offset in range(candidate, candidate + stable_frames)
+            )
+            and (
+                candidate >= start
+                or all(
                     y_pred[offset] == target
-                    for offset in range(candidate, candidate + stable_frames)
+                    for offset in range(candidate, start + 1)
                 )
-            ),
-            None,
+            )
+        ]
+        stable_start = (
+            min(
+                stable_candidates,
+                key=lambda candidate: (abs(candidate - start), candidate),
+            )
+            if stable_candidates
+            else None
         )
         if stable_start is None:
             missed += 1
+            outcome_counts["missed"] += 1
+            transition_events.append(
+                {
+                    "truth_transition_frame": start,
+                    "predicted_transition_frame": None,
+                    "event_window_start_frame": search_start,
+                    "event_window_end_frame_exclusive": stop,
+                    "direction": direction,
+                    "from_state": y_true[start - 1],
+                    "to_state": target,
+                    "outcome": "missed",
+                    "signed_error_frames": None,
+                    "signed_error_s": None,
+                }
+            )
             continue
-        latency = (stable_start - start) / fps
-        (entry_latency if target == 1 else exit_latency).append(latency)
+
+        signed_error_frames = stable_start - start
+        signed_error_s = signed_error_frames / fps
+        if signed_error_frames < -tolerance_frames:
+            outcome = "early"
+        elif signed_error_frames > tolerance_frames:
+            outcome = "delayed"
+        else:
+            outcome = "on_time"
+        outcome_counts[outcome] += 1
+        (
+            entry_signed_error if target == 1 else exit_signed_error
+        ).append(signed_error_s)
+        if signed_error_frames >= 0:
+            (entry_latency if target == 1 else exit_latency).append(
+                signed_error_s
+            )
+        transition_events.append(
+            {
+                "truth_transition_frame": start,
+                "predicted_transition_frame": stable_start,
+                "event_window_start_frame": search_start,
+                "event_window_end_frame_exclusive": stop,
+                "direction": direction,
+                "from_state": y_true[start - 1],
+                "to_state": target,
+                "outcome": outcome,
+                "signed_error_frames": signed_error_frames,
+                "signed_error_s": signed_error_s,
+            }
+        )
         supported_windows.append(
-            (max(1, start - tolerance_frames), stable_start)
+            (
+                min(stable_start, max(1, start - tolerance_frames)),
+                max(stable_start, start),
+            )
         )
 
     window_change_counts = [
@@ -286,15 +378,24 @@ def sequence_temporal_metrics(
         change
         for change in prediction_changes
         if not any(begin <= change <= end for begin, end in supported_windows)
+        and change >= warmup_frames
     ]
-    slot_minutes = len(y_true) / fps / 60.0
+    flicker_frames = max(0, len(y_true) - warmup_frames)
+    slot_minutes = flicker_frames / fps / 60.0
     all_latency = entry_latency + exit_latency
+    all_signed_error = entry_signed_error + exit_signed_error
     return {
         "frames": len(y_true),
         "ground_truth_transitions": len(truth_changes),
-        "matched_transitions": len(all_latency),
+        "matched_transitions": len(all_signed_error),
         "missed_transitions": missed,
+        "early_transitions": outcome_counts["early"],
+        "on_time_transitions": outcome_counts["on_time"],
+        "delayed_transitions": outcome_counts["delayed"],
+        "transition_outcomes": outcome_counts,
+        "transition_events": transition_events,
         "unsupported_flicker_count": len(unsupported),
+        "unsupported_flicker_frames": unsupported,
         "flicker_rate_per_slot_minute": (
             len(unsupported) / slot_minutes if slot_minutes else 0.0
         ),
@@ -308,7 +409,17 @@ def sequence_temporal_metrics(
             "entry": entry_latency,
             "exit": exit_latency,
         },
+        "signed_transition_error_s": {
+            "all": _summary(all_signed_error),
+            "entry": _summary(entry_signed_error),
+            "exit": _summary(exit_signed_error),
+        },
+        "signed_transition_error_values_s": {
+            "entry": entry_signed_error,
+            "exit": exit_signed_error,
+        },
         "state_stabilization_time_s": _summary(all_latency),
         "stable_frames": stable_frames,
         "tolerance_frames": tolerance_frames,
+        "warmup_frames_excluded_from_flicker_only": warmup_frames,
     }

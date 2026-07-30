@@ -1,0 +1,6 @@
+decision_area,evidence,decision,claim_boundary
+default_detector_at_final_R1_pipeline,D1 R1 Macro F1=0.706681; D1-LL R1 Macro F1=0.666978,D1 remains the final default detector,post-hoc Stage R attribution of frozen Stage Q-v2
+default_pipeline,D1 R1 is the strongest frozen default-compatible component result,D1 -> B1 -> F2 -> Occupancy Output,occupied recall remains 0.370927; not deployment-ready
+E4,D1 R1-to-R2 Macro F1=-0.042363 while occupied recall=+0.075188,conditional on calibrated continuous video,not the default for static or sparse inputs
+TrackTrack,not run in Stage Q-v2; no frozen occupancy gain,independent optional MOT module,no slot-level occupancy improvement claimed
+D1-LL,R1 Macro F1 is 0.039703 below D1,retained negative low-light fine-tuning experiment,does not replace D1

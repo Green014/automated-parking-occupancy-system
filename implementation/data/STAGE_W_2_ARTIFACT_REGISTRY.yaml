@@ -1,0 +1,260 @@
+schema_version: 1
+registry_id: STAGE-W-2-CROSS-PLATFORM-RELEASE-20260730-01
+stage: W.2
+created_at: '2026-07-30'
+status: LOCAL_SOURCE_CANDIDATE_NOT_PUBLIC
+public_release_ready: false
+model_training_run: false
+model_inference_run: false
+historical_registry_policy:
+  stage_v_1: pre_hardening_historical_snapshot
+  stage_w: pre_hardening_historical_snapshot
+  stage_w_1: pre_w2_historical_source_snapshot
+artifact_count: 43
+registry_self_path: implementation/data/STAGE_W_2_ARTIFACT_REGISTRY.yaml
+artifact_root: repository_root
+local_optional_policy: existing ignored demonstration artifacts are hash-verified when present and optional_unavailable
+  in the source-only checkout
+managed_artifact_globs:
+- .gitattributes
+- FINAL_RELEASE_INDEX.md
+- README.md
+- implementation/README.md
+- implementation/pyproject.toml
+- implementation/stage_w_requirements.txt
+- implementation/configs/p3_stage_r_recommended_default_20260729.yaml
+- implementation/data/STAGE_U_1_MODEL_ASSETS.md
+- implementation/data/STAGE_W_1_ARTIFACT_REGISTRY.yaml
+- implementation/data/STAGE_W_2_*.md
+- implementation/data/STAGE_W_2_SOURCE_COMMIT_MANIFEST.yaml
+- implementation/data/STAGE_W_PERMISSION_AND_PROVENANCE.md
+- implementation/data/STAGE_W_REPRODUCTION_GUIDE.md
+- implementation/scripts/run_p3_tt.py
+- implementation/scripts/verify_stage_v_w_registries.py
+- implementation/scripts/verify_stage_w_2_checkout.py
+- implementation/src/parking_occupancy/artifact_registry.py
+- implementation/src/parking_occupancy/integrated_cli.py
+- implementation/src/parking_occupancy/p3_tt_runtime.py
+- implementation/src/parking_occupancy/stage_t_tracktrack.py
+- implementation/src/parking_occupancy/stage_v*.py
+- implementation/src/parking_occupancy/stage_w*.py
+- implementation/src/parking_occupancy/stage_w_web/templates/*.html
+- implementation/src/parking_occupancy/stage_w_web/static/*.css
+- implementation/tests/test_stage_v_multimode.py
+- implementation/tests/test_stage_w*.py
+artifacts:
+- path: .gitattributes
+  role: cross_platform_git_attributes
+  availability: required
+  bytes: 713
+  sha256: e83e70f90400dea70be0d229b1a660eceb443ac99632164716a55730cbba3bad
+- path: FINAL_RELEASE_INDEX.md
+  role: repository_release_index
+  availability: required
+  bytes: 2742
+  sha256: 1f06ec0fdb4cbb11453f498e6113495199f61a9086ea772afd381eca55b98ff4
+- path: README.md
+  role: repository_readme
+  availability: required
+  bytes: 7756
+  sha256: 8b0b5905a7721a3ef13d19403005fb741de3893c14f45c6257c3c1e2a2451443
+- path: implementation/README.md
+  role: implementation_readme
+  availability: required
+  bytes: 35715
+  sha256: 6ad5b6d34ed019b3cdc2563f97cb5d195ad972fdedc95d88028e48fbd8f4c8e1
+- path: implementation/configs/p3_stage_r_recommended_default_20260729.yaml
+  role: frozen_config_identity
+  availability: required
+  bytes: 2236
+  sha256: 198f627689cd93f66ca0f087af6686d3afc697ff51e2aa77ee56124187b981b0
+- path: implementation/data/STAGE_U_1_MODEL_ASSETS.md
+  role: model_asset_boundary
+  availability: required
+  bytes: 1346
+  sha256: 0dab5dba52a7373db9f0ff9b9173d94eb191b926e619e11847484db28acad51d
+- path: implementation/data/STAGE_W_1_ARTIFACT_REGISTRY.yaml
+  role: pre_w2_historical_source_snapshot
+  availability: required
+  bytes: 11207
+  sha256: ac113b84afad1622f75230d3c34c9578b6c980fdad9adf5d079dc3cc60377a27
+- path: implementation/data/STAGE_W_2_CROSS_PLATFORM_RELEASE_REPORT.md
+  role: cross_platform_release_report
+  availability: required
+  bytes: 4884
+  sha256: 8a6083bdf86eb2684452a9a695020805c088efb9df00d9fe5ffa255e85a78b3e
+- path: implementation/data/STAGE_W_2_RELEASE_INDEX.md
+  role: release_index
+  availability: required
+  bytes: 2932
+  sha256: f2f40f570988a5b0778db3b5bb188661cf0f450bc78605937d3def041ded5245
+- path: implementation/data/STAGE_W_2_SOURCE_COMMIT_MANIFEST.yaml
+  role: source_commit_manifest
+  availability: required
+  bytes: 7519
+  sha256: bbf199146c4616d282a6611d982d4fd6bf063112d1b65f9b4a1e404f5bfedbdd
+- path: implementation/data/STAGE_W_PERMISSION_AND_PROVENANCE.md
+  role: permission_and_provenance
+  availability: required
+  bytes: 5564
+  sha256: 6193da517a3607154e55c081d22691d11d4406ff4671ac6be6d269ef92ad4570
+- path: implementation/data/STAGE_W_REPRODUCTION_GUIDE.md
+  role: reproduction_guide
+  availability: required
+  bytes: 4782
+  sha256: 827c87e0692bc294ce9032be152ec2c24c0fa36e16234387956b25ab161a414f
+- path: implementation/pyproject.toml
+  role: dependency_and_cli_metadata
+  availability: required
+  bytes: 1847
+  sha256: e5b05aeed6553d3fa84b6582aeff1c632614263e3bb56d63f9356ebe2bde67c9
+- path: implementation/scripts/run_p3_tt.py
+  role: optional_tracking_cli
+  availability: required
+  bytes: 2095
+  sha256: 1a7dd0ca23fc76b3aef6791c986c73d4803150ba7e843b60e6d067cc78cfe4a1
+- path: implementation/scripts/verify_stage_v_w_registries.py
+  role: historical_and_current_registry_verifier
+  availability: required
+  bytes: 2834
+  sha256: 431184976badf43cc616742823badaa1151027f3ee2936f0dd7b7fadf1b53cda
+- path: implementation/scripts/verify_stage_w_2_checkout.py
+  role: cross_platform_checkout_verifier
+  availability: required
+  bytes: 19589
+  sha256: 1ab4a5c832450ff70b82d2bfa354fe02c2b88b057e49ca4896ce9204e5f1ac5d
+- path: implementation/src/parking_occupancy/artifact_registry.py
+  role: registry_library
+  availability: required
+  bytes: 13236
+  sha256: 425a932b410b3e65c6a6065520fc9560753c21fe7cb1d7933bafcae508016869
+- path: implementation/src/parking_occupancy/integrated_cli.py
+  role: default_runtime_cli_identity
+  availability: required
+  bytes: 2562
+  sha256: 173a670d31cb888e09eddc6371fbc979534f8f1fe933c09816d2a304d9e0d17b
+- path: implementation/src/parking_occupancy/p3_tt_runtime.py
+  role: optional_tracking_runtime
+  availability: required
+  bytes: 7557
+  sha256: 64ae5673a6669f9e48c960714b23dc74973fa4171d44471991bc2944fc474a3e
+- path: implementation/src/parking_occupancy/stage_t_tracktrack.py
+  role: optional_tracking_contract
+  availability: required
+  bytes: 30875
+  sha256: 38d0a65486e7168df70dbad6a71d9cb2acbbf21e3ec9d60c2bcae1698d3fc6b6
+- path: implementation/src/parking_occupancy/stage_v.py
+  role: unified_backend_contract
+  availability: required
+  bytes: 24875
+  sha256: 9bb81c00c09d9c0a40a15b166e3032c895fe71163f247ced1368783915576569
+- path: implementation/src/parking_occupancy/stage_v_runner.py
+  role: corrected_config_identity_runner
+  availability: required
+  bytes: 48762
+  sha256: c2e474ff21748b9bca3c93f1edb28f685a129d69d3ce816136a6bffa1fea8212
+- path: implementation/src/parking_occupancy/stage_w_2_release.py
+  role: source_manifest_library
+  availability: required
+  bytes: 8950
+  sha256: 530f23feeddc4f4d402181ea04ae47a30286c9cdeb9125f371a30907ffdad66c
+- path: implementation/src/parking_occupancy/stage_w_cli.py
+  role: dashboard_cli
+  availability: required
+  bytes: 7037
+  sha256: d5fa6fb6ba18c3fb613f6cce3b34f9ca159bd1cfe1180da592abf5444dcf8c24
+- path: implementation/src/parking_occupancy/stage_w_member_reference.py
+  role: external_member_adapter
+  availability: required
+  bytes: 9556
+  sha256: dbd7f94dc670587f637ccdf805f636899e4ab01821942346d25daf85a43eae2b
+- path: implementation/src/parking_occupancy/stage_w_server.py
+  role: optional_dashboard_server
+  availability: required
+  bytes: 18585
+  sha256: 6ed030fb6e4ccb2b52570b72b4d25ac8d72f8e95eaac29899200c10aefce1804
+- path: implementation/src/parking_occupancy/stage_w_ui_adapter.py
+  role: dashboard_adapter
+  availability: required
+  bytes: 8676
+  sha256: ad422f58dddc6c09a085087bdbe42a6a81a14144f9f84fc6c3b12d69b27f27a9
+- path: implementation/src/parking_occupancy/stage_w_web/static/style.css
+  role: member_derived_local_ui_style
+  availability: required
+  bytes: 3466
+  sha256: cb4d243a4dd3c1bc582e66ac1489ce86fd509224d928ec19d588d0f509d60a4f
+- path: implementation/src/parking_occupancy/stage_w_web/templates/dashboard.html
+  role: member_derived_local_ui_template
+  availability: required
+  bytes: 6183
+  sha256: 6383927f0f59e7b17c28a1d0172ede2b059b763a17324fb561a589aeebd287cd
+- path: implementation/stage_w_requirements.txt
+  role: compatibility_dependency_entry
+  availability: required
+  bytes: 117
+  sha256: 0b258bb491a7d5f2692e03e5fd5b42b4ac4f5693e778d56f8f38262ef039f794
+- path: implementation/tests/test_stage_v_multimode.py
+  role: stage_v_config_regression_tests
+  availability: required
+  bytes: 25120
+  sha256: 649c70098afa22b64ead7cf6718a5b78e56ec5397ff8caca44d3adc2ea7de1fd
+- path: implementation/tests/test_stage_w_1_release_hardening.py
+  role: pre_w2_snapshot_boundary_tests
+  availability: required
+  bytes: 5642
+  sha256: 4302d443f76fef4a5d183a03ad30d5b41b061e83e463b2a429e3bb411580161d
+- path: implementation/tests/test_stage_w_2_cross_platform_release.py
+  role: cross_platform_release_tests
+  availability: required
+  bytes: 3886
+  sha256: 5461d9cd5a12f99cac61e346b81a5f5c878212739b93a00843674a7db645701a
+- path: implementation/tests/test_stage_w_server.py
+  role: optional_dashboard_server_tests
+  availability: required
+  bytes: 10991
+  sha256: 17a22ce7c16974eeefb3521b266a522660c6c4d4048caba6d643122bc652ea8a
+- path: implementation/tests/test_stage_w_ui_adapter.py
+  role: dashboard_adapter_tests
+  availability: required
+  bytes: 5668
+  sha256: 2fc48fe71be24202ed986d768528e2729a6639a5689c221b1627af6615fc72ee
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/annotated.mp4
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 208066
+  sha256: ac2f0c3dae9053c055b434f640a5bd61a6493833ff640c735976c8f8096f99e9
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/configuration_snapshot.yaml
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 1451
+  sha256: c10da2dc0a01dfb367c3348dc67231d7aa7e07052e5d6300652070ea09223118
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/dashboard_ui_demo.json
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 753
+  sha256: e53207db69ab6ef92d7444e1f6052bc2f7fcee8f8052a47866e316bd5bfea75a
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/dashboard_ui_demo.mp4
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 1555231
+  sha256: 12c1e85328ecb5cf5e8e5385ec4e97d24c2398a8f8ff26d0940dc843092288af
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/dashboard_ui_demo_preview.png
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 901753
+  sha256: 1363e5510f7ef0191239b7d512927cc9f23017b92bfd89c8b1f8f0b42489e6aa
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/events.jsonl
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 0
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/status.json
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 28675
+  sha256: cf76f480331d0b0259e9b9eb96d954a963fa210e041f8f36e0c262f152083f07
+- path: implementation/outputs/stage_w_dashboard_smoke_20260730_v3/summary.json
+  role: unchanged_local_demonstration_evidence
+  availability: local_ignored_optional
+  bytes: 560
+  sha256: 7d2ed32106a50992d01ea7d173ded0aeabec5152c4b2f853594b143e7841689c

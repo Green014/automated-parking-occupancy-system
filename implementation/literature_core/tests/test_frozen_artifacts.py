@@ -1,10 +1,24 @@
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 
 import yaml
 
-from scripts.verify_frozen_artifacts import verify_manifest
+
+SCRIPT_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "scripts"
+    / "verify_frozen_artifacts.py"
+)
+SPEC = importlib.util.spec_from_file_location(
+    "literature_core_verify_frozen_artifacts",
+    SCRIPT_PATH,
+)
+assert SPEC is not None and SPEC.loader is not None
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
+verify_manifest = MODULE.verify_manifest
 
 
 def test_verify_manifest_checks_hashes_and_result_counts(tmp_path: Path) -> None:

@@ -1,0 +1,109 @@
+schema_version: 1
+count_protocol_id: D-COUNT-NDISPARK-TEST-20260727-01
+selection_id: D-SELECT-NDISPARK-DEV-20260727-01
+status: frozen_before_count_test_predictions
+frozen_at: "2026-07-27T18:20:00+08:00"
+
+comparison_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+selected_detector:
+  method_id: D1
+  name: NDISPark-fine-tuned YOLOv8n
+  rule:
+    primary: mAP50_95
+    secondary: recall
+    deployment_constraint: framework_pipeline_FPS_recorded
+  ranking: [D1, D2, D0]
+  selected_before_count_test: true
+
+shared_count_rule:
+  rule: Count canonical vehicle detections remaining after common NMS at confidence >= 0.10.
+  confidence_threshold: 0.10
+  selection_data_role: consumed_development_validation
+  candidate_grid:
+    start: 0.05
+    stop: 0.95
+    step: 0.05
+  objective: Minimize mean development count MAE across D0/D1/D2.
+  tie_breaks:
+    - lower_worst_model_development_count_MAE
+    - higher_confidence_threshold
+  applies_identically_to: [D0, D1, D2]
+  per_model_thresholds: prohibited
+  test_count_selection: prohibited
+
+common_inference:
+  imgsz: 640
+  confidence_floor: 0.10
+  nms_iou: 0.7
+  max_detections: 300
+  batch: 1
+  single_class_evaluation: true
+  augmentation: false
+  rect: false
+  half: false
+  preprocessing: ultralytics_default_letterbox_same_version
+
+models:
+  D0:
+    name: COCO-pretrained YOLOv8n
+    weights_name: yolov8n.pt
+    weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  D1:
+    name: NDISPark-fine-tuned YOLOv8n
+    experiment_id: D1-NDISPARK-FT-20260727-01
+    weights_name: best.pt
+    weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+  D2:
+    name: YOLO-World zero-shot
+    weights_name: yolov8s-worldv2.pt
+    weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+
+evidence:
+  selection_record:
+    name: stage_i_detector_selection_20260727_v1.json
+    bytes: 20532
+    sha256: 3ec4313754c5826dc778b98134cbbfc3215e28cc45053d9cb6fb46583e061808
+  comparison:
+    name: comparison.json
+    bytes: 8503
+    sha256: b435bd36379fab789290f7289a958b4e6b099f27fb17bcc5266540c867743c2b
+  comparison_config:
+    name: detector_comparison_frozen_20260727.yaml
+    bytes: 4892
+    sha256: 21daff1090d7a734d864916d4e0f2f3a787a4d5d57f6a469d8b43343acb9cb7d
+
+count_test:
+  dataset: NDISPark
+  split: official_test
+  role: count_only_test
+  images: 117
+  cameras: 6
+  lighting: night
+  truth_type: vehicle_count
+  vehicle_box_ground_truth: unavailable
+  manifest:
+    name: ndispark_test_frozen_20260727.csv
+    rows: 117
+    bytes: 24630
+    sha256: 79cc80392c8d3c3723f31f68242f1e5ec0610f10ff81c02fc58a9a0215a2b35d
+  source_contract:
+    images: --test-images or PARKING_DATA_ROOT-derived path
+    hardcoded_user_path: false
+
+reported_metrics:
+  - MAE
+  - RMSE
+  - mean_predicted_count
+  - mean_true_count
+  - per_camera_MAE
+  - per_camera_RMSE
+  - latency
+  - FPS
+
+prohibited:
+  - detector_mAP_on_count_only_test
+  - box_precision_or_recall_on_count_only_test
+  - using_test_counts_to_change_threshold
+  - using_test_counts_to_retrain_or_reselect_detector
+  - claim_that_detector_gain_implies_slot_F1_gain
+  - overwriting_existing_outputs

@@ -4,6 +4,12 @@ This independent Part II workflow combines a slot-patch classifier and an
 open-vocabulary object detector. It does not replace the existing
 `parking_occupancy` baseline.
 
+This remains the literature/ablation module, not the final default workflow.
+For the closed B0/B1/E0/T0 names and the unified runnable geometry-baseline
+entry point, see `../BASELINE_CLOSURE.md`. The next convergence stage will use
+YOLOv8 as primary evidence and treat YOLO-World as a detector-replacement
+experiment.
+
 ```text
 frame + slot polygons
   |-- OpenCV perspective warp -> adapted MobileNetV3-Small -> P_cls --|
@@ -20,8 +26,8 @@ development-selected threshold.
 
 ## Executed status
 
-- Existing baseline: 23/23 tests passed.
-- Literature-core module: 78/78 tests passed.
+- Implementation package: 87/87 tests passed.
+- Literature-core module: 82/82 tests passed.
 - Adapted MobileNetV3 pilot training: completed on CUDA.
 - YOLO-World single-image check: completed.
 - Historical E0-E3 Fold A camera-transfer ablation: completed.
@@ -35,6 +41,20 @@ development-selected threshold.
 - Official CNR-EXT once-only external holdout: completed on 4,081 images and
   144,965 slot labels with complete-image bootstrap confidence intervals.
 - NDISPark night-domain detector comparison: completed on 725 manual boxes.
+- Canonical Stage I D0/D1/D2 comparison: completed; D1 selected on consumed
+  development, while D2 produced the lowest count-only test MAE under the
+  shared frozen rule. The negative D1 count result is retained.
+- Stage I-v2: v1 retained; class-agnostic NMS, per-model development
+  calibration and max-det sensitivity completed. The consumed-test rerun is
+  explicitly post-hoc sensitivity.
+- Stage J: P0/P1/P2 connected to identical B1 geometry on consumed PKLot
+  development; P1 led pooled Macro F1 but its image-grouped interval included
+  zero and substantial false-free errors remained.
+- Stage K: complete on 90 previously unpredicted PKLot images and 5,034 known
+  slot labels after an additive zero-overlap data gate. P1 led pooled Macro F1
+  but was lower than P0 by paired-image and camera-macro summaries.
+- Stage K artifacts: 43/43 main, 9/9 date/weather and 11/11 data-gate v2
+  bindings verified without rerunning predictions.
 - Two-frame/100-slot end-to-end video check: completed.
 - Restricted Grand Bassin positive-only temporal check: completed.
 - Grand Bassin continuous-truth candidate audit: completed; no valid vacant
@@ -44,7 +64,7 @@ development-selected threshold.
 - Phase B continuous-video source audit: VIRAT agreement acceptance is
   recorded; 26 official clips have been screened. Distinct `0502` development
   and `0503` holdout sequences have machine-verified local polygon/frame truth.
-- Frozen E4/E5 departure case studies: executed. Neither beat E0 on holdout;
+- Frozen E4/E5 departure case studies: executed. Neither beat T0 on holdout;
   E5 failed its development reliability gate, so Fusion V2 remains closed.
 - General tracking, arrival, IDF1, and HOTA claims: intentionally not made
   because the temporal truth contains only one slot and one departure per
@@ -60,7 +80,7 @@ The audited baseline environment already contains compatible versions of
 PyTorch, torchvision, OpenCV, and Ultralytics:
 
 ```powershell
-cd C:\Users\panda\Documents\停车场识别系统项目\implementation
+cd <repository-root>\implementation
 .\.venv\Scripts\python.exe -m pip install -e .\literature_core
 ```
 
@@ -82,7 +102,7 @@ project path `..\..\weights\clip\ViT-B-32.pt`; do not copy it into the module.
 ## Tests
 
 ```powershell
-cd C:\Users\panda\Documents\停车场识别系统项目\implementation\literature_core
+cd <repository-root>\implementation\literature_core
 ..\.venv\Scripts\python.exe -m pytest -q
 ```
 
@@ -314,8 +334,13 @@ Evaluate a verified sequence with the corrected temporal definition:
   --output outputs\camera01_literature_core\evaluation\metrics.json
 ```
 
-The evaluator reports delayed stable transitions as transition latency. It
-does not also count that same delayed transition as ordinary flicker.
+The evaluator matches an actual stable prediction change on either side of
+each truth transition. It reports signed prediction-minus-truth error and
+classifies events as `early`, `on_time`, `delayed`, or `missed`. Early changes
+are therefore not rewritten as zero latency. Entry/exit timing, the configured
+stable-frame requirement, unsupported flicker, and transition-instability
+counts remain explicit. A matched delayed transition is not also counted as
+ordinary flicker.
 
 Video `occupancy.csv` explicitly separates raw fused `p_occ` from
 EMA-filtered `p_occ_filtered`, then records `raw_state` and the final
@@ -398,7 +423,9 @@ Run the frozen case-study implementation only into a new output directory:
 ```
 
 The once-only `0503` holdout has already been consumed and must not be rerun
-for model selection. The executed E4/E5 outputs are frozen by
+for model selection or described as untouched for a new method. The executed
+raw YOLOv8 comparator is now reported as **T0** while its historical artifact
+key `e0_raw` remains unchanged. The executed E4/E5 outputs are frozen by
 `data/manifests/temporal_case_study_frozen_20260726.yaml`.
 
 ## Documentation

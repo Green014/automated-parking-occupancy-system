@@ -1,0 +1,115 @@
+schema_version: 1
+experiment_id: D1-NDISPARK-FT-20260727-01
+status: frozen_not_executed
+frozen_at: "2026-07-27T17:28:53.2225633+08:00"
+
+protocol:
+  dataset: ndispark_only_dataset_frozen_20260727.yaml
+  dataset_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  comparison: detector_comparison_frozen_20260727.yaml
+  comparison_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+  gpu_decision_id: GPU-GATE-NDISPARK-D1-20260727-01
+
+paths:
+  prepared_dataset:
+    input: --data or PARKING_PREPARED_DATA
+    committed_absolute_path: false
+  initial_weights:
+    input: --initial-weights or PARKING_D0_WEIGHTS
+    name: yolov8n.pt
+    sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  output:
+    input: --output-dir
+    must_not_exist: true
+    git_ignored: true
+
+model:
+  role: D1
+  formal_name: NDISPark-fine-tuned YOLOv8n
+  initialization: fresh_COCO-pretrained_yolov8n.pt
+  smoke_checkpoint_initialization: prohibited
+  output_class: {id: 0, name: vehicle}
+
+training:
+  max_epochs: 50
+  early_stopping_patience: 10
+  imgsz: 640
+  physical_batch: 4
+  nominal_batch: 64
+  post_warmup_accumulation_steps: 16
+  accumulation_implementation: Ultralytics_nbs_scaling
+  seed: 20260727
+  deterministic: true
+  amp: true
+  device: "0"
+  workers: 2
+  cache: false
+  pretrained: true
+  resume: false
+  optimizer: AdamW
+  lr0: 0.001
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  cos_lr: false
+  warmup_epochs: 3.0
+  warmup_momentum: 0.8
+  warmup_bias_lr: 0.1
+  close_mosaic: 10
+  validation_each_epoch: true
+  validation_split: val
+  plots: true
+  save: true
+  save_period: 10
+  save_best_and_last: true
+
+augmentation:
+  source: Ultralytics_8.4.104_smoke_args
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 0.0
+  translate: 0.1
+  scale: 0.5
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.5
+  bgr: 0.0
+  mosaic: 1.0
+  mixup: 0.0
+  cutmix: 0.0
+  copy_paste: 0.0
+  rect: false
+  multi_scale: 0.0
+
+selection_basis:
+  batch: Batch 4 is the largest allowed batch directly executed in the frozen smoke run.
+  imgsz: 640 is fixed by the dataset and detector-comparison protocols.
+  epoch: Best checkpoint selected only on consumed NDISPark development validation with patience 10.
+  search: One formal seed; no hyperparameter search.
+
+data_boundaries:
+  training: NDISPark official train, 112 images, 2577 vehicle boxes
+  development_validation: NDISPark official validation, 30 images, 725 vehicle boxes
+  forbidden_during_training:
+    - NDISPark count-only test
+    - CNR-EXT
+    - PKLot test or historical external result
+    - VIRAT
+
+resource_gate:
+  measured_device: NVIDIA GeForce RTX 3060 Laptop GPU
+  measured_total_vram_bytes: 6441926656
+  measured_smoke_peak_reserved_bytes: 767557632
+  measured_smoke_imgsz: 640
+  measured_smoke_batch: 4
+  local_training_selected: true
+  paid_or_remote_gpu_allowed: false
+  a100_needed: false
+
+execution_gate:
+  stage_G_passed: true
+  stage_H_local_execution_allowed: true
+  predictions_on_test_allowed: false
+  overwrite_existing_output: prohibited

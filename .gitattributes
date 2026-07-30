@@ -1,0 +1,40 @@
+# Cross-platform source identity: Git must materialize release text as LF.
+.gitattributes text eol=lf
+.gitignore text eol=lf
+LICENSE text eol=lf
+
+*.py text eol=lf
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.csv text eol=lf
+*.md text eol=lf whitespace=-trailing-space
+*.txt text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.svg text eol=lf
+
+# Model assets, demonstrations, images, documents, and archives are binary.
+*.pt binary
+*.pth binary
+*.ckpt binary
+*.onnx binary
+*.engine binary
+*.mp4 binary
+*.avi binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.webp binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.zip binary
+*.tar binary
+*.gz binary

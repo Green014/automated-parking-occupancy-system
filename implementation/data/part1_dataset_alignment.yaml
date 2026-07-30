@@ -1,0 +1,655 @@
+schema_version: 1
+audit:
+  id: PART1-DATASET-ALIGNMENT-20260727
+  title: Part I Dataset Alignment Audit
+  accessed_on: 2026-07-27
+  status: complete_backup_route_selected_and_stage_C_frozen
+  evidence_policy:
+    - Prefer official dataset pages, papers, repositories, and deposited records.
+    - A paper mentioning a dataset is not evidence that the data are public.
+    - Download access is not treated as a reuse license.
+    - Unknown fields remain unknown.
+    - Parking-slot polygons are never converted into vehicle bounding-box truth.
+    - Machine-generated boxes are never represented as manual ground truth.
+  path_policy:
+    source_cli: --source-root
+    source_environment: PARKING_DATA_ROOT
+    output_cli: --output-root
+    committed_absolute_paths_allowed: false
+
+local_audit:
+  scope: ignored assets in the external original workspace
+  checked_on: 2026-07-27
+  path_recording_policy: Absolute user paths are deliberately not stored.
+  holdings:
+    pklot:
+      status: partial
+      evidence:
+        - metadata file, 266961322 bytes
+        - 27 development images from PUCPR, UFPR04, and UFPR05
+      limitation: The official full-image archive is not local.
+    cnrpark_ext:
+      status: present_consumed
+      evidence:
+        - CNR-EXT full-image archive, 1104364544 bytes
+        - official occupancy CSV, 18132695 bytes
+        - 4081 evaluated frames and 144965 slot records
+      limitation: The once-only external evaluation has already been consumed.
+    ndispark:
+      status: present
+      evidence:
+        - official archive, 118187828 bytes
+        - 112 train images, 30 validation images, and 117 count-only test images
+        - 2577 train boxes and 725 validation boxes
+      limitation: Validation has already been used for development comparison.
+    carpk_pucpr_plus:
+      status: absent
+    psex:
+      status: absent
+    lmot:
+      status: absent
+    aodraw:
+      status: absent
+    virat:
+      status: partial_consumed_case_study
+    grand_bassin:
+      status: present_support_only
+
+datasets:
+  - id: PKLot
+    part1_alignment:
+      papers: [P17_APSD-OC, P18_Improved_MobileNetV3, P22_Optimizing_YOLOv8, P23_PKLot]
+      method_categories: [slot_patch_classification, geometry_based_slot_occupancy]
+      role: core_parking_occupancy
+    official_sources:
+      - title: PKLot official page
+        url: https://web.inf.ufpr.br/luizoliveira/research-interests/pklot/
+        accessed_on: 2026-07-27
+      - title: PKLot official README
+        url: https://www.inf.ufpr.br/lesoliveira/download/pklot-readme.pdf
+        accessed_on: 2026-07-27
+      - title: PKLot dataset paper
+        url: https://www.inf.ufpr.br/lesoliveira/download/ESWA2015.pdf
+        accessed_on: 2026-07-27
+    version: official_archive_no_semantic_version
+    license:
+      status: verified
+      name: Creative Commons Attribution 4.0 International
+      url: https://creativecommons.org/licenses/by/4.0/
+    local_status: partial
+    scale:
+      images: 12417
+      image_resolution: 1280x720
+      slot_instances: 695899
+      cameras_or_views: 3
+      acquisition: more_than_30_days_at_approximately_5_minute_intervals
+      download: official_archive_3860376865_bytes
+    annotations:
+      vehicle_bounding_boxes: false
+      masks: false
+      counting_labels: derivable_from_slot_states_only
+      parking_slot_polygons: true
+      occupied_vacant_labels: true
+      persistent_track_ids: false
+      weather_lighting_tags: [sunny, overcast, rainy]
+    viewpoint: [fixed_CCTV, overhead_high_angle, sRGB]
+    official_split:
+      type: day_disjoint_50_50_per_camera
+      note: The paper requires all images from one day to stay in one side.
+    leakage_risk: high_if_individual_frames_or_slot_patches_are_randomized
+    task_fit:
+      vehicle_detector_fine_tuning: unsuitable_no_vehicle_boxes
+      slot_classifier_training: primary
+      slot_occupancy_evaluation: primary
+      low_light_adverse_evaluation: weather_only_no_night
+      temporal_tracking_evaluation: unsuitable_sparse_snapshots_no_track_ids
+    manual_annotation:
+      needed_for_documented_roles: false
+      needed_for_vehicle_detection: true
+    risks:
+      - Slot polygons and occupied labels are not vehicle boxes.
+      - All three cameras have informed prior development; a new test can only use never-used date/image groups and is not a new-camera holdout.
+      - Official README count is 12417 while an older project manifest recorded 12416; reconcile against the acquired archive before freezing.
+    decision: acquire_full_archive_after_approval_for_grouped_slot_train_development_and_test
+
+  - id: CNRPark-EXT
+    part1_alignment:
+      papers: [P17_APSD-OC, P18_Improved_MobileNetV3]
+      method_categories: [slot_patch_classification, static_slot_occupancy]
+      role: core_parking_occupancy
+    official_sources:
+      - title: CNRPark+EXT official page
+        url: https://cnrpark.it/
+        accessed_on: 2026-07-27
+    version: CNRPark_plus_CNR-EXT
+    license:
+      status: verified
+      name: Open Data Commons Open Database License 1.0
+      url: https://opendatacommons.org/licenses/odbl/1-0/
+    local_status: present_consumed
+    scale:
+      slot_patches: approximately_150000
+      parking_spaces: 164
+      cnrpark_images: approximately_12000_patches
+      cnrpark_cameras: 2
+      cnr_ext_full_frames_local: 4081
+      cnr_ext_slot_records_local: 144965
+      cnr_ext_cameras: 9
+    annotations:
+      vehicle_bounding_boxes: false
+      masks: false
+      counting_labels: false
+      parking_slot_polygons: camera_space_coordinates_available
+      occupied_vacant_labels: true
+      persistent_track_ids: false
+      weather_lighting_tags: conditions_described_but_not_a_complete_machine_readable_taxonomy
+    viewpoint: [fixed_CCTV, overhead_high_angle, sRGB]
+    official_split:
+      type: no_single_project_safe_split
+      note: Preserve camera/date groups; never randomize adjacent slot patches.
+    leakage_risk: high_across_same_camera_date_and_adjacent_snapshots
+    task_fit:
+      vehicle_detector_fine_tuning: unsuitable_no_vehicle_boxes
+      slot_classifier_training: suitable_but_consumed_for_this_project
+      slot_occupancy_evaluation: historical_external_only
+      low_light_adverse_evaluation: weather_and_lighting_support_only
+      temporal_tracking_evaluation: unsuitable_sparse_static_frames
+    manual_annotation:
+      needed_for_documented_roles: false
+      needed_for_vehicle_detection: true
+    risks:
+      - CNR-EXT has already been consumed and cannot select new parameters.
+      - Any new-model run is post-hoc, not an untouched external test.
+    decision: preserve_frozen_historical_E0_and_E1_results_only
+
+  - id: CARPK_PUCPR_PLUS
+    part1_alignment:
+      papers: [ICCV2017_Drone_Based_Object_Counting]
+      method_categories: [vehicle_detection, vehicle_counting, small_dense_objects]
+      role: supporting_detection_dataset
+    official_sources:
+      - title: Official LPN project and dataset page
+        url: https://lafi.github.io/LPN/
+        accessed_on: 2026-07-27
+      - title: ICCV 2017 paper
+        url: https://openaccess.thecvf.com/content_ICCV_2017/html/Hsieh_Drone-Based_Object_Counting_ICCV_2017_paper.html
+        accessed_on: 2026-07-27
+    version: official_password_protected_2GB_release
+    license:
+      status: verified_restricted
+      name: academic_research_only_under_project_EULA
+      url: https://lafi.github.io/LPN/
+      note: PUCPR+ images retain the original owners' copyright.
+    local_status: absent
+    scale:
+      combined_download: approximately_2GB
+      CARPK:
+        images: 1448
+        resolution: 1280x720
+        parking_lots: 4
+        boxes: 89777
+        split: {train: 989, test: 459}
+      PUCPR_plus:
+        images: 125
+        resolution: 1280x720
+        scenes: 1
+        boxes: 16456
+        split: {train: 100, test: 25}
+    annotations:
+      vehicle_bounding_boxes: true
+      masks: false
+      counting_labels: boxes_support_counts
+      parking_slot_polygons: false
+      occupied_vacant_labels: false
+      persistent_track_ids: false
+      weather_lighting_tags: PUCPR_plus_has_sunny_overcast_rain_context_but_no_verified_tag_manifest
+    viewpoint:
+      CARPK: [moving_drone, overhead_high_angle, sRGB]
+      PUCPR_plus: [fixed_CCTV, overhead_high_angle, sRGB]
+    official_split:
+      type: provided_train_test
+      note: Verify exact source and sequence membership from the acquired archive before freezing a derived validation split.
+    leakage_risk: high_for_near_duplicate_frames_within_each_lot_or_sequence
+    task_fit:
+      vehicle_detector_fine_tuning: primary_candidate
+      slot_classifier_training: unsuitable_no_slot_states
+      slot_occupancy_evaluation: unsuitable_no_slot_polygons_or_states
+      low_light_adverse_evaluation: weak_no_night
+      temporal_tracking_evaluation: unsuitable_no_track_ids
+    manual_annotation:
+      needed_for_documented_roles: false
+      needed_for_slot_occupancy: true
+    risks:
+      - Acquisition requires accepting an EULA and receiving an archive password.
+      - CARPK drone domain differs from fixed parking CCTV.
+      - PUCPR+ overlaps the PKLot PUCPR source and can leak into a PKLot occupancy evaluation.
+    decision: primary_box_dataset_after_user_approved_EULA_acquisition_use_CARPK_only_by_default
+
+  - id: NDISPark
+    part1_alignment:
+      papers: [Domain_Adaptation_for_Traffic_Density_Estimation]
+      method_categories: [vehicle_detection, instance_segmentation, vehicle_counting, low_light_domain_shift]
+      role: supporting_detection_and_low_light_dataset
+    official_sources:
+      - title: Zenodo record 6560823
+        url: https://zenodo.org/records/6560823
+        accessed_on: 2026-07-27
+      - title: CNR AIMH dataset page
+        url: https://aimh.isti.cnr.it/ndispark/
+        accessed_on: 2026-07-27
+    version: 1.0.0
+    license:
+      status: verified
+      name: Open Data Commons Attribution License 1.0
+      url: https://opendatacommons.org/licenses/by/1-0/
+      note: Zenodo API record 6560823 returned license.id=odc-by and access_right=open on 2026-07-27.
+    local_status: present
+    scale:
+      total_images: 259
+      cameras: 7
+      download: 118187828_bytes_local
+      train: {images: 112, boxes: 2577, lighting: day}
+      validation: {images: 30, boxes: 725, lighting: night}
+      test: {images: 117, truth: count_only, lighting: night}
+    annotations:
+      vehicle_bounding_boxes: train_and_validation_only
+      masks: train_and_validation_only
+      counting_labels: true
+      parking_slot_polygons: false
+      occupied_vacant_labels: false
+      persistent_track_ids: false
+      weather_lighting_tags: split_level_day_night_plus_scene_conditions
+    viewpoint: [fixed_CCTV, varied_high_angles, sRGB]
+    official_split:
+      type: day_train_night_validation_and_test
+      note: Test has counts only and cannot produce detector mAP.
+    leakage_risk: same_camera_or_scene_may_span_lighting_splits_verify_filenames_and_camera_ids
+    task_fit:
+      vehicle_detector_fine_tuning: suitable_small
+      slot_classifier_training: unsuitable_no_slot_states
+      slot_occupancy_evaluation: unsuitable_no_slot_states
+      low_light_adverse_evaluation: primary_count_only_test_and_development_box_validation
+      temporal_tracking_evaluation: unsuitable_still_images_no_track_ids
+    manual_annotation:
+      needed_for_train_or_validation_detection: false
+      needed_for_test_detection_mAP: true
+    risks:
+      - Validation is already development validation and is not an untouched test.
+      - Test supports count MAE and RMSE only unless manual box truth is separately created.
+    decision: local_smoke_and_development_source
+
+  - id: PSEX
+    part1_alignment:
+      papers: [P24_Real_Time_Parking_Space_Detection]
+      method_categories: [panoramic_parking_corner_detection, parking_space_status_detection, synthetic_adverse_weather]
+      role: core_paper_but_unavailable_dataset
+    official_sources:
+      - title: Sensors 2025 article
+        url: https://www.mdpi.com/1424-8220/25/20/6449
+        accessed_on: 2026-07-27
+      - title: PubMed Central full text
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12568149/
+        accessed_on: 2026-07-27
+    version: paper_described_no_public_release_version
+    license:
+      status: unknown
+      name: unknown
+      note: The article is CC BY, but it provides no independently downloadable PSEX package or dataset license.
+    local_status: absent
+    scale:
+      source: PS2.0_images_processed_with_GAN_style_transfer
+      generated_images_reported: 6000
+      evaluation_subset: {synthetic: 3000, original: 3000, train: 4800, test: 1200}
+      full_annotation_count: unknown
+    annotations:
+      vehicle_bounding_boxes: false
+      masks: unknown
+      counting_labels: false
+      parking_slot_polygons: false
+      occupied_vacant_labels: occupancy_related_detection_classes
+      persistent_track_ids: false
+      weather_lighting_tags: synthetic_fog_snow_sandstorm_rain_styles
+      parking_corner_boxes: [T_corner, L_corner]
+    viewpoint: [panoramic, moving_vehicle_AVM, sRGB]
+    official_split:
+      type: paper_random_4800_1200_evaluation_split
+      note: No public image IDs, source-group manifest, or downloadable split was found.
+    leakage_risk: high_unknown_source_overlap_between_original_and_GAN_derivatives
+    task_fit:
+      vehicle_detector_fine_tuning: unsuitable_task_labels_are_parking_corners_and_states
+      slot_classifier_training: potentially_relevant_but_unavailable
+      slot_occupancy_evaluation: potentially_relevant_but_unavailable_and_view_mismatched
+      low_light_adverse_evaluation: synthetic_support_only_if_released
+      temporal_tracking_evaluation: unsuitable_still_AVM_images_no_tracks
+    manual_annotation:
+      needed_for_current_project: not_applicable_dataset_unavailable
+    risks:
+      - The article's data-availability statement says data are contained within the article.
+      - Public release, dataset license, annotation files, and source-safe split are unverified.
+      - Panoramic AVM viewpoint does not match fixed CCTV.
+    decision: exclude_from_formal_training_and_evaluation
+
+  - id: LMOT
+    part1_alignment:
+      papers: [P2_Multi_Object_Tracking_in_the_Dark]
+      method_categories: [low_light_multi_object_tracking]
+      role: support_only
+    official_sources:
+      - title: CVPR 2024 paper
+        url: https://openaccess.thecvf.com/content/CVPR2024/html/Wang_Multi-Object_Tracking_in_the_Dark_CVPR_2024_paper.html
+        accessed_on: 2026-07-27
+      - title: Current official LMOT repository
+        url: https://github.com/xinzwang/LMOT
+        accessed_on: 2026-07-27
+    version: repository_release_2024_06
+    license:
+      status: verified_restricted
+      name: Creative Commons Attribution-NonCommercial 4.0 International
+      url: https://creativecommons.org/licenses/by-nc/4.0/
+      note: Dataset is restricted to non-commercial research; repository code is MIT.
+    local_status: absent
+    scale:
+      paper_total: {videos: 32, frames: 35120, boxes: 815550, tracks: 4090}
+      repository_statistics:
+        train: {videos: 11, boxes: 309466, tracks: 1533}
+        validation: {videos: 4, boxes: 131781, tracks: 626}
+        test: {videos: 11, boxes: 312742, tracks: 1644}
+        real: {videos: 6, boxes: 61561, tracks: 287}
+      currently_released: train_and_validation_only
+      download_size: unknown
+    annotations:
+      vehicle_bounding_boxes: true
+      masks: false
+      counting_labels: derivable
+      parking_slot_polygons: false
+      occupied_vacant_labels: false
+      persistent_track_ids: true
+      weather_lighting_tags: low_light_pairing_not_a_parking_weather_taxonomy
+    viewpoint: [ground_level_outdoor, RAW, sRGB]
+    official_split:
+      type: train_validation_test_real
+      note: Official repository states only train and validation are currently released.
+    leakage_risk: paired_well_lit_and_dark_versions_must_remain_in_the_same_split
+    task_fit:
+      vehicle_detector_fine_tuning: support_only_domain_mismatch
+      slot_classifier_training: unsuitable
+      slot_occupancy_evaluation: unsuitable
+      low_light_adverse_evaluation: suitable_for_MOT_research_not_parking_occupancy
+      temporal_tracking_evaluation: suitable_for_general_MOT_not_slot_transitions
+    manual_annotation:
+      needed_for_documented_MOT_roles: false
+      needed_for_parking_occupancy: true
+    risks:
+      - Not a parking-slot dataset.
+      - No released untouched test or LMOT-real set at audit time.
+      - Download size is not stated and RAW paired video is likely costly.
+    decision: do_not_download_for_current_core_workflow
+
+  - id: AODRaw
+    part1_alignment:
+      papers: [P7_AODRaw]
+      method_categories: [RAW_object_detection, adverse_condition_robustness]
+      role: support_only
+    official_sources:
+      - title: CVPR 2025 paper
+        url: https://openaccess.thecvf.com/content/CVPR2025/html/Li_Towards_RAW_Object_Detection_in_Diverse_Conditions_CVPR_2025_paper.html
+        accessed_on: 2026-07-27
+      - title: Official AODRaw repository
+        url: https://github.com/lzyhha/AODRaw
+        accessed_on: 2026-07-27
+    version: repository_main_checked_2026_07_27
+    license:
+      status: unknown_for_dataset
+      name: unknown
+      note: The repository explicitly licenses code CC BY-NC-SA 4.0 but does not explicitly extend that statement to the dataset.
+    local_status: absent
+    scale:
+      images: 7785
+      instances: 135601
+      categories: 62
+      conditions: 9
+      split:
+        train: {images: 5445, instances: 94949}
+        test: {images: 2340, instances: 40652}
+      downloads:
+        original_RAW_and_sRGB: 435GB
+        downsampled_RAW: 223GB
+        downsampled_sRGB: 4.3GB
+        sliced_RAW: 439GB
+        sliced_sRGB: 23GB
+    annotations:
+      vehicle_bounding_boxes: included_among_62_categories
+      masks: empty_segmentation_fields
+      counting_labels: derivable
+      parking_slot_polygons: false
+      occupied_vacant_labels: false
+      persistent_track_ids: false
+      weather_lighting_tags: true
+    viewpoint: [mixed_indoor_outdoor, RAW, sRGB]
+    official_split:
+      type: train_test_no_validation
+    leakage_risk: derived_downsampled_and_sliced_files_must_follow_original_image_split
+    task_fit:
+      vehicle_detector_fine_tuning: weak_due_multi_category_nonparking_domain
+      slot_classifier_training: unsuitable
+      slot_occupancy_evaluation: unsuitable
+      low_light_adverse_evaluation: scientifically_relevant_but_costly_and_license_blocked
+      temporal_tracking_evaluation: unsuitable_still_images_no_tracks
+    manual_annotation:
+      needed_for_general_detection: false
+      needed_for_parking_occupancy: true
+    risks:
+      - Dataset license is not explicit.
+      - Even the smallest sRGB option is 4.3GB and the full RAW corpus is 435GB.
+      - The project does not use a RAW parking-camera pipeline and must not install MMDetection for this audit.
+    decision: exclude_from_download_and_current_experiments
+
+  - id: VIRAT_Ground_2
+    part1_alignment:
+      papers: []
+      method_categories: [surveillance_activity_detection, tracking]
+      role: part2_support_only
+    official_sources:
+      - title: VIRAT data project
+        url: https://viratdata.org/
+        accessed_on: 2026-07-27
+    version: Ground_2_0
+    license:
+      status: verified_restricted
+      name: individual_VIRAT_usage_agreement
+      note: Redistribution and personally identifiable information duties apply.
+    local_status: partial_consumed_case_study
+    scale:
+      duration: approximately_8_5_hours
+      scenes: 11
+      full_download: approximately_37_63GB
+    annotations:
+      vehicle_bounding_boxes: object_tracks
+      masks: false
+      counting_labels: derivable
+      parking_slot_polygons: false
+      occupied_vacant_labels: false
+      persistent_track_ids: true
+      weather_lighting_tags: limited
+      activities: true
+    viewpoint: [fixed_CCTV, ground_surveillance, sRGB]
+    official_split:
+      type: official_release_structure_not_a_slot_occupancy_split
+    leakage_risk: adjacent_clips_and_same_scene_tracks
+    task_fit:
+      vehicle_detector_fine_tuning: not_selected
+      slot_classifier_training: unsuitable
+      slot_occupancy_evaluation: requires_manual_truth
+      low_light_adverse_evaluation: weak
+      temporal_tracking_evaluation: case_study_only_after_manual_slot_truth
+    manual_annotation:
+      needed_for_slot_occupancy_and_transitions: true
+    risks:
+      - VIRAT 0503 has been viewed and cannot be a new untouched holdout.
+      - Existing local scenes remain case studies, not a formal temporal test.
+    decision: preserve_existing_case_study_only
+
+  - id: Grand_Bassin_Traffic
+    part1_alignment:
+      papers: []
+      method_categories: [traffic_detection, temporal_stability]
+      role: part2_support_only
+    official_sources:
+      - title: Deposited dataset
+        url: https://doi.org/10.5281/zenodo.21321449
+        accessed_on: 2026-07-27
+    version: deposited_release_checked_2026_07_26
+    license:
+      status: verified_restricted
+      name: Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+      url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+    local_status: present_support_only
+    scale:
+      sampled_frames: 4000
+      source_segments: 24
+      sampling_rate: 2FPS
+      supplied_boxes: 854646_machine_generated
+    annotations:
+      vehicle_bounding_boxes: machine_generated_only
+      masks: false
+      counting_labels: machine_derived_only
+      parking_slot_polygons: local_manual_development_subset_only
+      occupied_vacant_labels: incomplete_occupied_only_local_subset
+      persistent_track_ids: false
+      weather_lighting_tags: false
+    viewpoint: [fixed_looking, overhead_high_angle, sRGB]
+    official_split:
+      type: none_for_project_tasks
+    leakage_risk: all_frames_from_one_video_source_must_remain_in_one_split
+    task_fit:
+      vehicle_detector_fine_tuning: unsuitable_without_manual_box_correction
+      slot_classifier_training: unsuitable
+      slot_occupancy_evaluation: incomplete_truth
+      low_light_adverse_evaluation: unsuitable
+      temporal_tracking_evaluation: stability_development_only
+    manual_annotation:
+      needed_for_detector_training: true
+      needed_for_full_slot_transition_evaluation: true
+    risks:
+      - Supplied boxes are machine-generated preannotations.
+      - Reviewed local slots contain occupied intervals but no valid arrival/departure truth.
+    decision: retain_as_development_stability_evidence_only
+
+dataset_to_task:
+  vehicle_detector_fine_tuning:
+    primary: [CARPK_official_train]
+    supplemental: [NDISPark_train_verified_ODC_By]
+    excluded: [PKLot, CNRPark-EXT, PSEX, LMOT, AODRaw, VIRAT_Ground_2, Grand_Bassin_Traffic]
+  slot_classifier_training:
+    primary: [PKLot_official_day_grouped_train]
+    existing_artifact: [E1b_historical_PKLot_checkpoint]
+    excluded: [CNRPark-EXT_consumed, CARPK_PUCPR_PLUS, NDISPark, PSEX_unavailable, LMOT, AODRaw]
+  slot_occupancy_evaluation:
+    development: [PKLot_never_test_design_groups]
+    test: [PKLot_never_used_date_image_groups_pending_full_archive]
+    historical_external_only: [CNRPark-EXT]
+  low_light_adverse_evaluation:
+    development_box_metrics: [NDISPark_validation_consumed_as_development]
+    test_count_metrics: [NDISPark_test]
+    reference_only: [LMOT, AODRaw, PSEX]
+  temporal_tracking_evaluation:
+    formal_test: []
+    case_study_only: [VIRAT_Ground_2]
+    development_stability_only: [Grand_Bassin_Traffic]
+
+recommended_combination:
+  name: CARPK_plus_NDISPark_with_PKLot_slot_protocol
+  status: scientifically_recommended_but_not_selected
+  requires_user_approved_acquisition: true
+  components:
+    detection_train:
+      - CARPK official train after EULA
+      - NDISPark train as a balanced fixed-camera supplement
+    detection_validation:
+      - source-grouped development subset carved only from CARPK official train
+      - NDISPark 30-image night validation as a separately reported development stratum
+    detection_test:
+      - CARPK official 459-image test with boxes
+      - NDISPark 117-image test for count MAE/RMSE only
+    slot_classifier_train:
+      - PKLot official day-disjoint training groups if retraining is justified
+      - otherwise preserve the existing E1b checkpoint
+    slot_occupancy_development:
+      - never-test PKLot camera/date groups
+    slot_occupancy_test:
+      - never-used PKLot date/image groups frozen before P0/P1/P2 predictions
+    temporal_test:
+      - unavailable
+    low_light_test:
+      - NDISPark count-only test
+  controls:
+    - Keep source sampling counts and vehicle-box counts visible.
+    - Map all accepted detection categories to one vehicle class.
+    - Never use PUCPR+ in the primary detector protocol because it overlaps the PKLot PUCPR source.
+    - Never use a test result for threshold, epoch, or model selection.
+
+backup_combination:
+  name: local_NDISPark_only_detector_flow
+  status: selected_by_user_on_2026-07-27
+  acquisition_required: false
+  limitations:
+    - Only 112 daylight training images.
+    - The 30 night box-labelled images are development validation already.
+    - The 117-image test is count-only, so final detector mAP is unavailable.
+    - No untouched slot-occupancy or temporal test becomes available.
+  decision: acceptable_for_smoke_and_course_process_evidence_but_not_a_strong_final_detector_benchmark
+
+formal_role_decisions:
+  A_detection_train:
+    selected: NDISPark_official_train
+    status: frozen_112_images_2577_vehicle_boxes
+  B_detection_validation:
+    selected: NDISPark_official_validation
+    status: consumed_development_validation_30_images_725_vehicle_boxes
+  C_detection_test:
+    selected: NDISPark_official_test_count_truth_only
+    status: frozen_117_images_for_count_MAE_RMSE_no_box_metrics
+  D_slot_classifier_train:
+    selected: existing_E1b_historical_checkpoint_only
+    status: no_new_retraining_in_backup_route
+  E_slot_occupancy_development:
+    selected: historical_27_image_PKLot_development_set
+    status: consumed_development_only
+  F_slot_occupancy_test:
+    selected: none
+    status: unavailable_in_backup_route_must_report_limitation
+  G_temporal_test:
+    selected: none
+    status: unavailable_existing_VIRAT_is_case_study_only
+  H_low_light_test:
+    selected: NDISPark_117_image_count_only_test
+    status: available_for_MAE_RMSE_after_protocol_freeze_no_mAP
+
+excluded_or_deferred:
+  PUCPR_plus:
+    reason: Source overlap with PKLot risks detector-to-occupancy leakage; not needed in the primary combination.
+  CNRPark-EXT:
+    reason: Already consumed; historical external evidence only.
+  PSEX:
+    reason: No verified public release, dataset license, annotation package, or source-safe split.
+  LMOT:
+    reason: Non-parking MOT data, only train/validation currently released, and no stated download size.
+  AODRaw:
+    reason: Dataset license is unclear, storage is large, and RAW multi-category detection is mismatched to the current workflow.
+  VIRAT_Ground_2:
+    reason: No parking-slot truth; viewed local material is a case study rather than an untouched test.
+  Grand_Bassin_Traffic:
+    reason: Boxes are machine-generated and reviewed slot truth is incomplete.
+
+gate:
+  stage_B_passed: true
+  selected_route: local_NDISPark_only_detector_flow
+  selected_on: "2026-07-27"
+  stage_C_may_start: true
+  stage_C_completed: true
+  frozen_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  frozen_protocol: ../configs/ndispark_only_dataset_frozen_20260727.yaml
+  blocking_conditions: []
+  next_gate_rules:
+    - Complete and test Stage D preprocessing before detector training.
+    - Validate the Stage E comparison implementation before new D0/D1/D2 predictions.

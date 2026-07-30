@@ -7,8 +7,8 @@ Run date: 25-26 July 2026 (Asia/Shanghai)
 
 | Check | Result |
 |---|---|
-| Existing baseline unit tests | **23/23 passed** after all work |
-| Literature-core unit tests | **78/78 passed** |
+| Existing baseline unit tests | **28/28 passed** after baseline closure |
+| Literature-core unit tests | **82/82 passed** after metric correction |
 | Source compilation | `python -m compileall` passed |
 | Python/OpenCV available | Yes |
 | CUDA / RTX 3060 available | Yes, 6 GiB |
@@ -34,6 +34,40 @@ not a benchmark and is reported only as an environment check.
 
 Evidence:
 `outputs/phase0_baseline_smoke/summary.json`.
+
+## Evaluation correction and baseline closure
+
+The temporal evaluator previously searched only at or after each
+ground-truth transition. If a prediction changed early and stayed in the
+target state, the search rediscovered that already-active state at the truth
+frame and reported a misleading zero latency.
+
+The corrected evaluator matches the nearest observed prediction change into
+the target state that satisfies the frozen `stable_frames` rule. Each truth
+event now records prediction-minus-truth signed error in frames and seconds,
+entry/exit direction, and one of `early`, `on_time`, `delayed`, or `missed`.
+Early matches are excluded from the backward-compatible non-negative latency
+summary. Unsupported flicker and extra transition-window changes remain
+separate.
+
+Unit tests cover on-time, early, delayed, completely missed, briefly correct
+but unstable, and multiple-jump predictions. The full `literature_core`
+suite passed 82/82.
+
+Baseline reporting is now closed by
+`../configs/baseline_methods.yaml` and `../BASELINE_CLOSURE.md`:
+
+- B0 is YOLOv8 + bounding-box-centre mapping;
+- B1 is YOLOv8 + polygon coverage;
+- E0 is the historical frozen static CNR-EXT YOLOv8 coverage result; and
+- T0 is the raw YOLOv8 temporal comparator (historical artifact key
+  `e0_raw`).
+
+The common `parking-run --method B0|B1|T0` entry point writes
+`annotated.mp4`, `occupancy.csv`, `events.csv`, and `summary.json`. A
+deterministic fake-video integration test verified the complete artifact
+contract, and the full baseline suite passed 28/28. No historical metric or
+frozen output was recomputed or modified for this code/documentation closure.
 
 ## Adapted MobileNetV3 training
 
@@ -495,7 +529,8 @@ Evidence: `DATASET_AUDIT.md`, `DATASET_ACCESS_BLOCKER.md`,
 Frozen E4/E5 case studies were run on every frame after excluding a
 predeclared 30-frame warm-up from metrics. The methods were:
 
-- E0 raw: YOLOv8n plus polygon mapping, without temporal filtering;
+- T0 raw: YOLOv8n plus polygon mapping, without temporal filtering
+  (historical artifact key `e0_raw`);
 - E3b raw: the frozen calibrated logistic fusion;
 - E4: E3b plus pre-registered asymmetric EMA/hysteresis; and
 - E5: YOLOv8n + ByteTrack + one-to-one track-to-slot mapping, stationary-motion
@@ -504,11 +539,11 @@ predeclared 30-frame warm-up from metrics. The methods were:
 
 | Partition | Method | Macro F1 | Occupied recall | Vacant recall | False-free rate | False-occupied rate |
 |---|---|---:|---:|---:|---:|---:|
-| `0502` development | E0 raw | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
+| `0502` development | T0 raw | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
 | `0502` development | E3b raw | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
 | `0502` development | E4 | 0.456072 | 1.000000 | 0.000000 | 0.000000 | 1.000000 |
 | `0502` development | E5 | 0.453626 | 0.990184 | 0.000000 | 0.009816 | 1.000000 |
-| `0503` holdout | E0 raw | **0.954119** | 0.951974 | **1.000000** | 0.048026 | **0.000000** |
+| `0503` holdout | T0 raw | **0.954119** | 0.951974 | **1.000000** | 0.048026 | **0.000000** |
 | `0503` holdout | E3b raw | 0.940952 | 0.980921 | 0.883629 | 0.019079 | 0.116371 |
 | `0503` holdout | E4 | 0.834272 | **0.990132** | 0.599606 | **0.009868** | 0.400394 |
 | `0503` holdout | E5 | 0.919147 | 0.912500 | **1.000000** | 0.087500 | **0.000000** |
@@ -516,7 +551,7 @@ predeclared 30-frame warm-up from metrics. The methods were:
 These are negative E4/E5 results. On development, all methods remained
 occupied after the true departure because an adjacent/stationary detection
 continued to overlap the fixed polygon; E5 mapped that evidence to persistent
-track 3. On holdout, E0 raw remained strongest. E4 reduced raw E3b flicker
+track 3. On holdout, T0 raw remained strongest. E4 reduced raw E3b flicker
 (29 to 11 unsupported changes) but retained false occupied states too long.
 E5 reduced changes to two but first declared vacant at frame 1491, 59 frames
 before the true frame 1550, and did not initialize occupied until frame 104.
@@ -557,3 +592,319 @@ artifacts passed SHA-256 and size verification.
 - The 27 PKLot images were already used during earlier baseline development.
   All three PKLot cameras are therefore method-development data, even when a
   camera is held out inside one rotation. None is a final benchmark.
+
+## D1 smoke and local GPU gate
+
+The frozen `D1-NDISPARK-SMOKE-20260727-01` run completed three pretrained
+epochs at 640/batch 4 on the local RTX 3060 Laptop GPU. It changed all three
+training losses, updated the checkpoint hash, validated all 30 consumed
+development images, and reported no NaN, OOM, silent batch reduction, or
+material dataloader wait. Its peak Torch reserved memory was 767,557,632 bytes
+(0.715 GiB) on 6,441,926,656 total bytes. The smoke validation metrics are
+diagnostics and the smoke checkpoint is not formal D1.
+
+Stage G then performed calculation only. For a maximum 50-epoch run at the
+same 640/batch-4 setting, measured overhead plus epochs 2-3 gives a 2.43-minute
+central estimate; the slowest smoke epoch gives 4.35 minutes, and a doubled
+slowest-epoch stress bound gives 8.52 minutes. These are extrapolations rather
+than a measured formal-run duration.
+
+The local resource gate passed. Physical batch 4 is retained as the largest
+allowed directly executed batch, with nominal batch 64 and 16 post-warm-up
+accumulation steps. The 6 GiB local device is the recommended minimum and the
+formal run is frozen as `D1-NDISPARK-FT-20260727-01`. Paid/remote GPU rental
+is not justified, rental duration is zero, and an A100 is unnecessary.
+Stage G accessed no test data and ran no model prediction.
+
+## Formal D1 training
+
+`D1-NDISPARK-FT-20260727-01` completed one fixed-seed local run from the
+original COCO-pretrained YOLOv8n. It stopped at epoch 47 under the frozen
+patience of 10, selecting epoch 37:
+
+| Checkpoint | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+|---|---:|---:|---:|---:|
+| D1 best, epoch 37 | 0.93708 | 0.88339 | 0.94478 | 0.67556 |
+| D1 last, epoch 47 | 0.93105 | 0.89396 | 0.94946 | 0.67232 |
+
+These values are consumed-development diagnostics from the training loop.
+They are not an untouched test result and are not yet the canonical
+D0/D1/D2 comparison. The best weight SHA-256 is
+`0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64`.
+
+Training took 299.473 seconds by the epoch CSV (0.083 hours as reported by
+Ultralytics). The rounded progress-log peak was approximately 0.814 GiB on
+the local 6 GiB RTX 3060. No NaN, OOM, or automatic batch reduction occurred.
+
+The first runner retained a post-run callback audit failure after training and
+final best-checkpoint validation completed. No rerun was performed. Offline
+recovery loaded no model, all 14 recorded artifacts passed size/SHA-256
+verification, and the failure remains part of the result record. NDISPark
+count-only test and all slot-occupancy data remained unaccessed.
+
+## Stage I D0/D1/D2 evaluation
+
+The frozen canonical detector comparison used all 30 NDISPark night
+development-validation images and 725 human vehicle boxes:
+
+| Method | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 | FPS |
+|---|---:|---:|---:|---:|---:|
+| D0 COCO-pretrained YOLOv8n | 0.59394 | 0.51648 | 0.55852 | 0.28468 | 38.733 |
+| D1 NDISPark-fine-tuned YOLOv8n | **0.88153** | **0.84160** | **0.89910** | **0.64969** | 37.773 |
+| D2 YOLO-World zero-shot | 0.76736 | 0.61655 | 0.72963 | 0.39704 | 37.893 |
+
+D1 was selected by the predeclared mAP@0.5:0.95-then-recall rule before any
+test prediction. It improved mAP@0.5:0.95 by 0.36501 and recall by 0.32512
+over D0 at similar framework pipeline speed.
+
+One shared count confidence, 0.10, was then selected on development data from
+the fixed `0.05:0.05:0.95` grid. The objective minimized mean count MAE across
+D0/D1/D2 rather than selecting a separate threshold for each detector.
+
+The frozen rule was applied once to the 117-image, six-camera official
+count-only test:
+
+| Method | MAE | RMSE | Mean predicted | Mean true | FPS |
+|---|---:|---:|---:|---:|---:|
+| D0 | 2.99145 | 5.30119 | 11.16239 | 11.98291 | 108.492 |
+| D1 | 3.46154 | 6.78800 | 14.62393 | 11.98291 | 127.315 |
+| D2 | **2.58974** | **4.98631** | 10.09402 | 11.98291 | 16.424 |
+
+This is a retained negative result for D1: better development box AP did not
+produce the lowest count error under the common rule. D1 tended to over-count,
+while D2 under-counted but had the lowest MAE/RMSE at substantially lower
+speed. The D1 selection and threshold were not changed after test access.
+
+The test split contains no box truth, so no detector mAP, box precision, box
+recall, FP-box, or FN-box result is reported there. FP/FN montages instead use
+the consumed development boxes. Visual review confirms D1's recall gain and
+also shows low-confidence/duplicate detections in dense rows at the shared
+0.10 threshold. The dense night image is only an overlap/occlusion review
+candidate because no official occlusion tag exists.
+
+The initial count runner failed before its first prediction because the
+Ultralytics user settings directory was not writable. Its preflight-only
+directory remains. The successful v2 changed only the settings-directory
+location. All 24 selected Stage I artifacts passed SHA-256 and size
+verification. See `../data/DETECTOR_EVALUATION_REPORT.md`.
+
+## Stage I-v2 corrected evaluation
+
+Stage I v1 remains frozen. The corrected development evaluation applies
+class-agnostic NMS before the D0/D2 source classes are merged into project
+class 0 `vehicle`. On the same consumed 30-image/725-box validation, the
+`max_det=300` results were:
+
+| Method | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 | Cap-hit images |
+|---|---:|---:|---:|---:|---:|
+| D0 | 0.63669 | 0.53379 | 0.59954 | 0.30672 | 4/30 |
+| D1 | **0.88590** | **0.84606** | **0.90653** | **0.65577** | 30/30 |
+| D2 | 0.79014 | 0.62069 | 0.74025 | 0.40295 | 5/30 |
+
+A paired development-only `max_det=1000` arm preserved the D1 > D2 > D0
+ranking and slightly reduced rather than improved all three mAP@0.5:0.95
+values. D1 still hit the cap on 30/30 images. The preregistered decision
+therefore retained 300 and records low-floor candidate saturation as a
+limitation.
+
+The common-threshold diagnostic remains 0.10. Independent calibration on the
+same development membership and grid selected D0 0.10, D1 0.30, and D2 0.10.
+The objective was minimum development count MAE, with lower RMSE and higher
+threshold as tie-breaks.
+
+One corrected pass over the already consumed count-only split was frozen
+before execution and is labelled post-hoc sensitivity:
+
+| Method | Common 0.10 MAE | Per-model calibrated MAE |
+|---|---:|---:|
+| D0 | 2.96581 | 2.96581 |
+| D1 | 3.45299 | **1.52991** |
+| D2 | 2.58974 | 2.58974 |
+
+D1's post-hoc calibrated result supports the diagnosis that v1's common 0.10
+operating point amplified its over-counting. It does not create a new
+untouched test, did not trigger model reselection or retuning, and does not
+measure per-slot occupancy. All 44 critical v2 artifacts passed size/SHA-256
+verification. See `../data/STAGE_I_V2_CORRECTED_EVALUATION_REPORT.md`.
+
+## Stage J P0/P1/P2 slot-occupancy integration
+
+The corrected Stage I-v2 detector settings were frozen before any slot
+prediction as `P-COMP-PKLOT-DEV-STAGEJ-20260727-01`. P0, P1 and P2 differ
+only in D0, D1 and D2 detector evidence; all use the same B1 0.40 polygon
+coverage, one-to-one assignment, class-agnostic NMS, `max_det=300` and no
+temporal stabilization. Detector thresholds came from the earlier Stage I-v2
+development calibration (0.10, 0.30 and 0.10).
+
+The 27 local PKLot images were already consumed by previous development.
+Their 1,505 known slot labels therefore support integration diagnostics only:
+
+| Pipeline | Macro F1 | Occupied recall | Vacant recall | False-free | False-occupied |
+|---|---:|---:|---:|---:|---:|
+| P0 = D0 + B1 | 0.768040 | 0.566711 | 0.991979 | 0.433289 | 0.008021 |
+| P1 = D1 + B1 | **0.825723** | **0.671070** | 0.990642 | **0.328930** | 0.009358 |
+| P2 = D2 + B1 | 0.735168 | 0.504624 | **1.000000** | 0.495376 | **0.000000** |
+
+P1 led this fixed comparison, but the remaining 249 false-free errors are a
+material negative result. P2's zero false-occupied errors came with 375
+false-free errors. Detector selection remained D1 because it was selected
+before this comparison; no Stage J metric changed a model or parameter.
+
+Each pipeline wrote a 27-frame annotated montage, 1,512 occupancy rows, a
+header-only events file, 27 detection records, metrics, summary and runtime
+metadata. The montage is non-contiguous and is not temporal evidence. All 27
+registered source/output artifacts passed size and SHA-256 verification.
+
+The preregistered read-only grouped analysis did not rerun predictions. P1
+versus P0 was 6 wins, 2 ties and 19 losses by image. Its mean paired
+Macro-F1 difference was -0.020935 with 95% image-group bootstrap interval
+[-0.080493, 0.044616]. P1 therefore leads the pooled consumed-development
+comparison, but the gain is camera-dependent and was not confirmed there as a
+stable per-image improvement.
+
+Run-inclusive mean throughput is confounded by sequential lazy loading and
+first CUDA initialization. Median end-to-end frame latency was 34.105 ms for
+P0, 31.974 ms for P1 and 32.668 ms for P2; the anomalous cold-start means are
+retained rather than rewritten. Stage I-v2 remains the controlled source for
+detector runtime comparisons.
+
+## Stage K untouched PKLot slot-occupancy evaluation
+
+The original local-inventory blocker is preserved, but an additive v2 gate
+later passed before predictions after 90 complete JPG/XML pairs were recovered
+from the partial official PKLot archive. The three selected camera/date groups
+contain 90 unique image hashes with zero overlap against Stage J, 5,034 known
+slot labels and six excluded unknown labels. Membership within each group was
+timestamp-sorted and evenly spaced. Raw and truth-overlay contact sheets were
+reviewed before `P-COMP-PKLOT-TEST-STAGEK-20260727-01` was frozen.
+
+The frozen P0/P1/P2 pipelines were executed once without retraining, threshold
+changes, geometry changes or post-result detector selection:
+
+| Pipeline | Macro F1 | Occupied recall | Vacant recall | False-free | False-occupied | Slot AP |
+|---|---:|---:|---:|---:|---:|---:|
+| P0 = D0 + B1 | 0.785612 | 0.544519 | 0.992883 | 0.455481 | 0.007117 | 0.718263 |
+| P1 = D1 + B1 | **0.808398** | **0.598044** | 0.984148 | **0.401956** | 0.015852 | **0.739705** |
+| P2 = D2 + B1 | 0.796548 | 0.559444 | **0.997735** | 0.440556 | **0.002265** | 0.729244 |
+
+The pooled table alone is insufficient. Camera-macro F1 is 0.841099 for P0,
+0.824835 for P1 and 0.849168 for P2. P1 improved PUCPR but was lower than P0
+on UFPR04 and UFPR05. Across 90 images, P1 versus P0 was 17 wins, 11 ties and
+62 losses; the paired mean difference was -0.040322 with 95% interval
+[-0.068804, -0.009457]. P2 versus P0 was 33 wins, 34 ties and 23 losses, with
+paired mean 0.035781 and interval [0.009939, 0.062788].
+
+D1 remains the candidate selected before slot-test access, but Stage K does
+not support an across-camera P1 superiority claim. The test result did not
+replace D1 with P0 or P2.
+
+Date and weather tables were produced afterward from the frozen occupancy CSV
+files without model prediction or parameter selection. Each camera has one
+selected date, and cloudy weather occurs only for UFPR04, so those strata are
+confounded with camera and are descriptive only.
+
+Stage K binds 43/43 main artifacts, 9/9 stratified-analysis artifacts and
+11/11 data-gate v2 artifacts. Full interpretation is in
+`../data/STAGE_K_FINAL_REPORT.md`.
+
+## Stage L integrated Part I workflow
+
+Stage L connected D1, B1, E1b, asymmetric uncertainty gating, temporal
+hysteresis and optional ByteTrack without modifying Stage J/K. On the 90
+previously consumed Stage K images, P3 reached 0.987061 Macro F1 versus
+0.808398 for P1. It improved 78 images, tied 12 and lost none; the paired
+mean per-image gain was 0.191884 with 95% interval
+[0.158389, 0.227038].
+
+The fixed E1b-only ablation was higher at 0.992226 Macro F1. P3 instead
+reduced false-free rate from E1b's 0.016469 to 0.004632 while increasing
+false-occupied rate from 0.001618 to 0.017147. P3 is therefore a
+recall-oriented operational trade-off, not an unconditional replacement for
+E1b.
+
+The complete 1,974-frame VIRAT 0502 run produced a negative result. D1+B1
+remained detector-positive in all 314 post-departure frames, so E1b was never
+called; ByteTrack confirmed the adjacent stationary vehicle selected by the
+oblique slot polygon, and all four variants missed the departure. Full
+interpretation is in `../data/STAGE_L_INTEGRATED_WORKFLOW_REPORT.md`.
+
+## Stage O raw detector-only low-light adaptation
+
+Stage O is an additive consumed-development diagnostic on the four released
+LMOT validation sequences. Unlike Stage N-v2/v3, it calls `YOLO.predict`
+without loading a tracker. All arms retain `imgsz=640`, confidence 0.30, NMS
+IoU 0.70, class-agnostic NMS, `max_det=300`, the unified
+car/motorcycle/bus/truck class and the frozen person/bicycle suppression rule.
+LMOT has no slot polygons or occupied/vacant truth, so this section reports
+vehicle detection only and cannot establish a parking-occupancy Macro F1
+change.
+
+The primary pooled/micro result sums all GT, predictions, TP, FP and FN and
+uses one confidence ordering with isolated sequence/frame keys:
+
+| Method | Dark precision | Dark recall | Dark AP50 | Dark AP50-95 | Dark TP | Dark FP | Dark FN |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| O0: frozen D1, original sRGB | 0.722928 | 0.034694 | 0.034954 | 0.018189 | 2,390 | 916 | 66,497 |
+| O1: sequence-gated Gamma/CLAHE | 0.454643 | 0.043216 | 0.034143 | 0.017125 | 2,977 | 3,571 | 65,910 |
+| O2: pretrained Retinexformer preprocessing | 0.581802 | 0.019307 | 0.017284 | 0.011517 | 1,330 | 956 | 67,557 |
+| O3: supervised D1-LL | 0.725393 | 0.259222 | 0.230516 | 0.116695 | 17,857 | 6,760 | 51,030 |
+
+O1 is a negative engineering result: its small recall increase comes with a
+large precision loss and lower AP50/AP50-95. O3 used one ordinary supervised
+fine-tune from D1, paired sequence-grouped LMOT train sRGB boxes, and the
+existing NDISPark daylight parking-training split. The frozen patience-five
+rule stopped the single run after epoch 9, with epoch 4 best. No consistency
+loss, hyperparameter search, LMOT-validation threshold tuning or tracker
+tuning was performed.
+
+O2 is also a negative result: full-resolution pretrained Retinexformer
+preprocessing reduces dark recall, AP50 and AP50-95 below O0 and runs at
+1.198 whole-run frames/s. O3 alone passes every predeclared eligibility
+check. It is selected as the D1-LL detector-side candidate, raising dark
+pooled recall from 0.034694 to 0.259222 and AP50 from 0.034954 to 0.230516
+without a precision loss. The truth-free four-frame P3 interface smoke
+completed with the unchanged B1/E1b/F2/E4 path and no tracker; its metrics
+status is `not_computed_no_truth`, so it adds no occupancy-performance claim.
+
+The completed P3 remains the system main path. Stage O replaces only the
+detector side if a candidate passes the predeclared rule. B1, E1b, F2 and E4
+stay frozen. Without a new nighttime fixed-camera parking dataset with
+per-slot truth, the selected detector receives only a truth-free interface
+smoke; no low-light occupancy or event improvement is reported.
+
+## Stage P parking retention and Stage Q-v2 external occupancy
+
+Stage P remains a consumed-development parking-domain diagnostic. Its frozen
+decision is `FAIL`; D1-LL is not eligible to replace D1 from that evidence.
+
+Stage Q-v2 subsequently acquired the official UPM-GTI Test archive and froze
+376 low-light images from 17 previously unused Test sequences before model
+output. The 21 polygons were aligned with the official numbering and
+human-confirmed before the two formal runs. Both methods used the same
+confidence 0.30, NMS IoU 0.70, B1 0.40 one-to-one mapping, E1b/F2 threshold
+0.76 and E4 parameters, with no tracker:
+
+| Metric | P3-D1 | P3-D1-LL |
+|---|---:|---:|
+| Macro F1 | **0.664318** | 0.617484 |
+| Occupied precision | **0.368530** | 0.269572 |
+| Occupied recall | 0.446115 | **0.457393** |
+| Vacant recall | **0.914060** | 0.860665 |
+| False-free | 0.553885 | **0.542607** |
+| False-occupied | **0.085940** | 0.139335 |
+| Accuracy | **0.866768** | 0.819909 |
+| Count MAE | **1.329787** | 1.909574 |
+
+D1-LL recovers nine additional occupied labels but introduces 379 additional
+false-occupied labels. It therefore has a small recall advantage and a
+material precision, vacant-recall, Macro-F1 and count-error regression. D1
+remains the default, D1-LL remains a secondary frozen comparison, and Stage
+P2 remains `FAIL`.
+
+The source lacks reliable timestamps/FPS. The 90 ground-truth transitions
+are reported in frame units only: D1 matched 39 and D1-LL matched 41, with a
+median four selected frames for non-early matched stabilization in both
+methods. No seconds latency is claimed. This is one-camera external
+low-light slot-occupancy evidence, not detector AP, tracker robustness or a
+universal generalization result. Full interpretation is in
+`../data/STAGE_Q_V2_UPM_GTI_EXTERNAL_EVALUATION_REPORT.md`.

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stage W Parking Occupancy Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">FIXED-CAMERA OCCUPANCY DEMONSTRATION · STAGE W</p>
+      <h1>Parking Occupancy &amp; Tracking</h1>
+      <p class="subtitle">Unified Classic, Detection and Fusion backends</p>
+    </div>
+    <span id="health" class="health">Starting</span>
+  </header>
+  <main>
+    <section class="metrics" aria-label="Current parking metrics">
+      <article><span>Occupied</span><strong id="occupied">0</strong></article>
+      <article><span>Vacant</span><strong id="vacant">0</strong></article>
+      <article><span>Total slots</span><strong id="total">0</strong></article>
+      <article><span>Vehicles detected</span><strong id="detections">0</strong></article>
+      <article><span>Attributed FPS</span><strong id="fps">—</strong></article>
+      <article><span>Mode</span><strong id="mode" class="mode">—</strong></article>
+    </section>
+
+    <section class="runtime-strip" aria-label="Runtime configuration">
+      <span id="rendered">Rendered slots: 0</span>
+      <span id="cache">Cache: —</span>
+      <span id="temporal">Temporal: off</span>
+      <span id="tracker">Tracker: off</span>
+      <span id="timestamp">Frame: —</span>
+    </section>
+
+    <section class="video-panel">
+      <img src="{{ url_for('video_feed') }}" alt="Annotated parking video showing all configured slot polygons">
+    </section>
+
+    <section class="tables">
+      <article>
+        <div class="section-heading">
+          <h2>Parking spaces</h2>
+          <span id="slot-count" class="muted">0 records</span>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Slot</th><th>State</th><th>Evidence</th><th>Source</th><th>Track</th></tr></thead>
+          <tbody id="slots"></tbody>
+        </table></div>
+      </article>
+      <article>
+        <h2>Recent frame-level events</h2>
+        <p id="event-semantics" class="muted">Waiting for temporal status</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Frame</th><th>Event</th><th>Slot</th><th>Track</th></tr></thead>
+          <tbody id="events"></tbody>
+        </table></div>
+      </article>
+    </section>
+  </main>
+  <script>
+    const escapeHtml = value => String(value ?? "—")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+    const formatFps = value =>
+      typeof value === "number" && Number.isFinite(value) ? value.toFixed(1) : "—";
+    const shortSource = value => String(value || "unknown").split(".").at(-1);
+
+    async function refresh() {
+      try {
+        const [statusResponse, eventResponse] = await Promise.all([
+          fetch("/api/status"),
+          fetch("/api/events")
+        ]);
+        const status = await statusResponse.json();
+        const events = await eventResponse.json();
+        document.querySelector("#occupied").textContent = status.occupied ?? 0;
+        document.querySelector("#vacant").textContent = status.vacant ?? 0;
+        document.querySelector("#total").textContent = status.total ?? 0;
+        document.querySelector("#detections").textContent = status.detections?.length ?? 0;
+        document.querySelector("#fps").textContent = formatFps(status.runtime?.attributed_fps);
+        document.querySelector("#mode").textContent = status.mode ?? "—";
+        document.querySelector("#rendered").textContent = `Rendered slots: ${status.rendered_slots ?? 0}`;
+        document.querySelector("#cache").textContent = `Cache: ${status.runtime?.cache ?? "—"}`;
+        document.querySelector("#temporal").textContent = `Temporal: ${status.temporal_enabled ? "on" : "off"}`;
+        document.querySelector("#tracker").textContent = `Tracker: ${status.tracker_enabled ? "on" : "off"}`;
+        document.querySelector("#timestamp").textContent =
+          `Frame: ${status.frame_index ?? "—"} · ${Number(status.timestamp_s || 0).toFixed(2)}s`;
+
+        const health = document.querySelector("#health");
+        health.textContent = status.message || status.health;
+        health.classList.toggle("online", status.health === "running");
+        health.classList.toggle("error", status.health === "error");
+
+        const slots = status.slots || [];
+        document.querySelector("#slot-count").textContent = `${slots.length} records`;
+        document.querySelector("#slots").innerHTML = slots.map(slot => `
+          <tr>
+            <td><strong>${escapeHtml(slot.slot_id)}</strong></td>
+            <td><span class="state ${escapeHtml(slot.state)}">${escapeHtml(slot.state)}</span></td>
+            <td>${Number(slot.evidence || 0).toFixed(3)}</td>
+            <td title="${escapeHtml(slot.evidence_source)}">${escapeHtml(shortSource(slot.evidence_source))}</td>
+            <td>${escapeHtml(slot.track_id)}</td>
+          </tr>
+        `).join("") || `<tr><td colspan="5" class="empty">No slot state is available</td></tr>`;
+
+        document.querySelector("#event-semantics").textContent =
+          status.event_semantics === "raw_frame_level_state_changes"
+            ? "Raw frame-level changes; E4 stabilization is off."
+            : (status.event_semantics || "No temporally valid events");
+        document.querySelector("#events").innerHTML = events.slice(0, 20).map(event => `
+          <tr>
+            <td>${escapeHtml(event.frame_index)}</td>
+            <td>${escapeHtml(event.event_type)}</td>
+            <td>${escapeHtml(event.slot_id)}</td>
+            <td>${escapeHtml(event.track_id)}</td>
+          </tr>
+        `).join("") || `<tr><td colspan="4" class="empty">No post-initial transitions yet</td></tr>`;
+      } catch (error) {
+        const health = document.querySelector("#health");
+        health.textContent = "Dashboard disconnected";
+        health.classList.add("error");
+      }
+    }
+    refresh();
+    setInterval(refresh, 1000);
+  </script>
+</body>
+</html>

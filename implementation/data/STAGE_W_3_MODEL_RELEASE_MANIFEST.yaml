@@ -1,0 +1,40 @@
+schema_version: 1
+manifest_id: STAGE-W-3-MODEL-RELEASE-MANIFEST-20260730-01
+stage: W.3
+status: VERIFIED_LOCAL_ASSETS_PENDING_GITHUB_RELEASE
+release_url: pending
+source_publication_contains_weights: false
+model_assets_ready_for_github_release: true
+public_release_published: false
+model_training_run: false
+model_inference_run: false
+asset_license: AGPL-3.0-only
+assets:
+  - model_id: D1
+    release_filename: D1_NDISPark_best.pt
+    local_ignored_path: implementation/outputs/stage_w_3_model_release_assets/D1_NDISPark_best.pt
+    bytes: 6255409
+    sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+    frozen_experiment_id: D1-NDISPARK-FT-20260727-01
+    model_card: implementation/data/MODEL_CARD_D1.md
+    training_dataset: NDISPark
+    training_dataset_license: ODC-By-1.0
+    source_repository_inclusion: excluded
+  - model_id: E1b
+    release_filename: E1b_CBAM_best.pt
+    local_ignored_path: implementation/outputs/stage_w_3_model_release_assets/E1b_CBAM_best.pt
+    bytes: 8045704
+    sha256: f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3
+    frozen_experiment_id: not_recorded_in_historical_training_summary
+    frozen_artifact_id: mobilenet_variant_ablation/cbam_supplement
+    model_card: implementation/data/MODEL_CARD_E1B.md
+    training_dataset: PKLot
+    training_dataset_license: CC-BY-4.0
+    source_repository_inclusion: excluded
+checksum_file: implementation/outputs/stage_w_3_model_release_assets/SHA256SUMS.txt
+metadata_file: implementation/outputs/stage_w_3_model_release_assets/MODEL_RELEASE_METADATA.yaml
+manual_release_steps:
+  - configure an authorized Git remote
+  - create the real GitHub Release
+  - upload both weight assets, SHA256SUMS.txt, and MODEL_RELEASE_METADATA.yaml
+  - replace the pending release URL only with the real published URL

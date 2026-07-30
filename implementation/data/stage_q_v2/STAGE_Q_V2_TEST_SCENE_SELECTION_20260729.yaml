@@ -1,0 +1,379 @@
+schema_version: 1
+protocol_id: STAGE-Q-V2-UPM-GTI-EXTERNAL-NIGHT-OCCUPANCY-20260729-01
+status: PASS
+deterministic_rule: all official-test sequences with complete raw image/truth bijection,
+  shared stable 800x600 geometry, at least one truth-labelled image at frozen luminance
+  <=70, and both occupied and vacant labels in the selected low-light frames
+selection_not_based_on_model_results: true
+qualified_sequences:
+- gopro1
+- gopro4
+- gopro5
+- gopro8
+- gopro9
+- gopro11
+- gopro12
+- gopro19
+- gopro23
+- gopro24
+- gopro25
+- gopro26
+- gopro30
+- gopro33
+- gopro34
+- gopro36
+- gopro46
+sequence_decisions:
+- sequence_id: gopro1
+  qualified: true
+  reasons: []
+  raw_image_count: 117
+  truth_count: 117
+  selected_low_light_images: 25
+  selected_occupied_labels: 41
+  selected_vacant_labels: 484
+  selected_transition_frames: 4
+  selected_slot_state_changes: 6
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro2
+  qualified: false
+  reasons:
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 115
+  truth_count: 115
+  selected_low_light_images: 8
+  selected_occupied_labels: 0
+  selected_vacant_labels: 168
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro4
+  qualified: true
+  reasons: []
+  raw_image_count: 124
+  truth_count: 124
+  selected_low_light_images: 29
+  selected_occupied_labels: 32
+  selected_vacant_labels: 577
+  selected_transition_frames: 3
+  selected_slot_state_changes: 3
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro5
+  qualified: true
+  reasons: []
+  raw_image_count: 73
+  truth_count: 73
+  selected_low_light_images: 33
+  selected_occupied_labels: 61
+  selected_vacant_labels: 632
+  selected_transition_frames: 4
+  selected_slot_state_changes: 10
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro8
+  qualified: true
+  reasons: []
+  raw_image_count: 87
+  truth_count: 87
+  selected_low_light_images: 20
+  selected_occupied_labels: 48
+  selected_vacant_labels: 372
+  selected_transition_frames: 3
+  selected_slot_state_changes: 7
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro9
+  qualified: true
+  reasons: []
+  raw_image_count: 114
+  truth_count: 114
+  selected_low_light_images: 33
+  selected_occupied_labels: 61
+  selected_vacant_labels: 632
+  selected_transition_frames: 6
+  selected_slot_state_changes: 12
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro10
+  qualified: false
+  reasons:
+  - raw_sequence_image_truth_not_one_to_one
+  raw_image_count: 67
+  truth_count: 35
+  selected_low_light_images: 22
+  selected_occupied_labels: 29
+  selected_vacant_labels: 433
+  selected_transition_frames: 2
+  selected_slot_state_changes: 2
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro11
+  qualified: true
+  reasons: []
+  raw_image_count: 135
+  truth_count: 135
+  selected_low_light_images: 25
+  selected_occupied_labels: 70
+  selected_vacant_labels: 455
+  selected_transition_frames: 5
+  selected_slot_state_changes: 6
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro12
+  qualified: true
+  reasons: []
+  raw_image_count: 124
+  truth_count: 124
+  selected_low_light_images: 27
+  selected_occupied_labels: 52
+  selected_vacant_labels: 515
+  selected_transition_frames: 4
+  selected_slot_state_changes: 9
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro19
+  qualified: true
+  reasons: []
+  raw_image_count: 118
+  truth_count: 118
+  selected_low_light_images: 2
+  selected_occupied_labels: 4
+  selected_vacant_labels: 38
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro23
+  qualified: true
+  reasons: []
+  raw_image_count: 198
+  truth_count: 198
+  selected_low_light_images: 45
+  selected_occupied_labels: 150
+  selected_vacant_labels: 795
+  selected_transition_frames: 8
+  selected_slot_state_changes: 16
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro24
+  qualified: true
+  reasons: []
+  raw_image_count: 86
+  truth_count: 86
+  selected_low_light_images: 30
+  selected_occupied_labels: 101
+  selected_vacant_labels: 529
+  selected_transition_frames: 2
+  selected_slot_state_changes: 2
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro25
+  qualified: true
+  reasons: []
+  raw_image_count: 42
+  truth_count: 42
+  selected_low_light_images: 3
+  selected_occupied_labels: 19
+  selected_vacant_labels: 44
+  selected_transition_frames: 1
+  selected_slot_state_changes: 1
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro26
+  qualified: true
+  reasons: []
+  raw_image_count: 137
+  truth_count: 137
+  selected_low_light_images: 28
+  selected_occupied_labels: 40
+  selected_vacant_labels: 548
+  selected_transition_frames: 3
+  selected_slot_state_changes: 4
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro30
+  qualified: true
+  reasons: []
+  raw_image_count: 133
+  truth_count: 133
+  selected_low_light_images: 2
+  selected_occupied_labels: 2
+  selected_vacant_labels: 40
+  selected_transition_frames: 1
+  selected_slot_state_changes: 2
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro31
+  qualified: false
+  reasons:
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 123
+  truth_count: 123
+  selected_low_light_images: 12
+  selected_occupied_labels: 0
+  selected_vacant_labels: 252
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro32
+  qualified: false
+  reasons:
+  - no_images_at_frozen_low_light_threshold
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 122
+  truth_count: 122
+  selected_low_light_images: 0
+  selected_occupied_labels: 0
+  selected_vacant_labels: 0
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro33
+  qualified: true
+  reasons: []
+  raw_image_count: 59
+  truth_count: 59
+  selected_low_light_images: 16
+  selected_occupied_labels: 32
+  selected_vacant_labels: 304
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro34
+  qualified: true
+  reasons: []
+  raw_image_count: 158
+  truth_count: 158
+  selected_low_light_images: 26
+  selected_occupied_labels: 44
+  selected_vacant_labels: 502
+  selected_transition_frames: 3
+  selected_slot_state_changes: 7
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro35
+  qualified: false
+  reasons:
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 123
+  truth_count: 123
+  selected_low_light_images: 20
+  selected_occupied_labels: 0
+  selected_vacant_labels: 420
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro36
+  qualified: true
+  reasons: []
+  raw_image_count: 140
+  truth_count: 140
+  selected_low_light_images: 2
+  selected_occupied_labels: 3
+  selected_vacant_labels: 39
+  selected_transition_frames: 1
+  selected_slot_state_changes: 1
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro37
+  qualified: false
+  reasons:
+  - no_images_at_frozen_low_light_threshold
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 97
+  truth_count: 97
+  selected_low_light_images: 0
+  selected_occupied_labels: 0
+  selected_vacant_labels: 0
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro40
+  qualified: false
+  reasons:
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 153
+  truth_count: 153
+  selected_low_light_images: 13
+  selected_occupied_labels: 0
+  selected_vacant_labels: 273
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro41
+  qualified: false
+  reasons:
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 144
+  truth_count: 144
+  selected_low_light_images: 15
+  selected_occupied_labels: 0
+  selected_vacant_labels: 315
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro46
+  qualified: true
+  reasons: []
+  raw_image_count: 249
+  truth_count: 249
+  selected_low_light_images: 30
+  selected_occupied_labels: 38
+  selected_vacant_labels: 592
+  selected_transition_frames: 2
+  selected_slot_state_changes: 4
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+- sequence_id: gopro52
+  qualified: false
+  reasons:
+  - no_images_at_frozen_low_light_threshold
+  - selected_frames_do_not_contain_both_states
+  raw_image_count: 142
+  truth_count: 142
+  selected_low_light_images: 0
+  selected_occupied_labels: 0
+  selected_vacant_labels: 0
+  selected_transition_frames: 0
+  selected_slot_state_changes: 0
+  resolution:
+  - 800x600
+  camera_stability_evidence: same_resolution_plus_pre_model_contact_sheet_review
+polygon_policy: one shared geometry may be used only after official slot-order mapping
+  is drawn and human-confirmed before inference
+formal_inference_authorized: false

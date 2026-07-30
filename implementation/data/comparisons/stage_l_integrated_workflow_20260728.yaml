@@ -1,0 +1,101 @@
+schema_version: 1
+record_id: P3-INTEGRATED-LITERATURE-WORKFLOW-RECORD-20260728-01
+recorded_at: '2026-07-28T02:01:19.470137+00:00'
+status: executed_and_hash_frozen
+historical_stage_j_k_modified: false
+model_training_or_retraining_performed: false
+static_development_claim: functional_integration_check_only
+static_retrospective_claim: previously_consumed_test_extension_not_untouched_for_P3
+continuous_claim: single_slot_single_departure_case_study_only
+artifacts:
+- path: configs/stage_l_integrated_workflow_frozen_20260728.yaml
+  bytes: 6268
+  sha256: 29e70e76fe7a8c92fe4022520a47c2cbe69f159749960e5e170116df1ea039e3
+- path: data/STAGE_L_INTEGRATED_WORKFLOW_REPORT.md
+  bytes: 7340
+  sha256: a5b0034accdd5fa0e69ab3c1b31b19c781c62ce03af6149626107c358353a7fa
+- path: outputs/stage_l_p3_static_development_20260728_v1/preflight.json
+  bytes: 412
+  sha256: b3c3cf6e3bb818eee9c52dc1209ea7bcc44f9f9a76835b5233e934f59ea08a23
+- path: outputs/stage_l_p3_static_development_20260728_v1/annotated.mp4
+  bytes: 5602364
+  sha256: 1bc789a60eab70d59b4a0c25b1baf7e1c0e6a92456c698be8580a5bfe2895e26
+- path: outputs/stage_l_p3_static_development_20260728_v1/predictions.csv
+  bytes: 153595
+  sha256: 5aa1fe2b1d1f7962d8f546c332b1a847820b9d50d1c44f77e780c0b810bbbf37
+- path: outputs/stage_l_p3_static_development_20260728_v1/events.csv
+  bytes: 50
+  sha256: fa5536fa91c519abdb411733cad82895671745507b19090c2a8737f4da59d457
+- path: outputs/stage_l_p3_static_development_20260728_v1/metrics.json
+  bytes: 15720
+  sha256: b942bdb62fcd8c3b17809f50c9da2985ba53c1e7db95deeb1e4a28db446eb8ea
+- path: outputs/stage_l_p3_static_development_20260728_v1/paired_analysis.json
+  bytes: 5257
+  sha256: 65ac34c0975e258fa5d848783989fa6ad324e7b12c3451ed0e2ce8441edb98fa
+- path: outputs/stage_l_p3_static_development_20260728_v1/summary.json
+  bytes: 1476
+  sha256: f218a4fbb1eed867c795ec8a6799aaa93acf0267100b1d699071780e9bdaf900
+- path: outputs/stage_l_p3_static_development_20260728_v1/runtime_metadata.json
+  bytes: 943
+  sha256: 5875375324ecb512b45ed7976a0526636a923159109f74016ed3effca71e7d63
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/preflight.json
+  bytes: 442
+  sha256: bffd7d7a10f34bf3a4ca9a437462d05f48589f5c7eea0f7d78affad7144bf433
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/annotated.mp4
+  bytes: 12265310
+  sha256: 0c3135892d4614e5e53005919bcedeb6d7555fddadb2c2f0e848bc1ba20708c3
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/predictions.csv
+  bytes: 538387
+  sha256: 386506a735721da70a1ac0ab8307f70bc3226f01aff87a1632bc7804407ddad6
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/events.csv
+  bytes: 50
+  sha256: fa5536fa91c519abdb411733cad82895671745507b19090c2a8737f4da59d457
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/metrics.json
+  bytes: 13782
+  sha256: fa3ea90715ae8489ab51a684849217f449efb3b16bcec1471e4936aad19d26a0
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/paired_analysis.json
+  bytes: 14954
+  sha256: 0c8bd5572878dfd826dafc4346348125593c31115b97c77008a6b014818bfc52
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/summary.json
+  bytes: 1478
+  sha256: afd2747e634506449fc14f2202fe93ca60cdf617b6c955bd132c3c533a8854ab
+- path: outputs/stage_l_p3_static_retrospective_20260728_v1/runtime_metadata.json
+  bytes: 944
+  sha256: 151d637424f460ded6abadc63068e56a5542d0b9a7a97a44bb03b8ffc8162002
+- path: outputs/stage_l_e1b_classifier_ablation_retrospective_20260728_v1/predictions.csv
+  bytes: 560580
+  sha256: 992c5b236e6576c4c660d218659653794d0e2aff61dd877139e7ba0bd545a050
+- path: outputs/stage_l_e1b_classifier_ablation_retrospective_20260728_v1/metrics.json
+  bytes: 10186
+  sha256: d8fa11dff7dd23f146cbd41c5be1abb4acbfd2a512093963fb4f7ef10686a0f6
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/preflight.json
+  bytes: 483
+  sha256: 5edd6e0eaaff19239cf705440d46959ea86e1fc94d77158bdcf9765a88dc775d
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/annotated.mp4
+  bytes: 121865507
+  sha256: 8aed5191edd808e5fb776333ca5e2bccf4493cd007bb061077305d02c2e76e7c
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/occupancy.csv
+  bytes: 336534
+  sha256: 4d126c122154206d95ca0e30d2e5184479186c52b8469b861b62002356cb92ac
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/events.csv
+  bytes: 361
+  sha256: 4cdadfd0a72ce370911adbef96db7143cbc4814884bcb2e3d2432f34116f7651
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/detections.jsonl
+  bytes: 7245784
+  sha256: 1e5bbef372c80c8dfb66d879ee7d8aa3defbce02188808778acdaaef56ddbee6
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/metrics.json
+  bytes: 11850
+  sha256: c84885db2f28cb2f6f439fc4cb2c1a1b0c95cb3509c7d9b3430031c57d820ad3
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/metrics_v2_absolute_frames.json
+  bytes: 13220
+  sha256: 2f26804c555e426aa6251ab725432f34b9800846057e88cdce20a396c64127bc
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/summary.json
+  bytes: 1408
+  sha256: 5cab77716879fb65248fd3e083134469d14d3f8d56695975ef83875b45f5f2c1
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/runtime_metadata.json
+  bytes: 2630
+  sha256: b1570340a4a27dd3968a001977f5bb5acd1e7db917441f9b21fa85b18ef2bd55
+- path: outputs/stage_l_p3_video_virat0502_20260728_v1/annotated_frame_1700_review.jpg
+  bytes: 496154
+  sha256: 63151761550852ebcc50be8618d3e373eacc39ddb47b3abfe87c8bb541ba4a96
+artifact_count: 30

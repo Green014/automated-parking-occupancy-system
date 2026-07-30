@@ -1,0 +1,80 @@
+schema_version: 1
+protocol_id: STAGE-O-LOW-LIGHT-DETECTOR-ADAPTATION-20260729-01
+decision_id: STAGE-O-O2-RUNTIME-DECISION-20260729-01
+status: frozen_before_O2_formal_detector_only_evaluation
+claim_role: preprocessing_only_diagnostic
+
+permission:
+  explicit_user_permission_received: true
+  permitted_actions:
+    - clone_the_official_Retinexformer_repository
+    - install_required_packages_only_in_the_isolated_environment
+    - download_the_official_LOL_v2_real_checkpoint
+  original_implementation_environment_modified: false
+
+primary_GLARE:
+  selected_primary: true
+  formal_execution: blocked_before_download_or_build
+  evidence:
+    official_required_environment:
+      python: "3.8"
+      pytorch: "1.11"
+      cuda: "11.3"
+      native_extension: deformable_convolution_CUDA_extension
+    local_missing_tools: [python3.8, conda, nvcc, cl]
+  decision: switch_only_to_the_predeclared_Retinexformer_fallback
+
+fallback_Retinexformer:
+  repository:
+    source: https://github.com/caiyuanhao1998/Retinexformer
+    commit: 1e9a0efce4b306b6701b824768370ff26066c32a
+    license: MIT
+    license_file: ../../vendor/stage_o_retinexformer_20260729/LICENSE.txt
+    license_sha256: 7d0d24f7ca79ea8b2ea9490111df8e134d71360a2c4c643f687ebddab3e36063
+  checkpoint:
+    official_folder_id: 1tChRwTfqhs-A67QzG8a9Lrx7qKB3m89K
+    name: LOL_v2_real.pth
+    bytes: 6478393
+    sha256: 539bd16c4da6179e45616329f249c4672951b1045193428e1d042c50d4b65a0b
+  isolated_environment: ../../.venv_stage_o_retinexformer
+  network:
+    in_channels: 3
+    out_channels: 3
+    n_feat: 40
+    stage: 1
+    num_blocks: [1, 2, 2]
+    strict_checkpoint_load: true
+    checkpoint_state_dict_keys: 122
+  preprocessing:
+    dark_stream: official_full_resolution_Retinexformer
+    light_stream: original_sRGB_unchanged
+    arithmetic: float32
+    tiling: false
+    frame_or_sequence_parameter_adaptation: false
+  preflight:
+    input: LMOT-05/img_dark_rgb/000001.png
+    input_size: [1800, 1000]
+    completed: true
+    elapsed_seconds: 1.9793818999969517
+    peak_cuda_memory_allocated_bytes: 4399764480
+    peak_cuda_memory_reserved_bytes: 5905580032
+    output_root: ../../outputs/stage_o_o2_retinexformer_blocked_20260729_v3
+    note: >-
+      The v3 directory name was allocated before the clean-process result was
+      known. Its runtime metadata truthfully records unexpected_preflight_outcome:
+      the native full-resolution frame succeeded, so O2 is not treated as blocked.
+
+formal_detector_only:
+  thresholds: inherited_unchanged_from_stage_o_frozen_protocol
+  validation_role: consumed_development_diagnostic
+  detector: frozen_D1
+  model_track_prohibited: true
+  tracker_loading_prohibited: true
+  post_result_tiling_or_enhancer_change: prohibited
+  alternate_enhancer_trials: prohibited
+
+retained_failed_attempts:
+  - output_root: ../../outputs/stage_o_o2_retinexformer_blocked_20260729_v1
+    failure: unicode_unsafe_OpenCV_path_decode_before_model_execution
+  - output_root: ../../outputs/stage_o_o2_retinexformer_blocked_20260729_v2
+    failure: evidence_writer_expected_LICENSE_instead_of_LICENSE.txt_after_model_preflight

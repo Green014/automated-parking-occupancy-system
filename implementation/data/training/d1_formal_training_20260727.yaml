@@ -1,0 +1,228 @@
+schema_version: 1
+record_id: D1-NDISPARK-FORMAL-RECORD-20260727-01
+experiment_id: D1-NDISPARK-FT-20260727-01
+run_id: d1_ndispark_formal_20260727_v1
+status: complete_with_retained_postrun_audit_failure
+
+protocol:
+  dataset_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  comparison_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+  gpu_decision_id: GPU-GATE-NDISPARK-D1-20260727-01
+  formal_config: ../../configs/d1_ndispark_formal_frozen_20260727.yaml
+  formal_config_bytes: 3017
+  formal_config_sha256: 8cf5f22db403ba361a01842e10e3ca7852bf25947366fef28d324daddb1648df
+
+data:
+  train:
+    role: NDISPark_official_train
+    images: 112
+    vehicle_boxes: 2577
+    background_images: 1
+  validation:
+    role: consumed_development_validation
+    images: 30
+    vehicle_boxes: 725
+    background_images: 0
+  prepared_dataset_yaml_sha256: 8e000ba2fe912edf09c9386426da58315950c708726468df36a7c25163eab170
+  count_test_accessed: false
+
+initialization:
+  name: COCO-pretrained YOLOv8n
+  bytes: 6549796
+  sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  smoke_checkpoint_used: false
+
+training:
+  started_at: "2026-07-27T20:20:12.864388+08:00"
+  postrun_audit_failed_at: "2026-07-27T20:25:49.941204+08:00"
+  max_epochs: 50
+  epochs_completed: 47
+  early_stopped: true
+  patience: 10
+  best_epoch_one_based: 37
+  seed: 20260727
+  deterministic: true
+  amp: true
+  imgsz: 640
+  physical_batch: 4
+  nominal_batch: 64
+  configured_post_warmup_accumulation_steps: 16
+  optimizer: AdamW
+  lr0: 0.001
+  lrf: 0.01
+  momentum: 0.937
+  weight_decay: 0.0005
+  cos_lr: false
+  warmup_epochs: 3.0
+  close_mosaic: 10
+  augmentation_source: frozen_Ultralytics_8.4.104_args
+  hyperparameter_search_performed: false
+  additional_seed_run: false
+
+development_validation:
+  role_warning: Consumed development validation used for early stopping; not a final detector test.
+  best_epoch:
+    precision: 0.93708
+    recall: 0.88339
+    mAP50: 0.94478
+    mAP50_95: 0.67556
+    fitness: 0.702482
+  final_epoch:
+    precision: 0.93105
+    recall: 0.89396
+    mAP50: 0.94946
+    mAP50_95: 0.67232
+  loss_change_first_to_last:
+    box: {first: 1.47235, last: 0.98288, delta: -0.48947}
+    cls: {first: 2.23770, last: 0.94450, delta: -1.29320}
+    dfl: {first: 1.09937, last: 0.93531, delta: -0.16406}
+  all_numeric_values_finite: true
+
+resources:
+  device: NVIDIA GeForce RTX 3060 Laptop GPU
+  total_vram_bytes: 6441926656
+  peak_reserved_gib_from_Ultralytics_progress: 0.814
+  peak_reserved_bytes_approximate: 874025845
+  peak_precision_limitation: Progress display is rounded; exact callback bytes were lost in the retained post-run audit failure.
+  results_cumulative_time_seconds: 299.473
+  Ultralytics_reported_training_hours: 0.083
+  runner_start_to_audit_failure_seconds: 337.076816
+  mean_epoch_time_seconds: 6.371765957446809
+  min_epoch_time_seconds: 5.7032000000000025
+  max_epoch_time_seconds: 11.4518
+  nan_observed: false
+  oom_observed: false
+  batch_auto_reduced: false
+  remote_or_paid_GPU_used: false
+
+checkpoints:
+  best:
+    repository_relative_path: outputs/d1_ndispark_formal_20260727_v1/weights/best.pt
+    bytes: 6255409
+    sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+  last:
+    repository_relative_path: outputs/d1_ndispark_formal_20260727_v1/weights/last.pt
+    bytes: 6255409
+    sha256: 3923afbe7f8f00385129912943fcc3c307eea5a10a14e10eca29124fa3a5cbfe
+  updated_from_initialization: true
+  selected_D1_checkpoint: best
+
+artifacts:
+  - role: preflight
+    path: outputs/d1_ndispark_formal_20260727_v1/preflight.json
+    bytes: 4517
+    sha256: 448b35b4e3469384ed811a4d5086eb932f59862fa9da68c540802858fc041e0e
+  - role: executed_arguments
+    path: outputs/d1_ndispark_formal_20260727_v1/args.yaml
+    bytes: 2114
+    sha256: 5f7b232153baba12d6c0a6fd956f0b9ec4063e63c56c16cb1e8e2453444d1e89
+  - role: epoch_results
+    path: outputs/d1_ndispark_formal_20260727_v1/results.csv
+    bytes: 5829
+    sha256: b3b53539de2f560b5f489b3ca7e45329c61ab2f7302a9576823aa6a4774607bd
+  - role: training_curves
+    path: outputs/d1_ndispark_formal_20260727_v1/results.png
+    bytes: 279212
+    sha256: e151642b45adee8f8409029cf5002ef3607f7597e2c6f3028d6bbd5051fc801d
+  - role: PR_curve
+    path: outputs/d1_ndispark_formal_20260727_v1/BoxPR_curve.png
+    bytes: 78180
+    sha256: 9f2f6369cc94fe9941ac25c40da205666364d6ee6c5ab60eb2cc75aafeefb9a3
+  - role: confusion_matrix
+    path: outputs/d1_ndispark_formal_20260727_v1/confusion_matrix.png
+    bytes: 94352
+    sha256: 47bdfe76ff31d627eae3b8eab918f87e35af4ec5165b4ece9e7ef247d51c3b84
+  - role: training_console
+    path: outputs/d1_ndispark_formal_20260727_v1/training_console.log
+    bytes: 19601
+    sha256: 3fe511b6f08504855bad790fb2a7619975158ff5d361303627d40abaec3b14b2
+  - role: retained_postrun_audit_failure
+    path: outputs/d1_ndispark_formal_20260727_v1/formal_training_failure.json
+    bytes: 844
+    sha256: 1f6322ba222a5e781696ab7ca1558c732f19c7f7e77cbe7a48e4d086e04262bb
+  - role: recovered_resource_metrics
+    path: outputs/d1_ndispark_formal_20260727_v1/resource_metrics.json
+    bytes: 1976
+    sha256: 635cf9a10f90e289a93db5839d29ca89517e8b09bb790d296161fcb0e410f815
+  - role: recovered_formal_summary
+    path: outputs/d1_ndispark_formal_20260727_v1/formal_training_summary.json
+    bytes: 15981
+    sha256: a75338d3fdce1aecf8379ea83d6559f859ba3ef2ead3ead95123e075b67b22fd
+  - role: best_checkpoint
+    path: outputs/d1_ndispark_formal_20260727_v1/weights/best.pt
+    bytes: 6255409
+    sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+  - role: last_checkpoint
+    path: outputs/d1_ndispark_formal_20260727_v1/weights/last.pt
+    bytes: 6255409
+    sha256: 3923afbe7f8f00385129912943fcc3c307eea5a10a14e10eca29124fa3a5cbfe
+  - role: redirected_stdout
+    path: outputs/d1_formal_launcher_stdout_20260727_v1.log
+    bytes: 245070
+    sha256: 89fbeca9ab2dc278fa2090d40d01c93ff2777b42f3dde20d0ce255483d5e6f66
+  - role: redirected_stderr
+    path: outputs/d1_formal_launcher_stderr_20260727_v1.log
+    bytes: 658
+    sha256: 5bc86fb3389203121e0e3ea195990735e14864fc826ee81fdffd13042983506c
+
+output_inventory:
+  root: outputs/d1_ndispark_formal_20260727_v1
+  files: 37
+  bytes: 139626147
+  git_ignored: true
+
+retained_engineering_failure:
+  stage: postrun_summary_audit
+  error: Resource probe epoch count mismatch
+  cause: Final best-checkpoint evaluation was counted as an extra resource epoch after early stopping.
+  training_completed_before_failure: true
+  scientific_training_invalidated: false
+  rerun_performed: false
+  repair: Existing immutable artifacts were audited offline; no model was loaded and no training, validation, or prediction was rerun.
+
+implementation:
+  executed_run_d1_formal_py:
+    current_bytes: 1597
+    current_sha256: 09d8694763468f3b5503e3d58b8d86f20199eba8e4af9ac79b05b021ba6d87e3
+  corrected_formal_training_py:
+    bytes: 40457
+    sha256: 84d741b061e0868a07a1ec3dd438f2a37255f7e2f2805caed07beb68bf6bfc6d
+  finalize_d1_formal_py:
+    bytes: 1212
+    sha256: 553720c534ad5b98e80b3a339e7a5ed553574968831a0bcb133fc8792c81a778
+  verify_d1_formal_artifacts_py:
+    bytes: 1230
+    sha256: 07aa279d979f5fa56feb35830bc0d1eb65f0781af1056d7114297b762cc99388
+  test_formal_training_py:
+    bytes: 5095
+    sha256: 85a3f8cfda9ad726b170461fe915e3d765bba528d41cd369f71a66748f02fe50
+  executed_formal_training_module_hash_captured_before_run: false
+
+verification:
+  artifact_count: 14
+  all_size_and_sha256_checks_passed: true
+  repository_relative_path: outputs/d1_formal_training_verification_20260727_v1.json
+  bytes: 8287
+  sha256: 9f1ef3f655c454dc1391377634b703bdc996fb287ce1ee704862d3689738fd45
+
+interpretation:
+  D1_formal_training_complete: true
+  selected_checkpoint: best.pt
+  detector_comparison_completed: false
+  current_metrics_are_development_diagnostics: true
+  no_claim_that_D1_exceeds_D0_or_D2: true
+  no_claim_that_detector_gain_improves_slot_F1: true
+
+scope:
+  count_test_accessed: false
+  CNR_EXT_accessed: false
+  PKLot_accessed: false
+  VIRAT_accessed: false
+  remote_or_paid_GPU_used: false
+  historical_frozen_outputs_modified: false
+
+gate:
+  stage_H_passed: true
+  stage_I_development_detector_comparison_may_start: true
+  count_test_allowed_now: false
+  parking_pipeline_prediction_allowed_now: false

@@ -1,0 +1,211 @@
+schema_version: 1
+registry_id: STAGE-W-3-PRIVACY-MODEL-RELEASE-20260730-01
+stage: W.3
+created_at: '2026-07-30'
+status: PUBLIC_SOURCE_AND_MODEL_ASSETS_PREPARED_NOT_PUBLISHED
+source_publication_ready: true
+model_assets_ready_for_github_release: true
+public_release_published: false
+model_training_run: false
+model_inference_run: false
+historical_registry_policy:
+  stage_w_2: pre_w3_historical_source_snapshot
+artifact_count: 33
+registry_self_path: implementation/data/STAGE_W_3_ARTIFACT_REGISTRY.yaml
+artifact_root: repository_root
+local_optional_policy: model release assets are verified when present and are intentionally absent from
+  the public source checkout
+managed_artifact_globs:
+- .gitattributes
+- LICENSE
+- THIRD_PARTY_NOTICES.md
+- README.md
+- FINAL_RELEASE_INDEX.md
+- implementation/README.md
+- implementation/pyproject.toml
+- implementation/stage_w_requirements.txt
+- implementation/configs/p3_stage_r_recommended_default_20260729.yaml
+- implementation/data/PUBLIC_PERMISSION_AND_PROVENANCE.md
+- implementation/data/MODEL_CARD_*.md
+- implementation/data/STAGE_U_1_MODEL_ASSETS.md
+- implementation/data/STAGE_W_REPRODUCTION_GUIDE.md
+- implementation/data/STAGE_W_2_ARTIFACT_REGISTRY.yaml
+- implementation/data/STAGE_W_3_*.md
+- implementation/data/STAGE_W_3_*MANIFEST.yaml
+- implementation/scripts/run_p3_tt.py
+- implementation/scripts/verify_stage_v_w_registries.py
+- implementation/scripts/verify_stage_w_3_release.py
+- implementation/src/parking_occupancy/artifact_registry.py
+- implementation/src/parking_occupancy/integrated_cli.py
+- implementation/src/parking_occupancy/stage_v_runner.py
+- implementation/src/parking_occupancy/stage_w_3_release.py
+- implementation/src/parking_occupancy/stage_w_cli.py
+- implementation/tests/test_stage_w_2_cross_platform_release.py
+- implementation/tests/test_stage_w_3_privacy_and_model_release.py
+- implementation/outputs/stage_w_3_model_release_assets/*
+artifacts:
+- path: .gitattributes
+  role: cross_platform_attributes
+  availability: required
+  bytes: 760
+  sha256: b342ca39767238e1aca2a49acfa3f16d387b3072b64e7895d3510d5de730e7e7
+- path: LICENSE
+  role: project_agpl_3_0_license
+  availability: required
+  bytes: 34523
+  sha256: 0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0
+- path: THIRD_PARTY_NOTICES.md
+  role: third_party_license_notices
+  availability: required
+  bytes: 4157
+  sha256: 6ec3aa31eec632ee7a7cad1ca921a5f2669645efedbcfba6780642515f279823
+- path: README.md
+  role: repository_readme
+  availability: required
+  bytes: 8291
+  sha256: 5c840512a0daacbde9766b7df1ab9e99dc3b540d2bb18d0b3a8ca73f7245243d
+- path: FINAL_RELEASE_INDEX.md
+  role: repository_release_index
+  availability: required
+  bytes: 3384
+  sha256: e0720e700611e01f42ba08d2114ddc20bc1ca009e381c0e093f3f6dadd6f766f
+- path: implementation/README.md
+  role: implementation_readme
+  availability: required
+  bytes: 37361
+  sha256: 34fa1ee559451c77a247a42664fe2644ceb0c87f3514d522d4a58d5f4e0540bb
+- path: implementation/pyproject.toml
+  role: dependency_and_cli_metadata
+  availability: required
+  bytes: 1873
+  sha256: 49620f957f4eda3dab80687b0729ba0dd95764edd476fd080440327d3f68e84f
+- path: implementation/stage_w_requirements.txt
+  role: dashboard_dependency_compatibility_entry
+  availability: required
+  bytes: 117
+  sha256: 0b258bb491a7d5f2692e03e5fd5b42b4ac4f5693e778d56f8f38262ef039f794
+- path: implementation/configs/p3_stage_r_recommended_default_20260729.yaml
+  role: frozen_config_identity
+  availability: required
+  bytes: 2236
+  sha256: 198f627689cd93f66ca0f087af6686d3afc697ff51e2aa77ee56124187b981b0
+- path: implementation/data/PUBLIC_PERMISSION_AND_PROVENANCE.md
+  role: anonymous_public_permission_record
+  availability: required
+  bytes: 1581
+  sha256: 2244eb5aaebf0680ae8ab627913c27a15f68e5c2d2f3e2697ff6a4ec42b1964e
+- path: implementation/data/MODEL_CARD_D1.md
+  role: d1_model_card
+  availability: required
+  bytes: 2908
+  sha256: d8174f7cece8117ed0613332714a9cbe9c4b298e0afd7b5c326c5b42f074ef00
+- path: implementation/data/MODEL_CARD_E1B.md
+  role: e1b_model_card
+  availability: required
+  bytes: 3281
+  sha256: c2b5fea609b83940e972fae6687dd1be39f1e7d5d85e1e1db5e50e1d051c3ba8
+- path: implementation/data/STAGE_W_3_MODEL_RELEASE_MANIFEST.yaml
+  role: model_release_manifest
+  availability: required
+  bytes: 1817
+  sha256: 77cbf66d3a6fc6accfc218282a1dc8f41d50c6fa72016e349cac8870471a1cd5
+- path: implementation/data/STAGE_W_3_PUBLIC_SOURCE_MANIFEST.yaml
+  role: privacy_safe_public_source_manifest
+  availability: required
+  bytes: 7586
+  sha256: f687fcb9fdc1840d82a336f2d2b4488b55759600fa6259f6ab0c515991f58809
+- path: implementation/data/STAGE_W_2_ARTIFACT_REGISTRY.yaml
+  role: pre_w3_historical_source_snapshot
+  availability: required
+  bytes: 11260
+  sha256: db496155780b2880149085fe93f16a0c86f5d2e2d3aef67e951f7964bd04a2d4
+- path: implementation/data/STAGE_W_3_PRIVACY_AND_MODEL_RELEASE_REPORT.md
+  role: privacy_and_model_release_report
+  availability: required
+  bytes: 5102
+  sha256: 100646d0d1d5690e503502f749a87a8ade49a33939123c8e0e136628abd3f0ec
+- path: implementation/data/STAGE_W_3_RELEASE_INDEX.md
+  role: w3_release_index
+  availability: required
+  bytes: 2730
+  sha256: bda394218ba6f8bb2ac447b599ab5ba4937d5d2736f24d7944562540dc628669
+- path: implementation/data/STAGE_U_1_MODEL_ASSETS.md
+  role: model_asset_user_guide
+  availability: required
+  bytes: 1671
+  sha256: e2e32d4b049fc77497d62698d39f540fac40a5ae8122d4080e132e110d364ea1
+- path: implementation/data/STAGE_W_REPRODUCTION_GUIDE.md
+  role: reproduction_guide
+  availability: required
+  bytes: 5195
+  sha256: 623dbf872b80472fed4af23c5ed1d1ec49c797845caa709792000f5fab2dea78
+- path: implementation/scripts/verify_stage_v_w_registries.py
+  role: historical_and_current_registry_verifier
+  availability: required
+  bytes: 3296
+  sha256: f996f384da713d61e75310899020730a5ba9e864a850c141b4e550a2132fd3b1
+- path: implementation/scripts/verify_stage_w_3_release.py
+  role: w3_release_verifier
+  availability: required
+  bytes: 21960
+  sha256: 1f0b59dbda7e4159562dfeab075c218bc5366c7498e4841cd7f016f99d970d03
+- path: implementation/src/parking_occupancy/artifact_registry.py
+  role: registry_library
+  availability: required
+  bytes: 13346
+  sha256: f4b2f0c80a2dfd03618d3595ed780e6de0b7514e8b377be110fdd5080ee4cfdf
+- path: implementation/src/parking_occupancy/stage_w_3_release.py
+  role: privacy_safe_source_library
+  availability: required
+  bytes: 11749
+  sha256: d02a6fc70ff590683fef7f92eae2719e7a5f853b0b1b2b14af6f505ce8b2753a
+- path: implementation/src/parking_occupancy/integrated_cli.py
+  role: default_runtime_cli
+  availability: required
+  bytes: 2562
+  sha256: 173a670d31cb888e09eddc6371fbc979534f8f1fe933c09816d2a304d9e0d17b
+- path: implementation/src/parking_occupancy/stage_v_runner.py
+  role: controlled_comparison_cli
+  availability: required
+  bytes: 48762
+  sha256: c2e474ff21748b9bca3c93f1edb28f685a129d69d3ce816136a6bffa1fea8212
+- path: implementation/src/parking_occupancy/stage_w_cli.py
+  role: dashboard_cli
+  availability: required
+  bytes: 7037
+  sha256: d5fa6fb6ba18c3fb613f6cce3b34f9ca159bd1cfe1180da592abf5444dcf8c24
+- path: implementation/scripts/run_p3_tt.py
+  role: optional_tracking_cli
+  availability: required
+  bytes: 2095
+  sha256: 1a7dd0ca23fc76b3aef6791c986c73d4803150ba7e843b60e6d067cc78cfe4a1
+- path: implementation/tests/test_stage_w_2_cross_platform_release.py
+  role: pre_w3_history_regression
+  availability: required
+  bytes: 3764
+  sha256: 794c78e2fdbd8b7709c59618755697863e7457c91dc6d044e034d5f5cfefbb70
+- path: implementation/tests/test_stage_w_3_privacy_and_model_release.py
+  role: w3_release_regression
+  availability: required
+  bytes: 7007
+  sha256: 1a6bc087e7cfb0808e1332ec10a8102ecda67112701bb2777e53fdc21af26920
+- path: implementation/outputs/stage_w_3_model_release_assets/D1_NDISPark_best.pt
+  role: d1_future_github_release_asset
+  availability: local_ignored_optional
+  bytes: 6255409
+  sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+- path: implementation/outputs/stage_w_3_model_release_assets/E1b_CBAM_best.pt
+  role: e1b_future_github_release_asset
+  availability: local_ignored_optional
+  bytes: 8045704
+  sha256: f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3
+- path: implementation/outputs/stage_w_3_model_release_assets/SHA256SUMS.txt
+  role: model_release_checksums
+  availability: local_ignored_optional
+  bytes: 169
+  sha256: 04004a926029dec769231a1b5c1dad725194bd0887401f2118d21dff047b4738
+- path: implementation/outputs/stage_w_3_model_release_assets/MODEL_RELEASE_METADATA.yaml
+  role: model_release_metadata
+  availability: local_ignored_optional
+  bytes: 937
+  sha256: 50ee0225b533acda1b45580a32e35a1226d870d4bf13316e347acc3b68ace812
