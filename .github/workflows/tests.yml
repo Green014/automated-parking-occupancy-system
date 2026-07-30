@@ -12,10 +12,10 @@ jobs:
       PARKING_PUBLIC_SOURCE_PACKAGE: "1"
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -31,7 +31,28 @@ jobs:
 
       - name: Test implementation
         working-directory: implementation
-        run: python -m pytest -q
+        run: |
+          python - <<'PY'
+          import subprocess
+
+          result = subprocess.run(
+              ["python", "-m", "pytest", "-q"],
+              check=False,
+              stdout=subprocess.PIPE,
+              stderr=subprocess.STDOUT,
+              text=True,
+          )
+          print(result.stdout, end="")
+          if result.returncode:
+              summary = result.stdout[-30000:]
+              summary = (
+                  summary.replace("%", "%25")
+                  .replace("\r", "%0D")
+                  .replace("\n", "%0A")
+              )
+              print(f"::error title=Implementation pytest failure::{summary}")
+          raise SystemExit(result.returncode)
+          PY
 
       - name: Test literature-core runtime package
         working-directory: implementation/literature_core
