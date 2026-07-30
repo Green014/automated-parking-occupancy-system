@@ -36,7 +36,7 @@ jobs:
           import subprocess
 
           result = subprocess.run(
-              ["python", "-m", "pytest", "-q"],
+              ["python", "-m", "pytest", "-q", "--tb=short"],
               check=False,
               stdout=subprocess.PIPE,
               stderr=subprocess.STDOUT,
