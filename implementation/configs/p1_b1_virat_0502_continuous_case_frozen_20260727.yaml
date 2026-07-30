@@ -1,0 +1,129 @@
+schema_version: 1
+protocol_id: P1-B1-VIRAT0502-CONTINUOUS-20260727-01
+status: frozen_before_predictions
+frozen_at: "2026-07-27T23:58:00+08:00"
+
+scope:
+  stage: continuous_video_case
+  data_role: consumed_development_case_study
+  untouched_claim: prohibited
+  quantitative_scope: one_project_labelled_slot_with_one_departure
+  parameter_selection_from_this_run: prohibited
+  detector_reselection_from_this_run: prohibited
+  static_montage_as_temporal_evidence: prohibited
+
+source:
+  dataset: VIRAT Ground Camera Dataset Release 2.0
+  source_video_id: VIRAT_S_050202_10_002159_002233
+  scene_id: "0502"
+  usage: governed_by_previously_accepted_VIRAT_individual_usage_agreement
+  source_path_supplied_by_cli: true
+  bytes: 86850675
+  sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
+  video:
+    frame_start_inclusive: 0
+    frame_end_exclusive: 1974
+    frame_count: 1974
+    width: 1920
+    height: 1080
+    fps: 29.97002997002997
+    real_continuous_video: true
+    fixed_camera: true
+
+truth:
+  source: project_created_manual_review_not_native_VIRAT_occupancy_truth
+  path: ../literature_core/data/annotations/virat_0502_departure_truth.yaml
+  bytes: 1804
+  sha256: 325ab6fac1970532cd86d0fc88e2b6acfd66cc8abd5ad8a70b070a318f58c760
+  slot_id: 0502-departing-01
+  polygon:
+    - [555, 552]
+    - [850, 715]
+    - [790, 786]
+    - [516, 631]
+  intervals:
+    - {start_frame: 0, end_frame: 1660, state: occupied}
+    - {start_frame: 1660, end_frame: 1974, state: vacant}
+  transition:
+    type: departure
+    last_occupied_frame: 1659
+    first_vacant_frame: 1660
+  polygon_or_truth_edits_after_prediction: prohibited
+
+raw_method:
+  method_id: P1-RAW-B1-VIRAT0502
+  detector_id: D1
+  detector_name: NDISPark-fine-tuned YOLOv8n
+  weights_name: best.pt
+  weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+  backend: ultralytics_yolo
+  source_class_ids: [0]
+  source_class_names: [vehicle]
+  confidence: 0.30
+  imgsz: 640
+  nms_iou: 0.7
+  agnostic_nms: true
+  max_detections: 300
+  augmentation: false
+  mapping:
+    algorithm: slot_polygon_coverage
+    minimum_slot_coverage: 0.40
+    one_to_one: true
+    evidence: detector_confidence_times_slot_coverage
+
+hysteresis_sensitivity:
+  enabled: true
+  method_id: P1-HYST-B1-VIRAT0502
+  purpose: uncalibrated_temporal_sensitivity_branch
+  parameter_source: repository_HysteresisConfig_generic_defaults_not_selected_on_VIRAT_or_Stage_K
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.18
+  vacant_threshold: 0.06
+  claim_boundary: May suppress short fluctuations but is not calibrated for D1 and must not be presented as an improved default.
+
+tracking_branch:
+  enabled: false
+  reason: D1 confidence and ByteTrack gate parameters were not calibrated together; ByteTrack is optional and cannot be assumed to improve occupancy.
+
+evaluation:
+  classification_warmup_frames: 30
+  temporal_metrics_use_full_frame_range: true
+  stable_frames: 3
+  transition_tolerance_frames: 0
+  required_transition_outcomes: [early, on_time, delayed, missed]
+  signed_transition_error: true
+  report:
+    - occupied_precision
+    - occupied_recall
+    - occupied_f1
+    - vacant_precision
+    - vacant_recall
+    - vacant_f1
+    - macro_f1
+    - false_free_rate
+    - false_occupied_rate
+    - transition_events
+    - signed_transition_error_s
+    - unsupported_flicker_count
+    - transition_instability_changes
+    - steady_state_timing
+
+output_contract:
+  root_must_not_exist: true
+  files:
+    - annotated.mp4
+    - occupancy.csv
+    - events.csv
+    - detections.jsonl
+    - metrics.json
+    - summary.json
+    - runtime_metadata.json
+  annotated_video_is_real_continuous_sequence: true
+  negative_results_retained: true
+
+gates:
+  D1_retraining: prohibited
+  remote_or_paid_GPU: prohibited
+  VIRAT_0503_access: prohibited
+  parameter_tuning_from_0502_result: prohibited

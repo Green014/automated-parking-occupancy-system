@@ -1,0 +1,21 @@
+schema_version: 1
+verification_status: empirical_visual_verified
+id_to_name:
+  1: person
+  2: bicycle
+  3: car
+  4: motorcycle
+  5: bus
+  6: truck
+evaluated_mark_values: [1]
+evidence_file: LMOT_CLASS_MAPPING_EVIDENCE_PUBLIC.yaml
+evidence_sha256: 884a6bb1f31ecfd8183aa3d19cd6418397fa8ac27638d789b36844d5036a865a
+original_local_evidence_sha256: 05f550ca5c40986431a08741a36f1325c03c3b5cc08793541a3acc376186dfac
+public_release_note: >-
+  The class mapping is unchanged. The evidence carrier was replaced by a
+  path-free public summary, so its evidence hash differs from the local frozen
+  artifact.
+scope_note: >-
+  This is an empirically verified mapping for the released LMOT validation
+  annotations. It is not represented as an explicit numeric mapping statement
+  from the official README.

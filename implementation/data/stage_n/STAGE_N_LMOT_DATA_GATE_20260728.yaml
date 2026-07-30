@@ -1,0 +1,62 @@
+schema_version: 1
+gate_id: STAGE-N-LMOT-DATA-GATE-20260728-01
+recorded_at: "2026-07-28T22:30:00+08:00"
+status: blocked_before_download
+formal_lmot_execution_allowed: false
+download_performed: false
+downloaded_bytes: 0
+source:
+  repository: https://github.com/xinzwang/LMOT
+  download: https://pan.baidu.com/s/1OHojTQSTdDaybuflYGwaMw
+  extraction_code: xedx
+  license: CC-BY-NC-4.0
+  current_release: train_and_validation_only
+approved_scope:
+  - val/*/img_dark_rgb/**
+  - val/*/img_light_rgb/**
+  - val/*/gt/gt.txt
+  - val/*/seqinfo.ini
+prohibited:
+  - RAW
+  - TIFF
+  - train
+  - test
+  - LMOT-real
+  - complete_435GB_or_similar_release
+  - LTrack_training_dependencies
+pre_download:
+  package_bytes: unknown
+  validation_selectable: unknown
+  srgb_only_selectable: unknown
+  login_required: unknown
+  desktop_client_required: unknown
+  actual_archive_tree_verified: false
+  disk_free_gib_at_audit:
+    C: 117.10
+    D: 77.24
+blockers:
+  - official_single_share_has_no_published_size
+  - validation_only_and_srgb_only_selectivity_not_verified
+  - login_and_desktop_client_requirements_not_verified
+  - interactive_share_rejected_by_browser_security_policy
+  - official_numeric_classid_mapping_not_found
+  - official_ignore_value_semantics_not_found
+class_mapping:
+  official_names: [car, person, bicycle, motorcycle, bus, truck]
+  numeric_ids: unresolved
+  inference_from_list_order: prohibited
+truth_policy:
+  main_class: motor_vehicle
+  motor_vehicle: [car, motorcycle, bus, truck]
+  prediction_suppression_regions: [person, bicycle, explicit_ignore]
+  car_only: optional_category_mismatched_additional_result
+next_gate_requirements:
+  - archive_and_member_byte_counts
+  - validation_only_selection_confirmation
+  - srgb_only_selection_confirmation
+  - user_permission_if_login_client_or_large_transfer_is_required
+  - archive_SHA256
+  - every_extracted_file_SHA256
+  - official_numeric_classid_mapping_evidence_and_SHA256
+  - official_ignore_semantics_evidence_and_SHA256
+  - paired_sequence_audit_pass

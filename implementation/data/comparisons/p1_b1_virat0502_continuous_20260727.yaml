@@ -1,0 +1,320 @@
+schema_version: 1
+record_id: P1-B1-VIRAT0502-CONTINUOUS-RECORD-20260727-01
+protocol_id: P1-B1-VIRAT0502-CONTINUOUS-20260727-01
+status: frozen_after_single_effective_execution
+frozen_at_utc: '2026-07-27T16:11:43.358408+00:00'
+data_role: consumed_development_case_study
+untouched_claim: false
+real_continuous_video: true
+static_montage: false
+effective_prediction_runs: 1
+failed_pre_prediction_attempt_retained: true
+parameters_selected_from_result: false
+D1_retrained: false
+tracking_branch_run: false
+negative_results_retained: true
+artifact_count: 16
+summary:
+  metrics:
+    raw:
+      samples: 1944
+      tp: 1630
+      tn: 0
+      fp: 314
+      fn: 0
+      accuracy: 0.838477366255144
+      precision: 0.838477366255144
+      recall: 1.0
+      f1: 0.9121432568550643
+      occupied_precision: 0.838477366255144
+      occupied_recall: 1.0
+      occupied_f1: 0.9121432568550643
+      vacant_precision: 0.0
+      vacant_recall: 0.0
+      vacant_f1: 0.0
+      macro_f1: 0.4560716284275321
+      false_free_rate: 0.0
+      false_occupied_rate: 1.0
+      temporal:
+        frames: 1974
+        ground_truth_transitions: 1
+        matched_transitions: 0
+        missed_transitions: 1
+        early_transitions: 0
+        on_time_transitions: 0
+        delayed_transitions: 0
+        transition_outcomes:
+          early: 0
+          on_time: 0
+          delayed: 0
+          missed: 1
+        transition_events:
+        - truth_transition_frame: 1660
+          predicted_transition_frame: null
+          direction: exit
+          from_state: 1
+          to_state: 0
+          outcome: missed
+          signed_error_frames: null
+          signed_error_s: null
+        unsupported_flicker_count: 0
+        flicker_rate_per_slot_minute: 0.0
+        transition_instability_changes: 0
+        transition_latency_s:
+          all:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          entry:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          exit:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+        transition_latency_values_s:
+          entry: []
+          exit: []
+        signed_transition_error_s:
+          all:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          entry:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          exit:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+        signed_transition_error_values_s:
+          entry: []
+          exit: []
+        state_stabilization_time_s:
+          count: 0
+          median: null
+          p90: null
+          maximum: null
+        stable_frames: 3
+        tolerance_frames: 0
+    hysteresis:
+      samples: 1944
+      tp: 1630
+      tn: 0
+      fp: 314
+      fn: 0
+      accuracy: 0.838477366255144
+      precision: 0.838477366255144
+      recall: 1.0
+      f1: 0.9121432568550643
+      occupied_precision: 0.838477366255144
+      occupied_recall: 1.0
+      occupied_f1: 0.9121432568550643
+      vacant_precision: 0.0
+      vacant_recall: 0.0
+      vacant_f1: 0.0
+      macro_f1: 0.4560716284275321
+      false_free_rate: 0.0
+      false_occupied_rate: 1.0
+      temporal:
+        frames: 1974
+        ground_truth_transitions: 1
+        matched_transitions: 0
+        missed_transitions: 1
+        early_transitions: 0
+        on_time_transitions: 0
+        delayed_transitions: 0
+        transition_outcomes:
+          early: 0
+          on_time: 0
+          delayed: 0
+          missed: 1
+        transition_events:
+        - truth_transition_frame: 1660
+          predicted_transition_frame: null
+          direction: exit
+          from_state: 1
+          to_state: 0
+          outcome: missed
+          signed_error_frames: null
+          signed_error_s: null
+        unsupported_flicker_count: 0
+        flicker_rate_per_slot_minute: 0.0
+        transition_instability_changes: 0
+        transition_latency_s:
+          all:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          entry:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          exit:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+        transition_latency_values_s:
+          entry: []
+          exit: []
+        signed_transition_error_s:
+          all:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          entry:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+          exit:
+            count: 0
+            median: null
+            p90: null
+            maximum: null
+        signed_transition_error_values_s:
+          entry: []
+          exit: []
+        state_stabilization_time_s:
+          count: 0
+          median: null
+          p90: null
+          maximum: null
+        stable_frames: 3
+        tolerance_frames: 0
+  runtime:
+    frames: 1974
+    elapsed_s: 366.98778190000303
+    classification_warmup_frames: 30
+    steady_state:
+      frame:
+        mean_ms: 167.0694178496008
+        p50_ms: 61.56164999993052
+        p95_ms: 952.6820000028238
+        fps_from_mean: 5.985535909990539
+      detector:
+        mean_ms: 138.31172710897852
+        p50_ms: 29.29479999875184
+        p95_ms: 911.0848999989685
+        fps_from_mean: 7.230044920284167
+      mapping:
+        mean_ms: 0.1745242798129212
+        p50_ms: 0.1367999975627754
+        p95_ms: 0.35090000164927915
+        fps_from_mean: 5729.861776664746
+    detector:
+      method_id: D1
+      name: NDISPark-fine-tuned YOLOv8n
+      backend: ultralytics_yolo
+      weights_name: best.pt
+      weights_bytes: 6255409
+      weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+      parameter_count: 3005843
+      source_class_ids:
+      - 0
+      source_class_names:
+      - vehicle
+      prompts: []
+      project_class:
+        id: 0
+        name: vehicle
+      requested_device: '0'
+      resolved_device: '0'
+      python: 3.12.13
+      torch: 2.13.0+cu130
+      torch_cuda: '13.0'
+      ultralytics: 8.4.104
+      opencv: 4.13.0
+artifacts:
+- role: protocol
+  root: source
+  path: configs/p1_b1_virat_0502_continuous_case_frozen_20260727.yaml
+  bytes: 3862
+  sha256: 0cd73b630e50b2331eb05542541129ca4d56f2b6fc2f52f8017a5c3cce7ceae5
+- role: truth
+  root: source
+  path: literature_core/data/annotations/virat_0502_departure_truth.yaml
+  bytes: 1804
+  sha256: 325ab6fac1970532cd86d0fc88e2b6acfd66cc8abd5ad8a70b070a318f58c760
+- role: failed_attempt_audit
+  root: source
+  path: data/comparisons/p1_b1_virat0502_continuous_failed_attempt_20260727_v1.yaml
+  bytes: 1363
+  sha256: 6cdbdffed0dafcbdaa44920675d283bc7fd018436a696d3b285d332d621e4352
+- role: preflight_only
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_preflight_20260727_v1.json
+  bytes: 857
+  sha256: ef40eb8d7902f8f2c355af995ce7c9a4534f11a5f4da10546f89dd11f2fbced6
+- role: failed_preflight
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v1/preflight.json
+  bytes: 857
+  sha256: ef40eb8d7902f8f2c355af995ce7c9a4534f11a5f4da10546f89dd11f2fbced6
+- role: failed_empty_detections
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v1/detections.jsonl
+  bytes: 0
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- role: failed_unplayable_video_header
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v1/annotated.mp4
+  bytes: 258
+  sha256: 7817119d388f19407bdacbd714686f779bc1cf19bf9fb8e7438fde492f502be2
+- role: run_preflight
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/preflight.json
+  bytes: 857
+  sha256: ef40eb8d7902f8f2c355af995ce7c9a4534f11a5f4da10546f89dd11f2fbced6
+- role: annotated_video
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/annotated.mp4
+  bytes: 117261252
+  sha256: 5a40d13eae44a024912e293be11afc539d60ae3598a3c91337d9e07373da8d1f
+- role: occupancy
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/occupancy.csv
+  bytes: 308095
+  sha256: c369d3bd6bf85d7547c0743c6328f30a513baed9ce2c7e59d047ffb2b06a61a7
+- role: events
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/events.csv
+  bytes: 215
+  sha256: f47feb3b665dcbbfd617333125e3d3e24d5e2e317015fc7bd536d6f814cc7208
+- role: detections
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/detections.jsonl
+  bytes: 6774356
+  sha256: fd1afbf74b06cbf2581e28cbec3aafb5e994e6dbd9bdfd5de761b0fd6be42d3d
+- role: metrics
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/metrics.json
+  bytes: 6150
+  sha256: 5e64ee8deb4391d7b0a7f443fb22e88bfefc903976efb22761d7754033288a09
+- role: summary
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/summary.json
+  bytes: 7894
+  sha256: 5c3e670ce4ace5a1c3e06d8fc11b73b89043797d6323f001da3344b982df8751
+- role: runtime
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_20260727_v2/runtime_metadata.json
+  bytes: 1362
+  sha256: ac61a9036dbe37ff7d65841914033f616854feccc76d1ca644e4aa9cf43fb189
+- role: qualitative_key_frames
+  root: external
+  path: outputs/p1_b1_virat0502_continuous_qa_20260727_v2.png
+  bytes: 1861709
+  sha256: 007644978e6781a2a3ea7d6911d7328a2fb3c1646aa6f621793d7ec2ea3cc8dc

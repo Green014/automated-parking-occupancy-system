@@ -1,0 +1,170 @@
+schema_version: 1
+protocol_id: STAGE-P-PARKING-DOMAIN-RETENTION-20260729-01
+stage_name: Stage P — Parking-Domain Retention and Final Low-Light Occupancy Evidence
+status: frozen_before_stage_p_predictions
+frozen_on: "2026-07-29"
+
+scope:
+  allowed:
+    - consumed-development NDISPark parking-domain detector comparison
+    - training-resubstitution daylight box diagnostic
+    - consumed night-validation box diagnostic
+    - consumed post-hoc night count diagnostic
+    - final night parking occupancy data gate
+  prohibited:
+    - retraining D1 or D1-LL
+    - threshold, NMS, IoU, fusion, mapping, or temporal tuning
+    - testing additional low-light enhancers, detectors, or trackers
+    - calling confidence-truncated AP standard COCO AP
+    - calling LMOT detection improvement parking occupancy improvement
+    - calling an interface smoke an occupancy evaluation
+    - overwriting Stage L, M, N, or O artifacts
+
+inputs:
+  stage_o_protocol:
+    path: stage_o_low_light_adaptation_frozen_20260729.yaml
+    bytes: 7429
+    sha256: 370ea667dc32fe0dd2f2d231305d61267c9c79ccc41444c1cdceee2eb4788e6e
+  stage_o_selection:
+    path: ../data/stage_o/STAGE_O_SELECTION_20260729.json
+    bytes: 4999
+    sha256: 2171c8d05186eb261a17d6d3cb3266b056828116f6ed60fe9a2bd9d2e6014bae
+  p3_defaults:
+    path: p3_integrated_runtime_defaults_20260729.yaml
+    bytes: 1498
+    sha256: 33d8997eb1686968c3efd0e4416a81507909693c0018ed3c89cc08e1149af766
+  ndispark_protocol:
+    path: ndispark_only_dataset_frozen_20260727.yaml
+    bytes: 6303
+    sha256: 1a3a8747eb16867a9a846d8ad279591dc96731091c96549b50d041ecf8a0e0e8
+  manifests:
+    train:
+      path: ../data/manifests/ndispark_only_20260727/ndispark_train_frozen_20260727.csv
+      bytes: 24054
+      sha256: 9231cd310d2ce64c6bc06727c1835ba05a4229de1837954a7409f525de0a0b32
+    validation:
+      path: ../data/manifests/ndispark_only_20260727/ndispark_validation_frozen_20260727.csv
+      bytes: 7260
+      sha256: abbcf72d193afbdbe64fea46c5d2553dfba6c978406f1c2dd76f4b68aa471c99
+    test:
+      path: ../data/manifests/ndispark_only_20260727/ndispark_test_frozen_20260727.csv
+      bytes: 24630
+      sha256: 79cc80392c8d3c3723f31f68242f1e5ec0610f10ff81c02fc58a9a0215a2b35d
+  prepared_dataset:
+    dataset_yaml_bytes: 195
+    dataset_yaml_sha256: 8e000ba2fe912edf09c9386426da58315950c708726468df36a7c25163eab170
+  models:
+    D1:
+      role: frozen_parking_detector_baseline
+      bytes: 6255409
+      sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+    D1_LL:
+      role: selected_low_light_detector_candidate
+      stage_o_method: O3
+      bytes: 6240049
+      sha256: 99b658bba0ef117d3206b85fc982c81cc0b94839932bfb9e99780027bab1c5da
+
+data_roles:
+  daytime_train:
+    images: 112
+    boxes: 2577
+    role: training_resubstitution_diagnostic
+    used_by_D1_training: true
+    used_by_D1_LL_training: true
+  night_validation:
+    images: 30
+    boxes: 725
+    role: consumed_development_diagnostic
+    used_for_D1_epoch_or_model_evidence: true
+    previously_consumed_by_stage_i: true
+  night_test:
+    images: 117
+    vehicle_count_sum: 1402
+    box_truth: false
+    role: consumed_posthoc_count_diagnostic
+    previously_consumed_by_stage_i: true
+  slot_polygons_available: false
+  per_slot_occupancy_truth_available: false
+
+shared_inference:
+  api: ultralytics.YOLO.predict
+  imgsz: 640
+  confidence: 0.30
+  nms_iou: 0.70
+  agnostic_nms: true
+  max_detections: 300
+  classes: [0]
+  augment: false
+  rect: false
+  half: false
+  batch: 1
+  device: "0"
+  model_track_prohibited: true
+  threshold_reselection: prohibited
+
+historical_protocol_conflict:
+  old_ndispark_AP_confidence_floor: 0.001
+  stage_p_frozen_confidence: 0.30
+  resolution: >-
+    Stage P follows the user-required Stage O/P3 operating threshold for both
+    models. It does not reuse or compare directly with historical standard-like
+    PR curves produced from the 0.001 confidence floor.
+
+metrics:
+  box_iou_thresholds: [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+  ap_semantics: confidence-truncated AP at the frozen confidence threshold of 0.30
+  ap_not_standard_coco: true
+  box:
+    - precision
+    - recall
+    - confidence-truncated AP50 at the frozen confidence threshold of 0.30
+    - confidence-truncated AP50-95 at the frozen confidence threshold of 0.30
+    - ground_truth_boxes
+    - predicted_boxes
+    - true_positives
+    - false_positives
+    - false_negatives
+  count: [MAE, RMSE, mean_predicted_count, mean_true_count, per_camera]
+  runtime_descriptive_only: true
+  unknown_truth_policy: exclude_and_count
+  ignored_class_suppression:
+    enabled: false
+    reason: NDISPark train/validation evaluated truth contains only category 3 car and no ignore-region schema
+
+retention_decision_rule:
+  frozen_before_results: true
+  required_night_improvement:
+    any_of:
+      - recall_gain_at_least: 0.02
+      - confidence_truncated_AP50_gain_at_least: 0.02
+  night_precision_drop_no_worse_than: 0.05
+  night_AP50_95_drop_no_worse_than: 0.02
+  daytime_training_resubstitution_max_drop:
+    precision: 0.05
+    recall: 0.05
+    confidence_truncated_AP50: 0.05
+    confidence_truncated_AP50_95: 0.05
+  all_box_labelled_max_AP50_95_drop: 0.05
+  count_test_max_increase:
+    MAE: 0.50
+    RMSE: 1.00
+  outcomes:
+    PASS: all available improvement and retention checks pass
+    CONDITIONAL: night improvement and night precision checks pass, but a daytime, aggregate, or count retention check fails
+    FAIL: night improvement or night precision/AP50-95 safety check fails
+    BLOCKED: required local box data, model weights, or comparable settings are unavailable
+
+p3_ll_gate:
+  create_runtime_defaults_only_if:
+    - retention_decision_is_PASS
+    - new_final_night_parking_occupancy_data_gate_is_PASS
+    - real_P3_D1_vs_P3_LL_occupancy_evidence_exists
+  current_D1_LL_label: selected low-light detector candidate
+  current_default_detector_change_authorized: false
+
+execution:
+  local_hardware_only: true
+  A100_prohibited: true
+  output_root_must_not_exist: true
+  historical_artifact_overwrite: prohibited
+  training_prohibited: true

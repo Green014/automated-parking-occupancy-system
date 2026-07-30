@@ -1,0 +1,83 @@
+schema_version: 1
+config_id: P3-STAGE-R-RECOMMENDED-DEFAULT-20260729-01
+method_id: P3
+method_name: D1 + B1 + F2 default; E4 and tracking explicit-only
+status: frozen_for_stage_s_final_default
+frozen_on: "2026-07-29"
+
+parameter_provenance:
+  source: ../data/STAGE_R_COMPONENT_ATTRIBUTION_REPORT.md
+  source_sha256: c95b8f9986f240d358d8b9cbec64aeded2239b1de6b0eb1d6d01ffb2f42c427c
+  inherited_runtime: p3_integrated_runtime_defaults_20260729.yaml
+  inherited_runtime_sha256: 33d8997eb1686968c3efd0e4416a81507909693c0018ed3c89cc08e1149af766
+  threshold_reselection: prohibited
+  model_retraining: prohibited
+  stage_q_v2_output_regeneration: prohibited
+
+detector:
+  id: D1
+  role: final_default_detector
+  confidence: 0.30
+  image_size: 640
+  class_ids: [0]
+  nms_iou: 0.70
+  agnostic_nms: true
+  max_detections: 300
+
+mapping:
+  id: B1
+  mode: overlap
+  minimum_slot_coverage: 0.40
+  one_to_one: true
+
+classifier:
+  id: E1b
+  occupied_threshold: 0.76
+  patch_size: [224, 224]
+  perspective_warp: true
+  detector_negative_slots_only: true
+
+fusion:
+  id: F2
+  mode: asymmetric_uncertainty_gate
+  detector_positive_is_occupied: true
+  classifier_reviews_detector_negative_only: true
+
+temporal:
+  id: E4
+  default_enabled: false
+  availability: conditional_continuous_video_only
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+  raw_threshold: 0.76
+  stable_frames_for_evaluation: 3
+
+tracking:
+  default_backend: none
+  availability: explicit_optional_only
+  bytetrack:
+    config_path: bytetrack_stage_m_frozen_20260728.yaml
+    config_sha256: 9c46e5796711065c1e3e2784f9ed2c2775833801c01b1a548c0ee0b092331f1f
+  tracktrack:
+    config_path: tracktrack_stage_m_frozen_20260728.yaml
+    config_sha256: 54a158728a3dd41b523c7d9054fa0e187548075f563adb71c5db72e797328f37
+
+claims:
+  data_role: final_configuration_selected_from_posthoc_stage_r_evidence
+  deployment_ready: false
+  limitation: occupied_recall_remains_limited_on_external_low_light_data
+  tracktrack_occupancy_improvement_claimed: false
+
+output:
+  codec: mp4v
+  root_must_not_exist: true
+  files:
+    - occupancy.csv
+    - events.csv
+    - detections.jsonl
+    - annotated.mp4
+    - metrics.json
+    - summary.json
+    - runtime_metadata.json

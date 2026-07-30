@@ -1,0 +1,119 @@
+schema_version: 1
+protocol_id: P-COMP-PKLOT-DEV-STAGEJ-20260727-01
+status: frozen_before_predictions
+frozen_at: "2026-07-27T22:32:37.4248333+08:00"
+
+scope:
+  stage: J
+  task: detector_to_polygon_slot_occupancy
+  data_role: consumed_development
+  untouched_test_claim: prohibited
+  purpose: Connect D0/D1/D2 to the identical B1 geometry and output contract.
+  parameter_selection_from_this_run: prohibited
+
+data:
+  dataset: PKLot
+  annotations:
+    path: ../data/annotations/pklot_development_samples.jsonl
+    bytes: 522284
+    sha256: ac9dbc48b491b3f6a657b38b53a422a59fef70a40bf3a2b91a98132abbeb2074
+  membership_manifest:
+    path: ../data/manifests/stage_j_pklot_development_20260727.csv
+    bytes: 5457
+    sha256: eb548c61eda7dd24a658fb07229131ddac8be4fb4cdee8fab37faa0edf022519
+  expected:
+    images: 27
+    cameras: [pucpr, ufpr04, ufpr05]
+    weather: [cloudy, rainy, sunny]
+    slot_labels_known: 1505
+    occupied: 757
+    vacant: 748
+    unknown_excluded: 7
+  image_root_contract:
+    supplied_by: --source-root or PARKING_DATA_ROOT
+    hardcoded_user_path: false
+
+methods:
+  P0:
+    detector_id: D0
+    name: COCO-pretrained YOLOv8n + B1 polygon mapping
+    weights_name: yolov8n.pt
+    weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+    backend: ultralytics_yolo
+    source_class_ids: [2, 3, 5, 7]
+    source_class_names: [car, motorcycle, bus, truck]
+    confidence: 0.10
+  P1:
+    detector_id: D1
+    name: NDISPark-fine-tuned YOLOv8n + B1 polygon mapping
+    weights_name: best.pt
+    weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+    backend: ultralytics_yolo
+    source_class_ids: [0]
+    source_class_names: [vehicle]
+    confidence: 0.30
+  P2:
+    detector_id: D2
+    name: YOLO-World zero-shot + B1 polygon mapping
+    weights_name: yolov8s-worldv2.pt
+    weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+    backend: ultralytics_yolo_world
+    prompts: [car, motorcycle, bus, truck]
+    source_class_ids: [0, 1, 2, 3]
+    source_class_names: [car, motorcycle, bus, truck]
+    confidence: 0.10
+
+common_inference:
+  imgsz: 640
+  nms_iou: 0.7
+  agnostic_nms: true
+  max_detections: 300
+  augmentation: false
+  rect: false
+  half: false
+  device: local_explicit_or_auto
+  threshold_source: Stage_I_v2_consumed_development_calibration
+
+common_mapping:
+  algorithm: slot_polygon_coverage
+  mapping_source: B1
+  minimum_slot_coverage: 0.40
+  one_to_one: true
+  evidence: detector_confidence_times_slot_coverage
+  temporal_stabilization: false
+  test_polygon_edits: prohibited
+
+metric_contract:
+  overall:
+    - macro_F1
+    - occupied_recall
+    - vacant_recall
+    - false_free_rate
+    - false_occupied_rate
+    - confusion_matrix
+    - slot_average_precision
+  stratified_by: [camera, weather]
+  runtime: [end_to_end_FPS, inference_latency]
+  detector_mAP_claim_from_slot_truth: prohibited
+  selection_after_result: prohibited
+
+output_contract:
+  root_must_not_exist: true
+  per_method:
+    - annotated.mp4
+    - occupancy.csv
+    - events.csv
+    - detections.jsonl
+    - summary.json
+    - metrics.json
+    - runtime_metadata.json
+  events_policy: Header-only because the 27 development images are non-contiguous and must not be treated as a temporal sequence.
+  annotated_video_policy: Ordered development montage, not temporal evidence.
+  negative_results_retained: true
+
+gates:
+  D1_retraining: prohibited
+  remote_or_paid_GPU: prohibited
+  CNR_EXT_parameter_selection: prohibited
+  NDISPark_test_parameter_selection: prohibited
+  stage_K_untouched_test_available: false

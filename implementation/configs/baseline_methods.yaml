@@ -1,0 +1,106 @@
+schema_version: 1
+registry_id: baseline-closure-20260726
+status: naming_closed
+
+methods:
+  B0:
+    canonical_name: YOLOv8 bbox-centre mapping baseline
+    runnable: true
+    pipeline_experiment: b0
+    detector:
+      family: YOLOv8
+      implementation: ultralytics_closed_set_yolo
+      weights: yolov8n.pt
+      confidence: 0.025
+      image_size: 1280
+      class_ids: [2, 3, 5, 7]
+    mapping:
+      type: bbox_centre_inside_slot_polygon
+      one_to_one: true
+      minimum_slot_coverage: null
+      evidence: detector_confidence
+    temporal:
+      enabled: false
+      tracking: false
+    data_role: development_baseline_or_future_protocol_frozen_evaluation
+    exclusions:
+      - CNR-EXT is consumed and must not be used for new parameter selection
+      - VIRAT 0503 is viewed/consumed and is not an untouched holdout
+
+  B1:
+    canonical_name: YOLOv8 polygon-coverage baseline
+    runnable: true
+    pipeline_experiment: b1
+    detector:
+      family: YOLOv8
+      implementation: ultralytics_closed_set_yolo
+      weights: yolov8n.pt
+      confidence: 0.025
+      image_size: 1280
+      class_ids: [2, 3, 5, 7]
+    mapping:
+      type: slot_polygon_coverage
+      one_to_one: true
+      minimum_slot_coverage: 0.40
+      evidence: detector_confidence_times_slot_coverage
+    temporal:
+      enabled: false
+      tracking: false
+    data_role: development_baseline_or_future_protocol_frozen_evaluation
+    exclusions:
+      - CNR-EXT is consumed and must not be used for new parameter selection
+      - VIRAT 0503 is viewed/consumed and is not an untouched holdout
+
+  E0:
+    canonical_name: Historical static external YOLOv8 coverage baseline
+    runnable: false
+    historical_aliases: [E0 YOLOv8 + official boxes]
+    detector:
+      family: YOLOv8
+      implementation: literature_core.ClosedSetYOLODetector
+      weights: ../yolov8n.pt
+      confidence: 0.025
+      image_size: 1280
+      class_ids: [2, 3, 5, 7]
+    mapping:
+      type: official_box_coverage
+      one_to_one: true
+      minimum_slot_coverage: 0.40
+      evidence: detector_confidence_times_slot_coverage
+    temporal:
+      enabled: false
+      tracking: false
+    data_role: consumed_once_only_static_external_holdout
+    frozen_config: literature_core/configs/external_holdout_frozen.yaml
+    frozen_outputs: literature_core/outputs/cnrpark_ext_frozen_evaluation_20260725
+    rerun_policy: historical_artifacts_only_no_parameter_selection
+
+  T0:
+    canonical_name: Raw YOLOv8 temporal comparator
+    runnable: true
+    pipeline_experiment: t0
+    historical_aliases: [e0_raw]
+    detector:
+      family: YOLOv8
+      implementation: ultralytics_closed_set_yolo
+      weights: yolov8n.pt
+      confidence: 0.20
+      image_size: 640
+      class_ids: [2, 3, 5, 7]
+    mapping:
+      type: slot_polygon_coverage
+      one_to_one: true
+      minimum_slot_coverage: 0.30
+      evidence: detector_confidence_times_slot_coverage
+    temporal:
+      enabled: false
+      tracking: false
+      historical_note: >-
+        The frozen VIRAT runner attached ByteTrack IDs to retained raw
+        detections, but T0 state decisions did not use IDs, dwell, or
+        hysteresis.
+    data_role: raw_temporal_comparator_for_future_protocol_frozen_video
+    historical_config: literature_core/configs/temporal_e4_e5_frozen.yaml
+    historical_outputs: literature_core/outputs/virat_temporal_case_study_*
+    exclusions:
+      - VIRAT 0503 is viewed/consumed and is not an untouched holdout

@@ -1,0 +1,55 @@
+# Python
+.venv/
+**/.venv/
+**/.venv_*/
+implementation/.venv_*/
+**/__pycache__/
+**/.pytest_cache/
+*.py[cod]
+.coverage
+htmlcov/
+*.egg-info/
+
+# Models and generated outputs
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+weights/
+models/
+outputs/
+runs/
+tmp/
+**/tmp/
+**/.ultralytics/
+
+# Downloaded or generated datasets
+datasets/
+**/datasets/
+implementation/data/raw/
+implementation/data/processed/
+implementation/data/external/
+implementation/data/external/stage_o_training_*/
+implementation/data/external/*.partial/
+implementation/data/research_samples/
+
+# Literature and generated documents
+literature_review/
+papers/
+*.pdf
+*.docx
+*.xlsx
+
+# Large presentation media
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Local machine and editor files
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.swp

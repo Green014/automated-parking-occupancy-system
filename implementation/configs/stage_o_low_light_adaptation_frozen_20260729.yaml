@@ -1,0 +1,239 @@
+schema_version: 1
+protocol_id: STAGE-O-LOW-LIGHT-DETECTOR-ADAPTATION-20260729-01
+created_at: "2026-07-29T18:00:00+08:00"
+status: frozen_before_formal_execution
+
+claim_scope:
+  allowed:
+    - raw detector-only low-light motor-vehicle detection on LMOT sRGB
+    - paired light-to-dark robustness retention
+    - preprocessing-only diagnostics for O1 and O2
+    - one ordinary supervised D1-LL fine-tuning run for O3
+  prohibited:
+    - LMOT measures parking-slot occupancy or Macro F1
+    - detector-only boxes are tracker-emitted boxes
+    - Stage O reproduces LTrack, GLARE, or Retinexformer paper experiments
+    - LMOT validation or NDISPark night is an untouched final test
+    - validation-driven confidence, NMS, or max-det tuning
+
+data:
+  lmot_train_sequences:
+    - LMOT-02
+    - LMOT-04
+    - LMOT-06
+    - LMOT-08
+    - LMOT-09
+    - LMOT-12
+    - LMOT-16
+    - LMOT-18
+    - LMOT-20
+    - LMOT-21
+    - LMOT-26
+  internal_development_sequences: [LMOT-06, LMOT-26]
+  o3_training_sequences:
+    - LMOT-18
+    - LMOT-21
+    - LMOT-08
+    - LMOT-02
+    - LMOT-16
+    - LMOT-20
+    - LMOT-09
+    - LMOT-12
+    - LMOT-04
+  consumed_diagnostic_sequences: [LMOT-05, LMOT-13, LMOT-14, LMOT-25]
+  split_rule: ascending_sha256_of_20260729_colon_sequence_then_first_two_for_dev
+  paired_group_key: LMOT_sequence_id_plus_frame_number
+  pair_splitting_prohibited: true
+  deterministic_subsampling:
+    first_frame: 1
+    stride: 10
+    last_frame_inclusive: 1210
+    frames_per_sequence: 121
+  ndispark_daylight_mix:
+    split: official_train
+    images: 112
+    boxes: 2577
+    role: parking_domain_forgetting_mitigation
+  diagnostic_boundaries:
+    LMOT_validation: consumed_development_diagnostic
+    NDISPark_validation_night: consumed_development_diagnostic
+    NDISPark_test_night: consumed_count_only_no_box_metrics
+
+class_policy:
+  source_id_to_name:
+    1: person
+    2: bicycle
+    3: car
+    4: motorcycle
+    5: bus
+    6: truck
+  evaluated_motor_vehicle_ids: [3, 4, 5, 6]
+  excluded_prediction_suppression_ids: [1, 2]
+  evaluated_mark_values: [1]
+  output: {id: 0, name: vehicle}
+
+shared_detector_only_inference:
+  api: ultralytics.YOLO.predict
+  model_track_prohibited: true
+  tracker_loading_prohibited: true
+  imgsz: 640
+  confidence: 0.30
+  nms_iou: 0.70
+  agnostic_nms: true
+  max_detections: 300
+  classes: [0]
+  augment: false
+  rect: false
+  half: false
+  batch: 1
+  device: "0"
+  threshold_reselection: prohibited
+
+methods:
+  O0:
+    name: existing_D1_original_sRGB
+    weights_role: frozen_D1
+    preprocessing: none
+  O1:
+    name: D1_sequence_brightness_gated_gamma_CLAHE
+    method_class: OpenCV_engineering_baseline
+    gate_scope: once_per_sequence_or_source
+    per_frame_parameter_adaptation: prohibited
+    gate_calibration_frames: 32
+    brightness_statistic: median_of_frame_mean_BT601_luma
+    internal_development_grid:
+      thresholds: [45.0, 60.0]
+      gamma: [0.50, 0.65]
+      clahe_clip_limit: [2.0, 3.0]
+      clahe_tile_grid: [8, 8]
+    internal_selection_order:
+      - dark_AP50_descending
+      - dark_recall_descending
+      - dark_AP50_95_descending
+      - dark_precision_descending
+      - transform_latency_ascending
+      - parameter_tuple_lexicographic
+    selected:
+      status: frozen_after_internal_development
+      threshold: 45.0
+      gamma: 0.50
+      clahe_clip_limit: 3.0
+      clahe_tile_grid: [8, 8]
+      evidence:
+        path: ../outputs/stage_o_o1_internal_development_20260729_v1/selection.json
+        bytes: 6703
+        sha256: 06852c92066fed7485ee6c9fac44e272e4bcad53e203ed712d70e48a2132fa79
+      selected_dark_diagnostic:
+        ground_truth_boxes: 1151
+        predicted_boxes: 78
+        true_positives: 0
+        false_positives: 78
+        false_negatives: 1151
+        precision: 0.0
+        recall: 0.0
+        AP50: 0.0
+        AP50-95: 0.0
+      selection_note: >-
+        All eight candidates had zero IoU-0.50 true positives on the sampled
+        internal-development frames. The frozen tie-break therefore selected
+        candidate 02 by measured transform-plus-inference latency before the
+        final parameter-tuple tie-break. This is retained as a negative
+        internal-development result and does not authorize grid expansion.
+  O2:
+    name: D1_plus_pretrained_low_light_enhancer
+    role: preprocessing_only_diagnostic
+    primary:
+      method: GLARE
+      official_repository: https://github.com/LowLevelAI/GLARE
+      paper: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/06415.pdf
+      code_and_model_license: Apache-2.0
+      expected_environment: isolated_Python_3_8_CUDA_11_3_PyTorch_1_11
+      known_native_dependency: deformable_convolution_CUDA_extension
+    only_allowed_fallback:
+      method: Retinexformer
+      official_repository: https://github.com/caiyuanhao1998/Retinexformer
+      paper: https://openaccess.thecvf.com/content/ICCV2023/html/Cai_Retinexformer_One-stage_Retinex-based_Transformer_for_Low-light_Image_Enhancement_ICCV_2023_paper.html
+      code_license: MIT
+    download_or_install_requires_user_permission: true
+    multi_model_trial_prohibited: true
+    status: dependency_and_weight_permission_pending
+  O3:
+    name: D1_LL_paired_sRGB_supervised_fine_tune
+    initialization: frozen_D1_best
+    training:
+      smoke_epochs: 1
+      formal_max_epochs: 20
+      early_stopping_patience: 5
+      imgsz: 640
+      physical_batch: 4
+      nominal_batch: 64
+      seed: 20260729
+      deterministic: true
+      amp: true
+      device: "0"
+      workers: 2
+      optimizer: AdamW
+      lr0: 0.0005
+      lrf: 0.01
+      momentum: 0.937
+      weight_decay: 0.0005
+      warmup_epochs: 2.0
+      close_mosaic: 5
+      pretrained: true
+      resume: false
+      hyperparameter_search: prohibited
+      consistency_loss: prohibited
+      formal_runs: 1
+
+evaluation:
+  iou_thresholds: [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+  primary_aggregate: all_data_pooled_micro
+  secondary_aggregate: unweighted_per_sequence_macro_rates
+  counts_are_summed: true
+  outputs:
+    - precision
+    - recall
+    - AP50
+    - AP50-95
+    - ground_truth_boxes
+    - predicted_boxes
+    - true_positives
+    - false_positives
+    - false_negatives
+    - latency
+    - FPS
+    - peak_CUDA_memory
+    - light_to_dark_retention
+
+selection_rule_frozen_before_formal_comparison:
+  eligibility:
+    minimum_dark_recall_gain_over_O0: 0.02
+    minimum_dark_AP50_gain_over_O0: 0.01
+    maximum_precision_drop_from_O0: 0.05
+    require_nonnegative_AP50_95_delta: true
+  eligible_order:
+    - dark_AP50_descending
+    - dark_recall_descending
+    - dark_AP50_95_descending
+    - precision_descending
+    - FPS_descending
+  if_no_eligible_candidate: retain_O0_D1
+  cherry_picking_sequences_or_frames: prohibited
+
+p3_reintegration:
+  allowed_only_after_detector_candidate_selected: true
+  frozen_components: [B1, E1b, F2, E4]
+  VIRAT_0502_reuse_for_tuning: prohibited
+  without_new_night_slot_truth:
+    allowed: [interface_smoke, qualitative_video]
+    prohibited: [occupancy_improvement_metric, threshold_tuning]
+
+execution_gates:
+  internal_O1_development_allowed: true
+  formal_O0_O1_allowed_after_O1_selection_is_frozen: true
+  O2_allowed_after_explicit_permission_and_isolated_preflight: false
+  O3_smoke_allowed_after_training_manifest_verification: true
+  O3_formal_allowed_after_smoke_pass: true
+  overwrite_existing_output: prohibited
+  paid_or_remote_GPU: prohibited
+  A100_required: false

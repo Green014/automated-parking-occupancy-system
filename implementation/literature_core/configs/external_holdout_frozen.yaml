@@ -1,0 +1,66 @@
+schema_version: 1
+frozen_at: "2026-07-25T14:15:00+08:00"
+status: frozen_before_external_prediction
+
+dataset:
+  name: CNRPark+EXT
+  subset: CNR-EXT
+  role: external_holdout_once_only
+  official_page: http://cnrpark.it/
+  metadata_file: datasets/cnrpark_ext/CNRPark+EXT.csv
+  full_image_archive: datasets/cnrpark_ext/CNR-EXT_FULL_IMAGE_1000x750.tar
+  include_cameras: ["01", "02", "03", "04", "05", "06", "07", "08", "09"]
+  include_all_available_frames: true
+  source_coordinate_size: [2592, 1944]
+  evaluation_image_size: [1000, 750]
+  slot_geometry: official_axis_aligned_boxes
+  bootstrap_group: camera_datetime
+  bootstrap_resamples: 2000
+  bootstrap_seed: 20260725
+
+detectors:
+  class_ids: [2, 3, 5, 7]
+  confidence: 0.025
+  image_size: 1280
+  device: 0
+  e0:
+    weights: ../yolov8n.pt
+    minimum_slot_coverage: 0.40
+  e2:
+    weights: models/yolov8s-worldv2.pt
+    prompts: [car, truck, bus, motorcycle]
+    minimum_mapping_coverage: 0.10
+    occupied_evidence_threshold: 0.08
+
+classifiers:
+  e1a:
+    checkpoint: outputs/mobilenet_variant_ablation/standard/best.pt
+    occupied_threshold: 0.61
+    implementation_label: adapted_standard_mobilenet_v3_small
+  e1b:
+    checkpoint: outputs/mobilenet_variant_ablation/cbam_supplement/best.pt
+    occupied_threshold: 0.76
+    implementation_label: paper_inspired_mobilenet_v3_cbam_supplement
+    exact_paper_reproduction: false
+    components:
+      cbam_supplements_pretrained_se: true
+      shallow_leakyrelu6: false
+      bsconv: false
+
+fusion:
+  classifier_branch: e1a
+  e3a:
+    type: raw_weighted_fusion
+    classifier_weight: 0.50
+    detector_weight: 0.50
+    occupied_threshold: 0.37
+    selection_source: historical_PKLot_Fold_A_development_camera
+  e3b:
+    config: configs/proposed_fusion.yaml
+    type: calibrated_nonnegative_logistic_fusion
+    occupied_threshold: 0.67
+
+prohibitions:
+  tune_after_external_results: false
+  slot_level_random_bootstrap: false
+  retune_on_grand_bassin: false

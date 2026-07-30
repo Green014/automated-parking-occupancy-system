@@ -1,0 +1,152 @@
+record_type,sequence_id,detector,metric,value,details
+gap_distribution,,,source_frame_gap_1,350,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_2,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_18,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_41,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_68,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_82,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_85,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_97,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_133,1,within-sequence adjacent selected frames
+gap_distribution,,,source_frame_gap_136,1,within-sequence adjacent selected frames
+per_sequence,gopro1,,selected_frames,25,
+per_sequence,gopro1,,adjacent_selected_boundaries,24,
+per_sequence,gopro1,,gap_1_boundaries,24,
+per_sequence,gopro1,,gap_gt_1_boundaries,0,
+per_sequence,gopro1,,maximum_gap_frames,1,
+per_sequence,gopro1,,continuous_segment_count,1,
+per_sequence,gopro11,,selected_frames,25,
+per_sequence,gopro11,,adjacent_selected_boundaries,24,
+per_sequence,gopro11,,gap_1_boundaries,24,
+per_sequence,gopro11,,gap_gt_1_boundaries,0,
+per_sequence,gopro11,,maximum_gap_frames,1,
+per_sequence,gopro11,,continuous_segment_count,1,
+per_sequence,gopro12,,selected_frames,27,
+per_sequence,gopro12,,adjacent_selected_boundaries,26,
+per_sequence,gopro12,,gap_1_boundaries,25,
+per_sequence,gopro12,,gap_gt_1_boundaries,1,
+per_sequence,gopro12,,maximum_gap_frames,97,
+per_sequence,gopro12,,continuous_segment_count,1,
+per_sequence,gopro19,,selected_frames,2,
+per_sequence,gopro19,,adjacent_selected_boundaries,1,
+per_sequence,gopro19,,gap_1_boundaries,1,
+per_sequence,gopro19,,gap_gt_1_boundaries,0,
+per_sequence,gopro19,,maximum_gap_frames,1,
+per_sequence,gopro19,,continuous_segment_count,1,
+per_sequence,gopro23,,selected_frames,45,
+per_sequence,gopro23,,adjacent_selected_boundaries,44,
+per_sequence,gopro23,,gap_1_boundaries,43,
+per_sequence,gopro23,,gap_gt_1_boundaries,1,
+per_sequence,gopro23,,maximum_gap_frames,18,
+per_sequence,gopro23,,continuous_segment_count,2,
+per_sequence,gopro24,,selected_frames,30,
+per_sequence,gopro24,,adjacent_selected_boundaries,29,
+per_sequence,gopro24,,gap_1_boundaries,28,
+per_sequence,gopro24,,gap_gt_1_boundaries,1,
+per_sequence,gopro24,,maximum_gap_frames,2,
+per_sequence,gopro24,,continuous_segment_count,2,
+per_sequence,gopro25,,selected_frames,3,
+per_sequence,gopro25,,adjacent_selected_boundaries,2,
+per_sequence,gopro25,,gap_1_boundaries,2,
+per_sequence,gopro25,,gap_gt_1_boundaries,0,
+per_sequence,gopro25,,maximum_gap_frames,1,
+per_sequence,gopro25,,continuous_segment_count,1,
+per_sequence,gopro26,,selected_frames,28,
+per_sequence,gopro26,,adjacent_selected_boundaries,27,
+per_sequence,gopro26,,gap_1_boundaries,27,
+per_sequence,gopro26,,gap_gt_1_boundaries,0,
+per_sequence,gopro26,,maximum_gap_frames,1,
+per_sequence,gopro26,,continuous_segment_count,1,
+per_sequence,gopro30,,selected_frames,2,
+per_sequence,gopro30,,adjacent_selected_boundaries,1,
+per_sequence,gopro30,,gap_1_boundaries,1,
+per_sequence,gopro30,,gap_gt_1_boundaries,0,
+per_sequence,gopro30,,maximum_gap_frames,1,
+per_sequence,gopro30,,continuous_segment_count,1,
+per_sequence,gopro33,,selected_frames,16,
+per_sequence,gopro33,,adjacent_selected_boundaries,15,
+per_sequence,gopro33,,gap_1_boundaries,15,
+per_sequence,gopro33,,gap_gt_1_boundaries,0,
+per_sequence,gopro33,,maximum_gap_frames,1,
+per_sequence,gopro33,,continuous_segment_count,1,
+per_sequence,gopro34,,selected_frames,26,
+per_sequence,gopro34,,adjacent_selected_boundaries,25,
+per_sequence,gopro34,,gap_1_boundaries,24,
+per_sequence,gopro34,,gap_gt_1_boundaries,1,
+per_sequence,gopro34,,maximum_gap_frames,133,
+per_sequence,gopro34,,continuous_segment_count,2,
+per_sequence,gopro36,,selected_frames,2,
+per_sequence,gopro36,,adjacent_selected_boundaries,1,
+per_sequence,gopro36,,gap_1_boundaries,1,
+per_sequence,gopro36,,gap_gt_1_boundaries,0,
+per_sequence,gopro36,,maximum_gap_frames,1,
+per_sequence,gopro36,,continuous_segment_count,1,
+per_sequence,gopro4,,selected_frames,29,
+per_sequence,gopro4,,adjacent_selected_boundaries,28,
+per_sequence,gopro4,,gap_1_boundaries,28,
+per_sequence,gopro4,,gap_gt_1_boundaries,0,
+per_sequence,gopro4,,maximum_gap_frames,1,
+per_sequence,gopro4,,continuous_segment_count,1,
+per_sequence,gopro46,,selected_frames,30,
+per_sequence,gopro46,,adjacent_selected_boundaries,29,
+per_sequence,gopro46,,gap_1_boundaries,27,
+per_sequence,gopro46,,gap_gt_1_boundaries,2,
+per_sequence,gopro46,,maximum_gap_frames,136,
+per_sequence,gopro46,,continuous_segment_count,3,
+per_sequence,gopro5,,selected_frames,33,
+per_sequence,gopro5,,adjacent_selected_boundaries,32,
+per_sequence,gopro5,,gap_1_boundaries,31,
+per_sequence,gopro5,,gap_gt_1_boundaries,1,
+per_sequence,gopro5,,maximum_gap_frames,41,
+per_sequence,gopro5,,continuous_segment_count,2,
+per_sequence,gopro8,,selected_frames,20,
+per_sequence,gopro8,,adjacent_selected_boundaries,19,
+per_sequence,gopro8,,gap_1_boundaries,18,
+per_sequence,gopro8,,gap_gt_1_boundaries,1,
+per_sequence,gopro8,,maximum_gap_frames,68,
+per_sequence,gopro8,,continuous_segment_count,2,
+per_sequence,gopro9,,selected_frames,33,
+per_sequence,gopro9,,adjacent_selected_boundaries,32,
+per_sequence,gopro9,,gap_1_boundaries,31,
+per_sequence,gopro9,,gap_gt_1_boundaries,1,
+per_sequence,gopro9,,maximum_gap_frames,82,
+per_sequence,gopro9,,continuous_segment_count,2,
+continuous_segment,gopro1,,gopro1_continuous_01,25,source_frame_index 92..116
+continuous_segment,gopro11,,gopro11_continuous_01,25,source_frame_index 110..134
+continuous_segment,gopro12,,gopro12_continuous_01,26,source_frame_index 98..123
+continuous_segment,gopro19,,gopro19_continuous_01,2,source_frame_index 0..1
+continuous_segment,gopro23,,gopro23_continuous_01,28,source_frame_index 100..127
+continuous_segment,gopro23,,gopro23_continuous_02,17,source_frame_index 145..161
+continuous_segment,gopro24,,gopro24_continuous_01,2,source_frame_index 55..56
+continuous_segment,gopro24,,gopro24_continuous_02,28,source_frame_index 58..85
+continuous_segment,gopro25,,gopro25_continuous_01,3,source_frame_index 39..41
+continuous_segment,gopro26,,gopro26_continuous_01,28,source_frame_index 109..136
+continuous_segment,gopro30,,gopro30_continuous_01,2,source_frame_index 131..132
+continuous_segment,gopro33,,gopro33_continuous_01,16,source_frame_index 43..58
+continuous_segment,gopro34,,gopro34_continuous_01,9,source_frame_index 0..8
+continuous_segment,gopro34,,gopro34_continuous_02,17,source_frame_index 141..157
+continuous_segment,gopro36,,gopro36_continuous_01,2,source_frame_index 138..139
+continuous_segment,gopro4,,gopro4_continuous_01,29,source_frame_index 95..123
+continuous_segment,gopro46,,gopro46_continuous_01,8,source_frame_index 0..7
+continuous_segment,gopro46,,gopro46_continuous_02,9,source_frame_index 143..151
+continuous_segment,gopro46,,gopro46_continuous_03,13,source_frame_index 236..248
+continuous_segment,gopro5,,gopro5_continuous_01,8,source_frame_index 0..7
+continuous_segment,gopro5,,gopro5_continuous_02,25,source_frame_index 48..72
+continuous_segment,gopro8,,gopro8_continuous_01,4,source_frame_index 0..3
+continuous_segment,gopro8,,gopro8_continuous_02,16,source_frame_index 71..86
+continuous_segment,gopro9,,gopro9_continuous_01,4,source_frame_index 0..3
+continuous_segment,gopro9,,gopro9_continuous_02,29,source_frame_index 85..113
+detector_state_audit,,D1,observed_raw_state_changes,146,frozen E4 output; no regeneration
+detector_state_audit,,D1,observed_E4_state_changes,97,frozen E4 output; no regeneration
+detector_state_audit,,D1,E4_state_changes_on_gap_1_boundaries,81,frozen E4 output; no regeneration
+detector_state_audit,,D1,E4_state_changes_on_gap_gt_1_boundaries,16,frozen E4 output; no regeneration
+detector_state_audit,,D1,fraction_E4_state_changes_on_gap_gt_1_boundaries,0.16494845360824742,frozen E4 output; no regeneration
+detector_state_audit,,D1,rows_where_state_differs_from_raw_state,506,frozen E4 output; no regeneration
+detector_state_audit,,D1,such_rows_at_first_frame_after_gap_gt_1,13,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,observed_raw_state_changes,310,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,observed_E4_state_changes,139,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,E4_state_changes_on_gap_1_boundaries,121,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,E4_state_changes_on_gap_gt_1_boundaries,18,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,fraction_E4_state_changes_on_gap_gt_1_boundaries,0.12949640287769784,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,rows_where_state_differs_from_raw_state,639,frozen E4 output; no regeneration
+detector_state_audit,,D1-LL,such_rows_at_first_frame_after_gap_gt_1,20,frozen E4 output; no regeneration

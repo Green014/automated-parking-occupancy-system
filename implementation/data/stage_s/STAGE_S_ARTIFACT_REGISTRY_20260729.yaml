@@ -1,0 +1,106 @@
+schema_version: 1
+protocol_id: STAGE-S-FINAL-DEFAULT-AND-DEMO-20260729-01
+registry_id: STAGE-S-ARTIFACT-REGISTRY-20260729-01
+status: FINAL_DEFAULT_AND_DEMO_COMPLETE_HASH_VERIFIED
+created_on: '2026-07-29'
+artifact_count: 24
+registry_self_hash_included: false
+model_inference_run: false
+historical_stage_l_to_r_modified: false
+artifacts:
+- path: .gitignore
+  role: submission exclusion rules
+  bytes: 1112
+  sha256: 4df01fafe65714e8909e84d21ec2f8ef4d8c02dbb5288acfaf37d39f2feb5f8d
+- path: implementation/pyproject.toml
+  role: final CLI registration
+  bytes: 1607
+  sha256: b920b3af83f544d68fe54fe42b43a31d6e34ea39b50707c261de30eb3c6084ef
+- path: implementation/configs/p3_stage_r_recommended_default_20260729.yaml
+  role: Stage R recommended final default configuration
+  bytes: 2236
+  sha256: 198f627689cd93f66ca0f087af6686d3afc697ff51e2aa77ee56124187b981b0
+- path: implementation/src/parking_occupancy/integrated_cli.py
+  role: final default user entry
+  bytes: 2567
+  sha256: 793dafe58b3182d18176446e1a0e4ee1e171ba0f62a5dc62d71cb9aeca433b96
+- path: implementation/src/parking_occupancy/stage_s_release.py
+  role: Stage S release audit implementation
+  bytes: 16202
+  sha256: 12cff59ff2f05f6ffd1e996df4ae178f8e2efd46daf236ed2541acf15b92c9ba
+- path: implementation/src/parking_occupancy/stage_s_demo.py
+  role: Stage S frozen-output renderer
+  bytes: 21947
+  sha256: fffbdcabf5d9a92937fee12565731f7627c1c5435cbaf3027d8997f5de34353d
+- path: implementation/scripts/audit_stage_s_release.py
+  role: Stage S preflight audit command
+  bytes: 2679
+  sha256: 30aa29e5884274080bf64538854092dbc7345c1dabe8bf62da139405b8ee79e3
+- path: implementation/scripts/render_stage_s_demo.py
+  role: Stage S rendering command
+  bytes: 1001
+  sha256: 8f0aa22e89292862792bd8860aa191337d05a6caf5e41639262996507c6828d6
+- path: implementation/scripts/finalize_stage_s.py
+  role: Stage S finalization command
+  bytes: 5887
+  sha256: 25bae597f2e638828d40148f47e8c0c74c250a8a3570e30a3ccb0c22226688b8
+- path: implementation/tests/test_stage_s_release.py
+  role: Stage S release tests
+  bytes: 3524
+  sha256: f06535f92900cc3c583ebf6e2db85f4c2180121978d8b700140adac9a2209fa7
+- path: implementation/tests/test_stage_s_demo.py
+  role: Stage S demo tests
+  bytes: 2558
+  sha256: 8935a06f333c26456ea77f4f4890fa815b98334c6d13faed3ece0310a7769948
+- path: implementation/data/STAGE_S_FINAL_DEFAULT_AND_DEMO_REPORT.md
+  role: Stage S report
+  bytes: 6683
+  sha256: 3dbc743c13dbcc6af25784342cc8e805ae7899403e5551715534dd10133b40f8
+- path: implementation/data/SYSTEM_RELEASE_INDEX.md
+  role: additive final release index
+  bytes: 1813
+  sha256: bac6988cff669c4de6477db6a91b162fb2d82407a978a7f178946c99b77402ec
+- path: implementation/data/stage_s/STAGE_S_FINAL_SYSTEM_EVIDENCE.csv
+  role: corrected final evidence table
+  bytes: 796
+  sha256: 121d80ef575bedd52e983f22a4441479fdd99b661830ad2818600e86aba6e009
+- path: implementation/data/stage_s/STAGE_S_SUBMISSION_AUDIT.json
+  role: submission candidate audit summary
+  bytes: 89547
+  sha256: 72a848c3cd7a5758c5153341c3507451c5423cb65d645a217c67039fd38f0cb7
+- path: implementation/data/stage_s/STAGE_S_SUBMISSION_CANDIDATES.csv
+  role: submission candidate inventory
+  bytes: 49332
+  sha256: 3f835b93520a9c14e9ae1d859eef75ea418b96d8ddd76b988346d00424145745
+- path: implementation/data/stage_s/STAGE_S_HISTORICAL_REGISTRY_PRE_SNAPSHOT.json
+  role: historical registry entry snapshot
+  bytes: 3452
+  sha256: 79196b42e4c8585b08c4748dae52f05ee835c93dfa70679fa65f43de70533a53
+- path: implementation/data/stage_s/STAGE_S_HISTORICAL_REGISTRY_POST_SNAPSHOT.json
+  role: historical registry exit snapshot
+  bytes: 3452
+  sha256: 79196b42e4c8585b08c4748dae52f05ee835c93dfa70679fa65f43de70533a53
+- path: implementation/data/stage_s/STAGE_S_HISTORICAL_REGISTRY_GATE.json
+  role: historical registry unchanged gate
+  bytes: 304
+  sha256: 892fbd208328c0466d9a885edb09c5eee3970a7e53ea729baa63dafbbf2d1110
+- path: implementation/data/stage_s/demo/demo_main.mp4
+  role: 50-second frozen-output default demo
+  bytes: 7756276
+  sha256: f4e9e59b5bcef1b51f2e94b8443c5f22a69ca850bfc77f5c9b94a1bf947ac608
+- path: implementation/data/stage_s/demo/demo_keyframe_default.png
+  role: default pipeline demo keyframe
+  bytes: 696675
+  sha256: f3dabd6ad0683531c24f08ff59bc99061bf554dafc973e5523371f63f893509a
+- path: implementation/data/stage_s/demo/demo_keyframe_d1_vs_d1ll.png
+  role: D1 versus D1-LL keyframe
+  bytes: 990156
+  sha256: 232973d3d3813ea313eba4b385e28da461180c5d0b1bb6d4970053407c71c882
+- path: implementation/data/stage_s/demo/demo_keyframe_f2_recovery.png
+  role: B1-to-F2 recovery keyframe
+  bytes: 708465
+  sha256: 990a1ed589598ab345007b33340478bd6894e75e2eccbd25c2ed0f4a7632a279
+- path: implementation/data/stage_s/demo/STAGE_S_DEMO_METADATA.json
+  role: demo source and codec metadata
+  bytes: 13089
+  sha256: f68f1656db926f97b0fecb29622136a0f7ffac5b22894eea9aa0d4da614017f8

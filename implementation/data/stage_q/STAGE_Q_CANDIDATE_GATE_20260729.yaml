@@ -1,0 +1,158 @@
+schema_version: 1
+gate_id: STAGE-Q-CANDIDATE-GATE-20260729-01
+stage: Stage Q — Independent External Night Parking Occupancy Evaluation
+checked_on: '2026-07-29'
+status: BLOCKED_BEFORE_DOWNLOAD
+formal_inference_authorized: false
+download_performed: false
+archives_downloaded: []
+models_loaded: false
+model_predict_called: false
+frozen_prior_conclusions:
+  stage_p2_status: FAIL
+  stage_p4_executed: false
+  default_detector: D1
+  D1_LL_role: secondary_frozen_comparison
+  reopen_stage_p4: false
+  reinterpret_stage_p: false
+comparison_roles:
+  primary: P3-D1
+  secondary: P3-D1-LL
+  default_change_allowed: false
+  purpose: independent_external_occupancy_evidence_not_model_selection
+shared_inference:
+  imgsz: 640
+  confidence: 0.3
+  nms_iou: 0.7
+  agnostic_nms: true
+  max_detections: 300
+  classes:
+  - 0
+  B1_minimum_slot_coverage: 0.4
+  B1_one_to_one: true
+  E1b_occupied_threshold: 0.76
+  E1b_detector_negative_slots_only: true
+  E4_default_enabled: true
+  E4_rise_alpha: 0.6
+  E4_fall_alpha: 0.15
+  E4_occupied_threshold: 0.58
+  E4_vacant_threshold: 0.42
+  parameter_reselection: prohibited
+candidates:
+- id: UPM_GTI_ETSIT
+  official_name: ETSIT / UPM-GTI Parking Lot Occupancy Database
+  official_page: https://gti.ssr.upm.es/data/parking-lot-database
+  official_storage: https://drive.upm.es/index.php/s/TdqfDr25NAsGIea
+  paper:
+    title: Visual Parking Occupancy Detection Using Extended Contextual Image Information
+      via a Multi-Branch Output ConvNeXt Network
+    doi: 10.3390/s23063329
+  real_parking_lot: true
+  fixed_camera: requires_archive_verification_per_gopro_sequence
+  night_low_light: database_level_confirmed_test_split_unverified
+  media_type: low_frame_rate_image_sequence
+  splits:
+  - training
+  - validation
+  - test
+  per_slot_truth: true
+  source_truth_vector_length: 21
+  source_value_1: vacant
+  source_value_0: occupied
+  machine_readable_polygons: false
+  numbered_slot_figure: true
+  timestamp_or_fps: not_stated
+  prior_project_use: false
+  login_required: false
+  public_share_metadata:
+    test.zip: 239.1 MB
+    validation.zip: 239.7 MB
+    training.zip: 1.9 GB
+    total: 2.3 GB
+  dataset_license: unclear_not_stated_on_official_dataset_or_share_page
+  gate: BLOCKED
+  blockers:
+  - dataset research-use permission is not explicit
+  - night membership of the Test archive is not established before download
+  - slot-number-to-image mapping requires manual polygon confirmation
+- id: CNRPark_EXT
+  official_name: CNRPark+EXT
+  official_page: https://cnrpark.it/
+  paper_doi: 10.1016/j.eswa.2016.10.055
+  license: ODbL-1.0
+  full_frame_archive:
+    published_size: 1.1 GB
+    frozen_actual_bytes: 1104364544
+    local_path: <omitted-from-public-release>
+    local_sha256: 02a66d936433f02dfceae37a25eb3ee100969ff63eb38d891621e8bf42d1256f
+    local_archive_verified: true
+    existing_extraction_present: true
+    user_download_authorization_received: true
+    duplicate_download_performed: false
+  fixed_cameras: 9
+  per_slot_truth: true
+  geometry: per_camera_axis_aligned_boxes
+  timestamp: minute_in_filename
+  official_weather_groups:
+  - sunny
+  - overcast
+  - rainy
+  official_night_test_established: false
+  prior_project_use: consumed_once_only_external_evaluation
+  gate: INELIGIBLE
+  blockers:
+  - previously consumed by this project
+  - qualifying night test not established by official page
+- id: ACPDS
+  official_name: Action-Camera Parking Dataset
+  official_repository: https://github.com/martin-marek/parking-space-occupancy
+  paper: https://arxiv.org/abs/2107.12207
+  license: MIT
+  archive:
+    name: rois_gopro.zip
+    bytes: 380796292
+  images: 293
+  slot_views: 11236
+  per_slot_truth: true
+  polygons: per_image_quadrilaterals
+  camera: moved_telescoping_pole_each_image_unique_view
+  fixed_camera_sequence: false
+  qualifying_night_sequence: false
+  prior_project_use: false
+  gate: INELIGIBLE
+  blockers:
+  - no fixed reusable scene
+  - no ordered low-light sequence
+  - no stable scene-level polygons or transitions
+blocking_conditions:
+- no candidate satisfies all fixed-camera, night, independent, licensed, per-slot-truth
+  requirements
+- UPM-GTI dataset license is unclear
+- UPM-GTI night Test membership is not verified
+- UPM-GTI slot mapping needs human confirmation after a permitted download
+minimum_next_step:
+  permission:
+    required_statement: Written confirmation from UPM-GTI that the Parking Lot Occupancy
+      Database image archives may be used for non-commercial course research, including
+      any attribution and redistribution restrictions.
+    suggested_contacts:
+    - Ana I. Maqueda, UPM-GTI
+    - Carlos R. del-Blanco, UPM-GTI
+  after_permission:
+    archive: test.zip
+    displayed_size: 239.1 MB
+    official_share: https://drive.upm.es/index.php/s/TdqfDr25NAsGIea
+    user_action: download manually or explicitly authorize Codex after license confirmation
+    required_local_handoff: absolute path to the unmodified test.zip
+  later_human_confirmation:
+  - confirm the selected night Test scene is a stable fixed view
+  - confirm the official 21-slot numbering-to-image mapping
+  - approve the pre-inference polygon overlay
+prohibited_while_blocked:
+- download archives
+- extract data
+- create fabricated source archive audit or image manifest
+- create slot polygons or occupancy truth without source images
+- create Stage Q formal inference config with invented hashes
+- load D1, D1-LL, E1b, or run inference
+- create quantitative occupancy results

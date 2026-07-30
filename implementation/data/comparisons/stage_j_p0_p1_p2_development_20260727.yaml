@@ -1,0 +1,45 @@
+schema_version: 1
+record_id: P-COMP-PKLOT-DEV-STAGEJ-RECORD-20260727-01
+frozen_at: "2026-07-27T23:06:00+08:00"
+status: consumed_development_comparison_complete
+protocol_id: P-COMP-PKLOT-DEV-STAGEJ-20260727-01
+dataset_role: consumed_development
+untouched_test_claim: prohibited
+pipeline_reselection_after_result: false
+historical_outputs_modified: false
+
+artifacts:
+  - {role: protocol, root: source, path: configs/stage_j_p0_p1_p2_pklot_development_frozen_20260727.yaml, bytes: 3596, sha256: 2131c37e482132271fb5e48e3278ef1130420e7957d29862895ba0ef3433b6a4}
+  - {role: annotations, root: source, path: data/annotations/pklot_development_samples.jsonl, bytes: 522284, sha256: ac9dbc48b491b3f6a657b38b53a422a59fef70a40bf3a2b91a98132abbeb2074}
+  - {role: membership_manifest, root: source, path: data/manifests/stage_j_pklot_development_20260727.csv, bytes: 5457, sha256: eb548c61eda7dd24a658fb07229131ddac8be4fb4cdee8fab37faa0edf022519}
+  - {role: preflight_only, root: external, path: outputs/P0_P1_P2_stage_j_20260727_preflight_v1.json, bytes: 1003, sha256: d2b5e0b8b9e1d5e90e14343a2439a536e9941a75ca071c8682b11a7f21b4c412}
+  - {role: run_preflight, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/preflight.json, bytes: 1003, sha256: d2b5e0b8b9e1d5e90e14343a2439a536e9941a75ca071c8682b11a7f21b4c412}
+  - {role: comparison, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/comparison.json, bytes: 24319, sha256: ed6b72c8a72b8ff4d5ab843a682e1536be4a62424d6c81a00904f09074ad79d7}
+  - {role: P0_annotated_video, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/annotated.mp4, bytes: 5486618, sha256: 405afb0e2e96851850dad6b68dfbbf4a93ff196abaec4713ec09fce34a011981}
+  - {role: P0_occupancy, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/occupancy.csv, bytes: 179019, sha256: a6059c01382d590e25e6b4462f7c2818113c7f27f73aa870baadb801a4dc8d8f}
+  - {role: P0_events, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/events.csv, bytes: 79, sha256: bb5ab3aa45b17f5fb14ff22e8250d1739756bd9f3968a51299292682d28aad4d}
+  - {role: P0_detections, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/detections.jsonl, bytes: 140800, sha256: fccde65c5fd33edb11216fb14735734eb4c3b1fe3e4e465c626803904eaa7388}
+  - {role: P0_summary, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/summary.json, bytes: 2509, sha256: cc258dd9900f9bd619937e52605ff76a4ebb5419b7aaa784f106446ed5d243de}
+  - {role: P0_metrics, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/metrics.json, bytes: 7018, sha256: 1c970f7a81e52cb6dec187251ea0c8ef7d4f3cd0ea6f6901dfeaee44b8febf84}
+  - {role: P0_runtime, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P0/runtime_metadata.json, bytes: 1267, sha256: a4e96ee67fd64aa22bb27a34be7a9881116a79a283c7171e9c809f2e9e4e53ad}
+  - {role: P1_annotated_video, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/annotated.mp4, bytes: 5642752, sha256: 93a37d4706289b043dd0efbe9ba92df51eb8064a7ad3fd731e6732c371055d4b}
+  - {role: P1_occupancy, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/occupancy.csv, bytes: 179019, sha256: 937ba4f8d091d6c90a82b0f5775f5fa2a1718991e2ada6b20dd4a5247af00421}
+  - {role: P1_events, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/events.csv, bytes: 79, sha256: bb5ab3aa45b17f5fb14ff22e8250d1739756bd9f3968a51299292682d28aad4d}
+  - {role: P1_detections, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/detections.jsonl, bytes: 239364, sha256: e7b11af5dbaf767569da502910ea65fcf72e3bb251a15a7fb5323b41541251e8}
+  - {role: P1_summary, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/summary.json, bytes: 2513, sha256: cd77fd89ed7755391cac94abb8e6f44813df8a825d685b19ed1b4929a8ecb8cc}
+  - {role: P1_metrics, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/metrics.json, bytes: 7134, sha256: 44da86f963ee6feadeb1462f1677a573ed4dacff51653d3de9e8ca193f0ce446}
+  - {role: P1_runtime, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P1/runtime_metadata.json, bytes: 1189, sha256: fbd0d8ef785f14db2267c2d592697f78d7903a351e6b6450f6bfb8ff0b1fdec6}
+  - {role: P2_annotated_video, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/annotated.mp4, bytes: 5376943, sha256: ab7abe9411122af104884b10cfa7b94371dad18349619b4d662c5aaef8e573cf}
+  - {role: P2_occupancy, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/occupancy.csv, bytes: 179019, sha256: 76de3d6694d4d355a1ce1eaac87318505768ca1f7f4f0115a8991f398cf51743}
+  - {role: P2_events, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/events.csv, bytes: 79, sha256: bb5ab3aa45b17f5fb14ff22e8250d1739756bd9f3968a51299292682d28aad4d}
+  - {role: P2_detections, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/detections.jsonl, bytes: 113709, sha256: 6b0463772454cf24dc0704149a2e77d121aaff6e336eb01465d4b029c95b94df}
+  - {role: P2_summary, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/summary.json, bytes: 2506, sha256: b0e298ad24735efdd17a03087687a58dd2b60cbe85efc8c161bc286f60c75ede}
+  - {role: P2_metrics, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/metrics.json, bytes: 6689, sha256: a2352078cfa6b62c03aa81a80f45d73e5577113d5a62cbe6069dead2de8a4da2}
+  - {role: P2_runtime, root: external, path: outputs/P0_P1_P2_stage_j_20260727_v1/P2/runtime_metadata.json, bytes: 1344, sha256: f138db43a80e3cfc40bca373a513e935071ff8708abea94a7db074b14d5e14c6}
+
+result_summary:
+  known_slot_labels: 1505
+  P0: {detector: D0, macro_f1: 0.768040, occupied_recall: 0.566711, vacant_recall: 0.991979, false_free_rate: 0.433289, false_occupied_rate: 0.008021}
+  P1: {detector: D1, macro_f1: 0.825723, occupied_recall: 0.671070, vacant_recall: 0.990642, false_free_rate: 0.328930, false_occupied_rate: 0.009358}
+  P2: {detector: D2, macro_f1: 0.735168, occupied_recall: 0.504624, vacant_recall: 1.000000, false_free_rate: 0.495376, false_occupied_rate: 0.000000}
+  interpretation: P1 led this consumed-development comparison; no test claim or post-result reselection is allowed.

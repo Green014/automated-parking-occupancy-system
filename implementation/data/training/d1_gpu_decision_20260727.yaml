@@ -1,0 +1,113 @@
+schema_version: 1
+record_id: GPU-GATE-NDISPARK-D1-RECORD-20260727-01
+decision_id: GPU-GATE-NDISPARK-D1-20260727-01
+status: complete
+decided_at: "2026-07-27T17:28:53.2225633+08:00"
+
+source:
+  smoke_record: d1_ndispark_smoke_20260727.yaml
+  smoke_experiment_id: D1-NDISPARK-SMOKE-20260727-01
+  smoke_run_id: d1_ndispark_smoke_20260727_v3
+  smoke_summary:
+    repository_relative_path: outputs/d1_ndispark_smoke_20260727_v3/smoke_summary.json
+    bytes: 10114
+    sha256: 8a6642d422a704fe53c7f7e375fb0de60e1fcf8e2b29fcbbb2ca181b8cf2b2d0
+  formal_config: ../../configs/d1_ndispark_formal_frozen_20260727.yaml
+  formal_experiment_id: D1-NDISPARK-FT-20260727-01
+
+measured:
+  device: NVIDIA GeForce RTX 3060 Laptop GPU
+  imgsz: 640
+  physical_batch: 4
+  epochs: 3
+  total_vram_bytes: 6441926656
+  total_vram_gib: 5.99951171875
+  cuda_free_before_training_bytes: 5379194880
+  cuda_free_before_training_gib: 5.009765625
+  peak_allocated_bytes: 635307520
+  peak_reserved_bytes: 767557632
+  peak_reserved_gib: 0.71484375
+  peak_reserved_fraction_of_total: 0.11915032147798486
+  model_train_wall_seconds: 21.368030499997985
+  epoch_time_seconds: [5.003259897232056, 2.8234293460845947, 2.5707907676696777]
+  oom_detected: false
+  batch_auto_reduced: false
+
+formal_runtime_estimate:
+  imgsz: 640
+  physical_batch: 4
+  max_epochs: 50
+  early_stopping_patience: 10
+  fixed_overhead_seconds: 10.970550489011657
+  steady_epoch_seconds_from_epochs_2_and_3: 2.6971100568771362
+  central_seconds: 145.82605333286847
+  central_minutes: 2.4304342222144744
+  conservative_seconds_using_slowest_smoke_epoch: 261.13354535061444
+  conservative_minutes: 4.352225755843574
+  stress_upper_seconds_at_twice_slowest_smoke_epoch: 511.2965402122172
+  stress_upper_minutes: 8.521609003536954
+  two_hour_gate_passed: true
+  limitation: Extrapolated from three smoke epochs; not a measured 50-epoch duration.
+
+memory_projection:
+  formula: measured_peak_reserved * batch_ratio * pixel_ratio * 1.25
+  safety_factor: 1.25
+  limitation: Analytical scaling is not an executed dry run.
+  cases:
+    - {imgsz: 640, batch: 4, estimated_gib: 0.8935546875, fits_smoke_free_memory: true, executed: true}
+    - {imgsz: 640, batch: 8, estimated_gib: 1.787109375, fits_smoke_free_memory: true, executed: false}
+    - {imgsz: 960, batch: 4, estimated_gib: 2.010498046875, fits_smoke_free_memory: true, executed: false}
+    - {imgsz: 960, batch: 8, estimated_gib: 4.02099609375, fits_smoke_free_memory: true, executed: false}
+    - {imgsz: 1280, batch: 4, estimated_gib: 3.57421875, fits_smoke_free_memory: true, executed: false}
+    - {imgsz: 1280, batch: 8, estimated_gib: 7.1484375, fits_smoke_free_memory: false, executed: false}
+
+selected_formal_configuration:
+  experiment_id: D1-NDISPARK-FT-20260727-01
+  initialization: fresh_COCO-pretrained_yolov8n.pt
+  smoke_checkpoint_initialization: prohibited
+  imgsz: 640
+  physical_batch: 4
+  nominal_batch: 64
+  post_warmup_accumulation_steps: 16
+  nominal_effective_batch: 64
+  max_epochs: 50
+  patience: 10
+  selection_basis: Batch 4 is the largest allowed configuration directly executed by the frozen smoke run.
+
+decision:
+  six_gib_can_complete_selected_run: true
+  operational_minimum_vram_gib: 4
+  recommended_minimum_vram_gib: 6
+  local_RTX_3060_selected: true
+  rent_gpu_worthwhile: false
+  rental_duration_hours: 0
+  measured_remote_speedup: null
+  local_vs_rental: No remote benchmark was executed; the local stress-bound estimate is under nine minutes, so remote setup and transfer would dominate.
+  A100_needed: false
+  YOLO_World_fine_tuning_in_scope: false
+
+ignored_artifact:
+  repository_relative_path: outputs/gpu_decision_20260727_v1.json
+  bytes: 7375
+  sha256: 10626027fb39344aad180f98fe45c9086d95bb4b4962c37575d8e32acf49baab
+
+implementation_hashes:
+  gpu_decision_py: fefdcb9a4cfd9e1b911b53e139a53f98a262cad9e2115e3926e5c97f7c742b7b
+  analyze_gpu_decision_py: a74ab7852cdc37061493dfac880d71f61925ec8d23f730ac2b72c4b529e19dde
+  test_gpu_decision_py: 6623d93e63e9fb3422ab16781842f5b1299a5549d6dc85a92245e2fb470f7ab9
+
+scope:
+  training_run: false
+  prediction_run: false
+  test_data_accessed: false
+  CNR_EXT_accessed: false
+  PKLot_accessed: false
+  VIRAT_accessed: false
+  remote_or_paid_GPU_used: false
+  historical_frozen_outputs_modified: false
+
+gate:
+  stage_G_passed: true
+  stage_H_local_formal_training_allowed: true
+  paid_or_remote_GPU_allowed: false
+  new_output_directory_required: true

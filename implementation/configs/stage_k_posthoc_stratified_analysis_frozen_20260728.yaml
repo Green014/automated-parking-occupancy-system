@@ -1,0 +1,62 @@
+schema_version: 1
+protocol_id: P-COMP-PKLOT-TEST-STAGEK-STRATA-POSTHOC-20260728-01
+status: frozen_posthoc_before_analysis
+frozen_at: "2026-07-28T00:17:00+08:00"
+
+scope:
+  data_role: untouched_test_already_evaluated
+  read_only_posthoc: true
+  prediction_allowed: false
+  parameter_selection_allowed: false
+  detector_reselection_allowed: false
+  purpose: Add the prerequested explicit date and weather reporting layers without changing frozen predictions.
+
+source:
+  result_record:
+    path: ../data/comparisons/stage_k_p0_p1_p2_test_20260727.yaml
+    bytes: 19563
+    sha256: 3a2b878791255a9f0a21a895cbcff88233636867f70ececc4244f8281d5d5cbe
+  external_run_root: outputs/P0_P1_P2_stage_k_20260727_v1
+  methods:
+    P0:
+      relative_path: P0/occupancy.csv
+      bytes: 584656
+      sha256: 5a0a58f52855ff3dd0096940389e03a99db411c90c5d7c6145884460cdb82545
+    P1:
+      relative_path: P1/occupancy.csv
+      bytes: 584656
+      sha256: 2b582c0f2a28ae70c6233fef5567c760ea599f53dcaa2e560eadab7093319f79
+    P2:
+      relative_path: P2/occupancy.csv
+      bytes: 584656
+      sha256: 89d7629ab17e244563e8b0d692e27f7ba1ac0097dad25fcf05d9f602b11a9b91
+
+expected:
+  methods: [P0, P1, P2]
+  rows_per_method: 5040
+  known_rows_per_method: 5034
+  unknown_rows_excluded_per_method: 6
+  samples: 90
+  dates: ["2012-09-15", "2013-01-16", "2013-04-14"]
+  weather: [cloudy, sunny]
+
+metrics:
+  strata: [date, weather]
+  fields:
+    - macro_f1
+    - occupied_precision
+    - occupied_recall
+    - occupied_f1
+    - vacant_precision
+    - vacant_recall
+    - vacant_f1
+    - false_free_rate
+    - false_occupied_rate
+
+output_contract:
+  root_must_not_exist: true
+  files:
+    - preflight.json
+    - analysis.json
+    - date_metrics.csv
+    - weather_metrics.csv

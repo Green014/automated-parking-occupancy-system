@@ -1,0 +1,39 @@
+schema_version: 1
+protocol_id: STAGE-Q-V2-UPM-GTI-EXTERNAL-NIGHT-OCCUPANCY-20260729-01
+config_id: STAGE-Q-V2-FORMAL-EXTERNAL-NIGHT-OCCUPANCY-20260729-02
+status: frozen_before_formal_model_inference
+frozen_on: "2026-07-29"
+correction_type: additive_runtime_environment_retry
+
+additive_retry_of:
+  path: stage_q_v2_external_night_occupancy_frozen_20260729.yaml
+  bytes: 5102
+  sha256: e5c586aebf7b9de1e8e0cdd8118d7a9f0ef487fa7a610338b05c40a2fb2c1002
+
+failed_attempt_evidence:
+  path: ../data/stage_q_v2/STAGE_Q_V2_FORMAL_ATTEMPT_V1_FAILURE_20260729.yaml
+  bytes: 1749
+  sha256: 155168a3e637e8ca267d73b780c4da4b2f8a9669959439c17fdcb588e6c088ee
+  status: FAILED_BEFORE_DETECTOR_MODEL_LOAD_OR_PREDICTION
+
+corrections:
+  output_root:
+    old: ../outputs/stage_q_v2_upm_gti_external_20260729_v1
+    new: ../outputs/stage_q_v2_upm_gti_external_20260729_v2
+    rationale: preserve_failed_v1_without_overwrite_or_deletion
+  runtime_environment:
+    YOLO_CONFIG_DIR: ../outputs/stage_q_v2_upm_gti_external_20260729_v2/_runtime
+    rationale: keep_Ultralytics_settings_inside_writable_additive_output
+
+invariants:
+  detector_weights_changed: false
+  E1b_checkpoint_changed: false
+  manifest_changed: false
+  truth_changed: false
+  polygons_changed: false
+  P3_parameters_changed: false
+  method_order_changed: false
+  run_count_per_method: 1
+  D1_remains_project_default: true
+  D1_LL_role: secondary_frozen_comparison
+  stage_p2_decision_remains: FAIL

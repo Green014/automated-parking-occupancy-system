@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "protocol_id": "STAGE-U-PORTABLE-FINAL-RELEASE-20260730-01",
+  "status": "AUDITED_WITHOUT_HISTORICAL_REGISTRY_MODIFICATION",
+  "registry_count": 11,
+  "portable_count": 2,
+  "local_only_count": 9,
+  "registries": [
+    {
+      "path": "implementation/data/stage_m/STAGE_M_ARTIFACT_REGISTRY_20260728.yaml",
+      "bytes": 11331,
+      "sha256": "dd12482338df3c4b9dccac36863dd85151645a1ce7845c5fcec5fa6168b998bd",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths",
+        "model_weights"
+      ],
+      "binding_count": 55,
+      "current_local_verification": {
+        "verified": false,
+        "errors": [
+          "bytes:README.md",
+          "bytes:PLAN.md",
+          "bytes:literature_core/METHOD_PROVENANCE.md"
+        ]
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_n/STAGE_N_ARTIFACT_REGISTRY_20260728.yaml",
+      "bytes": 8980,
+      "sha256": "dcf49cde19839918e8d6d43a7eda56c7ba610a660341d5f70e1266ac0ccfbd2c",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths",
+        "model_weights"
+      ],
+      "binding_count": 40,
+      "current_local_verification": {
+        "verified": false,
+        "errors": [
+          "bytes:src/parking_occupancy/stage_n_lmot.py",
+          "bytes:tests/test_stage_n_lmot.py",
+          "bytes:scripts/run_stage_n_lmot.py",
+          "bytes:README.md",
+          "bytes:PLAN.md",
+          "bytes:literature_core/METHOD_PROVENANCE.md"
+        ]
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_n_v2/STAGE_N_V2_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 23822,
+      "sha256": "803412bf4258ecae423108938206f2e19cbebf31b11284856573a9984a2d464b",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_outside_repository",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths"
+      ],
+      "binding_count": 73,
+      "current_local_verification": {
+        "verified": false,
+        "errors": [
+          "bytes:README.md",
+          "bytes:PLAN.md"
+        ]
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_n_v3/STAGE_N_V3_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 12831,
+      "sha256": "5ab04f3326286c0605f2781536c45bd0ef79bdbe2e17ccfa636ed8734c96a2e6",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_dataset_or_external_data",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths"
+      ],
+      "binding_count": 35,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_o/STAGE_O_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 78776,
+      "sha256": "efbbb63b77aefae00c1c4758b8df1dd463c2fd4a54bc32626ebf441073b87660",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_dataset_or_external_data",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths",
+        "model_weights"
+      ],
+      "binding_count": 213,
+      "current_local_verification": {
+        "verified": false,
+        "errors": [
+          "bytes:literature_core/METHOD_PROVENANCE.md",
+          "bytes:literature_core/RESULTS.md"
+        ]
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_p/STAGE_P_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 13210,
+      "sha256": "206db0c3b9cd1a3575eeb7e5ba56a23f3f7f621caee139e61f47d9ee6efe06fa",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths",
+        "model_weights"
+      ],
+      "binding_count": 39,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_q/STAGE_Q_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 6531,
+      "sha256": "da6cb2b9efc9b0bcda97d1c723ec4471101fce8c0dd3bdb0c5e8e742f7e04186",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_dataset_or_external_data",
+        "machine_absolute_paths"
+      ],
+      "binding_count": 18,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_q_v2/STAGE_Q_V2_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 298206,
+      "sha256": "003bca5f2d5c6f7c92dddd99b40d2bf7f510c63dd9004a4bbd211e069e45fd21",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "artifact_outside_repository",
+        "ignored_dataset_or_external_data",
+        "ignored_runtime_outputs",
+        "machine_absolute_paths",
+        "model_weights"
+      ],
+      "binding_count": 819,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_r/STAGE_R_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 2671,
+      "sha256": "97bd04779c9622235f12be2d3c0fa77296c62197b3163bd31e3963419fe98b25",
+      "registry_class": "portable historical registry",
+      "classification_reasons": [],
+      "binding_count": 13,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": true,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_s/STAGE_S_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 4979,
+      "sha256": "282f30b241c49930888788bcf4f04cde344b7cb03d6f07b23cc955ff181e43aa",
+      "registry_class": "portable historical registry",
+      "classification_reasons": [],
+      "binding_count": 24,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": true,
+      "content_modified_by_stage_u": false
+    },
+    {
+      "path": "implementation/data/stage_t/STAGE_T_ARTIFACT_REGISTRY_20260729.yaml",
+      "bytes": 10716,
+      "sha256": "2b2989b558619448e5fdc8a54c7efe3812d91c16cb2c7e8806f58824b38d427c",
+      "registry_class": "local-only historical registry",
+      "classification_reasons": [
+        "artifact_not_in_submission_candidates",
+        "ignored_runtime_outputs"
+      ],
+      "binding_count": 46,
+      "current_local_verification": {
+        "verified": true,
+        "errors": []
+      },
+      "included_in_submission_candidates": false,
+      "content_modified_by_stage_u": false
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "candidate_id": "P-COMP-PKLOT-TEST-STAGEK-CANDIDATE-20260727-01",
+  "status": "candidate_prepared_no_predictions",
+  "prediction_count": 0,
+  "existing_candidate_data_reused_and_verified": true,
+  "selection_rule": "sort timestamps within each predeclared camera/weather/date group, then choose 30 evenly spaced complete JPG/XML pairs; do not inspect occupancy labels for membership selection",
+  "groups": [
+    {
+      "archive_camera": "parking2",
+      "camera": "pucpr",
+      "weather": "sunny",
+      "date": "2012-10-15",
+      "requested": 30,
+      "available_complete_pairs": 81
+    },
+    {
+      "archive_camera": "parking1a",
+      "camera": "ufpr04",
+      "weather": "cloudy",
+      "date": "2013-01-19",
+      "requested": 30,
+      "available_complete_pairs": 68
+    },
+    {
+      "archive_camera": "parking1b",
+      "camera": "ufpr05",
+      "weather": "sunny",
+      "date": "2013-03-03",
+      "requested": 30,
+      "available_complete_pairs": 71
+    }
+  ],
+  "totals": {
+    "images": 90,
+    "known_slots": 5022,
+    "occupied": 90,
+    "vacant": 4932,
+    "unknown": 18
+  },
+  "prior_development_manifest": {
+    "bytes": 5457,
+    "sha256": "eb548c61eda7dd24a658fb07229131ddac8be4fb4cdee8fab37faa0edf022519",
+    "image_hashes": 27
+  },
+  "overlap": {
+    "selected_unique_image_hashes": 90,
+    "prior_image_sha256_overlap": 0
+  },
+  "source": {
+    "dataset": "PKLot",
+    "official_archive_url": "https://www.inf.ufpr.br/lesoliveira/download/PKLot.tar.gz",
+    "official_archive_expected_bytes": 3860376865,
+    "local_partial_archive_bytes": 2760421376,
+    "local_partial_archive_sha256": "e197ae7fa97045354a115e515d6568d86d540c628907803d3bf640a67734c621",
+    "local_archive_is_complete": false,
+    "scan": {
+      "members_read": 17881,
+      "unique_stems": 12219,
+      "complete_pairs": 5257,
+      "stream_end": "partial_archive: unexpected end of data"
+    }
+  },
+  "artifacts": {
+    "manifest": {
+      "bytes": 43773,
+      "sha256": "c8d1500e3a042a265b2b06fa9549671f43a13928bcfa7ba0b8787551c9cc7422"
+    },
+    "annotations": {
+      "bytes": 1206480,
+      "sha256": "5bd202249d408e2e649ebd3511cdba0e5df4c3ebf0212b17d119f1bc161cdc13"
+    },
+    "contact_sheet": {
+      "bytes": 4565569,
+      "sha256": "34763f745dcd0b9c0f261b96006e6fd3895a26656961f06ce40f7016ecb26caf"
+    }
+  },
+  "manual_visual_review": {
+    "status": "pending",
+    "review_scope": "all 90 candidate thumbnails"
+  },
+  "gate": "pending_manual_visual_review_and_protocol_freeze"
+}

@@ -1,0 +1,104 @@
+schema_version: 1
+audit_id: STAGE-M-DATA-GATES-20260728-01
+audited_at: "2026-07-28T18:00:00+08:00"
+threshold_selection_after_freeze: prohibited
+formal_test_execution_before_gate: prohibited
+
+gates:
+  - gate_id: continuous_parking_formal_test
+    status: blocked
+    allowed_claim: audit_only
+    reasons:
+      - no_new_human_reviewed_development_and_physically_distinct_test_pair
+      - no_new_video_polygon_truth_bundle_frozen_before_prediction
+      - VIRAT_0502_is_consumed_development_and_not_new_independent_validation
+      - Grand_Bassin_has_incomplete_transition_truth
+    required_before_open:
+      - explicit_dataset_license
+      - fixed_camera_video
+      - development_and_physically_distinct_test_scenes
+      - entry_departure_pass_by_or_occlusion_event
+      - fixed_slot_polygons
+      - human_reviewed_truth_intervals_or_transition_frames
+      - video_polygon_truth_and_config_sha256
+      - configuration_freeze_before_single_test_execution
+
+  - gate_id: low_light_slot_occupancy
+    status: blocked
+    allowed_claim: audit_only
+    reasons:
+      - no_local_low_light_parking_data_with_slot_polygons_and_slot_truth
+      - NDISPark_has_no_slot_geometry_or_occupied_vacant_truth
+      - LMOT_has_no_parking_slot_geometry_or_occupied_vacant_truth
+    primary_metric_scope:
+      - macro_f1
+      - occupied_recall
+      - vacant_recall
+      - false_free_rate
+      - false_occupied_rate
+      - flicker_count
+      - false_transitions
+      - signed_transition_error
+
+  - gate_id: ndispark_low_light_detector_count
+    status: eligible
+    allowed_claim: detector_count_only_supporting_experiment
+    reasons: []
+    dataset: NDISPark
+    dataset_license: ODC-By-1.0
+    local_status: present_and_previously_audited
+    restrictions:
+      - validation_is_consumed_development
+      - test_has_counts_only
+      - test_cannot_report_box_AP
+      - result_cannot_support_slot_occupancy_or_tracking_claims
+
+  - gate_id: aodraw_detector_diagnostic
+    status: blocked
+    allowed_claim: audit_only
+    reasons:
+      - repository_statement_explicitly_licenses_code_not_dataset
+      - dataset_image_and_annotation_license_not_verified
+      - no_local_dataset
+    official_source: https://github.com/lzyhha/AODRaw
+    checked_at: "2026-07-28"
+    candidate_if_license_resolved:
+      package: images_downsampled_srgb
+      approximate_size_gb: 4.3
+      task: detector_only_supporting_experiment
+      category_mapping: [car, bus, truck, motorcycle]
+      condition_strata:
+        - normal
+        - low_light
+        - rain
+        - fog
+        - combined
+      prohibited:
+        - parking_slot_occupancy_claim
+        - tracking_claim
+        - MMDetection_install
+        - RAW_pretraining_reproduction
+        - cross_domain_distillation_reproduction
+
+  - gate_id: lmot_tracking_diagnostic
+    status: deferred
+    allowed_claim: validation_tracking_diagnostic_only
+    reasons:
+      - no_local_LMOT_release
+      - only_train_and_validation_are_currently_released
+      - no_parking_slot_polygons_or_occupied_vacant_truth
+    official_source: https://github.com/xinzwang/LMOT
+    checked_at: "2026-07-28"
+    dataset_license: CC-BY-NC-4.0
+    code_license: MIT
+    candidate_scope_if_acquired:
+      split: validation
+      paired_light_and_dark_must_share_split: true
+      trackers: [ByteTrack, TrackTrack]
+      metrics: [HOTA, AssA, IDF1]
+      vehicle_subset: [car]
+      evaluator: TrackEval
+      prohibited:
+        - parking_slot_occupancy_claim
+        - untouched_test_claim
+        - LTrack_reproduction_without_complete_official_implementation

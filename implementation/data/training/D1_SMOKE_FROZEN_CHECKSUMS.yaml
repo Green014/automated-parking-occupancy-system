@@ -1,0 +1,7 @@
+schema_version: 1
+registry_id: D1-NDISPARK-SMOKE-FREEZE-20260727-01
+frozen_at: "2026-07-27T17:02:08.783602+08:00"
+artifacts:
+  - path: data/training/d1_ndispark_smoke_20260727.yaml
+    bytes: 6411
+    sha256: 44318362f767bab3ae07f7c865fe7e130cdf53c6df66ccd485eaf2a506eed10e

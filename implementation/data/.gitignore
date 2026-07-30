@@ -1,0 +1,12 @@
+# Historical full registries below bind local outputs, datasets, weights, or
+# machine-specific absolute paths. Keep them locally, but omit them from the
+# portable submission package. Stage R/S portable registries remain included.
+stage_m/STAGE_M_ARTIFACT_REGISTRY_20260728.yaml
+stage_n/STAGE_N_ARTIFACT_REGISTRY_20260728.yaml
+stage_n_v2/STAGE_N_V2_ARTIFACT_REGISTRY_20260729.yaml
+stage_n_v3/STAGE_N_V3_ARTIFACT_REGISTRY_20260729.yaml
+stage_o/STAGE_O_ARTIFACT_REGISTRY_20260729.yaml
+stage_p/STAGE_P_ARTIFACT_REGISTRY_20260729.yaml
+stage_q/STAGE_Q_ARTIFACT_REGISTRY_20260729.yaml
+stage_q_v2/STAGE_Q_V2_ARTIFACT_REGISTRY_20260729.yaml
+stage_t/STAGE_T_ARTIFACT_REGISTRY_20260729.yaml

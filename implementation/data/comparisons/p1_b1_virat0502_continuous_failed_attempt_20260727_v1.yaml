@@ -1,0 +1,30 @@
+schema_version: 1
+attempt_id: P1-B1-VIRAT0502-CONTINUOUS-ATTEMPT-20260727-V1
+protocol_id: P1-B1-VIRAT0502-CONTINUOUS-20260727-01
+status: failed_before_first_prediction
+data_role: consumed_development_case_study
+failure:
+  stage: first_detector_initialization_before_frame_0_prediction
+  exception: PermissionError
+  reason: Ultralytics attempted to create its default roaming-user configuration directory, which was outside the writable sandbox.
+  prediction_rows_written: 0
+  model_output_viewed: false
+  parameter_change_after_failure: false
+recovery:
+  action: Set YOLO_CONFIG_DIR to a new run-local directory.
+  method_protocol_changed: false
+  data_protocol_changed: false
+  retry_output: outputs/p1_b1_virat0502_continuous_20260727_v2
+retained_external_artifacts:
+  - role: failed_preflight
+    path: outputs/p1_b1_virat0502_continuous_20260727_v1/preflight.json
+    bytes: 857
+    sha256: ef40eb8d7902f8f2c355af995ce7c9a4534f11a5f4da10546f89dd11f2fbced6
+  - role: failed_empty_detections
+    path: outputs/p1_b1_virat0502_continuous_20260727_v1/detections.jsonl
+    bytes: 0
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  - role: failed_unplayable_video_header
+    path: outputs/p1_b1_virat0502_continuous_20260727_v1/annotated.mp4
+    bytes: 258
+    sha256: 7817119d388f19407bdacbd714686f779bc1cf19bf9fb8e7438fde492f502be2

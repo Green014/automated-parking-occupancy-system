@@ -1,0 +1,218 @@
+schema_version: 1
+dataset_id: virat_ground_release_2_0
+purpose: temporal_candidate_screening_only
+created_at: "2026-07-26"
+official:
+  landing_page: https://viratdata.org/
+  api_root: https://data.kitware.com/api/v1
+  videos_folder_id: 56f581ce8d777f753209ca43
+  release_document_item_id: 56f581c88d777f753209c9cc
+  agreement: https://viratdata.org/resources/VIRAT-Video-Data-Set-Protection-Agreement-1-4-11.pdf
+license_access:
+  individual_acceptance_required: true
+  user_acceptance_recorded: true
+  acceptance_recorded_at: "2026-07-26"
+  personal_details_stored: false
+grouping:
+  rule: physical_scene_id_is_filename_digits_XXYY
+  sequence_rule: sequence_id_is_filename_digits_ZZ
+  source: VIRAT_Video_Dataset_Release2.0_Introduction_v1.0.pdf section 2.2
+  warning: six_digit_XXYYZZ_prefixes_are_not_independent_scenes
+screening:
+  downloaded_video_count: 21
+  downloaded_bytes: 961643821
+  budget_bytes: 1000000000
+  result: one_eligible_clip_only
+  experiment_gate: closed
+  gate_reason: no_second_physical_scene_with_verified_slot_transition
+candidates:
+  - name: VIRAT_S_010003_07_000608_000636.mp4
+    item_id: 56f5879c8d777f753209cb34
+    physical_scene_id: "0100"
+    sequence_id: "03"
+    bytes: 1618350
+    sha256: 154aa82e4bc10efb16025fb251a287be3e0108f1e2877173b6cc5bda5106210e
+    video: {width: 1280, height: 720, fps: 23.97, frames: 495}
+    decision: reject
+    reason: campus_plaza_without_parking_slots
+  - name: VIRAT_S_010004_01_000163_000188.mp4
+    item_id: 56f587a08d777f753209cb4f
+    physical_scene_id: "0100"
+    sequence_id: "04"
+    bytes: 2079987
+    sha256: 95a1e20094e3b8da9369d40866d00db695798bf67758fc9a24dfb64c4143f85a
+    video: {width: 1280, height: 720, fps: 23.97, frames: 507}
+    decision: reject
+    reason: campus_plaza_without_parking_slots
+  - name: VIRAT_S_010005_05_000397_000430.mp4
+    item_id: 56f587aa8d777f753209cb70
+    physical_scene_id: "0100"
+    sequence_id: "05"
+    bytes: 1639520
+    sha256: f4a20650204d0c87c204f2a5f23f8b2d128968ae4a92ddeb8b1a455e279eace3
+    video: {width: 1280, height: 720, fps: 23.97, frames: 558}
+    decision: reject
+    reason: campus_plaza_without_parking_slots
+  - name: VIRAT_S_010111_09_000981_001014.mp4
+    item_id: 56f587d38d777f753209cbd3
+    physical_scene_id: "0101"
+    sequence_id: "11"
+    bytes: 2654583
+    sha256: 2d5a78b6494fe428a986a40644aa391d489c1edaefa935bfcd2f484490a02aa4
+    video: {width: 1280, height: 720, fps: 23.97, frames: 327}
+    decision: reject
+    reason: marked_parking_visible_but_no_slot_state_transition
+  - name: VIRAT_S_010200_08_000838_000867.mp4
+    item_id: 56f587ed8d777f753209cc1e
+    physical_scene_id: "0102"
+    sequence_id: "00"
+    bytes: 2046689
+    sha256: cfc243f839058da3efaa73156178910e62e73961aa5fa5cea290e4f14f2d608e
+    video: {width: 1280, height: 720, fps: 23.97, frames: 532}
+    decision: reject
+    reason: campus_walkway_without_parking_slots
+  - name: VIRAT_S_010201_09_000770_000801.mp4
+    item_id: 56f587f48d777f753209cc42
+    physical_scene_id: "0102"
+    sequence_id: "01"
+    bytes: 2651971
+    sha256: f0090dd687a6b2c535f71f8758d1b01f62ea71eb8d2c5eab736d050863f18997
+    video: {width: 1280, height: 720, fps: 23.97, frames: 700}
+    decision: reject
+    reason: campus_walkway_without_parking_slots
+  - name: VIRAT_S_010202_00_000001_000033.mp4
+    item_id: 56f587f58d777f753209cc45
+    physical_scene_id: "0102"
+    sequence_id: "02"
+    bytes: 1808139
+    sha256: a2d816eab5f98e244094987e744f0a098194120a5c57b76a8fe92b2aaeae837c
+    video: {width: 1280, height: 720, fps: 23.97, frames: 542}
+    decision: reject
+    reason: campus_walkway_without_parking_slots
+  - name: VIRAT_S_010208_07_000768_000791.mp4
+    item_id: 56f588218d777f753209ccde
+    physical_scene_id: "0102"
+    sequence_id: "08"
+    bytes: 1362385
+    sha256: 2b791ce4ab56420fccf1092e7d8723afccc81dc4503a9adee788700ad218d44d
+    video: {width: 1280, height: 720, fps: 23.97, frames: 461}
+    decision: reject
+    reason: campus_walkway_without_parking_slots
+  - name: VIRAT_S_000201_03_000640_000672.mp4
+    item_id: 56f585f08d777f753209ca77
+    physical_scene_id: "0002"
+    sequence_id: "01"
+    bytes: 32878685
+    sha256: 1821ca07735092f13238418ef459759a8a2dcb962d6a59c4e74a3c2434564668
+    video: {width: 1280, height: 720, fps: 30.0, frames: 943}
+    decision: reject
+    reason: marked_parking_visible_but_only_lane_vehicle_motion
+  - name: VIRAT_S_000203_08_001702_001734.mp4
+    item_id: 56f586e08d777f753209ca9b
+    physical_scene_id: "0002"
+    sequence_id: "03"
+    bytes: 33229616
+    sha256: 9ce4094d2bb0b24d3c5c43e2c595cd77efc5d2c78a32050ab0cd646f096c50f2
+    video: {width: 1280, height: 720, fps: 30.0, frames: 954}
+    decision: reject
+    reason: marked_parking_visible_but_no_slot_state_transition
+  - name: VIRAT_S_000205_05_001092_001124.mp4
+    item_id: 56f5872d8d777f753209cab0
+    physical_scene_id: "0002"
+    sequence_id: "05"
+    bytes: 33529627
+    sha256: 25aa06ef4534d026ade4ba9b85df110eb2d02d5a037b1d361b2f36dea11252d5
+    video: {width: 1280, height: 720, fps: 30.0, frames: 958}
+    decision: reject
+    reason: marked_parking_visible_but_no_slot_state_transition
+  - name: VIRAT_S_000207_02_000498_000530.mp4
+    item_id: 56f587628d777f753209cac2
+    physical_scene_id: "0002"
+    sequence_id: "07"
+    bytes: 32906093
+    sha256: f17a1165984444b242199a8190d1f0fe6a83c6ea0c07b54c1c3ab633539b4571
+    video: {width: 1280, height: 720, fps: 30.0, frames: 943}
+    decision: reject
+    reason: marked_parking_visible_but_only_lane_vehicle_motion
+  - name: VIRAT_S_040000_00_000063_000085.mp4
+    item_id: 56f5882c8d777f753209cced
+    physical_scene_id: "0400"
+    sequence_id: "00"
+    bytes: 49063526
+    sha256: a197864d8bd9b93e1cf96bf692b9bf59e20c66412ae0781a6dfa3f31faff6497
+    video: {width: 1920, height: 1080, fps: 29.97003, frames: 649}
+    decision: reject
+    reason: roadway_view_without_complete_fixed_parking_slots
+  - name: VIRAT_S_050000_12_001591_001619.mp4
+    item_id: 56f58e7c8d777f753209cd93
+    physical_scene_id: "0500"
+    sequence_id: "00"
+    bytes: 36628890
+    sha256: ba7ed0525ad0041000d88064bf489f1a06f7986d14e62bb4d0067c0b91f6a006
+    video: {width: 1920, height: 1080, fps: 29.97003, frames: 834}
+    decision: reject
+    reason: roadway_view_without_complete_fixed_parking_slots
+  - name: VIRAT_S_050201_05_000890_000944.mp4
+    item_id: 56f58ee98d777f753209cdae
+    physical_scene_id: "0502"
+    sequence_id: "01"
+    bytes: 70155773
+    sha256: c7f532bfc620efcd9ec24c37c2fea3b2f0ca6d93aef976960a6be3679b66bfa8
+    video: {width: 1920, height: 1080, fps: 29.97003, frames: 1616}
+    decision: reject
+    reason: marked_parking_visible_but_no_slot_state_transition
+  - name: VIRAT_S_000207_00_000000_000045.mp4
+    item_id: 56f587558d777f753209cabc
+    physical_scene_id: "0002"
+    sequence_id: "07"
+    bytes: 47534720
+    sha256: cc0fa4f6aa69bfc6b2098fef7b32b3b05cddd9f01a1bb9de1f62297ef656a30b
+    video: {width: 1280, height: 720, fps: 30.0, frames: 1350}
+    decision: reject
+    reason: marked_parking_visible_but_only_lane_vehicle_motion
+  - name: VIRAT_S_010108_02_000800_000960.mp4
+    item_id: 56f587bf8d777f753209cb9a
+    physical_scene_id: "0101"
+    sequence_id: "08"
+    bytes: 30308238
+    sha256: a0a1115bad9f81bc2c200b02d08ec5119fac0aefd71f29a448839723883dca9f
+    video: {width: 1280, height: 720, fps: 23.97, frames: 3762}
+    decision: reject
+    reason: marked_parking_visible_but_no_slot_state_transition
+  - name: VIRAT_S_040103_00_000000_000120.mp4
+    item_id: 56f58c5d8d777f753209cd3f
+    physical_scene_id: "0401"
+    sequence_id: "03"
+    bytes: 271159387
+    sha256: a4de5b231ce8f11b7bb22d7031e105acbbb7157a73ea63cccf8b80438cd34dab
+    video: {width: 1920, height: 1080, fps: 29.945034, frames: 3594}
+    decision: reject
+    reason: moving_vehicle_already_outside_a_complete_slot_at_frame_zero
+  - name: VIRAT_S_050202_02_000447_000577.mp4
+    item_id: 56f58f488d777f753209cdc9
+    physical_scene_id: "0502"
+    sequence_id: "02"
+    bytes: 169725598
+    sha256: fcd7bcedee3b919d7dce7ae4bbde82565642456a71261864aec796eefea0146e
+    video: {width: 1920, height: 1080, fps: 29.97003, frames: 3889}
+    decision: reject
+    reason: marked_parking_visible_but_only_lane_vehicle_motion
+  - name: VIRAT_S_050202_10_002159_002233.mp4
+    item_id: 56f58f9b8d777f753209cde1
+    physical_scene_id: "0502"
+    sequence_id: "02"
+    bytes: 86850675
+    sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
+    video: {width: 1920, height: 1080, fps: 29.97003, frames: 1974}
+    decision: eligible_frame_truth_verified_candidate
+    reason: clear_departure_from_fixed_polygon_with_first_vacant_frame_1660
+    truth_path: data/annotations/virat_0502_departure_truth.yaml
+  - name: VIRAT_S_000203_03_000736_000785.mp4
+    item_id: 56f586ac8d777f753209ca8c
+    physical_scene_id: "0002"
+    sequence_id: "03"
+    bytes: 51811369
+    sha256: c85ced4e6984bb4a2d97109a7f9e45cf7b398530c0eebc0eba3dcd30c68477ad
+    video: {width: 1280, height: 720, fps: 30.0, frames: 1468}
+    decision: reject
+    reason: marked_parking_visible_but_only_roadway_vehicle_motion

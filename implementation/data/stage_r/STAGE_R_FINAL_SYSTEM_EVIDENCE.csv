@@ -1,0 +1,6 @@
+decision_area,evidence,decision,claim_boundary
+default_detector,D1 R2 Macro F1=0.664318; D1-LL R2 Macro F1=0.617484.,Keep D1 as the default detector.,D1-LL remains a frozen negative low-light fine-tuning experiment.
+fusion_F2,D1 B1-to-F2 Macro F1 change=+0.093474.,Use B1 + F2 in the default occupancy path.,Post-hoc attribution on frozen Stage Q-v2 outputs.
+temporal_E4,D1 F2-to-E4 occupied-recall change=+0.075188; Macro-F1 change=-0.042363.,Make E4 conditional on genuinely continuous video.,E4 needs separate continuous-video calibration.
+temporal_validity,9 selected-frame boundaries have source-frame gap > 1; maximum gap=136 frames.,Do not use Stage Q-v2 as continuous-video proof.,No timestamps/FPS or seconds-level latency claimed.
+TrackTrack,Stage Q-v2 tracker backend is none; TrackTrack was not run.,Retain TrackTrack as an independent optional MOT module.,No claim that TrackTrack improves slot-level occupancy.

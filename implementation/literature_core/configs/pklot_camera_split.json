@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "description": "Camera-disjoint pilot split selected before literature-core training.",
+  "train": ["pucpr"],
+  "development": ["ufpr04"],
+  "test": ["ufpr05"]
+}
+

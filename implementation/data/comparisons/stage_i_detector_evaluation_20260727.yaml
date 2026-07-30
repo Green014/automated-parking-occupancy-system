@@ -1,0 +1,256 @@
+schema_version: 1
+record_id: D-STAGE-I-RECORD-NDISPARK-20260727-01
+status: complete_with_negative_count_result_and_retained_preinference_failure
+completed_at: "2026-07-27T18:35:00+08:00"
+
+protocol:
+  dataset_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  development_comparison_id: D-COMP-NDISPARK-DEV-20260727-01
+  detector_selection_id: D-SELECT-NDISPARK-DEV-20260727-01
+  count_test_protocol_id: D-COUNT-NDISPARK-TEST-20260727-01
+  common_imgsz: 640
+  common_nms_iou: 0.7
+  common_max_detections: 300
+
+development_detection_comparison:
+  role: consumed_development_validation
+  images: 30
+  vehicle_boxes: 725
+  confidence_floor_for_PR_and_AP: 0.001
+  models:
+    D0:
+      name: COCO-pretrained YOLOv8n
+      precision: 0.5939411559299785
+      recall: 0.5164839855433425
+      mAP50: 0.5585236544196752
+      mAP50_95: 0.28467800146866495
+      latency_ms_per_image: 25.817683333419456
+      fps: 38.73314220666575
+      parameter_count: 3151904
+      weights_bytes: 6549796
+    D1:
+      name: NDISPark-fine-tuned YOLOv8n
+      precision: 0.8815308316950262
+      recall: 0.8416047018391926
+      mAP50: 0.8990977314394328
+      mAP50_95: 0.6496907042246293
+      latency_ms_per_image: 26.473780000136077
+      fps: 37.773223166274704
+      parameter_count: 3005843
+      weights_bytes: 6255409
+    D2:
+      name: YOLO-World zero-shot
+      precision: 0.7673560497517391
+      recall: 0.616551724137931
+      mAP50: 0.7296272841610298
+      mAP50_95: 0.3970351434258608
+      latency_ms_per_image: 26.39029333319437
+      fps: 37.89272015185125
+      runtime_loaded_parameter_count: 164026601
+      weights_bytes: 25923032
+  selected_detector: D1
+  selection_order: [mAP50_95, recall]
+  detector_ranking: [D1, D2, D0]
+  note: D1 was selected before any count-test prediction or slot-occupancy test.
+
+shared_count_rule_selection:
+  role: consumed_development_validation
+  candidate_grid: "0.05:0.05:0.95"
+  selected_confidence: 0.10
+  objective: mean count MAE across every D0/D1/D2 development image
+  tie_breaks:
+    - lower_worst_model_MAE
+    - higher_confidence
+  per_model_thresholds_used: false
+  selected_threshold_development_MAE:
+    D0: 6.7
+    D1: 9.333333333333334
+    D2: 4.766666666666667
+  count_test_read_during_selection: false
+
+count_only_test:
+  role: official_count_only_test
+  images: 117
+  cameras: [60, 64, 69, 73, 78, 83]
+  true_vehicle_count_sum: 1402
+  box_ground_truth_available: false
+  shared_confidence: 0.10
+  models:
+    D0:
+      MAE: 2.9914529914529915
+      RMSE: 5.301185160184852
+      mean_predicted_count: 11.162393162393162
+      mean_true_count: 11.982905982905983
+      latency_ms_per_image: 9.217276923057693
+      fps: 108.4919123454376
+    D1:
+      MAE: 3.4615384615384617
+      RMSE: 6.787998458818556
+      mean_predicted_count: 14.623931623931623
+      mean_true_count: 11.982905982905983
+      latency_ms_per_image: 7.854545299094623
+      fps: 127.31481733452705
+    D2:
+      MAE: 2.58974358974359
+      RMSE: 4.986306033853905
+      mean_predicted_count: 10.094017094017094
+      mean_true_count: 11.982905982905983
+      latency_ms_per_image: 60.88698803420185
+      fps: 16.42387039145824
+  lowest_MAE_under_frozen_shared_rule: D2
+  negative_result:
+    D1_not_best_on_count_MAE: true
+    detector_selection_changed_after_test: false
+    threshold_changed_after_test: false
+    retained: true
+  prohibited_metrics_not_reported:
+    - detector_mAP
+    - box_precision
+    - box_recall
+
+qualitative:
+  source_role: consumed_development_validation
+  lighting: night
+  confidence: 0.10
+  iou: 0.5
+  representative_images:
+    - 60_1537702242.jpg
+    - 73_1537414287.jpg
+    - 60_1537648298.jpg
+  visual_review_completed: true
+  visual_review_finding: D1 increases recall strongly but the shared low threshold also exposes duplicate/low-confidence false positives in dense rows.
+  official_occlusion_tags_available: false
+  occlusion_claim: dense-overlap review candidate only
+  count_test_box_truth_used: false
+
+retained_engineering_failure:
+  run_id: detector_count_test_stage_i_20260727_v1
+  stage: before_first_model_prediction
+  error: Ultralytics user settings directory was not writable.
+  artifacts: preflight_only
+  scientific_results_created: false
+  retry:
+    run_id: detector_count_test_stage_i_20260727_v2
+    changed_scientific_settings: false
+    repair: Redirect YOLO_CONFIG_DIR to the new output directory.
+  failed_output_deleted_or_overwritten: false
+
+artifacts:
+  - role: detector_selection
+    path: outputs/stage_i_detector_selection_20260727_v1.json
+    bytes: 20532
+    sha256: 3ec4313754c5826dc778b98134cbbfc3215e28cc45053d9cb6fb46583e061808
+  - role: development_comparison
+    path: outputs/detector_comparison_stage_i_20260727_v1/comparison.json
+    bytes: 8503
+    sha256: b435bd36379fab789290f7289a958b4e6b099f27fb17bcc5266540c867743c2b
+  - role: development_runtime_table
+    path: outputs/detector_comparison_stage_i_20260727_v1/model_runtime_table.csv
+    bytes: 236
+    sha256: 682b8f3f2c71b8f94513814c9a113e88d1575682a76a50b2297838f7dd5ccbbf
+  - role: D0_development_metrics
+    path: outputs/detector_comparison_stage_i_20260727_v1/D0/metrics.json
+    bytes: 2260
+    sha256: a30d0adf0181dba383ced348431ee475808751bb7f823ec0b8a60da316250a77
+  - role: D1_development_metrics
+    path: outputs/detector_comparison_stage_i_20260727_v1/D1/metrics.json
+    bytes: 2162
+    sha256: af40445bbaae860cbc33a7485cbda120ce795e23cd3326024dd9473d32fccb89
+  - role: D2_development_metrics
+    path: outputs/detector_comparison_stage_i_20260727_v1/D2/metrics.json
+    bytes: 2338
+    sha256: f642d5a5dd9b1a97e5526bf14fef65ef6034c595abf355388bcb4b1a95e8fb40
+  - role: D0_development_detections
+    path: outputs/detector_comparison_stage_i_20260727_v1/D0/detections.jsonl
+    bytes: 765293
+    sha256: ae87c8430c8f17cc67ba14444b0d6e1ffdee5ba3c2deaf2eed717ea35e4fa847
+  - role: D1_development_detections
+    path: outputs/detector_comparison_stage_i_20260727_v1/D1/detections.jsonl
+    bytes: 1437943
+    sha256: 8959cda1b83604521a8f527ea0a26a9074b3b68aba49bde6091f3537f70d1db2
+  - role: D2_development_detections
+    path: outputs/detector_comparison_stage_i_20260727_v1/D2/detections.jsonl
+    bytes: 782221
+    sha256: 184cbd6a92046cb42f6cc927eb2afeb3b8577a9a84547eeb33e69bb2c121e822
+  - role: retained_preinference_failure
+    path: outputs/detector_count_test_stage_i_20260727_v1/preflight.json
+    bytes: 1198
+    sha256: c29a03839833f920e39ed640987d6de344f893cd13e19e88f0a987abc6d1be69
+  - role: count_comparison
+    path: outputs/detector_count_test_stage_i_20260727_v2/count_comparison.json
+    bytes: 10415
+    sha256: eacb939140a2478ebb0ec477b85345d26d14a96f74e2043c0f5f97dc7f016501
+  - role: count_runtime_table
+    path: outputs/detector_count_test_stage_i_20260727_v2/count_runtime_table.csv
+    bytes: 153
+    sha256: f37ba736e808133116a1134a6e0ef38f8231811788210f4c5155c50987abeed7
+  - role: D0_count_metrics
+    path: outputs/detector_count_test_stage_i_20260727_v2/D0/metrics.json
+    bytes: 2920
+    sha256: d104bee3779483375b01dd85887ac3e5abbe11d681652285e9bb2be97ad9363c
+  - role: D1_count_metrics
+    path: outputs/detector_count_test_stage_i_20260727_v2/D1/metrics.json
+    bytes: 2845
+    sha256: 25cb71d9f7f72bccc714aabde1878bb52d6f6e344d0026be509ae74f555a87a5
+  - role: D2_count_metrics
+    path: outputs/detector_count_test_stage_i_20260727_v2/D2/metrics.json
+    bytes: 2970
+    sha256: bd408a761a76c0b887cdc8d0c764cffdd787cf87d76df4702189a825cb758132
+  - role: D0_count_predictions
+    path: outputs/detector_count_test_stage_i_20260727_v2/D0/count_predictions.csv
+    bytes: 2766
+    sha256: cc3579e84360da75e466ab30820a44c447b5d9a22fd90867f96f54068b876f1f
+  - role: D1_count_predictions
+    path: outputs/detector_count_test_stage_i_20260727_v2/D1/count_predictions.csv
+    bytes: 2774
+    sha256: 641d801b6dde0f59eedf3ca053e350e339ffcb771b96ad099afed7dfc8673f71
+  - role: D2_count_predictions
+    path: outputs/detector_count_test_stage_i_20260727_v2/D2/count_predictions.csv
+    bytes: 2765
+    sha256: 5aee64685267454ecd8ae27d9f2b04516f84c85ea4d96650f67781e5ebad5e1f
+  - role: qualitative_manifest
+    path: outputs/detector_qualitative_stage_i_20260727_v1/qualitative_manifest.json
+    bytes: 19856
+    sha256: dfc5edc19ba89c440c6cce9dc9562e81eb787fb2ceb0b110ec84bf68e4bef4e0
+  - role: representative_montage
+    path: outputs/detector_qualitative_stage_i_20260727_v1/representative_comparison.png
+    bytes: 4049319
+    sha256: 5cfe9697ad3333ae9dd86d4f0024a6be23e550fc7a48588f44bc98e86fdae60d
+  - role: false_positive_montage
+    path: outputs/detector_qualitative_stage_i_20260727_v1/false_positive_montage.png
+    bytes: 4384243
+    sha256: 16935c0756e8edcb929c92c5ca7901892dcac64cdc19809b46e838b239c279ba
+  - role: false_negative_montage
+    path: outputs/detector_qualitative_stage_i_20260727_v1/false_negative_montage.png
+    bytes: 4416270
+    sha256: f92b74cfdc6f3461e0690c0b9d37b133683be902e1b4c502da51ff4ef94650e8
+  - role: night_dense_overlap_candidate
+    path: outputs/detector_qualitative_stage_i_20260727_v1/night_occlusion_candidate_comparison.png
+    bytes: 1558666
+    sha256: 4047a922d57c060293c0634e7610a363000d5af4ba7b9f1edf9445b06a47fb88
+  - role: formal_D1_training_curves
+    path: outputs/d1_ndispark_formal_20260727_v1/results.png
+    bytes: 279212
+    sha256: e151642b45adee8f8409029cf5002ef3607f7597e2c6f3028d6bbd5051fc801d
+
+output_inventory:
+  detector_comparison_stage_i_20260727_v1: {files: 32, bytes: 4645256}
+  detector_count_test_stage_i_20260727_v1: {files: 1, bytes: 1198}
+  detector_count_test_stage_i_20260727_v2: {files: 14, bytes: 762707}
+  detector_qualitative_stage_i_20260727_v1: {files: 14, bytes: 24118308}
+  git_ignored: true
+
+scope:
+  CNR_EXT_accessed: false
+  PKLot_accessed: false
+  VIRAT_accessed: false
+  remote_or_paid_GPU_used: false
+  historical_frozen_outputs_modified: false
+  slot_occupancy_test_accessed: false
+  test_counts_used_for_selection: false
+
+gate:
+  stage_I_passed: true
+  selected_detector_for_pipeline: D1
+  next_stage: J_reconnect_D0_D1_D2_to_common_B1_pipeline
+  new_untouched_slot_test_available: false

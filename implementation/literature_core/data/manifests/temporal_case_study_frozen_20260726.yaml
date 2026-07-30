@@ -1,0 +1,77 @@
+schema_version: 1
+purpose: freeze executed E4/E5 VIRAT case-study artifacts
+recorded_after_successful_evaluation: true
+scope: two_single_slot_departure_case_studies_not_a_general_tracking_benchmark
+
+protocol_artifacts:
+  experiment_config:
+    path: configs/temporal_e4_e5_frozen.yaml
+    sha256: 0bc75eac3ae2f9ac59c794f39dad301c40c1b49f1c2c169d357e0a1ef8964122
+  temporal_protocol:
+    path: configs/temporal_protocol_pending.yaml
+    sha256: 40be5bcf88ed99ebd735cce78bf0464299bb6c87475cdb4dfb8bee340877475b
+  runner:
+    path: scripts/run_frozen_temporal_case_study.py
+    sha256: 779d8076cda0e1bb0c837e399cd300d479306802fa69f412d243c14439639e23
+  development_truth:
+    path: data/annotations/virat_0502_departure_truth.yaml
+    sha256: ec17200d95a8348af5e813fb3364e68195e7a8ac33b9a8adeb93183d523f05a3
+  holdout_truth:
+    path: data/annotations/virat_0503_departure_truth.yaml
+    sha256: 4c859c26bb5ea0bcc171464ac8ada41c86ad1c7fe770fb1caca9386f61086b9b
+
+development:
+  scene_id: "0502"
+  source_video_id: VIRAT_S_050202_10_002159_002233
+  frames: 1974
+  post_warmup_frames: 1944
+  result_artifacts:
+    summary:
+      path: outputs/virat_temporal_case_study_dev_20260726_v1/summary.json
+      bytes: 14545
+      sha256: 709db63197841b55cbd702588f487e900be6abc07cc96110e42da991b2419435
+    predictions:
+      path: outputs/virat_temporal_case_study_dev_20260726_v1/predictions.csv
+      bytes: 479282
+      sha256: 845df1b29128cb003b0a94957541b11882a92e08dcabe075ee530b7b7a135772
+    events:
+      path: outputs/virat_temporal_case_study_dev_20260726_v1/events.csv
+      bytes: 424
+      sha256: 01c18b52022e4853311f17a644a528341838cb6a446b37992909babce6f159b9
+  metrics:
+    e0_raw: {macro_f1: 0.4560716284275321, occupied_recall: 1.0, vacant_recall: 0.0}
+    e3b_raw: {macro_f1: 0.4560716284275321, occupied_recall: 1.0, vacant_recall: 0.0}
+    e4: {macro_f1: 0.4560716284275321, occupied_recall: 1.0, vacant_recall: 0.0}
+    e5: {macro_f1: 0.4536256323777403, occupied_recall: 0.9901840490797545, vacant_recall: 0.0}
+
+holdout:
+  scene_id: "0503"
+  source_video_id: VIRAT_S_050300_09_001789_001858
+  frames: 2057
+  post_warmup_frames: 2027
+  consumed_once_only: true
+  result_artifacts:
+    summary:
+      path: outputs/virat_temporal_case_study_holdout_20260726_v1/summary.json
+      bytes: 15014
+      sha256: 6d4c31a62070a4c9d7f40ede8c4123000613ffb91c112feeddcb9f0141514ef9
+    predictions:
+      path: outputs/virat_temporal_case_study_holdout_20260726_v1/predictions.csv
+      bytes: 486076
+      sha256: 0571f1fabbc0cffdcb5d6f2c8402bd09a89f38f6d152e524c57492ecd7bafc61
+    events:
+      path: outputs/virat_temporal_case_study_holdout_20260726_v1/events.csv
+      bytes: 4436
+      sha256: 58bfbc63336ee5e0e790f4486fd17c9be10f56cf2c8f73e37df1198429cb5594
+  metrics:
+    e0_raw: {macro_f1: 0.9541193546056608, occupied_recall: 0.9519736842105263, vacant_recall: 1.0}
+    e3b_raw: {macro_f1: 0.9409523052885251, occupied_recall: 0.9809210526315789, vacant_recall: 0.883629191321499}
+    e4: {macro_f1: 0.8342717025062183, occupied_recall: 0.9901315789473685, vacant_recall: 0.5996055226824457}
+    e5: {macro_f1: 0.9191468508356554, occupied_recall: 0.9125, vacant_recall: 1.0}
+
+conclusion:
+  e4_beats_e0_holdout: false
+  e5_beats_e0_holdout: false
+  e5_reliable_on_development: false
+  fusion_v2_gate: closed
+  confidence_interval: not_reported_because_each_partition_has_one_video_group

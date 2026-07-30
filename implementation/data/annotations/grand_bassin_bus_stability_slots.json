@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "source": "Grand Bassin stream_gbassinexch1.stream_2023-02-16_16-34-07.264; seven manually checked continuously occupied bus bays",
+  "source_width": 1280,
+  "source_height": 720,
+  "coordinate_system": "pixel",
+  "slots": [
+    {
+      "id": "BUS_L01",
+      "points": [[916, 221], [970, 217], [981, 246], [928, 254]]
+    },
+    {
+      "id": "BUS_L02",
+      "points": [[921, 252], [987, 247], [1015, 291], [948, 307]]
+    },
+    {
+      "id": "BUS_L03",
+      "points": [[850, 286], [918, 282], [969, 337], [894, 356]]
+    },
+    {
+      "id": "BUS_R01",
+      "points": [[1108, 278], [1172, 279], [1180, 308], [1107, 309]]
+    },
+    {
+      "id": "BUS_R02",
+      "points": [[1106, 305], [1179, 309], [1179, 338], [1103, 335]]
+    },
+    {
+      "id": "BUS_R03",
+      "points": [[1102, 331], [1177, 338], [1174, 366], [1098, 359]]
+    },
+    {
+      "id": "BUS_R04",
+      "points": [[1096, 357], [1171, 368], [1165, 396], [1088, 385]]
+    }
+  ]
+}

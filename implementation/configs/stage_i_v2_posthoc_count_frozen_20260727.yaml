@@ -1,0 +1,124 @@
+schema_version: 2
+count_protocol_id: D-COUNT-NDISPARK-POSTHOC-V2-20260727-01
+selection_id: D-SELECT-NDISPARK-DEV-V2-20260727-01
+comparison_protocol_id: D-COMP-NDISPARK-DEV-V2-MAXDET300-20260727-01
+max_det_decision_id: D-MAXDET-NDISPARK-DEV-V2-20260727-01
+status: frozen_before_posthoc_corrected_predictions
+frozen_at: "2026-07-27T22:12:39.8556697+08:00"
+
+result_boundary:
+  experiment_name: Stage I-v2
+  role: consumed_test_posthoc_sensitivity
+  untouched_test_claim: prohibited
+  deployment_model_reselection_from_this_result: prohibited
+  threshold_or_NMS_retuning_from_this_result: prohibited
+  execution_limit: one_completed_prediction_pass
+  historical_Stage_I_v1_immutable: true
+
+selected_detector_before_posthoc:
+  method_id: D1
+  ranking: [D1, D2, D0]
+  selection_data_role: consumed_development_validation
+  primary_order: [mAP50_95, recall]
+
+operating_points:
+  common_threshold_diagnostic:
+    confidence: 0.10
+    role: controlled_sensitivity_only
+    deployment_selection_allowed: false
+    applies_identically_to: [D0, D1, D2]
+  per_model_development_calibration:
+    role: primary_deployment_operating_point
+    selection_data_role: consumed_development_validation
+    objective: lowest_development_count_MAE
+    tie_break: [lowest_RMSE, highest_threshold]
+    thresholds:
+      D0: 0.10
+      D1: 0.30
+      D2: 0.10
+  test_labels_used_for_selection: false
+
+common_inference:
+  imgsz: 640
+  confidence_floor: 0.001
+  nms_iou: 0.7
+  agnostic_nms: true
+  max_detections: 300
+  batch: 1
+  single_class_evaluation: true
+  augmentation: false
+  rect: false
+  half: false
+  preprocessing: ultralytics_default_letterbox_same_version
+
+models:
+  D0:
+    name: COCO-pretrained YOLOv8n
+    weights_name: yolov8n.pt
+    weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  D1:
+    name: NDISPark-fine-tuned YOLOv8n
+    experiment_id: D1-NDISPARK-FT-20260727-01
+    weights_name: best.pt
+    weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+  D2:
+    name: YOLO-World zero-shot
+    weights_name: yolov8s-worldv2.pt
+    weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+
+evidence:
+  operating_points:
+    name: stage_i_v2_operating_points_20260727_v1.json
+    bytes: 18302
+    sha256: d288a15abd735dbd95f2704b13a57d58c01f8f4b95a1240625df1370ef128524
+  max_det_decision:
+    name: stage_i_v2_maxdet_decision_20260727_v1.json
+    bytes: 3850
+    sha256: c43d0b27f201e511875ca499b4324791329c573331bf6576ea8f4d2fdc45df66
+  comparison:
+    name: comparison.json
+    bytes: 9642
+    sha256: 2c98417a143deac54027e1e62bf2060950df1a32bf248dc95d5a0e178ff119f5
+  comparison_config:
+    name: detector_comparison_stage_i_v2_maxdet300_frozen_20260727.yaml
+    bytes: 5682
+    sha256: 5c7b3a85b533c2642dae666c860741747ee8d310d6a108b8c994a0b689bbe662
+
+count_data:
+  dataset: NDISPark
+  split: official_test
+  original_truth_role: count_only_test
+  current_evaluation_role: consumed_test_posthoc_sensitivity
+  images: 117
+  cameras: 6
+  lighting: night
+  truth_type: vehicle_count
+  vehicle_box_ground_truth: unavailable
+  manifest:
+    name: ndispark_test_frozen_20260727.csv
+    rows: 117
+    bytes: 24630
+    sha256: 79cc80392c8d3c3723f31f68242f1e5ec0610f10ff81c02fc58a9a0215a2b35d
+  source_contract:
+    images: --test-images or PARKING_DATA_ROOT-derived path
+    hardcoded_user_path: false
+
+reported_metrics:
+  each_regime:
+    - MAE
+    - RMSE
+    - mean_predicted_count
+    - mean_true_count
+    - per_camera_MAE
+    - per_camera_RMSE
+  runtime:
+    - latency
+    - FPS
+
+prohibited:
+  - detector_mAP_on_count_only_truth
+  - box_precision_or_recall_on_count_only_truth
+  - using_posthoc_counts_to_change_threshold
+  - using_posthoc_counts_to_retrain_or_reselect_detector
+  - claim_that_vehicle_count_MAE_is_slot_occupancy_accuracy
+  - overwriting_existing_outputs

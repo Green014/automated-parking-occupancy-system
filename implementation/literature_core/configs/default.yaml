@@ -1,0 +1,51 @@
+seed: 20260725
+
+patch:
+  width: 224
+  height: 224
+  perspective_warp: true
+
+classifier:
+  architecture: mobilenet_v3_small
+  pretrained: true
+  freeze_backbone: true
+  epochs: 12
+  batch_size: 32
+  learning_rate: 0.0001
+  weight_decay: 0.0005
+  num_workers: 0
+  amp: true
+
+yolo_world:
+  weights: models/yolov8s-worldv2.pt
+  prompts:
+    - car
+    - truck
+    - bus
+    - motorcycle
+  confidence: 0.025
+  image_size: 1280
+  device: auto
+
+baseline_yolo:
+  weights: ../yolov8n.pt
+  confidence: 0.025
+  image_size: 1280
+  class_ids: [2, 3, 5, 7]
+
+mapping:
+  minimum_slot_coverage: 0.10
+  one_to_one: true
+
+fusion:
+  classifier_weight: 0.65
+  detector_weight: 0.35
+  track_weight: 0.0
+  occupied_threshold: 0.50
+
+temporal:
+  enabled: true
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42

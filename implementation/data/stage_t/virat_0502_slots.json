@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "source": "project-reviewed VIRAT 0502 consumed-development slot; derived without threshold selection",
+  "source_width": 1920,
+  "source_height": 1080,
+  "coordinate_system": "pixel",
+  "slots": [
+    {
+      "id": "0502-departing-01",
+      "points": [
+        [
+          555,
+          552
+        ],
+        [
+          850,
+          715
+        ],
+        [
+          790,
+          786
+        ],
+        [
+          516,
+          631
+        ]
+      ]
+    }
+  ]
+}

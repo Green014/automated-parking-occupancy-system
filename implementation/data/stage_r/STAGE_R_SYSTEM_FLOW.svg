@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+  </marker>
+  <style>
+    text { font-family: "Segoe UI", Arial, sans-serif; fill: #172033; }
+    .title { font-size: 30px; font-weight: 700; }
+    .section { font-size: 20px; font-weight: 700; }
+    .node-title { font-size: 22px; font-weight: 700; }
+    .node-sub { font-size: 16px; }
+    .arrow { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    .dash { stroke-dasharray: 10 8; }
+  </style>
+</defs>
+<rect width="1400" height="760" fill="#f8fafc"/>
+<text x="60" y="58" class="title">Automated Parking Lot Occupancy and Tracking System — Final Evidence Architecture</text>
+
+<rect x="45" y="90" width="1310" height="250" rx="18" fill="#ecfdf5" stroke="#16a34a" stroke-width="3"/>
+<text x="70" y="125" class="section" fill="#166534">DEFAULT OCCUPANCY PATH</text>
+<g>
+  <rect x="90" y="165" width="220" height="110" rx="14" fill="#ffffff" stroke="#16a34a" stroke-width="3"/>
+  <text x="200" y="208" text-anchor="middle" class="node-title">D1</text>
+  <text x="200" y="238" text-anchor="middle" class="node-sub">YOLO detector</text>
+  <rect x="400" y="165" width="220" height="110" rx="14" fill="#ffffff" stroke="#16a34a" stroke-width="3"/>
+  <text x="510" y="208" text-anchor="middle" class="node-title">B1</text>
+  <text x="510" y="238" text-anchor="middle" class="node-sub">polygon + 1:1 mapping</text>
+  <rect x="710" y="165" width="220" height="110" rx="14" fill="#ffffff" stroke="#16a34a" stroke-width="3"/>
+  <text x="820" y="208" text-anchor="middle" class="node-title">F2</text>
+  <text x="820" y="238" text-anchor="middle" class="node-sub">E1b gated fusion</text>
+  <rect x="1020" y="165" width="270" height="110" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="1155" y="208" text-anchor="middle" class="node-title">Occupancy Output</text>
+  <text x="1155" y="238" text-anchor="middle" class="node-sub">slot-level occupied / vacant</text>
+  <path d="M310 220 H395" class="arrow"/>
+  <path d="M620 220 H705" class="arrow"/>
+  <path d="M930 220 H1015" class="arrow"/>
+</g>
+
+<rect x="45" y="370" width="820" height="310" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+<text x="70" y="405" class="section" fill="#1d4ed8">CONDITIONAL — GENUINELY CONTINUOUS VIDEO ONLY</text>
+<rect x="105" y="455" width="220" height="110" rx="14" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="215" y="498" text-anchor="middle" class="node-title">F2</text>
+<text x="215" y="528" text-anchor="middle" class="node-sub">raw occupancy state</text>
+<rect x="420" y="455" width="250" height="110" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="545" y="498" text-anchor="middle" class="node-title">E4 (optional)</text>
+<text x="545" y="528" text-anchor="middle" class="node-sub">temporal stabilization</text>
+<path d="M325 510 H415" class="arrow dash"/>
+<text x="105" y="615" class="node-sub">Requires separate calibration on continuous video.</text>
+<text x="105" y="642" class="node-sub">E4 is not TrackTrack and does not maintain vehicle IDs.</text>
+
+<rect x="900" y="370" width="455" height="310" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+<text x="925" y="405" class="section" fill="#c2410c">EXPERIMENTAL BRANCHES</text>
+<rect x="950" y="445" width="170" height="90" rx="14" fill="#ffffff" stroke="#ea580c" stroke-width="3"/>
+<text x="1035" y="482" text-anchor="middle" class="node-title">D1-LL</text>
+<text x="1035" y="510" text-anchor="middle" class="node-sub">low-light fine-tune</text>
+<rect x="1150" y="445" width="160" height="90" rx="14" fill="#ffedd5" stroke="#ea580c" stroke-width="3"/>
+<text x="1230" y="482" text-anchor="middle" class="node-title">Replace D1</text>
+<text x="1230" y="510" text-anchor="middle" class="node-sub">not retained</text>
+<path d="M1120 490 H1145" class="arrow dash"/>
+<rect x="950" y="575" width="360" height="72" rx="14" fill="#ffffff" stroke="#ea580c" stroke-width="3"/>
+<text x="1130" y="606" text-anchor="middle" class="node-title">Detection → TrackTrack</text>
+<text x="1130" y="632" text-anchor="middle" class="node-sub">independent optional MOT research</text>
+</svg>

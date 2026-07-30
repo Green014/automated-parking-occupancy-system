@@ -1,0 +1,61 @@
+schema_version: 1
+status: frozen_before_temporal_prediction
+frozen_at: "2026-07-26T15:45:00+08:00"
+protocol: configs/temporal_protocol_pending.yaml
+
+evaluation:
+  warmup_frames: 30
+  stable_frames: 3
+  threshold_or_dwell_selection_on_holdout: false
+  bootstrap_confidence_interval: not_reported_single_video_per_partition
+  reporting_scope: two_single_slot_departure_case_studies
+
+e3b:
+  classifier_checkpoint: outputs/mobilenet_variant_ablation/standard/best.pt
+  classifier_checkpoint_sha256: 600c90ccb271fb1db3e39f87e500866e81c11781a8bb5a03a4285be1caf276b4
+  world_weights: models/yolov8s-worldv2.pt
+  world_weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+  prompts: [car, truck, bus, motorcycle]
+  detector_confidence: 0.025
+  detector_image_size: 1280
+  minimum_slot_coverage: 0.10
+  calibration_config: configs/proposed_fusion.yaml
+  calibration_config_sha256: 495825b9b616bc7d23accdfb2c175e5a901de3a99c8b303b2e3cf0147431ae32
+  raw_occupied_threshold: 0.67
+
+e4:
+  method: frozen_e3b_plus_asymmetric_ema_hysteresis
+  parameter_source: pre_registered_generic_defaults_not_selected_on_virat
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+
+e5:
+  method: frozen_yolov8n_bytetrack_track_to_slot_gate
+  fusion_v2: false
+  detector_weights: ../yolov8n.pt
+  detector_weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  detector_confidence: 0.20
+  detector_image_size: 640
+  tracker_config: ../configs/bytetrack_parking.yaml
+  tracker_config_sha256: 9c46e5796711065c1e3e2784f9ed2c2775833801c01b1a548c0ee0b092331f1f
+  minimum_slot_coverage: 0.30
+  maximum_stationary_displacement_px: 4.0
+  occupied_dwell_frames: 15
+  vacant_dwell_frames: 15
+  parameter_source: >-
+    existing baseline mapping/tracker settings plus synthetic engineering
+    dwell rules; no VIRAT model output was inspected before freezing
+
+partitions:
+  development:
+    scene_id: "0502"
+    source_sha256: b522ca72eb2244b7b36a955ca6e5ff7d1d4bec39d62a069a584a72d48597a9dd
+    truth: data/annotations/virat_0502_departure_truth.yaml
+  holdout:
+    scene_id: "0503"
+    source_sha256: b0bff7008afa69054b0c200a6fd0f1c04f8b7be5c5abb237b27f0c34aeca3079
+    truth: data/annotations/virat_0503_departure_truth.yaml
+    once_only: true
+    locked_before_any_model_output: true

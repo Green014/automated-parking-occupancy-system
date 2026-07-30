@@ -1,0 +1,42 @@
+schema_version: 1
+gate_id: STAGE-K-PKLOT-DATA-GATE-20260727-01
+audited_at: "2026-07-27T23:08:00+08:00"
+status: blocked_no_untouched_local_slot_test
+
+scope:
+  task: final_slot_occupancy_evaluation
+  requested_preference: unused_PKLot_camera_or_date_groups
+  local_paths_committed: false
+  prediction_run_on_new_test: false
+
+local_evidence:
+  annotation_file:
+    path: data/annotations/pklot_development_samples.jsonl
+    images: 27
+    bytes: 522284
+    sha256: ac9dbc48b491b3f6a657b38b53a422a59fef70a40bf3a2b91a98132abbeb2074
+  verified_image_manifest:
+    path: data/manifests/stage_j_pklot_development_20260727.csv
+    images: 27
+    bytes: 5457
+    sha256: eb548c61eda7dd24a658fb07229131ddac8be4fb4cdee8fab37faa0edf022519
+  cameras: [pucpr, ufpr04, ufpr05]
+  dates_per_camera: 3
+  weather: [cloudy, rainy, sunny]
+  known_slot_labels: 1505
+  unknown_slot_labels: 7
+  untouched_candidates: 0
+
+consumption_audit:
+  all_27_images_used_by_historical_B0_B1_development: true
+  all_27_images_used_by_prior_classifier_and_calibration_work: true
+  all_27_images_used_by_stage_J_consumed_development_comparison: true
+  CNR_EXT_available_as_new_test: false
+  NDISPark_count_test_available_as_slot_test: false
+  VIRAT_0503_available_as_untouched_test: false
+
+decision:
+  stage_K_gate_passed: false
+  reason: No additional locally available PKLot camera/date group has frozen slot polygons and occupied/vacant truth while remaining untouched.
+  forbidden_claim: Do not describe Stage J or historical CNR/VIRAT results as a new final untouched slot-occupancy test.
+  safe_next_action: Obtain a legally usable, previously unseen PKLot subset or another fixed-camera slot-labelled dataset, then freeze membership, hashes, polygons, truth and method configurations before any prediction.

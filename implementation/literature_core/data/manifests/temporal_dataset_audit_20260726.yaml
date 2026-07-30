@@ -1,0 +1,198 @@
+schema_version: 1
+audit_date: "2026-07-26"
+purpose: select licensed continuous video for manual parking-slot temporal truth
+selection_status: frozen_distinct_scene_development_holdout
+
+hard_requirements:
+  camera: fixed_or_nearly_fixed
+  marked_slots_visible: true
+  occupied_and_vacant_visible: true
+  real_arrival_or_departure_required: true
+  source_and_use_terms_recorded: true
+  random_frame_or_slot_split_prohibited: true
+  preferred_split_unit: distinct_camera_scene
+
+candidates:
+  - id: virat_ground_release_2_0
+    dataset: VIRAT Ground Camera Dataset, Release 2.0
+    official_page: https://viratdata.org/
+    official_collection: https://data.kitware.com/#collection/56f56db28d777f753209ba9f/folder/56f57e748d777f753209bed6
+    camera_type: stationary_ground_surveillance
+    continuous_video: true
+    published_scope:
+      hours: 8.5
+      scenes: 11
+      frame_rate_hz_range: [2, 30]
+      original_video_bytes: 37625884426
+    slot_occupancy_labels: false
+    transition_evidence: vehicle_and_human_activity_annotations_but_manual_slot_truth_required
+    low_light_or_adverse: uncontrolled_outdoor_scenes_not_a_dedicated_low_light_set
+    license_or_terms:
+      name: VIRAT Video Dataset Usage Agreement
+      requires_individual_acceptance: true
+      research_use: true
+      commercial_use: true
+      redistribution: only_to_other_agreement_signatories
+      pii_protection_required: true
+    access: public_catalog_but_content_use_requires_individual_agreement
+    decision: bounded_screening_complete; one_eligible_clip_but_no_cross_scene_pair
+
+  - id: dlp
+    dataset: Dragon Lake Parking Dataset
+    official_page: https://sites.google.com/berkeley.edu/dlp-dataset
+    official_data_record: https://doi.org/10.5061/dryad.tht76hf5b
+    camera_type: overhead_drone
+    continuous_video: true
+    published_scope:
+      hours: 3.5
+      resolution: 4K
+      fps: 25
+      scenes: 30
+      frames: 317873
+      parking_spots_approx: 400
+      raw_video_and_annotation_bytes_approx: 168GB
+      json_bytes: 8.02GB
+    slot_occupancy_labels: false
+    transition_evidence: abundant_parking_maneuvers_and_dense_vehicle_trajectories
+    low_light_or_adverse: not_claimed
+    license_or_terms:
+      name: project_specific_noncommercial_terms
+      noncommercial_research_teaching_personal_only: true
+      citation_required: true
+      redistribution_prohibited: true
+      toolkit_code_license: GPL-3.0
+    access: raw_video_requires_request; official_sample_link_reached_permission_validation
+    decision: defer; camera_motion_and_access_must_be_resolved_before_fixed_roi_use
+
+  - id: epfl_multiview_multiclass
+    dataset: EPFL Multi-view Multi-class Detection
+    official_page: https://www.epfl.ch/labs/cvlab/data/data-multiclass/
+    camera_type: six_fixed_calibrated_dv_cameras
+    continuous_video: described_but_not_currently_downloadable
+    published_scope:
+      duration: 00:23:57
+      fps: 25
+      cameras: 6
+      annotated_nonconsecutive_frames: 242
+    slot_occupancy_labels: false
+    transition_evidence: parking_slots_and_vehicles_visible_but_no_continuous_media_access
+    low_light_or_adverse: occlusion_present; low_light_not_claimed
+    license_or_terms:
+      name: EPFL copyrighted_research_use_terms
+      research_use: true
+      citation_required_for_publication: true
+    access: current_page_exposes_only_nonconsecutive_ground_truth_archives
+    decision: reject_for_temporal_evaluation_until_full_video_access_is_restored
+
+  - id: islab_pvd
+    dataset: ISLab-PVD
+    official_page: https://islab.ulsan.ac.kr/pvd/
+    camera_type: urban_surveillance
+    continuous_video: true
+    published_scope:
+      sequences: 16
+    slot_occupancy_labels: false
+    transition_evidence: illegal_parking_events_not_marked_bay_state_truth
+    low_light_or_adverse: crowded_lighting_variation_night_infrared
+    license_or_terms:
+      name: no_explicit_dataset_license_located
+      citation_requested: true
+    access: download_link_published_but_size_and_reuse_terms_not_verified
+    decision: reject_for_formal_evaluation_due_license_and_task_mismatch
+
+  - id: lmot
+    dataset: LMOT from Multi-Object Tracking in the Dark
+    official_code: https://github.com/ying-fu/LMOT
+    official_paper: https://openaccess.thecvf.com/content/CVPR2024/html/Wang_Multi-Object_Tracking_in_the_Dark_CVPR_2024_paper.html
+    camera_type: paired_city_outdoor_cameras
+    continuous_video: described_in_paper
+    published_scope:
+      videos: 32
+      frames: 35120
+      tracks: 1756
+    slot_occupancy_labels: false
+    transition_evidence: multi_object_tracks_only
+    low_light_or_adverse: dedicated_real_and_paired_low_light
+    license_or_terms:
+      name: no_dataset_license_published_in_official_repository
+    access: official_repository_still_says_dataset_and_code_will_be_released
+    decision: reject_as_parking_occupancy_data; future_low_light_tracking_support_only
+
+  - id: grand_bassin
+    dataset: Grand Bassin Traffic
+    official_record: https://doi.org/10.5281/zenodo.21321449
+    camera_type: fixed_looking_high_aerial_surveillance
+    continuous_video: true
+    published_scope:
+      segments: 24
+      sampled_fps: 2
+      local_reviewed_frames: 1349
+    slot_occupancy_labels: local_positive_only_seven_bays
+    transition_evidence: no_valid_marked_bay_arrival_or_departure_after_manual_audit
+    low_light_or_adverse: variable_glare_and_occlusion
+    license_or_terms:
+      name: CC-BY-NC-SA-4.0
+    access: locally_available_and_hash_recorded
+    decision: retain_negative_and_positive_only_stability_result; reject_for_full_temporal_metrics
+
+  - id: cnr_ext
+    dataset: CNR-EXT
+    official_page: https://cnrpark.it/
+    camera_type: fixed_surveillance
+    continuous_video: false
+    published_scope:
+      frames: 4081
+      slot_labels: 144965
+    slot_occupancy_labels: true
+    transition_evidence: sparse_snapshots_not_valid_for_transition_latency_or_tracking
+    low_light_or_adverse: varied_weather_and_lighting
+    license_or_terms:
+      name: ODbL-1.0
+    access: locally_available_and_once_only_evaluation_already_consumed
+    decision: frozen_static_external_result_only; never_reuse_for_tuning
+
+  - id: pklot_selected_27
+    dataset: PKLot selected 27-image set
+    official_page: https://web.inf.ufpr.br/luizoliveira/research-interests/pklot/
+    camera_type: fixed_surveillance
+    continuous_video: false
+    slot_occupancy_labels: true
+    transition_evidence: approximately_five_minute_sampling_not_contiguous
+    low_light_or_adverse: weather_variation_but_no_night
+    license_or_terms:
+      name: CC-BY-4.0
+    access: locally_available
+    decision: method_development_only; never_temporal_truth
+
+selected_source:
+  dataset_id: virat_ground_release_2_0
+  status: frozen
+  user_acceptance_recorded_at: "2026-07-26"
+  personal_details_stored: false
+  screening_manifest: data/manifests/virat_screening_20260726.yaml
+  targeted_0503_manifest: data/manifests/virat_0503_targeted_screening_20260726.yaml
+  downloaded_video_count: 26
+  downloaded_video_bytes: 1605720653
+  downloaded_annotation_bytes: 15925504
+  eligible_frame_truth_verified:
+    - VIRAT_S_050202_10_002159_002233.mp4
+    - VIRAT_S_050300_09_001789_001858.mp4
+  development_sequence:
+    scene_id: "0502"
+    source_video_id: VIRAT_S_050202_10_002159_002233
+    truth: data/annotations/virat_0502_departure_truth.yaml
+    transition: {type: departure, last_occupied_frame: 1659, first_vacant_frame: 1660}
+  holdout_sequence:
+    scene_id: "0503"
+    source_video_id: VIRAT_S_050300_09_001789_001858
+    truth: data/annotations/virat_0503_departure_truth.yaml
+    transition: {type: departure, last_occupied_frame: 1549, first_vacant_frame: 1550}
+    locked_before_model_output_inspection: true
+  protocol: configs/temporal_protocol_pending.yaml
+
+prohibitions:
+  download_or_accept_agreement_on_users_behalf: true
+  run_e4_before_frozen_truth: true
+  run_e5_before_frozen_truth: true
+  implement_fusion_v2_before_reliable_e5: true
+  report_pending_candidates_as_selected_sequences: true

@@ -1,0 +1,39 @@
+seed: 20260725
+
+patch:
+  width: 224
+  height: 224
+  perspective_warp: true
+
+yolo_world:
+  weights: models/yolov8s-worldv2.pt
+  prompts:
+    - car
+    - truck
+    - bus
+    - motorcycle
+  confidence: 0.025
+  image_size: 1280
+  device: auto
+
+mapping:
+  minimum_slot_coverage: 0.10
+  one_to_one: true
+
+fusion:
+  classifier_weight: 0.50
+  detector_weight: 0.50
+  track_weight: 0.0
+  occupied_threshold: 0.37
+
+temporal:
+  enabled: true
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+
+provenance:
+  fusion_parameters: development/ufpr04
+  temporal_parameters: pre_registered_generic_defaults
+  grand_bassin_used_for_selection: false

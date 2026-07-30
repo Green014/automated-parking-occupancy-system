@@ -1,0 +1,75 @@
+schema_version: 1
+gate_id: STAGE-N-FORMAL-PARKING-DATA-GATE-20260728-01
+recorded_at: "2026-07-28T22:30:00+08:00"
+status: blocked_no_qualifying_new_data
+os0_t0_t1_t2_t3_execution_allowed: false
+virat_0502_may_be_relabelled_as_new_test: false
+required:
+  explicit_license: true
+  fixed_camera: true
+  minimum_distinct_physical_scenes: 2
+  parking_slot_polygons_possible: true
+  event_types: [entry, exit, pass_by, occlusion]
+  truth: slot_interval_or_transition_frame
+  physical_scene_isolation_between_development_and_test: true
+local_candidates:
+  VIRAT_0502:
+    decision: reject
+    reasons: [consumed_development_evidence, not_a_new_test]
+  Grand_Bassin:
+    decision: reject
+    reasons:
+      - one_fixed_looking_physical_camera
+      - machine_generated_boxes
+      - only_incomplete_occupied_bus_bay_truth
+      - no_frozen_vacancy_transition_truth
+  PKLot:
+    decision: reject
+    reasons:
+      - already_consumed
+      - five_minute_stills_not_continuous_event_video
+      - no_transition_frame_truth
+  CNRPark_EXT:
+    decision: reject
+    reasons:
+      - one_physical_parking_lot
+      - sparse_still_frames_and_patch_labels
+      - no_transition_frame_truth
+  NDISPark:
+    decision: reject
+    reasons:
+      - detector_training_data
+      - no_frozen_slot_polygons_or_transition_truth
+public_candidates:
+  DLP:
+    source: https://zenodo.org/records/10084683
+    decision: reject
+    reasons: [drone_camera_not_fixed, one_physical_parking_lot, no_slot_occupancy_truth]
+  ACPDS:
+    source: https://arxiv.org/abs/2107.12207
+    decision: reject
+    reasons: [each_image_unique_view, no_fixed_camera_event_sequence]
+  UFPArk:
+    source: Public_Dataset_of_Parking_Lot_Videos_for_Computational_Vision_Applied_to_Surveillance
+    decision: reject
+    reasons:
+      - explicit_reusable_dataset_license_not_verified
+      - per_slot_interval_or_transition_truth_not_verified
+      - physical_development_test_scene_isolation_not_verified
+  AGH_Parking_Database:
+    source: https://qoe.agh.edu.pl/parking-database/
+    decision: reject
+    reasons: [license_plate_truth_only, no_slot_polygons_or_occupancy_truth, standard_license_not_stated]
+  CNRPark_EXT:
+    source: https://cnrpark.it/
+    decision: reject
+    reasons: [one_physical_parking_lot, sparse_occupancy_images, no_transition_truth]
+  PKLot:
+    source: https://www.inf.ufpr.br/lesoliveira/download/pklot-readme.pdf
+    decision: reject
+    reasons: [five_minute_time_lapse_stills, no_transition_frame_truth, already_consumed_locally]
+gate_policy:
+  truth_and_polygons_before_prediction: required
+  development_before_test: required
+  single_test_execution_after_freeze: required
+next_step: acquire_or_record_new_fixed_camera_continuous_video_from_two_physically_separate_scenes_with_explicit_license_then_annotate_before_any_prediction

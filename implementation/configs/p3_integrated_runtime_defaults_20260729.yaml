@@ -1,0 +1,62 @@
+schema_version: 1
+config_id: P3-INTEGRATED-RUNTIME-DEFAULTS-20260729-01
+method_id: P3
+method_name: D1 + B1 + E1b asymmetric gate + optional E4/tracker
+parameter_provenance:
+  source: stage_l_integrated_workflow_frozen_20260728.yaml
+  source_sha256: 29e70e76fe7a8c92fe4022520a47c2cbe69f159749960e5e170116df1ea039e3
+  stage_k_parameter_selection: prohibited
+  stage_l_result_parameter_selection: prohibited
+
+detector:
+  id: D1
+  confidence: 0.30
+  image_size: 640
+  class_ids: [0]
+  nms_iou: 0.70
+  agnostic_nms: true
+  max_detections: 300
+
+mapping:
+  id: B1
+  mode: overlap
+  minimum_slot_coverage: 0.40
+  one_to_one: true
+
+classifier:
+  id: E1b
+  occupied_threshold: 0.76
+  patch_size: [224, 224]
+  perspective_warp: true
+  detector_negative_slots_only: true
+
+temporal:
+  id: E4
+  default_enabled: true
+  rise_alpha: 0.60
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+  raw_threshold: 0.76
+  stable_frames_for_evaluation: 3
+
+tracking:
+  default_backend: none
+  bytetrack:
+    config_path: bytetrack_stage_m_frozen_20260728.yaml
+    config_sha256: 9c46e5796711065c1e3e2784f9ed2c2775833801c01b1a548c0ee0b092331f1f
+  tracktrack:
+    config_path: tracktrack_stage_m_frozen_20260728.yaml
+    config_sha256: 54a158728a3dd41b523c7d9054fa0e187548075f563adb71c5db72e797328f37
+
+output:
+  codec: mp4v
+  root_must_not_exist: true
+  files:
+    - occupancy.csv
+    - events.csv
+    - detections.jsonl
+    - annotated.mp4
+    - metrics.json
+    - summary.json
+    - runtime_metadata.json

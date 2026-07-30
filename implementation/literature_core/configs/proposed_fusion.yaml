@@ -1,0 +1,42 @@
+schema_version: 1
+method_id: E3b
+implementation_label: calibrated_nonnegative_logistic_fusion
+paper_exact_reproduction: false
+development_scope:
+  dataset: PKLot selected 27-image method-development set
+  selection: camera-grouped OOF predictions; final fit uses all three development
+    cameras
+  external_holdout_used: false
+  samples: 1505
+  cameras:
+  - pucpr
+  - ufpr04
+  - ufpr05
+evidence_semantics:
+  p_cls: MobileNetV3 occupied-class softmax score
+  p_det: YOLO-World confidence x slot-coverage evidence; not a native probability
+calibration:
+  classifier:
+    slope: 11.008169600896839
+    intercept: -7.2738261397083175
+    l2: 0.001
+    iterations: 7
+    converged: true
+  detector:
+    slope: 11.642227945349058
+    intercept: -0.8871723245141031
+    l2: 0.001
+    iterations: 8
+    converged: true
+fusion:
+  type: nonnegative_logistic_on_calibrated_log_odds
+  classifier_coefficient: 1.4947890652643805
+  detector_coefficient: 1.0494880311977735
+  intercept: -0.1563852450112445
+  l2: 0.01
+  iterations: 9
+  converged: true
+  occupied_threshold: 0.67
+temporal:
+  retune_on_grand_bassin: false
+  status: not selected without mixed continuous truth

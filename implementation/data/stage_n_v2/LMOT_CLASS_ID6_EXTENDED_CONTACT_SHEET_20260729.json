@@ -1,0 +1,59 @@
+{
+  "class_id": 6,
+  "proposed_name": "truck",
+  "samples": [
+    {
+      "sequence": "LMOT-13",
+      "frame": 13,
+      "track_id": 20,
+      "bbox_xywh": [
+        1259.0,
+        88.0,
+        481.0,
+        290.0
+      ],
+      "visibility": 1.0,
+      "image": "C:\\Users\\panda\\Documents\\\u505c\u8f66\u573a\u8bc6\u522b\u7cfb\u7edf\u9879\u76ee\\implementation\\data\\external\\lmot_stage_n_v2\\val\\LMOT-13\\img_light_rgb\\000013.jpg"
+    },
+    {
+      "sequence": "LMOT-05",
+      "frame": 183,
+      "track_id": 27,
+      "bbox_xywh": [
+        47.0,
+        328.0,
+        220.0,
+        127.0
+      ],
+      "visibility": 1.0,
+      "image": "C:\\Users\\panda\\Documents\\\u505c\u8f66\u573a\u8bc6\u522b\u7cfb\u7edf\u9879\u76ee\\implementation\\data\\external\\lmot_stage_n_v2\\val\\LMOT-05\\img_light_rgb\\000183.jpg"
+    },
+    {
+      "sequence": "LMOT-05",
+      "frame": 348,
+      "track_id": 42,
+      "bbox_xywh": [
+        12.0,
+        442.0,
+        82.0,
+        105.0
+      ],
+      "visibility": 1.0,
+      "image": "C:\\Users\\panda\\Documents\\\u505c\u8f66\u573a\u8bc6\u522b\u7cfb\u7edf\u9879\u76ee\\implementation\\data\\external\\lmot_stage_n_v2\\val\\LMOT-05\\img_light_rgb\\000348.jpg"
+    },
+    {
+      "sequence": "LMOT-25",
+      "frame": 606,
+      "track_id": 27,
+      "bbox_xywh": [
+        609.0,
+        39.0,
+        47.0,
+        57.0
+      ],
+      "visibility": 1.0,
+      "image": "C:\\Users\\panda\\Documents\\\u505c\u8f66\u573a\u8bc6\u522b\u7cfb\u7edf\u9879\u76ee\\implementation\\data\\external\\lmot_stage_n_v2\\val\\LMOT-25\\img_light_rgb\\000606.jpg"
+    }
+  ],
+  "contact_sheet_sha256": "1bb30b1a62f0b6f752d9ac536f7f64a1f1d21641fcaae4e8fe82a861fb65171d"
+}

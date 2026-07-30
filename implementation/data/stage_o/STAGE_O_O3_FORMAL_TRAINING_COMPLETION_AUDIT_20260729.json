@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "protocol_id": "STAGE-O-LOW-LIGHT-DETECTOR-ADAPTATION-20260729-01",
+  "status": "additive_post_training_completion_audit",
+  "formal_output_modified": false,
+  "formal_run_count": 1,
+  "configured_max_epochs": 20,
+  "configured_early_stopping_patience": 5,
+  "observed_completed_epochs": 9,
+  "best_epoch_by_recorded_AP50_95": 4,
+  "epochs_after_best": 5,
+  "early_stopping_triggered": true,
+  "results_csv": {
+    "path": "implementation/outputs/stage_o_o3_formal_20260729_v1/results.csv",
+    "bytes": 1283,
+    "sha256": "82be08223f712d33c561c2b8f00ec0217c15f462473a6dd3e8c1204cd298f364",
+    "best_epoch_recorded_AP50_95": 0.07182
+  },
+  "training_summary": {
+    "path": "implementation/outputs/stage_o_o3_formal_20260729_v1/training_summary.json",
+    "bytes": 1744,
+    "sha256": "ef8e2adfa3386d18bfc664c25f80ebc85bfdbc261a4fb1152cac2736a7698fd7",
+    "final_best_checkpoint_AP50_95": 0.0718927949480078
+  },
+  "hyperparameter_search_performed": false,
+  "consistency_loss_used": false,
+  "rerun_performed_for_this_audit": false
+}

@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "protocol_id": "STAGE-O-LOW-LIGHT-DETECTOR-ADAPTATION-20260729-01",
+  "method_id": "O2",
+  "task": "raw_detector_only_unified_motor_vehicle_box_detection",
+  "dataset_role": "consumed_development_diagnostic",
+  "tracker_emitted_boxes": false,
+  "model_track_called": false,
+  "thresholds_reselected_from_validation": false,
+  "illumination": {
+    "light": {
+      "pooled_micro": {
+        "precision": 0.7460173956417371,
+        "recall": 0.34738049269092863,
+        "AP50": 0.319227957125969,
+        "AP50-95": 0.14525568841954198,
+        "ground_truth_boxes": 68887,
+        "predicted_boxes": 32077,
+        "true_positives": 23930,
+        "false_positives": 8147,
+        "false_negatives": 44957,
+        "definition": "all_predictions_one_confidence_ordering_with_isolated_sequence_frame_keys_and_summed_counts"
+      },
+      "per_sequence_macro": {
+        "precision": 0.6030664803586353,
+        "recall": 0.25826554179052125,
+        "AP50": 0.2209888470412114,
+        "AP50-95": 0.10005790859016514,
+        "definition": "unweighted_mean_of_per_sequence_rates"
+      },
+      "per_sequence": {
+        "LMOT-05": {
+          "precision": 0.37167832167832165,
+          "recall": 0.2130260521042084,
+          "AP50": 0.1284633487894391,
+          "AP50-95": 0.05423853262042942,
+          "ground_truth_boxes": 4990,
+          "predicted_boxes": 2860,
+          "true_positives": 1063,
+          "false_positives": 1797,
+          "false_negatives": 3927
+        },
+        "LMOT-13": {
+          "precision": 0.7309941520467836,
+          "recall": 0.25938817859294466,
+          "AP50": 0.23538764734828319,
+          "AP50-95": 0.11199971631708779,
+          "ground_truth_boxes": 14939,
+          "predicted_boxes": 5301,
+          "true_positives": 3875,
+          "false_positives": 1426,
+          "false_negatives": 11064
+        },
+        "LMOT-14": {
+          "precision": 0.4875,
+          "recall": 0.11765415711355134,
+          "AP50": 0.09462459276315048,
+          "AP50-95": 0.04118473580832805,
+          "ground_truth_boxes": 8287,
+          "predicted_boxes": 2000,
+          "true_positives": 975,
+          "false_positives": 1025,
+          "false_negatives": 7312
+        },
+        "LMOT-25": {
+          "precision": 0.822093447709436,
+          "recall": 0.44299377935138057,
+          "AP50": 0.42547979926397284,
+          "AP50-95": 0.1928086496148153,
+          "ground_truth_boxes": 40671,
+          "predicted_boxes": 21916,
+          "true_positives": 18017,
+          "false_positives": 3899,
+          "false_negatives": 22654
+        }
+      }
+    },
+    "dark": {
+      "pooled_micro": {
+        "precision": 0.5818022747156606,
+        "recall": 0.01930698099786607,
+        "AP50": 0.017284055991806078,
+        "AP50-95": 0.01151738848727618,
+        "ground_truth_boxes": 68887,
+        "predicted_boxes": 2286,
+        "true_positives": 1330,
+        "false_positives": 956,
+        "false_negatives": 67557,
+        "definition": "all_predictions_one_confidence_ordering_with_isolated_sequence_frame_keys_and_summed_counts"
+      },
+      "per_sequence_macro": {
+        "precision": 0.5512430634130985,
+        "recall": 0.023778040927149597,
+        "AP50": 0.02206469530085129,
+        "AP50-95": 0.012496907076939418,
+        "definition": "unweighted_mean_of_per_sequence_rates"
+      },
+      "per_sequence": {
+        "LMOT-05": {
+          "precision": 0.27074235807860264,
+          "recall": 0.024849699398797595,
+          "AP50": 0.01988021375541523,
+          "AP50-95": 0.012192863111563416,
+          "ground_truth_boxes": 4990,
+          "predicted_boxes": 458,
+          "true_positives": 124,
+          "false_positives": 334,
+          "false_negatives": 4866
+        },
+        "LMOT-13": {
+          "precision": 0.6257309941520468,
+          "recall": 0.028649842693620725,
+          "AP50": 0.025987059232239016,
+          "AP50-95": 0.015698963014578602,
+          "ground_truth_boxes": 14939,
+          "predicted_boxes": 684,
+          "true_positives": 428,
+          "false_positives": 256,
+          "false_negatives": 14511
+        },
+        "LMOT-14": {
+          "precision": 0.4804928131416838,
+          "recall": 0.028236997707252322,
+          "AP50": 0.02371120881326165,
+          "AP50-95": 0.012340990569755666,
+          "ground_truth_boxes": 8287,
+          "predicted_boxes": 487,
+          "true_positives": 234,
+          "false_positives": 253,
+          "false_negatives": 8053
+        },
+        "LMOT-25": {
+          "precision": 0.8280060882800608,
+          "recall": 0.013375623908927737,
+          "AP50": 0.01868029940248927,
+          "AP50-95": 0.009754811611859985,
+          "ground_truth_boxes": 40671,
+          "predicted_boxes": 657,
+          "true_positives": 544,
+          "false_positives": 113,
+          "false_negatives": 40127
+        }
+      }
+    }
+  },
+  "light_to_dark_retention": {
+    "precision": 0.7798776249918197,
+    "recall": 0.05557877141663184,
+    "AP50": 0.05414330294694615,
+    "AP50-95": 0.0792904471597044
+  },
+  "runtime": {
+    "evaluated_frames": 9680,
+    "elapsed_seconds": 8080.350754000006,
+    "wall_ms_per_frame": 834.7469787190089,
+    "wall_fps": 1.197967798020169,
+    "framework_speed_ms_per_frame": {
+      "preprocess_ms": 4.092075568178564,
+      "inference_ms": 13.056760134310958,
+      "postprocess_ms": 2.9163349276733386
+    },
+    "peak_cuda_memory_allocated_bytes": 4436940288,
+    "peak_cuda_memory_reserved_bytes": 5976883200
+  }
+}

@@ -1,0 +1,2 @@
+candidate_id,x,y,width,height,occupied_fraction,longest_occupied,longest_vacant,transitions,transition_frames
+GB_HOLDOUT_DEPART_01,683,453,60,66,,,,2,100;115

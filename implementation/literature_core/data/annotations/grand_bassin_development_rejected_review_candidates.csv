@@ -1,0 +1,7 @@
+candidate_id,x,y,width,height,occupied_fraction,longest_occupied,longest_vacant,transitions,transition_frames
+BUS_DEPART_01,1012.5,372,105,72,,,,1,17
+BUS_R00_VAC,1142.5,264.5,65,25,,,,0,
+CAR_VAC_HATCH_01,1105.5,228,25,36,,,,0,
+CAR_VAC_HATCH_02,1121.5,228,25,36,,,,0,
+CAR_VAC_LANE_01,444.5,387.5,69,39,,,,0,
+CAR_VAC_DARK_01,429,286,38,26,,,,0,

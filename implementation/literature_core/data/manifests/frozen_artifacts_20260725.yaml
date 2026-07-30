@@ -1,0 +1,83 @@
+schema_version: 1
+purpose: reproduce the once-only frozen external evaluation
+recorded_after_successful_evaluation: true
+
+configurations:
+  generic_template:
+    path: configs/default.yaml
+    sha256: 3d52523634e05927e06aaf556e35657bc8f7f021322315e37941682828241fc7
+  grand_bassin_protocol:
+    path: configs/grand_bassin_frozen.yaml
+    sha256: b07a9b6f1334e6988b56106303516dbcbf2ad4831333f72458c877e8071011f8
+  pklot_fold_a_split:
+    path: configs/pklot_camera_split.json
+    sha256: c1ab8abf6b2b752713f5bb2eccc8e05798f3b21aaeb77145bf8af9f61d6b10f3
+  pklot_fold_b_split:
+    path: configs/pklot_fold_b.json
+    sha256: 8e4495590a574cbe1c4c13f73fe49ed4ef9f9fb7c416633f5ad278035e275ce7
+  pklot_fold_c_split:
+    path: configs/pklot_fold_c.json
+    sha256: 727cdd2456dfc1d6fd54a418ee28c637d4cfc41df245cbb10e44cfb078c6ec29
+  proposed_fusion:
+    path: configs/proposed_fusion.yaml
+    sha256: 495825b9b616bc7d23accdfb2c175e5a901de3a99c8b303b2e3cf0147431ae32
+  external_protocol:
+    path: configs/external_holdout_frozen.yaml
+    sha256: 4dd6a8c0cbabc2c947a47e83887c0f2d8fb4221a91435ab6ecfdcd38df121628
+
+model_artifacts:
+  e0_yolov8n:
+    path: ../yolov8n.pt
+    sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  e1a_standard_mobilenet:
+    path: outputs/mobilenet_variant_ablation/standard/best.pt
+    sha256: 600c90ccb271fb1db3e39f87e500866e81c11781a8bb5a03a4285be1caf276b4
+  e1b_paper_inspired_cbam:
+    path: outputs/mobilenet_variant_ablation/cbam_supplement/best.pt
+    sha256: f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3
+  e2_yolo_world:
+    path: models/yolov8s-worldv2.pt
+    sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+
+data_artifacts:
+  metadata:
+    path: datasets/cnrpark_ext/CNRPark+EXT.csv
+    sha256: 26416454cb8b184006431d0c149d31beabb8ef65d8eb2212cf4a39914a470dc8
+  full_frames:
+    path: datasets/cnrpark_ext/CNR-EXT_FULL_IMAGE_1000x750.tar
+    sha256: 02a66d936433f02dfceae37a25eb3ee100969ff63eb38d891621e8bf42d1256f
+
+result_artifacts:
+  fold_a_selected_parameters:
+    path: outputs/pklot_ablation/selected_parameters.json
+    sha256: 185430ed362ae3136d5e6d3b99f2b2ee2951d75d825ce87c31d7b729c28fb8d2
+  e1a_training_summary:
+    path: outputs/mobilenet_variant_ablation/standard/training_summary.json
+    sha256: 7b3d7719fa096f76ef858be30fc14768bdcc7b46ebf928f0ed3f76c205e629cc
+  e1b_training_summary:
+    path: outputs/mobilenet_variant_ablation/cbam_supplement/training_summary.json
+    sha256: 7e3d1fd0684dc5a11234da5b6a1c326382f44fe9b926d112eee68422271533c0
+  metrics:
+    path: outputs/cnrpark_ext_frozen_evaluation_20260725/metrics.json
+    sha256: dce38dc05e910ac1254ccfdcf71e697070e5c20d3ede17d2ba2c6be4b116575b
+  frames: 4081
+  slot_records: 144965
+  external_threshold_selection_performed: false
+
+method_traceability:
+  training_seed: 20260725
+  bootstrap_seed: 20260725
+  yolo_world_prompts: [car, truck, bus, motorcycle]
+  e0_minimum_slot_coverage: 0.40
+  e1a_occupied_threshold: 0.61
+  e1b_occupied_threshold: 0.76
+  e2_evidence_threshold: 0.08
+  e3a:
+    classifier_weight: 0.50
+    detector_weight: 0.50
+    occupied_threshold: 0.37
+  e3b:
+    frozen_config: configs/proposed_fusion.yaml
+    occupied_threshold: 0.67
+  cnr_ext_role: consumed_once_only_external_evaluation
+  retuning_on_cnr_ext_prohibited: true

@@ -1,0 +1,68 @@
+schema_version: 1
+preflight_id: D-COMP-PREFLIGHT-NDISPARK-20260727-01
+comparison_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+executed_at: "2026-07-27T16:39:10.9221578+08:00"
+status: blocked_as_expected_before_D1_training
+
+scope:
+  task: single_class_vehicle_box_detection_development_comparison
+  data_role: consumed_development_validation
+  predictions_run: false
+  models_loaded: false
+  output_directory_created_for_comparison: false
+
+data_validation:
+  preparation_id: DPREP-NDISPARK-ONLY-20260727-01
+  train_images: 112
+  train_boxes: 2577
+  validation_images: 30
+  validation_boxes: 725
+  observed_classes: [0]
+  canonical_class: {id: 0, name: vehicle}
+
+model_validation:
+  D0:
+    name: COCO-pretrained YOLOv8n
+    ready: true
+    weights_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  D1:
+    name: NDISPark-fine-tuned YOLOv8n
+    ready: false
+    reasons: [weights_path_missing, model_not_trained]
+  D2:
+    name: YOLO-World zero-shot
+    ready: true
+    weights_sha256: 9b2c17ab6124a913e9b3a5c170617920d91b0f01111a8479da69f00e2cf27792
+
+evaluation_guard:
+  source_vehicle_filter_applied_during_prediction: true
+  truth_filter_applied: false
+  canonical_prediction_class: {id: 0, name: vehicle}
+  matching: one_to_one_descending_iou
+  iou_thresholds: "0.50:0.05:0.95"
+  note: Passing COCO source classes to Ultralytics val would filter class-0 dataset truth; the comparison therefore evaluates canonical predictions explicitly.
+
+frozen_config:
+  path: ../../configs/detector_comparison_frozen_20260727.yaml
+  bytes: 4892
+  sha256: 21daff1090d7a734d864916d4e0f2f3a787a4d5d57f6a469d8b43343acb9cb7d
+
+ignored_runtime_artifact:
+  repository_relative_path: outputs/detector_comparison_preflight_20260727_v2.json
+  bytes: 1957
+  sha256: 7c56bb583a7dc614d9d183b1b3bc8712b71d4f6704e34466f540e5146e20f48c
+  committed: false
+  contains_runtime_absolute_paths: true
+
+retained_earlier_preflight:
+  repository_relative_path: outputs/detector_comparison_preflight_20260727_v1.json
+  predictions_run: false
+  use_as_frozen_evidence: false
+  reason: Retained without overwrite after the final evaluation guard and output contract were corrected.
+
+gate:
+  stage_E_protocol_passed: true
+  stage_F_smoke_may_start: true
+  comparison_execution_allowed_now: false
+  comparison_blocker: D1 has not yet been trained and hash-bound.
+  paid_GPU_allowed: false

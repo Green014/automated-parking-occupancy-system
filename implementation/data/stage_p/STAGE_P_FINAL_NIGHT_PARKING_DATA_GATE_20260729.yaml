@@ -1,0 +1,83 @@
+schema_version: 1
+gate_id: STAGE-P-FINAL-NIGHT-PARKING-DATA-GATE-20260729-01
+protocol_id: STAGE-P-PARKING-DOMAIN-RETENTION-20260729-01
+status: BLOCKED
+checked_on: "2026-07-29"
+download_performed: false
+P4_executed: false
+P3_LL_defaults_created: false
+required:
+  fixed_camera: true
+  real_parking_lot: true
+  night_or_clear_low_light: true
+  stable_slot_polygons: true
+  per_slot_occupied_vacant_truth: true
+  per_frame_or_timestamp_truth_for_transition_metrics: true
+  source_and_license_record: true
+  unused_for_training_threshold_or_model_selection: true
+local_candidates:
+  NDISPark:
+    fixed_camera: true
+    night_images: true
+    vehicle_box_or_count_truth: true
+    slot_polygons: false
+    per_slot_truth: false
+    consumed: true
+    result: ineligible
+  PKLot:
+    fixed_camera: true
+    real_parking_lot: true
+    slot_polygons_and_static_truth: true
+    night_low_light: false
+    continuous_video: false
+    consumed_by_stage_J_K_L: true
+    result: ineligible
+  Grand_Bassin:
+    continuous_video: true
+    parking_context: partial
+    truth: positive_only_stability_subset_without_verified_vacant_transitions
+    night_low_light: false
+    consumed: true
+    result: ineligible
+  VIRAT:
+    continuous_fixed_surveillance: true
+    local_project_slot_truth: single_consumed_case_only
+    night_low_light: false
+    consumed_by_stage_L_M: true
+    known_geometry_failure: true
+    result: ineligible
+  Stage_O_P3_smoke:
+    source: repeated_consumed_PKLot_image
+    truth: none
+    role: interface_only
+    result: ineligible
+blocking_conditions:
+  - no new qualifying night fixed-camera parking source
+  - no stable slot polygon set for such a source
+  - no per-slot occupied/vacant truth
+  - no timestamped transition truth for event metrics
+minimum_user_material:
+  - path to a night/low-light fixed-camera parking video or ordered frame directory
+  - scene/source description and permission or license statement
+  - slot polygon JSON in the format below
+  - occupancy CSV with one known occupied/vacant state per evaluated slot/frame
+  - frame timestamps or FPS when transition metrics are requested
+recommended_polygon_example:
+  schema_version: 1
+  source_width: 1920
+  source_height: 1080
+  coordinate_system: pixel
+  slots:
+    - id: slot_001
+      points: [[100, 200], [180, 200], [190, 300], [90, 300]]
+recommended_truth_columns:
+  - video_id
+  - frame_index
+  - timestamp_s
+  - slot_id
+  - state
+recommended_truth_states:
+  occupied: 1
+  vacant: 0
+  unknown: excluded_from_metrics
+note: Examples define schemas only and are not real labels.

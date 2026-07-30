@@ -1,0 +1,207 @@
+schema_version: 1
+protocol_id: STAGE-M-OPEN-SOURCE-TRACKING-ROBUSTNESS-20260728-01
+status: frozen_before_stage_m_formal_predictions
+frozen_at: '2026-07-28T18:15:00+08:00'
+scope:
+  stage: M
+  name: Open-source Baseline, TrackTrack and Adverse-condition Evaluation
+  stage_l_rerun: prohibited
+  stage_l_artifact_modification: prohibited
+  parameter_selection_from_stage_k: prohibited
+  parameter_selection_from_virat_0502: prohibited
+  parameter_selection_after_freeze: prohibited
+  formal_execution_without_open_data_gate: prohibited
+  unexecuted_result_claims: prohibited
+stage_l_preservation:
+  config:
+    path: stage_l_integrated_workflow_frozen_20260728.yaml
+    bytes: 6268
+    sha256: 29e70e76fe7a8c92fe4022520a47c2cbe69f159749960e5e170116df1ea039e3
+  report:
+    path: ../data/STAGE_L_INTEGRATED_WORKFLOW_REPORT.md
+    bytes: 7340
+    sha256: a5b0034accdd5fa0e69ab3c1b31b19c781c62ce03af6149626107c358353a7fa
+  registry:
+    path: ../data/comparisons/stage_l_integrated_workflow_20260728.yaml
+    bytes: 5495
+    sha256: b6536131011338f2576ba6f1d8cf415748cee513943d4c82795e1c6832415408
+runtime:
+  python: 3.12.13
+  ultralytics: 8.4.104
+  torch: 2.13.0+cu130
+  opencv_python: 4.13.0.92
+  numpy: 2.4.4
+  pyyaml: 6.0.3
+  lap: 0.5.13
+  shapely: 2.1.2
+  device: 0
+  license:
+    package: ultralytics
+    spdx: AGPL-3.0
+    source: https://github.com/ultralytics/ultralytics
+    local_license_sha256: 0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0
+  shapely_license:
+    spdx: BSD-3-Clause
+    discovery: installed_by_ultralytics_requirement_check_during_v1_smoke
+    local_license_bytes: 1612
+    local_license_sha256: e8cd7d34604d2758ff589f0f34d6ed79c3f7fb14aaf5e12fb09221421391a3bf
+  source_files:
+    parking_management:
+      sha256: e910c5a08156ee590bec3aefa3cd3d58ca748cb997d6756679d9ab7119cc715b
+    base_solution:
+      sha256: 54dd5c39e25404f075dd6a93650bc7e9950ec6d69da637f6377f00f75c410cf7
+    tracker_registration:
+      sha256: 493cdecc24f71feb17091fd9935363712412a7b3a4f4a76693f783f4c8e07419
+    tracktrack_implementation:
+      sha256: c9ccd5ed3275093a75b874813acde95fc2cd4af251df17cee00c98ff9415977a
+    upstream_tracktrack_yaml:
+      sha256: 33fcd0cf42023fabc1cff93e8769f949e3f92a39219a8b7de157fc612a1de37a
+provenance:
+  paper:
+    title: Focusing on Tracks for Online Multi-Object Tracking
+    venue: CVPR 2025
+    authors:
+    - Kyujin Shim
+    - Kangwook Ko
+    - Yujin Yang
+    - Changick Kim
+    source: https://openaccess.thecvf.com/content/CVPR2025/html/Shim_Focusing_on_Tracks_for_Online_Multi-Object_Tracking_CVPR_2025_paper.html
+  author_repository:
+    source: https://github.com/kamkyu94/TrackTrack
+    license: MIT
+  execution_relation: paper method executed through Ultralytics implementation
+  copied_author_code_claim: false
+shared_inference:
+  detector_id: D1
+  weights_path: ../models/D1_NDISPark_best.pt
+  weights_bytes: 6255409
+  weights_sha256: 0638d50d909d679eb15622632556f6f92052af8eacffb7bf7f398e93efd0ca64
+  confidence: 0.3
+  nms_iou: 0.7
+  imgsz: 640
+  source_class_ids:
+  - 0
+  unified_class: vehicle
+  agnostic_nms: true
+  max_detections: 300
+  augmentation: false
+  rect: false
+  half: false
+classifier:
+  id: E1b
+  checkpoint_path: ../models/E1b_CBAM_best.pt
+  checkpoint_bytes: 8045704
+  checkpoint_sha256: f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3
+  occupied_threshold: 0.76
+  patch_size:
+  - 224
+  - 224
+  perspective_warp: true
+  invocation: detector_negative_slots_only
+mapping:
+  id: B1
+  mode: overlap
+  minimum_slot_coverage: 0.4
+  one_to_one: true
+  evidence: detector_confidence_times_slot_coverage
+  polygon_rule: same_hash_locked_scene_polygon_for_OS0_and_T0_T3
+temporal:
+  id: E4
+  rise_alpha: 0.6
+  fall_alpha: 0.15
+  occupied_threshold: 0.58
+  vacant_threshold: 0.42
+  raw_threshold: 0.76
+  continuous_video_only: true
+trackers:
+  bytetrack:
+    config_path: bytetrack_stage_m_frozen_20260728.yaml
+    config_bytes: 345
+    config_sha256: 9c46e5796711065c1e3e2784f9ed2c2775833801c01b1a548c0ee0b092331f1f
+    relation: unchanged_Stage_L_E5_tracker_parameters
+  tracktrack:
+    config_path: tracktrack_stage_m_frozen_20260728.yaml
+    config_bytes: 564
+    config_sha256: 54a158728a3dd41b523c7d9054fa0e187548075f563adb71c5db72e797328f37
+    implementation: ultralytics.trackers.track_tracker.TRACKTRACK
+    entrypoint: model.track_persist_true
+    direct_tracker_instantiation: prohibited
+    with_reid: false
+methods:
+  OS0-Controlled:
+    implementation: ultralytics.solutions.ParkingManagement
+    detector: shared_D1
+    polygon: shared_scene_polygon
+    tracker: tracktrack
+    occupancy_rule: official_centre_point_in_polygon
+    local_adapter_scope: per_slot_logging_metrics_and_exports_only
+    static_policy: reset_tracker_per_image
+    continuous_policy: persist_within_one_video_only
+  T0:
+    detector: shared_D1
+    mapping: B1
+    classifier_gate: E1b
+    temporal: false
+    tracker: none
+  T1:
+    detector: shared_D1
+    mapping: B1
+    classifier_gate: E1b
+    temporal: E4
+    tracker: none
+  T2:
+    detector: shared_D1
+    mapping: B1
+    classifier_gate: E1b
+    temporal: E4
+    tracker: ByteTrack
+  T3:
+    detector: shared_D1
+    mapping: B1
+    classifier_gate: E1b
+    temporal: E4
+    tracker: TrackTrack
+smoke:
+  claim_scope: smoke_test_only
+  source_image:
+    path: ../data/local/pklot_development.jpg
+    bytes: 349195
+    sha256: de17c03f641df869e258ef96afb1eb8baccc986b123e35ac08d802a6ec8d6452
+    role: consumed_development_image_repeated_for_interface_smoke
+  regions:
+    path: ../data/stage_m/stage_m_smoke_regions_20260728.json
+    bytes: 498
+    sha256: 3f44717453a7445cb7f1167be0884a4c69afd02ab82a1e862824646819e9fd05
+    relationship: five_slot_subset_from_same_consumed_P3_development_scene
+  frames: 4
+  fps: 5.0
+  truth: null
+  temporal_or_accuracy_claim: prohibited
+evaluation:
+  occupancy:
+  - macro_f1
+  - occupied_recall
+  - vacant_recall
+  - false_free_rate
+  - false_occupied_rate
+  temporal:
+  - flicker_count
+  - false_transitions
+  - signed_transition_error
+  - early_transitions
+  - on_time_transitions
+  - delayed_transitions
+  - missed_transitions
+  runtime:
+  - component_latency
+  - end_to_end_fps
+output_contract:
+  root_must_not_exist: true
+  files:
+  - occupancy.csv
+  - events.csv
+  - detections.jsonl
+  - annotated.mp4
+  - metrics.json
+  - summary.json
+  - runtime_metadata.json

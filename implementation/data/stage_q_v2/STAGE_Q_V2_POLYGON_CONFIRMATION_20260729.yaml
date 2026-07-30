@@ -1,0 +1,41 @@
+schema_version: 1
+protocol_id: STAGE-Q-V2-UPM-GTI-EXTERNAL-NIGHT-OCCUPANCY-20260729-01
+confirmation_id: STAGE-Q-V2-POLYGON-CONFIRMATION-20260729-01
+status: PASS
+confirmed_on: "2026-07-29"
+confirmed_by: user_explicit_chat_confirmation
+confirmation_text: "确认 polygon"
+scope:
+  accepted_slot_id_order: slot_00_through_slot_20
+  accepted_physical_mapping: official_Sensors_2023_Figure_4a
+  polygon_adjustment_after_model_output: prohibited
+  model_predictions_viewed_before_confirmation: false
+  model_loaded_before_confirmation: false
+inputs:
+  pending_annotation_freeze:
+    path: STAGE_Q_V2_ANNOTATION_FREEZE_20260729.yaml
+    bytes: 2659
+    sha256: a24b4f16d1dce08b2a62f8dab82a9f85598720ebe3e7a61dff290086253b8ea7
+  polygons:
+    path: STAGE_Q_V2_SLOT_POLYGONS_20260729.json
+    bytes: 2728
+    sha256: 9547f75aed308b5958d475cd225769f0d1d0939d1596cefbee5faf9a3ef6dd66
+  polygon_validation:
+    path: STAGE_Q_V2_POLYGON_VALIDATION_20260729.png
+    bytes: 850958
+    sha256: 4f03e960937bc2848bc3f670d4e4671afbd93dc2b1f8b49e52a9201a3df36ae4
+  occupancy_truth:
+    path: STAGE_Q_V2_OCCUPANCY_TRUTH_20260729.csv
+    bytes: 174683
+    sha256: ecce202c09182078d60c1e98b4c6f3ad1512b6ff6c4332f7ee4e68c694d636e6
+authorization:
+  formal_inference_authorized: true
+  authorized_methods:
+    - QV2-0_P3-D1
+    - QV2-1_P3-D1-LL
+  authorized_run_count_per_method: 1
+  parameter_reselection: prohibited
+history:
+  pending_freeze_preserved: true
+  stage_q_v1_preserved: true
+

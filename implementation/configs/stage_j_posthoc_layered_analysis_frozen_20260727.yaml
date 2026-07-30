@@ -1,0 +1,87 @@
+schema_version: 1
+protocol_id: P-COMP-PKLOT-DEV-STAGEJ-POSTHOC-20260727-01
+status: frozen_posthoc_before_analysis
+frozen_at: "2026-07-27T23:40:00+08:00"
+
+scope:
+  stage: J
+  task: read_only_layered_and_paired_analysis
+  data_role: consumed_development
+  prediction_allowed: false
+  parameter_selection_allowed: false
+  detector_reselection_allowed: false
+  untouched_test_claim: prohibited
+
+source_stage_j:
+  protocol:
+    path: stage_j_p0_p1_p2_pklot_development_frozen_20260727.yaml
+    bytes: 3596
+    sha256: 2131c37e482132271fb5e48e3278ef1130420e7957d29862895ba0ef3433b6a4
+  result_record:
+    path: ../data/comparisons/stage_j_p0_p1_p2_development_20260727.yaml
+    bytes: 6107
+    sha256: 338e6f7b1ef8be293a953ea5ccf5c86f52b73eeb8aa484fc9f63d20413a3982e
+  output_root_supplied_by: --stage-j-root
+  methods:
+    P0:
+      relative_path: P0/occupancy.csv
+      bytes: 179019
+      sha256: a6059c01382d590e25e6b4462f7c2818113c7f27f73aa870baadb801a4dc8d8f
+    P1:
+      relative_path: P1/occupancy.csv
+      bytes: 179019
+      sha256: 937ba4f8d091d6c90a82b0f5775f5fa2a1718991e2ada6b20dd4a5247af00421
+    P2:
+      relative_path: P2/occupancy.csv
+      bytes: 179019
+      sha256: 76de3d6694d4d355a1ce1eaac87318505768ca1f7f4f0115a8991f398cf51743
+
+expected:
+  methods: [P0, P1, P2]
+  rows_per_method: 1512
+  known_rows_per_method: 1505
+  unknown_rows_excluded_per_method: 7
+  paired_samples: 27
+  cameras: [pucpr, ufpr04, ufpr05]
+
+metrics:
+  camera:
+    - macro_f1
+    - occupied_recall
+    - vacant_recall
+    - false_free_rate
+    - false_occupied_rate
+  camera_macro:
+    weighting: equal_camera
+    fields:
+      - macro_f1
+      - occupied_recall
+      - vacant_recall
+      - false_free_rate
+      - false_occupied_rate
+  paired:
+    baseline: P0
+    candidates: [P1, P2]
+    unit: sample_id
+    score: per_sample_macro_f1
+    difference: candidate_minus_P0
+    tie_tolerance: 1.0e-12
+
+bootstrap:
+  unit: sample_id
+  resamples: 20000
+  seed: 20260727
+  confidence_level: 0.95
+  interval: percentile
+  statistic: mean_paired_per_sample_macro_f1_difference
+  slot_level_resampling: prohibited
+
+reporting:
+  required_conclusion: P1 leads the pooled consumed-development comparison, but the gain is camera-dependent and is not yet confirmed on an untouched test.
+  negative_results_retained: true
+  no_model_or_threshold_change_after_analysis: true
+  outputs:
+    - preflight.json
+    - analysis.json
+    - camera_metrics.csv
+    - paired_image_differences.csv

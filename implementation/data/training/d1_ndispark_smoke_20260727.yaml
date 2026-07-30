@@ -1,0 +1,148 @@
+schema_version: 1
+record_id: D1-NDISPARK-SMOKE-RECORD-20260727-01
+experiment_id: D1-NDISPARK-SMOKE-20260727-01
+status: complete_after_retained_execution_failures
+
+protocol:
+  dataset: ../../configs/ndispark_only_dataset_frozen_20260727.yaml
+  dataset_protocol_id: DPROTO-NDISPARK-ONLY-20260727-01
+  comparison: ../../configs/detector_comparison_frozen_20260727.yaml
+  comparison_protocol_id: D-COMP-NDISPARK-DEV-20260727-01
+  initialization: COCO-pretrained_yolov8n.pt
+  initialization_sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+  prepared_dataset_yaml_sha256: 8e000ba2fe912edf09c9386426da58315950c708726468df36a7c25163eab170
+  count_test_accessed: false
+
+data:
+  train: {images: 112, boxes: 2577, background_images: 1, lighting: daylight}
+  validation: {images: 30, boxes: 725, background_images: 0, lighting: night, role: consumed_development_validation}
+  class: {id: 0, name: vehicle}
+
+executed_attempts:
+  - run_id: d1_ndispark_smoke_20260727_v1
+    status: failed_before_model_import
+    epochs_completed: 0
+    retained: true
+    reason: Ultralytics config directory was not created before import, causing a read-only-worktree fallback.
+    failure_artifact:
+      repository_relative_path: outputs/d1_ndispark_smoke_20260727_v1/smoke_failure.json
+      bytes: 2026
+      sha256: 808b4749ee7c2364de1edcaad7d09afbd383c695db5dea5ea537a2c0aa024064
+  - run_id: d1_ndispark_smoke_20260727_v2
+    status: failed_before_first_training_batch
+    epochs_completed: 0
+    retained: true
+    reason: pythonw had no stdout stream for the Ultralytics progress writer.
+    failure_artifact:
+      repository_relative_path: outputs/d1_ndispark_smoke_20260727_v2/smoke_failure.json
+      bytes: 1949
+      sha256: 1382695e0fa1bf50bb99059e18819d0c18fc28eaab7a93cf2dd5c494e1b13ae8
+  - run_id: d1_ndispark_smoke_20260727_v3
+    status: complete
+    epochs_completed: 3
+    retained: true
+    method_configuration_changed_from_frozen_protocol: false
+
+completed_run:
+  run_id: d1_ndispark_smoke_20260727_v3
+  started_at: "2026-07-27T17:01:43.899563+08:00"
+  ended_at: "2026-07-27T17:02:08.783602+08:00"
+  model_train_wall_seconds: 21.368030499997985
+  training_configuration:
+    epochs: 3
+    batch: 4
+    imgsz: 640
+    seed: 20260727
+    deterministic: true
+    amp: true
+    optimizer: AdamW
+    lr0: 0.001
+    weight_decay: 0.0005
+    workers: 2
+    cache: false
+    validation_each_epoch: true
+    pretrained_initialization: true
+    device: local_CUDA_0
+  epoch_time_seconds: [5.003259897232056, 2.8234293460845947, 2.5707907676696777]
+  mean_epoch_time_seconds: 3.465826670328776
+  training_losses:
+    train_box_loss: {first: 1.49829, last: 1.38859, delta: -0.10970}
+    train_cls_loss: {first: 2.36296, last: 1.23574, delta: -1.12722}
+    train_dfl_loss: {first: 1.10219, last: 1.03713, delta: -0.06506}
+    all_numeric_values_finite: true
+    losses_changed: true
+  final_development_validation:
+    images_seen: 30
+    precision: 0.74390
+    recall: 0.68109
+    mAP50: 0.75221
+    mAP50_95: 0.43950
+    inference_succeeded: true
+    role_warning: Smoke diagnostics on consumed development validation, not final test results.
+  failures:
+    nan_detected: false
+    oom_detected: false
+    batch_auto_reduced: false
+    empty_validation_labels: false
+  weights_updated: true
+
+resources:
+  gpu: NVIDIA GeForce RTX 3060 Laptop GPU
+  gpu_total_memory_bytes: 6441926656
+  cuda_free_before_training_bytes: 5379194880
+  cuda_peak_allocated_bytes: 635307520
+  cuda_peak_reserved_bytes: 767557632
+  cuda_peak_reserved_fraction: 0.11915032147798486
+  dataloader:
+    train_batch_wait_fraction_mean: 0.0031750390368403686
+    finding: no_material_loader_bottleneck_observed
+    limitation: Callback wait time is a practical prefetch/wait proxy, not a profiler trace.
+
+ignored_artifacts:
+  root:
+    repository_relative_path: outputs/d1_ndispark_smoke_20260727_v3
+    files: 31
+    bytes: 90026576
+  preflight_json: {bytes: 2436, sha256: 87b98beabffe9b5c1c7fde38c02c9490319bfbab0b855715d425f25ac63a808c}
+  args_yaml: {bytes: 2111, sha256: 71fcf8a9d80f0b41770ab662196728fbde47adf96f99f7cccc39a55a92db6867}
+  results_csv: {bytes: 553, sha256: 707b478db3d1ad9154ec8cecbd6f847088520b0136f90b5a518f0ecfb2ca1a6f}
+  resource_metrics_json: {bytes: 3846, sha256: 6b2410ec224fc0041b04735f7da6821ce80d1d8e73ed30c7d0bd19c7aacbdd78}
+  smoke_summary_json: {bytes: 10114, sha256: 8a6642d422a704fe53c7f7e375fb0de60e1fcf8e2b29fcbbb2ca181b8cf2b2d0}
+  training_console_log: {bytes: 9138, sha256: c705c8a8e688e04b8a51d89693b025908714fade44763cac7d254b31d5d4c45f}
+  results_png: {bytes: 237602, sha256: 6bdbab8f8af15e43690dd132650f4d066396ccec84128b80cf465cd1406c3dab}
+  redirected_stdout_log: {bytes: 26943, sha256: 9f7a9c80ff35d1deef6a04ec1c39a580d2c25ed86bc57fafd98733a265005d48}
+  redirected_stderr_log: {bytes: 0, sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855}
+  checkpoints:
+    initial: {bytes: 6549796, sha256: f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36}
+    epoch0: {bytes: 24475367, sha256: b227ae5a8da833ea212ae04713d3cba864d068798d7008c95902c426264a298d}
+    epoch1: {bytes: 24475559, sha256: 0c1e3468655a083181ec60a26d3269964d048ebb0babc0f3c45451c97d7cff7f}
+    epoch2: {bytes: 24475687, sha256: ea5f28326b7417df2801992ee12128ac52f0b0dc9918d1f596243a2b42ab80dc}
+    best: {bytes: 6249777, sha256: 4e57a68f93a050861bc8a9dde4c22b04c102f0984f19c7d39cbdde43ced8f2d1}
+    last: {bytes: 6249777, sha256: 4e57a68f93a050861bc8a9dde4c22b04c102f0984f19c7d39cbdde43ced8f2d1}
+    best_equals_last_reason: Epoch 3 was both the final and best smoke epoch.
+
+runtime:
+  python: 3.12.13
+  torch: 2.13.0+cu130
+  cuda: "13.0"
+  ultralytics: 8.4.104
+  opencv: 4.13.0
+  GPU_driver: "610.62"
+  remote_or_paid_GPU_used: false
+
+implementation_hashes:
+  training_smoke_py: 6a50edaea6e0814ce132b12230631e889b6d91550edeb201a2e59f3cefd2ade8
+  run_d1_smoke_py: dd838ae11127f192ae942c06a3b3985e365888db3f3b6e9c54c45eb59f1d8f01
+  test_training_smoke_py: 1dea237ba09125690ebeb1e51c2a85f18f9da6e24ffab6798153774e12a3faa5
+
+interpretation:
+  smoke_checkpoint_is_formal_D1: false
+  formal_detector_comparison_allowed: false
+  metric_claim: The run proves train/validation functionality and resource feasibility only.
+  negative_attempts_retained: true
+
+gate:
+  stage_F_smoke_passed: true
+  stage_G_GPU_decision_may_start: true
+  formal_training_allowed_now: false
+  paid_GPU_allowed: false
