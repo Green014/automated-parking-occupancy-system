@@ -75,7 +75,8 @@ byte-for-byte to the ignored release-assets directory:
 | E1b | 8,045,704 | `f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3` | verified |
 
 Same-sized files with different hashes were not selected. The source manifest
-contains no `.pt`, and the release URL remains pending.
+contains no `.pt`. At the time of this frozen validation, the Release URL was
+still pending.
 
 ## Final validation record
 
@@ -83,10 +84,10 @@ contains no `.pt`, and the release URL remains pending.
   `198f627689cd93f66ca0f087af6686d3afc697ff51e2aa77ee56124187b981b0`;
 - formal config temporary `core.autocrlf=true` clone SHA-256: the same value,
   with no CRLF;
-- public source candidate: 554 files, 69,498,686 bytes;
+- public source candidate: 554 files, 69,500,502 bytes;
 - source selection: 8 include categories, 9 explicit exclude categories,
   34 included files removed by an explicit or privacy exclusion;
-- privacy scan: 545 UTF-8 text files scanned, 0 findings;
+- privacy scan: 546 UTF-8 text files scanned, 0 findings;
 - W.3 registry: 33 artifacts, all verified locally;
 - clean checkout: passed; all four CLI help checks and compileall passed
   without a model or dataset;
@@ -95,7 +96,7 @@ contains no `.pt`, and the release URL remains pending.
 - compileall: passed;
 - `git diff --check`: passed;
 - all applicable historical/current registry verifiers: passed;
-- real Git index unchanged and no remote configured: passed.
+- real Git index unchanged and no remote configured at validation time: passed.
 
 ## Release state
 
@@ -110,3 +111,12 @@ authorized remote, push the verified source commit, create a real GitHub
 Release, upload D1/E1b plus `SHA256SUMS.txt` and
 `MODEL_RELEASE_METADATA.yaml`, and replace the pending Release URL with the
 real URL. W.3 performs none of the remote or publication actions.
+
+## Publication follow-up
+
+Those manual actions were completed on 2026-07-31. The source and verified
+D1/E1b assets are published as
+[v1.0.0](https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0).
+The release-time follow-up is additive: the `public_release_published=false`
+value above remains the truthful state of the frozen W.3 validation rather
+than being rewritten after the fact.

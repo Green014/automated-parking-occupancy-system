@@ -180,9 +180,9 @@ generic P3-TT runtimes.
 
 Required D1/E1b filenames, byte counts, hashes, and acquisition guidance are in
 `implementation/data/STAGE_U_1_MODEL_ASSETS.md`. The source repository does
-not bundle weights. The intended GitHub Release URL is pending; until a real
-Release is published, supply each local path manually and verify its size and
-SHA-256.
+not bundle weights. Download both checkpoints from the
+[v1.0.0 GitHub Release](https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0)
+and verify their byte counts and SHA-256 values before use.
 
 ## Tests
 
@@ -229,6 +229,8 @@ This is a reproducible local review candidate, not a deployment-ready parking
 management product. Stage W.3 adds the full AGPL-3.0-only project license,
 third-party notices, anonymous permission/provenance record, privacy-safe
 source manifest, and independently prepared D1/E1b Release assets.
-`public_release_published=false`: no remote push, GitHub Release, or public
-asset URL is asserted by the preparation record. A local source commit does
-not by itself mean that a public release exists.
+The frozen W.3 preparation record states
+`public_release_published=false` because it predates publication. The source
+and verified D1/E1b assets were subsequently published as
+[v1.0.0](https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0)
+on 2026-07-31.

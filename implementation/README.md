@@ -862,9 +862,9 @@ strings, secrets, weights, datasets, outputs, vendor copies, environments,
 and caches.
 
 D1 and E1b are copied byte-for-byte into the ignored
-`outputs/stage_w_3_model_release_assets/` directory for a future GitHub Release.
-They remain outside Git source. The Release URL is pending and must be replaced
-only after a real Release is published.
+`outputs/stage_w_3_model_release_assets/` directory and remain outside Git
+source. The verified checkpoints are published in the
+[v1.0.0 GitHub Release](https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0).
 
 W.2 remains an exact historical snapshot. Current optional dependencies can
 change pass/skip totals: for example, Flask makes dashboard server tests run
@@ -886,5 +886,7 @@ Verify the privacy-safe source in a temporary `core.autocrlf=true` clone:
 python scripts\verify_stage_w_3_release.py
 ```
 
-See `data/STAGE_W_3_RELEASE_INDEX.md`. These checks establish local preparation
-only: `public_release_published=false`.
+See `data/STAGE_W_3_RELEASE_INDEX.md`. Its
+`public_release_published=false` value is the frozen prepublication state;
+remote publication was completed on 2026-07-31 without rewriting that
+historical result.

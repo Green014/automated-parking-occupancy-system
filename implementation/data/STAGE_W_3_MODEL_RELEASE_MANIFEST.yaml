@@ -33,8 +33,20 @@ assets:
     source_repository_inclusion: excluded
 checksum_file: implementation/outputs/stage_w_3_model_release_assets/SHA256SUMS.txt
 metadata_file: implementation/outputs/stage_w_3_model_release_assets/MODEL_RELEASE_METADATA.yaml
-manual_release_steps:
+prepublication_manual_release_steps:
   - configure an authorized Git remote
   - create the real GitHub Release
   - upload both weight assets, SHA256SUMS.txt, and MODEL_RELEASE_METADATA.yaml
   - replace the pending release URL only with the real published URL
+publication_follow_up:
+  status: PUBLISHED
+  release_url: https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0
+  published_at: '2026-07-31T00:43:33Z'
+  source_commit: 6215adfa94cf046b012522f87dc839c55cc6a3c6
+  release_id: 362791125
+  verified_remote_assets:
+    - D1_NDISPark_best.pt
+    - E1b_CBAM_best.pt
+    - SHA256SUMS.txt
+    - MODEL_RELEASE_METADATA.yaml
+  note: top-level status and public_release_published preserve the frozen prepublication state

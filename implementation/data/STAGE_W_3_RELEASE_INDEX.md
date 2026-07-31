@@ -4,7 +4,7 @@ Date: 2026-07-30
 
 Status: privacy-safe public source and model assets prepared locally. This
 index belongs to the verified source commit; no remote push, upload, or public
-release is asserted.
+release was asserted by that frozen prepublication snapshot.
 
 ## Current release boundary
 
@@ -46,8 +46,9 @@ is not an accuracy result or continuous-video validation.
 | `E1b_CBAM_best.pt` | 8,045,704 | `f6966dabe0801f221cc6e67b9ee117af1b06c93a7e34c96d25771572616ddbe3` |
 
 The files are stored only under ignored
-`implementation/outputs/stage_w_3_model_release_assets/` and are intended for
-future GitHub Release assets. Release URL: pending.
+`implementation/outputs/stage_w_3_model_release_assets/` and remain outside
+Git source. They were subsequently published in the
+[v1.0.0 GitHub Release](https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0).
 
 ## Verification entry
 
@@ -72,3 +73,11 @@ Manual steps remain: configure an authorized remote, push the verified source
 commit, create the real GitHub Release, upload both weight assets and the
 checksum/metadata files, and replace the pending URL with the actual Release
 URL.
+
+## Publication follow-up
+
+The manual steps above were completed on 2026-07-31. Release `v1.0.0` contains
+the two checksum-verified model weights, `SHA256SUMS.txt`, and
+`MODEL_RELEASE_METADATA.yaml`. The frozen `public_release_published=false`
+field remains unchanged because it describes the state when W.3 validation
+was recorded.

@@ -62,18 +62,18 @@ artifacts:
 - path: README.md
   role: repository_readme
   availability: required
-  bytes: 8291
-  sha256: 5c840512a0daacbde9766b7df1ab9e99dc3b540d2bb18d0b3a8ca73f7245243d
+  bytes: 8433
+  sha256: bc2f93f16806097d2c08d6b95aeedfd0a1bb4b97500fe4ee87a044fccc7823e1
 - path: FINAL_RELEASE_INDEX.md
   role: repository_release_index
   availability: required
-  bytes: 3384
-  sha256: e0720e700611e01f42ba08d2114ddc20bc1ca009e381c0e093f3f6dadd6f766f
+  bytes: 3480
+  sha256: 5c78bd27297787e5af000919a79c66bd050a0181d36d840ca40e592a29c1c6d2
 - path: implementation/README.md
   role: implementation_readme
   availability: required
-  bytes: 37361
-  sha256: 34fa1ee559451c77a247a42664fe2644ceb0c87f3514d522d4a58d5f4e0540bb
+  bytes: 37485
+  sha256: 5b6aa10ef8db41557cb177fbc3375a974b54b9c920901edafd40c14f9b2d6c92
 - path: implementation/pyproject.toml
   role: dependency_and_cli_metadata
   availability: required
@@ -107,8 +107,8 @@ artifacts:
 - path: implementation/data/STAGE_W_3_MODEL_RELEASE_MANIFEST.yaml
   role: model_release_manifest
   availability: required
-  bytes: 1817
-  sha256: 77cbf66d3a6fc6accfc218282a1dc8f41d50c6fa72016e349cac8870471a1cd5
+  bytes: 2319
+  sha256: da872d08d6f8c73f9c02de373bc0812fb6d6844ef77d8c8b25a1ec7a90b5039d
 - path: implementation/data/STAGE_W_3_PUBLIC_SOURCE_MANIFEST.yaml
   role: privacy_safe_public_source_manifest
   availability: required
@@ -122,13 +122,13 @@ artifacts:
 - path: implementation/data/STAGE_W_3_PRIVACY_AND_MODEL_RELEASE_REPORT.md
   role: privacy_and_model_release_report
   availability: required
-  bytes: 5102
-  sha256: becc6c2aad9c19c74ff6f215ffe43710aadcacbc5a4aa3630c1c5d45e7762624
+  bytes: 5574
+  sha256: d4b0a6c54b6d3127e8e54e0a344d210b698c8819fac106c7365a1be2f2007aa5
 - path: implementation/data/STAGE_W_3_RELEASE_INDEX.md
   role: w3_release_index
   availability: required
-  bytes: 2730
-  sha256: bda394218ba6f8bb2ac447b599ab5ba4937d5d2736f24d7944562540dc628669
+  bytes: 3210
+  sha256: f8fe35d6d105c2aeb537b7a876f56cd1cb2c141cb397c19370c08f108b2635cb
 - path: implementation/data/STAGE_U_1_MODEL_ASSETS.md
   role: model_asset_user_guide
   availability: required
@@ -207,5 +207,5 @@ artifacts:
 - path: implementation/outputs/stage_w_3_model_release_assets/MODEL_RELEASE_METADATA.yaml
   role: model_release_metadata
   availability: local_ignored_optional
-  bytes: 937
-  sha256: 50ee0225b533acda1b45580a32e35a1226d870d4bf13316e347acc3b68ace812
+  bytes: 991
+  sha256: ca91018b725b13dd920f1e9f792f4fe6bff74b7209c18fe0ff0414431896c2d0

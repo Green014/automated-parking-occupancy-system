@@ -70,6 +70,7 @@ adapted interface remain independent license/provenance boundaries.
 
 `source_publication_ready=true` and
 `model_assets_ready_for_github_release=true` are local preparation states,
-subject to the W.3 verifier. `public_release_published=false`: an authorized
-remote push, real GitHub Release, weight upload, and replacement of
-`Release URL pending` remain manual actions.
+subject to the W.3 verifier. Its frozen
+`public_release_published=false` value records the prepublication state on
+2026-07-30. Publication was completed on 2026-07-31:
+[v1.0.0 source and model assets](https://github.com/Green014/automated-parking-occupancy-system/releases/tag/v1.0.0).
