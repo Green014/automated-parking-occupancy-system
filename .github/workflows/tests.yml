@@ -1,0 +1,59 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  public-source-tests:
+    runs-on: ubuntu-latest
+    env:
+      STAGE_U_PORTABLE_PACKAGE: "1"
+      PARKING_PUBLIC_SOURCE_PACKAGE: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install packages
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ./implementation/literature_core
+          python -m pip install -e "./implementation[integrated,dev]"
+
+      - name: Compile
+        run: python -m compileall -q implementation/src implementation/scripts implementation/tests implementation/literature_core/src
+
+      - name: Test implementation
+        working-directory: implementation
+        run: |
+          python - <<'PY'
+          import subprocess
+
+          result = subprocess.run(
+              ["python", "-m", "pytest", "-q", "--tb=short"],
+              check=False,
+              stdout=subprocess.PIPE,
+              stderr=subprocess.STDOUT,
+              text=True,
+          )
+          print(result.stdout, end="")
+          if result.returncode:
+              summary = result.stdout[-30000:]
+              summary = (
+                  summary.replace("%", "%25")
+                  .replace("\r", "%0D")
+                  .replace("\n", "%0A")
+              )
+              print(f"::error title=Implementation pytest failure::{summary}")
+          raise SystemExit(result.returncode)
+          PY
+
+      - name: Test literature-core runtime package
+        working-directory: implementation/literature_core
+        run: python -m pytest -q

@@ -83,7 +83,7 @@ contains no `.pt`, and the release URL remains pending.
   `198f627689cd93f66ca0f087af6686d3afc697ff51e2aa77ee56124187b981b0`;
 - formal config temporary `core.autocrlf=true` clone SHA-256: the same value,
   with no CRLF;
-- public source candidate: 553 files, 69,496,909 bytes;
+- public source candidate: 554 files, 69,498,686 bytes;
 - source selection: 8 include categories, 9 explicit exclude categories,
   34 included files removed by an explicit or privacy exclusion;
 - privacy scan: 545 UTF-8 text files scanned, 0 findings;

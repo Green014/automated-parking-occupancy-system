@@ -112,8 +112,8 @@ artifacts:
 - path: implementation/data/STAGE_W_3_PUBLIC_SOURCE_MANIFEST.yaml
   role: privacy_safe_public_source_manifest
   availability: required
-  bytes: 7586
-  sha256: f687fcb9fdc1840d82a336f2d2b4488b55759600fa6259f6ab0c515991f58809
+  bytes: 7622
+  sha256: 692b54a9c426bf6dc6513cdd9ce3ed6d9eaedb65b116bd0baddc0f2073b98428
 - path: implementation/data/STAGE_W_2_ARTIFACT_REGISTRY.yaml
   role: pre_w3_historical_source_snapshot
   availability: required
@@ -123,7 +123,7 @@ artifacts:
   role: privacy_and_model_release_report
   availability: required
   bytes: 5102
-  sha256: 100646d0d1d5690e503502f749a87a8ade49a33939123c8e0e136628abd3f0ec
+  sha256: becc6c2aad9c19c74ff6f215ffe43710aadcacbc5a4aa3630c1c5d45e7762624
 - path: implementation/data/STAGE_W_3_RELEASE_INDEX.md
   role: w3_release_index
   availability: required

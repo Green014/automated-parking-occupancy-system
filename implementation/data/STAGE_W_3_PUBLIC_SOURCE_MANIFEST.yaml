@@ -19,6 +19,7 @@ include:
       - README.md
       - FINAL_RELEASE_INDEX.md
       - pytest.ini
+      - .github/workflows/tests.yml
   - category: implementation_package_metadata
     reason: Installation, dependency, test, and implementation documentation.
     paths:
@@ -181,6 +182,6 @@ integrity:
 resolved_summary:
   include_category_count: 8
   exclude_category_count: 9
-  candidate_file_count: 553
+  candidate_file_count: 554
   candidate_bytes: null
   privacy_excluded_file_count: 33
