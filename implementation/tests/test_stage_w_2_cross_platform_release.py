@@ -57,7 +57,10 @@ def test_release_text_extensions_are_explicitly_lf() -> None:
         "css",
         "ini",
     ):
-        assert f"*.{extension} text eol=lf" in rules
+        assert any(
+            line.startswith(f"*.{extension} text eol=lf")
+            for line in rules
+        )
 
 
 def test_models_media_images_and_archives_are_binary() -> None:

@@ -122,8 +122,8 @@ artifacts:
 - path: implementation/data/STAGE_W_3_PRIVACY_AND_MODEL_RELEASE_REPORT.md
   role: privacy_and_model_release_report
   availability: required
-  bytes: 5574
-  sha256: d4b0a6c54b6d3127e8e54e0a344d210b698c8819fac106c7365a1be2f2007aa5
+  bytes: 5831
+  sha256: 8b395dd6ed87182a871e14c9cde07bd3ba71a8d98e06826c5ded7958c30eefeb
 - path: implementation/data/STAGE_W_3_RELEASE_INDEX.md
   role: w3_release_index
   availability: required
@@ -182,8 +182,8 @@ artifacts:
 - path: implementation/tests/test_stage_w_2_cross_platform_release.py
   role: pre_w3_history_regression
   availability: required
-  bytes: 3764
-  sha256: 794c78e2fdbd8b7709c59618755697863e7457c91dc6d044e034d5f5cfefbb70
+  bytes: 3829
+  sha256: cc62c5bd8f21eac80a3bc0bad5697b944ec8f8cec1631c659693c97f70d892e2
 - path: implementation/tests/test_stage_w_3_privacy_and_model_release.py
   role: w3_release_regression
   availability: required
